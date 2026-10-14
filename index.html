@@ -454,28 +454,28 @@ svg text{font-family:"Fira Sans",sans-serif}
   <div class="cols" style="align-items:center;gap:.6em">
     <div style="flex:1.3">
       <svg viewBox="0 0 700 470" style="width:100%;max-height:470px">
-        <g class="fragment" data-fragment-index="1"><circle cx="300" cy="245" r="222" fill="#f2f3f4" stroke="#c4cacf" stroke-width="2"/>
+        <g class="fragment" data-fragment-index="1"><circle cx="300" cy="245" r="222" fill="#f2f3f4" stroke="#c4cacf" stroke-width="2"></circle>
         <text x="300" y="60" text-anchor="middle" font-size="21" font-weight="600" fill="#4C5B66">Artificial Intelligence</text>
         <text x="300" y="82" text-anchor="middle" font-size="13" fill="#5b6770">since 1956</text></g>
-        <g class="fragment" data-fragment-index="2"><circle cx="300" cy="268" r="168" fill="#e6ebef" stroke="#a9b3ba" stroke-width="2"/>
+        <g class="fragment" data-fragment-index="2"><circle cx="300" cy="268" r="168" fill="#e6ebef" stroke="#a9b3ba" stroke-width="2"></circle>
         <text x="300" y="134" text-anchor="middle" font-size="19" font-weight="600" fill="#4C5B66">Machine Learning</text>
         <text x="300" y="154" text-anchor="middle" font-size="13" fill="#5b6770">since the 1990s</text></g>
-        <g class="fragment" data-fragment-index="3"><circle cx="300" cy="296" r="114" fill="#fde3cf" stroke="#F76902" stroke-width="2"/>
+        <g class="fragment" data-fragment-index="3"><circle cx="300" cy="296" r="114" fill="#fde3cf" stroke="#F76902" stroke-width="2"></circle>
         <text x="300" y="214" text-anchor="middle" font-size="18" font-weight="600" fill="#b84e00">Generative AI</text>
         <text x="300" y="233" text-anchor="middle" font-size="12" fill="#7a3c10">since ~2014</text></g>
-        <g class="fragment" data-fragment-index="4"><circle cx="300" cy="326" r="66" fill="#F76902"/>
+        <g class="fragment" data-fragment-index="4"><circle cx="300" cy="326" r="66" fill="#F76902"></circle>
         <text x="300" y="322" text-anchor="middle" font-size="20" font-weight="600" fill="#fff">LLMs</text>
         <text x="300" y="342" text-anchor="middle" font-size="11" fill="#fff">since 2018</text>
-        <line x1="366" y1="326" x2="530" y2="326" stroke="#F76902" stroke-width="2" stroke-dasharray="4 4"/>
+        <line x1="366" y1="326" x2="530" y2="326" stroke="#F76902" stroke-width="2" stroke-dasharray="4 4"></line>
         <text x="538" y="296" font-size="15" fill="#111">ChatGPT, Claude</text><text x="538" y="318" font-size="15" fill="#111">Copilot, Cursor</text><text x="538" y="340" font-size="15" fill="#111">"agents"</text><text x="538" y="362" font-size="15" fill="#111">every "AI feature"</text></g>
         
       </svg>
     </div>
     <div style="flex:1">
       <div class="card fragment" data-fragment-index="1" style="font-size:.72em"><b>AI</b>: programs that do something we would call intelligent, such as chess engines, route planners and robots.</div>
-      <div class="card fragment" data-fragment-index="2" style="font-size:.72em"><b>Machine learning</b>: the rules are learned from data instead of written by hand, as in spam filters, recommenders and image classifiers.</div>
-      <div class="card fragment" data-fragment-index="3" style="font-size:.72em"><b>Generative AI</b>: models that produce new content such as images, audio or text.</div>
-      <div class="card warn fragment" data-fragment-index="4" style="font-size:.72em"><b>Large language models</b>: generative models of text. Most of today's talk is about these.</div>
+      <div class="card fragment" data-fragment-index="2" style="font-size:.72em"><strong>Machine learning</strong>: the rules are learned from data instead of written by hand, as in spam filters, recommenders, and image classifiers.</div>
+      <div class="card fragment" data-fragment-index="3" style="font-size:.72em"><strong>Generative AI</strong>: models that produce new content such as images, audio or text.</div>
+      <div class="card warn fragment" data-fragment-index="4" style="font-size:.72em"><strong>Large language models</strong>: generative models of text. Most of today's "AI" hype.</div>
     </div>
   </div>
   <aside class="notes">~45 s. Four clicks, starting from the outer circle. The rest of the talk is about the innermost one. When someone says "AI will…", it is worth asking which of these they mean.</aside>
@@ -499,20 +499,34 @@ svg text{font-family:"Fira Sans",sans-serif}
     <div class="fragment"><div class="n">P</div><div class="t">Pre-trained</div>
       <svg viewBox="0 0 300 110" style="width:100%;height:110px;background:#fff;border-radius:8px;margin:.3em 0">
         <g font-size="13" fill="#5b6770"><text x="20" y="30">the web</text><text x="20" y="60">GitHub</text><text x="20" y="90">books, papers</text></g>
-        <g stroke="#4C5B66" stroke-width="2" fill="none"><path d="M120 26 L180 55"/><path d="M120 56 L180 55"/><path d="M120 86 L180 55"/></g>
-        <rect x="185" y="35" width="100" height="40" rx="8" fill="#4C5B66"/><text x="235" y="60" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">one model</text>
+        <g stroke="#4C5B66" stroke-width="2" fill="none"><path d="M120 26 L180 55"></path><path d="M120 56 L180 55"></path><path d="M120 86 L180 55"></path></g>
+        <rect x="185" y="35" width="100" height="40" rx="8" fill="#4C5B66"></rect><text x="235" y="60" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">one model</text>
       </svg>
-      <div class="d">Trained <b>once</b>, over several months, on a large share of the text available online. After that the model is fixed.</div></div>
+      <div class="d">Trained <strong>once</strong>, over several months, on a large share of the text available online. After that the model is fixed.</div></div>
     <div class="fragment"><div class="n">T</div><div class="t">Transformer</div>
       <svg viewBox="0 0 300 110" style="width:100%;height:110px;background:#fff;border-radius:8px;margin:.3em 0">
         <g font-size="13" fill="#111"><text x="10" y="90">The</text><text x="40" y="90">animal</text><text x="92" y="90">didn't</text><text x="135" y="90">cross</text><text x="176" y="90">the</text><text x="202" y="90">street</text><text x="246" y="90">as</text><text x="268" y="90" font-weight="600" fill="#F76902">it</text></g>
-        <path d="M272 76 C 240 10, 95 10, 62 76" fill="none" stroke="#F76902" stroke-width="5" opacity=".85"/>
-        <path d="M272 76 C 255 40, 225 40, 218 76" fill="none" stroke="#F76902" stroke-width="2" opacity=".4"/>
+        <path d="M272 76 C 240 10, 95 10, 62 76" fill="none" stroke="#F76902" stroke-width="5" opacity=".85"></path>
+        <path d="M272 76 C 255 40, 225 40, 218 76" fill="none" stroke="#F76902" stroke-width="2" opacity=".4"></path>
       </svg>
-      <div class="d">The architecture from 2017. Through <b>attention</b>, each word is compared with the others, which is how the model links "it" to "animal." It runs in parallel, so it scales to huge datasets.</div></div>
+      <div class="d">The architecture from 2017. Through <strong>attention</strong>, tokens are compared with all previous tokens, which is how the model links "it" to "animal." It runs in parallel, so it scales to huge datasets.</div></div>
   </div>
-  <div class="takeaway fragment" style="font-size:.78em"><b>GPT is a model, and ChatGPT is a product</b> built around it, with a chat window, hidden instructions and tools. Claude, Gemini, Llama and DeepSeek are built the same way.</div>
+  <div class="takeaway fragment" style="font-size:.78em"><strong>GPT is a model, and ChatGPT is a product</strong> built around it, with a chat window, hidden instructions and tools. Claude, Gemini, Llama and DeepSeek are built the same way.</div>
   <aside class="notes">~1.5 min. The model/product distinction comes back in Part 3: much of what people experience as "ChatGPT" is the product around the model.</aside>
+</section>
+    <section data-ch="1" style="height: 720px;">
+  <h2>Tokenization</h2>
+<p class="fragment"><strong>Tokenization</strong>&nbsp;is how a long string of text is broken down into discrete chunks.&nbsp;</p>
+<p class="fragment">OpenAI tokenization of <span style="font-family: &quot;Fira Mono&quot;, monospace;">`The students opened their laptops.`</span></p>
+<p class="toks fragment"><span class="tok">The</span><span class="tok"> students</span><span class="tok"> opened</span><span class="tok"> their</span><span class="tok">laptops</span><span class="tok">.</span></p>
+<p class="toks fragment"><span class="tok">976</span><span class="tok">4501</span><span class="tok">13906</span><span class="tok">1043</span><span class="tok">64508</span><span class="tok">13</span></p>
+<p class="fragment">OpenAI tokenization of&nbsp;<span><span style="font-family: &quot;Fira Mono&quot;, monospace;">` The Students opened there lap-tops.`</span></span></p>
+<p class="toks fragment"><span class="tok"> The</span><span class="tok"> Students</span><span class="tok"> opened</span><span class="tok"> there</span><span class="tok"> lap</span><span class="tok">-t</span><span class="tok">ops</span><span class="tok">.</span></p>
+<p class="toks fragment"><span class="tok">623</span><span class="tok">23372</span><span class="tok">13906</span><span class="tok">1354</span><span class="tok">18815</span><span class="tok">2378</span><span class="tok">4645</span><span class="tok">13</span></p>
+<p class="fragment">OpenAI tokenization of <span><span style="font-family: &quot;Fira Mono&quot;, monospace;">`print("hello, world!")`</span></span></p>
+<p class="toks fragment"><span class="tok">print</span><span class="tok">("</span><span class="tok">hello</span><span class="tok">,</span><span class="tok"> world</span><span class="tok">!")</span></p>
+<p class="toks fragment"><span class="tok">1598</span><span class="tok">568</span><span class="tok">24912</span><span class="tok">11</span><span class="tok">2375</span><span class="tok">193340</span></p>
+<p style="position: absolute; margin: 0px; left: 37px; top: 691px; width: 1205px; font-size: 12px;">https://platform.openai.com/tokenizer</p>
 </section>
 
 <section data-ch="1">
@@ -531,6 +545,43 @@ svg text{font-family:"Fira Sans",sans-serif}
   <p class="foot">Probabilities are illustrative.</p>
   <aside class="notes">~1.5 min. Click Sample until the sentence ends; every path makes a grammatical sentence. Reset and show a different path. Token IDs are real, from the GPT-4o tokenizer (o200k_base). If asked: attention compares each token with every earlier one, and caching means each new token costs roughly linear time.</aside>
 </section>
+
+<section data-ch="1" class="pe">
+  <h2>From autocomplete to chatbot</h2>
+  <div class="legend" style="margin:0 1.1em .5em"><span><i style="background:var(--usr)"></i>typed by the user</span><span><i style="background:var(--sys)"></i>added by the app, hidden from the user</span><span><i style="background:var(--out)"></i>model-generated</span></div>
+  <div class="cols" style="gap:1.2em">
+    <div>
+      <p class="pe-h">The model on its own</p>
+      <div class="doc"><span class="usr">Q: What is the capital of France?</span><br><span class="out fragment" data-fragment-index="1">Q: What is the capital of Canada?</span><br><span class="out fragment" data-fragment-index="1">Q: What is the capital of Thailand?</span><br><span class="out fragment" data-fragment-index="1">Q: What is the capital of Peru?</span><span class="pe-bad fragment" data-fragment-index="1">✗</span></div>
+      <p class="pe-cap fragment" data-fragment-index="1">The text looks like the start of a quiz, so the most likely continuation is more questions.</p>
+    </div>
+    <div class="fragment" data-fragment-index="2">
+      <p class="pe-h">The same model, with a template</p>
+      <div class="doc"><span class="sys">&lt;user&gt;</span> <span class="usr">Q: What is the capital of France?</span> <span class="sys">&lt;/user&gt;</span><br><span class="sys">&lt;reply&gt;</span><span class="out fragment" data-fragment-index="3"> A: Paris. &lt;/reply&gt;</span><span class="pe-good fragment" data-fragment-index="3">✓</span></div>
+      <p class="pe-cap fragment" data-fragment-index="3">The app wraps the question in tags the user never sees. Now the most likely continuation is an answer.</p>
+    </div>
+  </div>
+  <div class="takeaway fragment" data-fragment-index="4" style="font-size:.74em">A chatbot is a next-word predictor with a hidden template around it. Arranging the text so that the user-relevant continuation is also the most likely one is called <b>prompt engineering</b>.</div>
+  <aside class="notes">~1 min. Example adapted from Andrew Ng. Click 1: an untuned model just continues the pattern. Click 2–3: the app adds tags around the question and opens a reply, so the model fills in an answer. Today's chat models are also fine-tuned on this format (stage 2 on the training slide), so they follow it reliably, but the mechanism is the same. The system prompt on the next slide is more of this hidden text.</aside>
+</section>
+
+<section class="pe" data-ch="1">
+  <h2>Chain of Thought: clever prompting to induce 'reasoning'</h2>
+  <div class="legend" style="margin:0 1.1em .5em"><span><i style="background:var(--usr)"></i>typed by the user</span><span><i style="background:var(--sys)"></i>added by the app, hidden from the user</span><span><i style="background:var(--think)"></i>model-generated (hidden)</span><span><i style="background:var(--out)"></i>model-generated (shown to user)</span></div>
+  <div class="cols" style="gap:1.2em">
+    <div>
+      <div class="doc"><span class="sys">&lt;user&gt;</span> <span class="usr">A bat and a ball cost $1.10. The bat costs $1.00 more than the ball. How much is the ball?</span> <span class="sys">&lt;/user&gt;</span><br><span class="sys">&lt;reply&gt;</span><span class="out fragment" data-fragment-index="1"> The ball costs $0.10.</span><span class="pe-bad fragment" data-fragment-index="1">✗</span></div>
+      <p class="pe-cap fragment" data-fragment-index="1">The model has to commit to a number immediately, and $0.10 is the answer that "sounds" right.</p>
+    </div>
+    <div class="fragment" data-fragment-index="2">
+      <div class="doc"><span class="sys">&lt;user&gt;</span> <span class="usr">A bat and a ball cost $1.10. The bat costs $1.00 more than the ball. How much is the ball?</span> <span class="sys">&lt;/user&gt;</span><br><span class="sys">&lt;thinking&gt;Let's think step by step, then put the answer in &lt;reply&gt;&lt;/reply&gt; tags... </span><span class="think">Call the ball x. The bat is x + 1.00. Together 2x + 1.00 = 1.10, so x = 0.05.&lt;/thinking&gt;&lt;reply&gt;</span><span class="out">The ball costs $0.05.</span><span class="think">&lt;/reply&gt;</span><span class="pe-good">✓</span></div>
+    </div>
+  </div>
+  <div class="takeaway fragment" data-fragment-index="4" style="font-size:.74em">In 2022, adding "Let's think step by step" raised one model from 18% to 79% on arithmetic word problems. Today's <strong>reasoning models</strong> are trained to do this on their own, hidden from the user.</div>
+  <p class="foot"><a href="https://arxiv.org/abs/2205.11916" target="_blank" rel="noopener">Kojima et al. (2022)</a></p>
+  <aside class="notes">~1 min. Click 1: a direct answer. The wrong answer was typical of 2022-era models; current models get this one right, which is part of the point. Click 2–3: the app adds one line at the start of the reply, and the model writes its working before the answer. The figures are from Kojima et al.: text-davinci-002 went from 17.7% to 78.7% on the MultiArith benchmark (and 10.4% to 40.7% on GSM8K). This is "chain-of-thought" prompting. The next slide shows the same idea built into today's models, as the hidden thinking block.</aside>
+</section>
+
 
 <section data-ch="1">
   <h2>Chat, reasoning and tool use all happen in one text window</h2>
