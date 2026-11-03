@@ -62,6 +62,9 @@
     .titlewrap h1{font-size:2.3em;max-width:760px}
     .titlewrap .sub{font-size:.95em;color:var(--accent2);margin:.3em 0 1.2em;max-width:720px}
     .titlewrap .who{font-size:.7em;color:var(--muted);line-height:1.5}
+    .titlewrap .qr{position:absolute;right:110px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;margin:0 !important;background:#fff;padding:16px 16px 12px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+    .titlewrap .qr img{display:block;width:230px;height:auto;margin:0;border:0;box-shadow:none;image-rendering:pixelated}
+    .titlewrap .qr span{font-size:.42em;color:var(--muted)}
     .divider{position:absolute;inset:0;display:grid;grid-template-columns:1.1fr 1fr;grid-template-rows:auto auto auto;align-content:center;align-items:center;column-gap:60px;row-gap:0;padding:0 90px !important;margin:0 !important;background:var(--ink);color:#fff}
     .divider>.num,.divider>.t,.divider>.s{grid-column:1}
     .divider>.map{grid-column:2;grid-row:1/4;align-self:center;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0}
@@ -480,6 +483,7 @@ svg text{font-family:"Fira Sans",sans-serif}
   <div class="reveal"><div class="slides">
     <section data-ch="0">
       <div class="titlewrap">
+        <div class="qr"><img src="assets/qrcode.png" alt="QR code: https://github.com/aquastar/ai-literacy-faculty"><span>github.com/aquastar/ai-literacy-faculty</span></div>
         <div class="bar"></div>
         <div class="kicker">Nov 2026 Faculty Meeting · Computer Science</div>
         <h1>AI Literacy Tutorial</h1>
@@ -950,8 +954,8 @@ svg text{font-family:"Fira Sans",sans-serif}
                                     <div class="bar"></div>
                                     
                                     <h1>Questions?</h1>
-                                    <div class="sub">Slides: aquastar.github.io/ai-literacy-faculty</div>
-                                    <div class="who">AI Integration Committee · Fall 2026 · Glossary on the handout · Sources in the speaker notes (press S)</div>
+                                    <div class="qr"><img src="assets/qrcode.png" alt="QR code: https://github.com/aquastar/ai-literacy-faculty"><span>github.com/aquastar/ai-literacy-faculty</span></div>
+                                    
                                   </div>
                                   <aside class="notes">
                                     Sources: Kojima et al. 2022 (chain of thought); DeepSeek-R1 (2025); Lewis et al. 2020 (RAG); modelcontextprotocol.io; Anthropic, "Building effective agents" (Dec 2024); Simon Willison on agents (Sep 2025); METR time horizons (Time Horizon 1.1, 2026); METR developer study (2025) and update (Feb 2026); Kalai et al. 2025; Denny et al. CACM 2024; platform.claude.com models table; Epoch AI inference price trends; Epoch AI open-closed gap (May 2026); Mistral Large 4 weights (Oct 29 2026); Meta Muse Spark Open (The Batch, Oct 2026); OpenCode; OpenAI Codex CLI; Anthropic, "When AI builds itself" (2026); McKinsey State of AI (2025); Gartner forecast; Google blog, Gemini 4 Argon (Sep 30 2026); hyperscaler capex; Stanford Digital Economy Lab "Canaries" rev. Aug 12 2026.
