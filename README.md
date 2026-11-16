@@ -6,13 +6,13 @@ Online: https://aquastar.github.io/talks/
 
 | Folder | Talk | Where |
 |---|---|---|
-| 2026-11-19-graph-inside/ | Is There a Graph Inside Generative Models? Evidence from Language and Music | RIT CS department talk, Nov 19 2026 |
+| 2026-11-19-graph-inside/ | Is There a Graph Inside Generative Models? Evidence from Language and Music | RIT CS Department Colloquium, Nov 19 2026 |
 | 2026-11-03-ai-literacy/ | AI Literacy for CS Faculty | RIT CS faculty meeting, Nov 3 2026 |
-| networks/ | From Networks to Neural Networks | RIT CS PhD colloquium, Oct 2026 |
+| 2026-10-02-networks/ | From Networks to Neural Networks | RIT GCCIS PhD Colloquium Series, Oct 2 2026 |
 
 History: The networks and ai-literacy folders were moved in from aquastar/neural-networks-to-networks and aquastar/ai-literacy-faculty with their full git history (git subtree). Those repos are kept as they were. The graph-inside folder came from aquastar/graph-inside-generative-models the same way.
 
-Building: `python3 2026-11-19-graph-inside/src/build.py` (it reads the October deck from the networks folder next door), `python3 <date>-networks/src/restyle.py`. ai-literacy/ is plain HTML.
+Building: `python3 2026-11-19-graph-inside/src/build.py` (it reads the October deck from the networks folder next door), `python3 2026-10-02-networks/src/restyle.py`. ai-literacy/ is plain HTML.
 
 Next: a shared/ folder for the style module, fonts, people photos, book covers and paper figures, and a slide library that every talk can pick from by name.
 
