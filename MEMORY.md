@@ -22,6 +22,12 @@ Read this before doing anything in this repo. When Zhiqian gives a new rule abou
 - Talks not yet given, and outdated outlines or drafts: move them in, update them, check every page online, and then delete the original repo. Deleting is done by a local agent after he confirms, never from a cloud session.
 - After a move, search for hardcoded old paths and URLs, rebuild, and open the live pages to check that nothing returns 404.
 
+## Talks made with students (decided 2026-11-16)
+- Only one talks repo, this one. Never give students access to it.
+- A tutorial or talk made together with students lives in its own repo, one repo per tutorial, and only the students on it are added as collaborators of that repo. Example: aquastar/uq-dynamical-networks (WSDM 2026, IEEE BigData 2026).
+- After each delivery, copy the version that was given into this repo as `topic/YYYY-MM-DD-venue/` and freeze it, with the co-presenters and the original repo named in its README and on the index page. The homepage links to the copy here.
+- The original repo and its links stay. The next version is made there again, then copied here after it is given.
+
 ## Publishing and links
 - GitHub Pages deploys from `main`, root folder. Live site: https://aquastar.github.io/talks/
 - Share the version link for an event and the topic link for a homepage or signature.
