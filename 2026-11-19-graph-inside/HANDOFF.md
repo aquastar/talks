@@ -3,16 +3,16 @@
 ## CURRENT STATE (2026-11-15, read this first, everything below "Fixed decisions" is older history)
 
 ### 0. Where this lives now (Nov 16 2026)
-- Repo: aquastar/talks, folder graph-inside/. Live: https://aquastar.github.io/talks/graph-inside/ . Index of all talks: https://aquastar.github.io/talks/
+- Repo: aquastar/talks, folder 2026-11-19-graph-inside/. Live: https://aquastar.github.io/talks/2026-11-19-graph-inside/ . Index of all talks: https://aquastar.github.io/talks/
 - Do not edit aquastar/graph-inside-generative-models any more, it is kept as it was. The October PhD talk is networks/ and the faculty meeting talk is ai-literacy/ in the same repo, both moved with full history.
-- Build: python3 graph-inside/src/build.py, it reads the old deck from networks/ next door. Commit and push to main of aquastar/talks, Pages deploys from main.
+- Build: python3 2026-11-19-graph-inside/src/build.py, it reads the old deck from networks/ next door. Commit and push to main of aquastar/talks, Pages deploys from main.
 - This cloud session cannot create GitHub repos or change Pages settings. For that, use a Claude Code session on his own computer.
 
 ### 1. What this is and who it is for
 - Talk: "Is There a Graph Inside Generative Models? Evidence from Language and Music" by Zhiqian Chen (陈志谦), new assistant professor, RIT Department of Computer Science (joined Aug 2026).
 - Event: RIT CS department internal talk, Thursday Nov 19 2026, one hour slot, about 50 minutes of talking and 10 of questions (his decision Nov 16). Audience: CS faculty from many areas (systems, theory, vision, NLP, HCI), not specialists in interpretability or music.
 - Why he gives it: outreach. He is new, and wants colleagues to see one coherent research program and come to him as collaborators (knowledge graphs, NLP, vision, audio and hearing, AutoML, theory). So the talk must be clear to non specialists, interesting every minute, show presentation craft, and be honest: never overclaim, never show unfinished work as a result.
-- Deck: Reveal.js built by Python, published on GitHub Pages: https://aquastar.github.io/talks/graph-inside/ . HEAD at handoff: 24a9a74. 32 main slides plus backup slides under the down arrow.
+- Deck: Reveal.js built by Python, published on GitHub Pages: https://aquastar.github.io/talks/2026-11-19-graph-inside/ . HEAD at handoff: 24a9a74. 32 main slides plus backup slides under the down arrow.
 
 ### 2. The story the talk must tell (the effect he wants)
 - Throughline: we change and explain models with vectors (steering, editing, LoRA, fine tuning, probes, features). A vector says what we added, not where it went. The knowledge inside models has another shape: a graph. Reading that graph shows what a vector misses.

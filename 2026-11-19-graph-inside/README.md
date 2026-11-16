@@ -2,7 +2,7 @@
 
 Evidence from Language and Music. RIT Computer Science internal talk, built with reveal.js.
 
-Play online: https://aquastar.github.io/talks/graph-inside/
+Play online: https://aquastar.github.io/talks/2026-11-19-graph-inside/
 
 Keys: Space or arrows to advance, Esc or O for the slide overview, S for speaker notes.
 
