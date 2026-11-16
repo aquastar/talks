@@ -25,6 +25,7 @@ Read this before doing anything in this repo. When Zhiqian gives a new rule abou
 ## Publishing and links
 - GitHub Pages deploys from `main`, root folder. Live site: https://aquastar.github.io/talks/
 - Share the version link for an event and the topic link for a homepage or signature.
+- His homepage (repo aquastar/zhiqian-ai, src/pages/teach.astro, also research.astro and index.astro) links talks only through this repo: the topic link as "Slides (latest)", each event to its version link. Add the new event there whenever a version is added. Old links already given out at events stay as they were (2026-11-16).
 - A link that has been shared must keep working. If a folder is renamed after its link went out, leave a small redirect page at the old path.
 
 ## What a cloud session cannot do
