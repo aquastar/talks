@@ -2,7 +2,7 @@
 
 Evidence from Language and Music. RIT Computer Science internal talk, built with reveal.js.
 
-Play online: https://aquastar.github.io/graph-inside-generative-models/
+Play online: https://aquastar.github.io/talks/graph-inside/
 
 Keys: Space or arrows to advance, Esc or O for the slide overview, S for speaker notes.
 

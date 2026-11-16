@@ -2,7 +2,7 @@
 
 What internal structure tells us about generative models. A tutorial talk built with reveal.js.
 
-Play online: https://aquastar.github.io/neural-networks-to-networks/
+Play online: https://aquastar.github.io/talks/networks/ (the original repo aquastar/neural-networks-to-networks is kept as it was)
 
 Keys: Space or arrows to advance, Esc or O for the slide overview.
 

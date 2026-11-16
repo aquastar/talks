@@ -16,6 +16,6 @@ A ~25-minute AI literacy talk for the Fall 2026 CS faculty meeting, built with r
 
 Handout: `glossary.md` (and `glossary.pdf`), a one-page glossary of the terms used in the talk.
 
-Play online: https://aquastar.github.io/ai-literacy-faculty/
+Play online: https://aquastar.github.io/talks/ai-literacy/ (the original repo aquastar/ai-literacy-faculty is kept as it was, the QR code on the slides still points there)
 
 Keys: Space or arrows to advance, S for speaker notes (with timing cues), Esc for overview.
