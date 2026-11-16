@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Music That Plays the Brain: stimuli</title>
+<style>
+:root{--bg:#FBFAF7;--ink:#1F1E1B;--ink2:#5F5D50;--rule:#D7D2CB}
+@media (prefers-color-scheme: dark){:root{--bg:#1A1917;--ink:#EDEBE6;--ink2:#B5B1A6;--rule:#3A3833}}
+body{background:var(--bg);color:var(--ink);font:17px/1.5 Georgia,serif;max-width:760px;margin:0 auto;padding:24px 16px}
+h1{font-weight:400;font-size:30px;margin:0 0 6px} h2{font-weight:400;font-size:22px;margin:28px 0 8px;border-bottom:1px solid var(--rule)}
+.s{color:var(--ink2)} audio{width:100%;margin:4px 0 12px} code{font-size:15px}
+</style></head><body>
+<h1>Music That Plays the Brain</h1>
+<p class="s">Stimuli and settings from the keynote, free to use in your own EEG, ECG or wearable study. Please cite the talk.</p>
+<h2>One dial: how many notes back each next note depends on</h2>
+<p class="s">Für Elise opening, same notes, rhythm and timbre. Order 1 chain sampled with seed 29 (script: bibm26-keynote/src/fur_elise.py in the repo).</p>
+<p>Order 0, notes shuffled</p><audio controls src="../shared/audio/fe_shuffled.mp3"></audio>
+<p>Order 1, each note depends on the one before</p><audio controls src="../shared/audio/fe_order1.mp3"></audio>
+<p>The real opening</p><audio controls src="../shared/audio/fe_real.mp3"></audio>
+<h2>A neural generator dial: tempo</h2>
+<p class="s">MusicGen small, prompt "solo piano melody, calm and simple" plus the tempo words, seed 7. Measured tempo 59, 100 and 158 bpm.</p>
+<p>60 bpm asked</p><audio controls src="../shared/audio/mg_tempo_slow.mp3"></audio>
+<p>100 bpm asked</p><audio controls src="../shared/audio/mg_tempo_medium.mp3"></audio>
+<p>160 bpm asked</p><audio controls src="../shared/audio/mg_tempo_fast.mp3"></audio>
+<h2>Surprise and EEG, interactive</h2>
+<p><a href="../eeg-demo/">Open the demo</a>: MusicGen surprise per note and averaged EEG from OpenNeuro ds005876 (29 listeners).</p>
+</body></html>

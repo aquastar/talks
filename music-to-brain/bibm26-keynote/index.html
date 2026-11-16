@@ -1,0 +1,873 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Music You Can Experiment On</title>
+<link rel="stylesheet" href="../shared/reveal/reveal.css">
+<link rel="stylesheet" href="../shared/style.css">
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<section data-sec="20" class="cover" data-background-color="#FBFAF7">
+  <h1>The Music That <span>Plays</span> the Brain</h1>
+  <svg class="cover-mel" viewBox="0 0 1150 120" width="1150" height="120"><circle cx="20.0" cy="14.0" r="6" fill="#7D55C7" style="animation-delay:0.00s"/><circle cx="52.6" cy="19.8" r="6" fill="#7D55C7" style="animation-delay:0.16s"/><circle cx="85.3" cy="14.0" r="6" fill="#7D55C7" style="animation-delay:0.32s"/><circle cx="117.9" cy="19.8" r="6" fill="#7D55C7" style="animation-delay:0.48s"/><circle cx="150.6" cy="14.0" r="6" fill="#7D55C7" style="animation-delay:0.64s"/><circle cx="183.2" cy="42.8" r="6" fill="#7D55C7" style="animation-delay:0.80s"/><circle cx="215.9" cy="25.5" r="6" fill="#7D55C7" style="animation-delay:0.96s"/><circle cx="248.5" cy="37.0" r="6" fill="#7D55C7" style="animation-delay:1.12s"/><circle cx="281.2" cy="54.2" r="6" fill="#7D55C7" style="animation-delay:1.28s"/><circle cx="313.8" cy="106.0" r="6" fill="#7D55C7" style="animation-delay:1.44s"/><circle cx="346.5" cy="83.0" r="6" fill="#7D55C7" style="animation-delay:1.60s"/><circle cx="379.1" cy="54.2" r="6" fill="#7D55C7" style="animation-delay:1.76s"/><circle cx="411.8" cy="42.8" r="6" fill="#7D55C7" style="animation-delay:1.92s"/><circle cx="444.4" cy="83.0" r="6" fill="#7D55C7" style="animation-delay:2.08s"/><circle cx="477.1" cy="60.0" r="6" fill="#7D55C7" style="animation-delay:2.24s"/><circle cx="509.7" cy="42.8" r="6" fill="#7D55C7" style="animation-delay:2.40s"/><circle cx="542.4" cy="37.0" r="6" fill="#7D55C7" style="animation-delay:2.56s"/><circle cx="575.0" cy="83.0" r="6" fill="#7D55C7" style="animation-delay:2.72s"/><circle cx="607.6" cy="14.0" r="6" fill="#7D55C7" style="animation-delay:2.88s"/><circle cx="640.3" cy="19.8" r="6" fill="#7D55C7" style="animation-delay:3.04s"/><circle cx="672.9" cy="14.0" r="6" fill="#7D55C7" style="animation-delay:3.20s"/><circle cx="705.6" cy="19.8" r="6" fill="#7D55C7" style="animation-delay:3.36s"/><circle cx="738.2" cy="14.0" r="6" fill="#7D55C7" style="animation-delay:3.52s"/><circle cx="770.9" cy="42.8" r="6" fill="#7D55C7" style="animation-delay:3.68s"/><circle cx="803.5" cy="25.5" r="6" fill="#7D55C7" style="animation-delay:3.84s"/><circle cx="836.2" cy="37.0" r="6" fill="#7D55C7" style="animation-delay:4.00s"/><circle cx="868.8" cy="54.2" r="6" fill="#7D55C7" style="animation-delay:4.16s"/><circle cx="901.5" cy="106.0" r="6" fill="#7D55C7" style="animation-delay:4.32s"/><circle cx="934.1" cy="83.0" r="6" fill="#7D55C7" style="animation-delay:4.48s"/><circle cx="966.8" cy="54.2" r="6" fill="#7D55C7" style="animation-delay:4.64s"/><circle cx="999.4" cy="42.8" r="6" fill="#7D55C7" style="animation-delay:4.80s"/><circle cx="1032.1" cy="83.0" r="6" fill="#7D55C7" style="animation-delay:4.96s"/><circle cx="1064.7" cy="37.0" r="6" fill="#7D55C7" style="animation-delay:5.12s"/><circle cx="1097.4" cy="42.8" r="6" fill="#7D55C7" style="animation-delay:5.28s"/><circle cx="1130.0" cy="54.2" r="6" fill="#7D55C7" style="animation-delay:5.44s"/></svg>
+  <div class="who">Zhiqian Chen<br><span>Department of Computer Science, Rochester Institute of Technology</span></div>
+  <aside class="notes">[minute 0.0 of 29] Title as sent to the organizers: The Music That Plays the Brain (no subtitle). The dots are the opening of Für Elise. Say nothing. Go straight to the sound.</aside>
+</section>
+
+<section data-sec="60">
+  <span class="mark">Listen</span>
+  <h2>Pink Floyd, played back from electrodes on the brains of 29 patients</h2>
+  <div class="fp">
+    <div class="f"><img src="../shared/figs/papers/bellier_spec_orig.png" data-evidence style="width:720px"><img src="../shared/figs/papers/bellier_spec_recon.png" data-evidence style="width:720px;margin-top:6px"></div>
+    <div class="p">
+      <p class="key">Heard vs decoded</p>
+      <div class="audio-row"><button class="play" data-audio="../shared/audio/bellier_original.mp3">play</button><span>heard</span></div>
+      <div class="audio-row"><button class="play" data-audio="../shared/audio/bellier_nonlinear.mp3">play</button><span>decoded from the brain</span></div>
+      <p class="tldr" style="margin-top:18px">Rhythm and melody contour survive. The decoder learned this one song.</p>
+    </div>
+  </div>
+  <div class="ref"><a href="https://doi.org/10.1371/journal.pbio.3002176">Bellier et al., Music can be reconstructed from human auditory cortex activity using nonlinear decoding models, PLoS Biol 2023</a></div>
+  <aside class="notes">[minute 0.3 of 29] Cold open. Press play before saying anything: first what the patients heard, then what a decoder recovered from their cortex. Then: this is 2023, 29 people, one song. By the end of the talk I want you to imagine the reverse: music written for one brain.</aside>
+</section>
+
+<section data-sec="75">
+  <span class="mark">The question</span>
+  <h2>Many people with advanced dementia can still sing the hymns of their youth</h2>
+  <div class="fp">
+    <div class="f" style="width:620px"><img class="ph" src="../shared/figs/photos/older_adults_choir.jpg" alt="Older adults singing together"><p class="cap">A choir of older adults sings at a Dutch care home</p></div>
+    <div class="p" style="max-width:520px">
+      <p class="key">Music reaches a brain that has lost almost everything else.</p>
+      <p style="font-size:28px;margin-top:30px">What if we could choose the song for one of them, and watch her brain answer?</p>
+    </div>
+  </div>
+  <div class="ref"><a href="https://doi.org/10.1093/brain/awv135">Jacobsen et al., Why musical memory can be preserved in advanced Alzheimer's disease, Brain 2015</a></div>
+  <aside class="notes">[minute 1.3 of 29] A pattern families and care staff describe, and the reason Jacobsen 2015 asked why musical memory survives. Tell it as what care staff see, not as one named patient. The photo is a care home choir, not the person in the story. Ask: what if we could choose the song on purpose, and watch the brain answer? The photo returns on the last slide. Backup has the anatomy: the regions that hold long known music show the least atrophy in Alzheimer's (Jacobsen 2015).</aside>
+</section>
+
+<section data-sparse="1" data-sec="30">
+  <span class="mark">Your turn</span>
+  <h2>Same notes, same sound. Which one is Beethoven?</h2>
+  <div style="margin-top:6px">
+    <div class="audio-row"><button class="play" data-audio="../shared/audio/fe_order1.mp3">play</button><span>version A</span></div>
+    <div class="audio-row"><button class="play" data-audio="../shared/audio/fe_real.mp3">play</button><span>version B</span></div>
+  </div>
+  <p class="key" style="margin-top:12px">Same notes. Only the rule that picks each next note differs</p>
+  <aside class="notes">[minute 2.6 of 29] Play A then B, five seconds each. Ask the room which is Beethoven (B). A is a first order chain built from the same notes: each note depends only on the one before. The full knob comes in Act 5.</aside>
+</section>
+
+<section data-sec="45" data-sparse="1">
+  <span class="mark">The claim</span>
+  <p class="thesis">Soon we will compose music for one brain, and <em>watch it answer</em>.</p>
+  <p class="ink2" style="font-size:26px;margin-top:24px">Today: how close we are, the one thing missing, and what we can build together.</p>
+  <p class="illus" style="margin-top:30px">Vision</p>
+  <aside class="notes">[minute 3.1 of 29] The bold claim of the talk, said slowly. To confirm with Zhiqian: the wording "soon" (no year on the slide). The missing thing is control of the stimulus, revealed in Act 4.</aside>
+</section>
+
+<section data-sparse="1" data-gate="off" data-sec="45">
+  <span class="mark">Three findings</span>
+  <h2>Three steps to get there</h2>
+  <ol class="forecast">
+    <li>We can already read music in the brain, and music AI predicts part of its response.</li>
+    <li class="fragment">We cannot steer it yet, because natural music does not change on cue.</li>
+    <li class="fragment thesis-item">Generative models begin to turn music into a dial.</li>
+  </ol>
+  <aside class="notes">[minute 3.8 of 29] Read them slowly. Finding 3 is the thesis, stated fully only in Act 4. These three lines return as the contributions on the last slide.</aside>
+</section>
+
+<section data-sec="60" data-auto-animate>
+  <span class="mark">The map</span>
+  <h2>Four ways the field studies music and the brain, and a missing fifth</h2>
+  <svg class="fig map" viewBox="0 0 1152 470" data-id="fieldmap"><rect x="80" y="130" width="220" height="100" rx="3" fill="#DCD1EB"/><text x="100" y="174" font-size="28" fill="#1F1E1B" text-anchor="start" >Music</text><text x="100" y="204" font-size="18" fill="#5F5D50" text-anchor="start" >songs, scores, sound</text><rect x="660" y="130" width="220" height="100" rx="3" fill="#EFEBE5"/><text x="680" y="174" font-size="28" fill="#1F1E1B" text-anchor="start" >Brain</text><text x="680" y="204" font-size="18" fill="#5F5D50" text-anchor="start" >EEG, MEG, fMRI, ECoG</text><rect x="440" y="350" width="200" height="84" rx="3" fill="#EFEBE5"/><text x="460" y="394" font-size="28" fill="#1F1E1B" text-anchor="start" >Models</text><text x="460" y="424" font-size="18" fill="#5F5D50" text-anchor="start" >audio and music AI</text><rect x="960" y="130" width="170" height="100" rx="3" fill="#EFEBE5"/><text x="980" y="174" font-size="28" fill="#1F1E1B" text-anchor="start" >Patients</text><text x="980" y="204" font-size="18" fill="#5F5D50" text-anchor="start" >therapy outcomes</text><g><path d="M300,150 C420,60 560,60 660,140" fill="none" stroke="#ACA39A" stroke-width="1.5"/><path d="M660.0,140.0 L646.1,136.6 L653.6,127.2 z" fill="#ACA39A"/></g><text x="480" y="52" font-size="20" fill="#1F1E1B" text-anchor="middle" >1  Encode</text><text x="480" y="76" font-size="18" fill="#5F5D50" text-anchor="middle" >predict the brain from the music</text><g><path d="M660,210 C560,290 420,290 300,215" fill="none" stroke="#ACA39A" stroke-width="1.5"/><path d="M300.0,215.0 L314.2,216.8 L307.8,227.0 z" fill="#ACA39A"/></g><text x="480" y="300" font-size="20" fill="#1F1E1B" text-anchor="middle" >2  Decode</text><text x="480" y="324" font-size="18" fill="#5F5D50" text-anchor="middle" >play the music back from the brain</text><g><path d="M770,250 C770,360 730,392 650,392" fill="none" stroke="#ACA39A" stroke-width="1.5"/><path d="M650.0,392.0 L663.0,386.0 L663.0,398.0 z" fill="#ACA39A"/></g><text x="800" y="420" font-size="20" fill="#1F1E1B" text-anchor="start" >3  Compare</text><text x="800" y="444" font-size="18" fill="#5F5D50" text-anchor="start" >does a model resemble the brain?</text><g><path d="M880,180 L955,180" fill="none" stroke="#ACA39A" stroke-width="1.5"/><path d="M955.0,180.0 L942.0,186.0 L942.0,174.0 z" fill="#ACA39A"/></g><text x="960" y="270" font-size="20" fill="#1F1E1B" text-anchor="start" >4  Treat</text><text x="960" y="294" font-size="18" fill="#5F5D50" text-anchor="start" >does music help patients?</text><g><path d="M440,392 C260,392 190,330 190,240" fill="none" stroke="#ACA39A" stroke-width="1.5" stroke-dasharray="6 6"/><path d="M190.0,240.0 L196.0,253.0 L184.0,253.0 z" fill="#ACA39A"/></g><text x="40" y="440" font-size="20" fill="#1F1E1B" text-anchor="start" >5  Control</text><text x="40" y="464" font-size="18" fill="#5F5D50" text-anchor="start" >set the music, one knob at a time</text></svg>
+  <aside class="notes">[minute 4.6 of 29] Say in one line: EEG and MEG give the when, fMRI the where, intracranial both (backup slide). The map returns once more before the turn to the dial. Arrows 1 and 2 are Act 2. Arrow 3 is Act 3. Arrow 4 is Act 4. Arrow 5, dashed, is the gap and Act 5.</aside>
+</section>
+
+<section data-sec="50">
+  <span class="mark">1 Why music</span>
+  <h2>Music releases dopamine twice: while we wait for the peak, and when it lands</h2>
+  <div class="fp">
+    <div class="f" style="width:900px"><svg class="fig" viewBox="0 0 1152 400"><g data-accent="1">
+    <line x1="40" y1="300" x2="1100" y2="300" stroke="#ACA39A"/>
+    <text x="1100" y="330" font-size="21" fill="#5F5D50" text-anchor="end">time in the piece</text>
+    <path d="M40,290 C300,285 420,250 560,180 C620,150 650,120 700,110 C760,100 780,200 860,270 L1100,285" fill="none" stroke="#7C878E" stroke-width="1.5"/>
+    <g class="fragment" data-fragment-index="1">
+      <rect x="380" y="60" width="300" height="250" fill="#EFEBE5" opacity=".7"/>
+      <text x="530" y="95" font-size="27" fill="#1F1E1B" text-anchor="middle">anticipation</text>
+      <text x="530" y="125" font-size="23" fill="#5F5D50" text-anchor="middle">caudate</text>
+    </g>
+    <g class="fragment" data-fragment-index="2">
+      <circle cx="700" cy="110" r="9" fill="#F76902"/>
+      <text x="722" y="80" font-size="27" fill="#1F1E1B">peak pleasure</text>
+      <text x="722" y="110" font-size="23" fill="#5F5D50">nucleus accumbens</text>
+    </g>
+    <g class="fragment" data-fragment-index="3">
+      <text x="40" y="375" font-size="29" fill="#1F1E1B">Expectation is part of the reward. Whoever shapes expectation shapes the response.</text>
+    </g>
+  </g></svg>
+    <p class="illus" style="margin-top:4px">Schematic of the paper's finding, not data</p></div>
+    <div class="p"><div class="people"><figure><img src="../shared/figs/people/zatorre.jpg" alt="Robert Zatorre"><figcaption>Robert Zatorre<span>McGill, senior author</span></figcaption></figure></div></div>
+  </div>
+  <p class="ink2" style="font-size:20px;margin-top:6px">The chills were confirmed with autonomic recordings, the signals a wearable picks up.</p>
+  <div class="ref"><a href="https://doi.org/10.1038/nn.2726">Salimpoor et al., Anatomically distinct dopamine release during anticipation and experience of peak emotion to music, Nat Neurosci 2011</a></div>
+  <aside class="notes">[minute 5.6 of 29] One line from the backup slide: music recruits motor, reward, memory and emotion systems at once (Koelsch 2014). PET gives the chemistry, fMRI the timing, same listeners, same music. Last line plants a seed: expectation is part of the reward, and a generator can shape expectation. Check against the paper before saying it: chills were confirmed with psychophysiological recordings (heart rate, respiration, skin conductance), a hook for the ECG and wearables people in the room.</aside>
+</section>
+
+<section data-sec="45">
+  <span class="mark">1 Why music</span>
+  <h2>Your auditory cortex has a population that cares about song, and little else</h2>
+  <div class="fp"><div class="f"><svg class="fig" viewBox="0 0 900 300" style="width:900px"><text x="0" y="70" font-size="23" fill="#1F1E1B" text-anchor="start" >speech</text><text x="0" y="122" font-size="23" fill="#1F1E1B" text-anchor="start" >instrumental music</text><text x="0" y="174" font-size="23" fill="#1F1E1B" text-anchor="start" >music with singing</text><text x="0" y="226" font-size="23" fill="#1F1E1B" text-anchor="start" >other sounds</text><text x="230" y="30" font-size="21" fill="#5F5D50" text-anchor="start" >speech selective</text><g><rect x="230" y="50" width="180" height="28" fill="#ACA39A"/></g><g><rect x="230" y="102" width="18" height="28" fill="#7D55C7"/></g><g><rect x="230" y="154" width="81" height="28" fill="#7D55C7"/></g><g><rect x="230" y="206" width="18" height="28" fill="#ACA39A"/></g><text x="450" y="30" font-size="21" fill="#5F5D50" text-anchor="start" >music selective</text><g><rect x="450" y="50" width="18" height="28" fill="#ACA39A"/></g><g><rect x="450" y="102" width="162" height="28" fill="#7D55C7"/></g><g><rect x="450" y="154" width="144" height="28" fill="#7D55C7"/></g><g><rect x="450" y="206" width="27" height="28" fill="#ACA39A"/></g><text x="670" y="30" font-size="21" fill="#1F1E1B" text-anchor="start" font-weight="600">song selective</text><g><rect x="670" y="50" width="27" height="28" fill="#ACA39A"/></g><g><rect x="670" y="102" width="36" height="28" fill="#7D55C7"/></g><g data-accent="1"><rect x="670" y="154" width="180" height="28" fill="#F76902"/></g><g><rect x="670" y="206" width="9" height="28" fill="#ACA39A"/></g><text x="0" y="288" font-size="19" fill="#5F5D50" text-anchor="start" >schematic of the component responses, 165 natural sounds</text></svg></div><div class="p"><div class="people"><figure><img src="../shared/figs/people/norman-haignere.jpg" alt="Sam Norman-Haignere"><figcaption>Sam Norman-Haignere<span>U Rochester</span></figcaption></figure></div></div></div>
+  <div class="ref">Redrawn after <a href="https://doi.org/10.1016/j.neuron.2015.11.035">Norman-Haignere et al. 2015</a><span class="sep"></span><a href="https://doi.org/10.1016/j.cub.2022.01.069">Norman-Haignere et al. 2022</a></div>
+  <aside class="notes">[minute 6.4 of 29] Room question first: which of these sounds drives the purple bars, speech, instruments or singing? Schematic of Fig 2A in Norman-Haignere 2022: bar lengths show which sound categories drive each component, not measured values. Rows are the 165 sounds, red means strong response. C1 and C15 prefer speech, C10 music, C11 song. Seen with ECoG, confirmed with fMRI, not explained by acoustic features. Norman-Haignere is at the University of Rochester, a neighbor of RIT.</aside>
+</section>
+
+<section data-sec="35">
+  <span class="mark">1 Why music</span>
+  <h2>A steady beat can make a person with Parkinson's walk better</h2>
+  <div class="fp">
+    <div class="f" style="width:340px"><img class="ph" src="../shared/figs/photos/gait_rehab.jpg" alt="Gait training session"></div>
+    <div class="p">
+      <p class="key">Patients fall into step with the beat</p>
+      <p class="tldr">Patients step to the pulse: rhythmic auditory stimulation.</p>
+    </div>
+  </div>
+  <div class="ref"><a href="https://doi.org/10.3389/fneur.2022.940419">Ye et al., Front Neurol 2022</a></div>
+  <aside class="notes">[minute 7.2 of 29] Say: remember this one, it comes back in the clinic. Beat and meter show up in EEG as peaks at the beat frequency, even when the meter is only imagined (Nozaradan 2011, in Act 2). Plant for Act 4: the best understood music therapy is the one where the stimulus has a knob, the tempo.</aside>
+</section>
+
+<section data-sec="60">
+  <span class="mark">2 What we can see · Running example</span>
+  <h2>Your brain predicts every next note, and EEG can see the surprise</h2>
+  <svg class="fig" viewBox="0 0 1152 420" data-id="fe"><circle cx="40" cy="40" r="7" fill="#7D55C7" data-id="fe0"/><text x="40" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >E5</text><circle cx="100" cy="47" r="7" fill="#7D55C7" data-id="fe1"/><text x="100" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >D&#9839;5</text><rect class="fragment" data-fragment-index="1" x="88" y="344.9" width="24" height="35.099999999999994" fill="#ACA39A"/><circle cx="160" cy="40" r="7" fill="#7D55C7" data-id="fe2"/><text x="160" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >E5</text><rect class="fragment" data-fragment-index="1" x="148" y="380.0" width="24" height="1.5" fill="#ACA39A"/><circle cx="220" cy="47" r="7" fill="#7D55C7" data-id="fe3"/><text x="220" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >D&#9839;5</text><rect class="fragment" data-fragment-index="1" x="208" y="344.9" width="24" height="35.099999999999994" fill="#ACA39A"/><circle cx="280" cy="40" r="7" fill="#7D55C7" data-id="fe4"/><text x="280" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >E5</text><rect class="fragment" data-fragment-index="1" x="268" y="380.0" width="24" height="1.5" fill="#ACA39A"/><circle cx="340" cy="75" r="7" fill="#7D55C7" data-id="fe5"/><text x="340" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >B4</text><rect class="fragment" data-fragment-index="1" x="328" y="284.9" width="24" height="95.1" fill="#ACA39A"/><circle cx="400" cy="54" r="7" fill="#7D55C7" data-id="fe6"/><text x="400" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >D5</text><rect class="fragment" data-fragment-index="1" x="388" y="284.9" width="24" height="95.1" fill="#ACA39A"/><circle cx="460" cy="68" r="7" fill="#7D55C7" data-id="fe7"/><text x="460" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >C5</text><rect class="fragment" data-fragment-index="1" x="448" y="380.0" width="24" height="1.5" fill="#ACA39A"/><circle cx="520" cy="89" r="7" fill="#7D55C7" data-id="fe8"/><text x="520" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >A4</text><rect class="fragment" data-fragment-index="1" x="508" y="320.0" width="24" height="60.0" fill="#ACA39A"/><circle cx="580" cy="152" r="7" fill="#7D55C7" data-id="fe9"/><text x="580" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >C4</text><rect class="fragment" data-fragment-index="1" x="568" y="320.0" width="24" height="60.0" fill="#ACA39A"/><circle cx="640" cy="124" r="7" fill="#7D55C7" data-id="fe10"/><text x="640" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >E4</text><rect class="fragment" data-fragment-index="1" x="628" y="380.0" width="24" height="1.5" fill="#ACA39A"/><circle cx="700" cy="89" r="7" fill="#7D55C7" data-id="fe11"/><text x="700" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >A4</text><rect class="fragment" data-fragment-index="1" x="688" y="300.68" width="24" height="79.32000000000001" fill="#ACA39A"/><circle cx="760" cy="75" r="7" fill="#7D55C7" data-id="fe12"/><text x="760" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >B4</text><rect class="fragment" data-fragment-index="1" x="748" y="320.0" width="24" height="60.0" fill="#ACA39A"/><circle cx="820" cy="124" r="7" fill="#7D55C7" data-id="fe13"/><text x="820" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >E4</text><rect class="fragment" data-fragment-index="1" x="808" y="284.9" width="24" height="95.1" fill="#ACA39A"/><circle cx="880" cy="96" r="7" fill="#7D55C7" data-id="fe14"/><text x="880" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >G&#9839;4</text><rect class="fragment" data-fragment-index="1" x="868" y="240.68" width="24" height="139.32" fill="#7D55C7"/><circle cx="940" cy="75" r="7" fill="#7D55C7" data-id="fe15"/><text x="940" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >B4</text><rect class="fragment" data-fragment-index="1" x="928" y="380.0" width="24" height="1.5" fill="#ACA39A"/><circle cx="1000" cy="68" r="7" fill="#7D55C7" data-id="fe16"/><text x="1000" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >C5</text><rect class="fragment" data-fragment-index="1" x="988" y="224.9" width="24" height="155.1" fill="#F76902"/><circle cx="1060" cy="124" r="7" fill="#7D55C7" data-id="fe17"/><text x="1060" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >E4</text><rect class="fragment" data-fragment-index="1" x="1048" y="260.0" width="24" height="120.0" fill="#7D55C7"/><line x1="20" y1="380" x2="1090" y2="380" stroke="#ACA39A"/><g class="fragment" data-fragment-index="1"><text x="20" y="236" font-size="19" fill="#5F5D50" text-anchor="start" >surprise of each note given the one before (bits)</text></g></svg>
+  <p class="ink2" style="font-size:21px;margin-top:-6px">Di Liberto 2020: in 20 listeners, adding surprise raises EEG prediction from 0.073 to 0.078.</p>
+  <div class="ref"><a href="https://doi.org/10.7554/eLife.51784">Di Liberto et al., Cortical encoding of melodic expectations in human temporal cortex, eLife 2020</a></div>
+  <aside class="notes">[minute 7.8 of 29] Audience moment: play the first eight notes in your head or hum them, ask the room which note surprised them. Then reveal the bars. Our running example. Top: the first 18 notes, height is pitch. Fragment: surprise of each note given the previous one, counted on this excerpt. The E, D sharp trill is predictable. The turn to G sharp and the leaps are surprising, only the most surprising note in orange. Question for the room: does the brain track this curve?</aside>
+</section>
+
+<section data-sec="60">
+  <span class="mark">2 What we can see · Encode</span>
+  <h2>Try it: imagine a march. Your cortex now shows a peak the beat does not have</h2>
+  <div class="fp">
+    <div class="f"><svg class="fig" viewBox="0 0 700 420" style="width:700px"><text x="0" y="100" font-size="22" fill="#1F1E1B" text-anchor="start" >beat only</text><line x1="160" y1="120" x2="680" y2="120" stroke="#ACA39A"/><g><line x1="576.0" y1="120" x2="576.0" y2="50" stroke="#7C878E" stroke-width="4"/><text x="576.0" y="44" font-size="17" fill="#5F5D50" text-anchor="middle" >2.4 Hz</text></g><text x="0" y="220" font-size="22" fill="#1F1E1B" text-anchor="start" >imagine a march</text><line x1="160" y1="240" x2="680" y2="240" stroke="#ACA39A"/><g><line x1="576.0" y1="240" x2="576.0" y2="170" stroke="#7C878E" stroke-width="4"/><text x="576.0" y="164" font-size="17" fill="#5F5D50" text-anchor="middle" >2.4 Hz</text></g><g data-accent="1"><line x1="368.0" y1="240" x2="368.0" y2="170" stroke="#F76902" stroke-width="4"/><text x="368.0" y="164" font-size="17" fill="#1F1E1B" text-anchor="middle" >1.2 Hz</text></g><text x="0" y="340" font-size="22" fill="#1F1E1B" text-anchor="start" >imagine a waltz</text><line x1="160" y1="360" x2="680" y2="360" stroke="#ACA39A"/><g><line x1="576.0" y1="360" x2="576.0" y2="290" stroke="#7C878E" stroke-width="4"/><text x="576.0" y="284" font-size="17" fill="#5F5D50" text-anchor="middle" >2.4 Hz</text></g><g><line x1="298.7" y1="360" x2="298.7" y2="290" stroke="#7D55C7" stroke-width="4"/><text x="298.66666666666663" y="284" font-size="17" fill="#1F1E1B" text-anchor="middle" >0.8 Hz</text></g><g><line x1="437.3" y1="360" x2="437.3" y2="290" stroke="#7C878E" stroke-width="4"/><text x="437.3333333333333" y="284" font-size="17" fill="#5F5D50" text-anchor="middle" >1.6 Hz</text></g><line x1="437.3" y1="360" x2="437.3" y2="310" stroke="#7D55C7" stroke-width="4"/><text x="430.0" y="416" font-size="18" fill="#5F5D50" text-anchor="middle" >EEG frequency, schematic of the paper's finding</text></svg></div>
+    <div class="p"><div class="people"><figure><img src="../shared/figs/people/nozaradan.jpg" alt="Sylvie Nozaradan"><figcaption>Sylvie Nozaradan<span>UCLouvain</span></figcaption></figure></div></div>
+  </div>
+  <div class="ref"><a href="https://doi.org/10.1523/JNEUROSCI.0411-11.2011">Nozaradan et al., Tagging the neuronal entrainment to beat and meter, J Neurosci 2011</a></div>
+  <aside class="notes">[minute 8.8 of 29] Audience moment. Ask the room to imagine a steady beat as a march: one two, one two. Then reveal: in EEG, listeners who imagine a march show a peak at half the beat frequency, a waltz at a third. The meter exists only in the brain. Nozaradan 2011, J Neurosci.</aside>
+</section>
+
+<section data-sec="60">
+  <span class="mark">2 What we can see · Decode</span>
+  <h2>From brain scans, an AI composer makes music that matches what people heard in genre and mood</h2>
+  
+  <div class="cols" style="margin-top:20px">
+    <div><div class="audio-row"><button class="play" data-audio="../shared/audio/b2m_heard1.mp3">play</button><span>what they heard</span></div>
+    <div class="audio-row"><button class="play" data-audio="../shared/audio/b2m_recon1.mp3">play</button><span>made from their brain scan</span></div>
+    <p class="cap" style="margin-top:10px">the authors' best example, 5 people scanned</p></div>
+    <div><p class="big">85%</p><p class="ink2" style="font-size:22px">of clips picked out against another clip, chance 50%. 66% in a low level sound space.</p></div>
+  </div>
+  <p class="tldr" style="margin-top:30px">Genre, instruments and mood carry over. Timing and tempo often do not.</p>
+  <img src="../shared/figs/denk2023_fig1.png" data-evidence style="width:1000px;display:block;margin-top:14px">
+  <div class="ref"><a href="https://doi.org/10.1038/s41467-025-66731-7">Denk, Takagi et al., Text to music generation models capture musical semantic representations in the human brain, Nat Commun 2025</a></div>
+  <aside class="notes">[minute 9.8 of 29] Audio: one of the authors' highlight pairs from the Brain2Music project page, picked as the best of 10. Play 5 s of each. Five people scanned, 540 clips. fMRI is mapped to a 128 number music embedding (MuLan), MusicLM turns it into sound. The 85 percent: is the generated clip closer to the true clip than to another clip, judged in MuLan, the space the decoder aims at, chance 50. In a low level audio space it is about 66 percent against a ceiling of about 79 (backup has the bars).</aside>
+</section>
+
+<section data-sec="55">
+  <span class="mark">2 What we can see </span>
+  <h2>A music AI's layers line up with the auditory cortex's hierarchy</h2>
+  <div class="fp">
+    <div class="f"><svg class="fig" viewBox="0 0 560 420" style="width:560px"><line x1="70" y1="354" x2="440" y2="354" stroke="#ACA39A"/><text x="60" y="360" font-size="18" fill="#5F5D50" text-anchor="end" >0</text><text x="60" y="200.0" font-size="18" fill="#5F5D50" text-anchor="end" >0.5</text><text x="60" y="40" font-size="18" fill="#5F5D50" text-anchor="end" >1</text><text x="70.0" y="380" font-size="18" fill="#5F5D50" text-anchor="middle" >0</text><text x="190.0" y="380" font-size="18" fill="#5F5D50" text-anchor="middle" >4</text><text x="310.0" y="380" font-size="18" fill="#5F5D50" text-anchor="middle" >8</text><text x="430.0" y="380" font-size="18" fill="#5F5D50" text-anchor="middle" >12</text><text x="255.0" y="410" font-size="20" fill="#5F5D50" text-anchor="middle" >model layer</text><polyline fill="none" stroke="#009CBD" stroke-width="2.5" points="70.0,219.6 100.0,152.4 130.0,133.2 160.0,120.4 190.0,171.6 220.0,194.0 250.0,235.6 280.0,264.4 310.0,274.0 340.0,270.8 370.0,251.6 400.0,267.6 430.0,235.6"/><polyline fill="none" stroke="#ACA39A" stroke-width="1.8" stroke-dasharray="6 5" points="70.0,347.6 100.0,280.4 130.0,171.6 160.0,152.4 190.0,142.8 220.0,114.0 250.0,114.0 280.0,101.2 310.0,85.2 340.0,78.8 370.0,59.6 400.0,69.2 430.0,75.6"/><polyline fill="none" stroke="#7D55C7" stroke-width="2.5" points="70.0,328.4 100.0,280.4 130.0,290.0 160.0,280.4 190.0,251.6 220.0,210.0 250.0,142.8 280.0,133.2 310.0,94.8 340.0,78.8 370.0,62.8 400.0,72.4 430.0,75.6"/><text x="438.0" y="81.6" font-size="20" fill="#1F1E1B" text-anchor="start" >far sites</text><text x="438.0" y="241.6" font-size="20" fill="#5F5D50" text-anchor="start" >early sites</text><text x="550" y="14" font-size="16" fill="#5F5D50" text-anchor="end" >redrawn, approximate</text><text x="80" y="14" font-size="18" fill="#5F5D50" text-anchor="start" >fit, normalized</text></svg></div>
+    <div class="p">
+      <p class="key">Early layers fit primary auditory cortex. Late layers fit sites farther out</p>
+      <div class="people"><figure><img src="../shared/figs/people/mesgarani.jpg" alt="Nima Mesgarani"><figcaption>Nima Mesgarani<span>Columbia</span></figcaption></figure></div>
+    </div>
+  </div>
+  <div class="ref"><a href="https://doi.org/10.1038/s41467-025-63961-7">Mischler, Li, Bickel, Mehta, Mesgarani, Nat Commun 2025</a></div>
+  <aside class="notes">[minute 10.8 of 29] Three electrode clusters: blue prefers early layers and sits in primary auditory cortex, yellow peaks in middle to late layers, magenta prefers late layers and sits farthest out. classical piano pieces, 20 EEG listeners and 6 intracranial patients (the curves are from the intracranial data). Expertise changes how strongly context is encoded. Curves redrawn approximately from Fig 3a: teal is the early layer cluster (blue in the brain image) near primary auditory cortex, purple the late layer cluster farthest out. A third, middle cluster (yellow in the paper) peaks in middle to late layers.</aside>
+</section>
+
+<section data-sec="70">
+  <span class="mark">2 What we can see · My own data</span>
+  <h2>Averaged over hundreds of notes, the notes MusicGen calls surprising get a bigger brain response <span class="status prog">In progress</span></h2>
+  <div class="fp">
+    <div class="f"><svg class="fig" viewBox="0 0 700 380" style="width:700px"><rect x="216.4" y="30" width="195.2" height="290" fill="#EFEBE5"/><line x1="70" y1="206.1" x2="680" y2="206.1" stroke="#ACA39A"/><line x1="143.2" y1="30" x2="143.2" y2="320" stroke="#ACA39A" stroke-dasharray="3 4"/><polygon points="70.0,121.8 82.3,117.4 94.4,133.0 106.6,138.6 118.9,133.7 131.1,138.5 143.2,143.9 155.4,141.0 167.6,133.7 179.9,110.6 192.0,105.9 204.2,145.6 216.5,125.2 228.6,120.4 240.8,61.8 253.0,43.9 265.2,44.5 277.4,57.3 289.6,65.6 301.8,87.0 314.1,50.7 326.2,57.7 338.4,66.0 350.6,77.4 362.8,82.5 375.0,110.8 387.2,115.1 399.4,117.9 411.7,128.3 423.8,128.8 436.0,100.4 448.2,121.0 460.4,122.7 472.6,131.4 484.8,135.8 497.0,157.5 509.2,149.3 521.4,142.1 533.6,164.8 545.8,172.3 558.0,146.1 570.2,146.4 582.4,165.0 594.6,163.3 606.8,193.9 619.0,194.5 631.2,200.2 643.4,177.8 655.6,185.8 667.8,209.3 680.0,209.1 680.0,265.7 667.8,265.9 655.6,248.7 643.4,245.9 631.2,266.7 619.0,251.6 606.8,262.6 594.6,229.2 582.4,218.9 570.2,215.0 558.0,213.3 545.8,241.3 533.6,231.5 521.4,199.5 509.2,206.4 497.0,220.0 484.8,205.3 472.6,210.8 460.4,180.3 448.2,169.3 436.0,151.4 423.8,189.3 411.7,187.6 399.4,175.0 387.2,178.8 375.0,183.3 362.8,154.6 350.6,155.2 338.4,143.0 326.2,126.2 314.1,119.0 301.8,154.6 289.6,135.4 277.4,124.2 265.2,102.3 253.0,112.7 240.8,130.9 228.6,175.9 216.5,176.7 204.2,190.9 192.0,159.1 179.9,166.9 167.6,203.9 155.4,201.1 143.2,204.6 131.1,206.0 118.9,201.0 106.6,210.5 94.4,207.3 82.3,191.0 70.0,207.4" fill="#FAD6BA" opacity=".7"/><polyline fill="none" stroke="#7C878E" stroke-width="2" points="70.0,137.3 82.3,139.7 94.4,148.7 106.6,176.5 118.9,170.8 131.1,180.2 143.2,177.8 155.4,181.8 167.6,170.9 179.9,194.8 192.0,197.8 204.2,173.4 216.5,196.6 228.6,228.4 240.8,269.2 253.0,269.6 265.2,261.6 277.4,258.6 289.6,269.1 301.8,271.0 314.1,252.1 326.2,275.4 338.4,263.3 350.6,262.4 362.8,247.0 375.0,220.2 387.2,231.4 399.4,215.9 411.7,208.5 423.8,190.2 436.0,194.7 448.2,197.1 460.4,188.4 472.6,163.6 484.8,191.8 497.0,175.3 509.2,155.6 521.4,148.7 533.6,143.6 545.8,144.3 558.0,156.3 570.2,148.6 582.4,152.3 594.6,130.2 606.8,140.9 619.0,110.3 631.2,114.1 643.4,102.8 655.6,101.6 667.8,66.0 680.0,111.1"/><polyline fill="none" stroke="#F76902" stroke-width="2.5" points="70.0,164.6 82.3,154.2 94.4,170.1 106.6,174.6 118.9,167.4 131.1,172.3 143.2,174.3 155.4,171.0 167.6,168.8 179.9,138.7 192.0,132.5 204.2,168.2 216.5,151.0 228.6,148.2 240.8,96.3 253.0,78.3 265.2,73.4 277.4,90.8 289.6,100.5 301.8,120.8 314.1,84.9 326.2,91.9 338.4,104.5 350.6,116.3 362.8,118.6 375.0,147.1 387.2,147.0 399.4,146.5 411.7,157.9 423.8,159.0 436.0,125.9 448.2,145.1 460.4,151.5 472.6,171.1 484.8,170.5 497.0,188.8 509.2,177.9 521.4,170.8 533.6,198.1 545.8,206.8 558.0,179.7 570.2,180.7 582.4,191.9 594.6,196.3 606.8,228.3 619.0,223.1 631.2,233.4 643.4,211.8 655.6,217.2 667.8,237.6 680.0,237.4"/><text x="143.2" y="344" font-size="17" fill="#5F5D50" text-anchor="middle">0</text><text x="299.4" y="344" font-size="17" fill="#5F5D50" text-anchor="middle">0.2</text><text x="455.5" y="344" font-size="17" fill="#5F5D50" text-anchor="middle">0.4</text><text x="611.7" y="344" font-size="17" fill="#5F5D50" text-anchor="middle">0.6</text><text x="375" y="368" font-size="18" fill="#5F5D50" text-anchor="middle">seconds after the note starts</text><text x="149.2" y="44" font-size="16" fill="#5F5D50">note</text><text x="222.4" y="48" font-size="16" fill="#5F5D50">cluster, p = 0.0028</text><text x="444.0" y="111.9" font-size="19" fill="#1F1E1B">surprising notes</text><text x="244.7" y="301.4" font-size="19" fill="#5F5D50">expected notes</text><text x="60" y="211.1" font-size="16" fill="#5F5D50" text-anchor="end">0</text><text x="14" y="40" font-size="16" fill="#5F5D50">EEG (SD)</text></svg></div>
+    <div class="p">
+      <p class="key">0.16 s after the note, over the top of the head</p>
+            <p class="ink2" style="font-size:20px">29 listeners. Note by note: r = 0.083, an untrained model 0.155, both chance level. The untrained model is not yet tested on the average.</p>
+    </div>
+  </div>
+  <div class="ref"><a href="https://openneuro.org/datasets/ds005876">OpenNeuro ds005876</a><span class="sep"></span>Chen, unpublished analysis</div>
+  <aside class="notes">[minute 11.7 of 29] Orange: notes one SD more surprising, gray: one SD less. 29 listeners in all, 14 to 21 per song. Clear when averaged over hundreds of notes. Not yet run: the group level control with an untrained model, and confirming which nuisance regressors are in the regression. Surprise for every note from MusicGen-large, EEG from an open dataset of people hearing familiar songs. Live demo: aquastar.github.io/music-to-brain/eeg-demo. Not yet tested against the untrained model at group level. Regression over all songs and all 29 listeners, separating overlapping note responses. Cluster permutation p = 0.0028, 11 frontocentral channels, 0.09 to 0.34 s, peak 0.16 s, a P2 like window. Scalp maps: extra response per one SD more surprise. If time allows, switch to the demo for 20 seconds: step to the next surprising note at quarter speed. Fallback is a screen recording. To confirm with Zhiqian: which nuisance regressors (envelope, onsets) the group regression includes. Scalp maps use teal for negative and purple for positive. Cluster permutation p = 0.0028 over 11 frontocentral channels, 0.09 to 0.34 s.</aside>
+</section>
+
+<section data-sec="110" class="fullbleed" style="padding:18px 0 0 0 !important">
+  <div style="padding:0 64px"><span class="mark">2 What we can see · Interactive demo</span>
+  <h2 style="font-size:30px;margin:0 0 8px 0">Try it: step to the next surprising note and watch the EEG of the 19 listeners who heard this song</h2></div>
+  <div style="width:1200px;height:600px;overflow:hidden;margin-left:20px"><iframe class="embed" data-src="../eeg-demo/index.html" width="1500" height="750" style="display:block;transform:scale(0.8);transform-origin:0 0" title="EEG surprise demo"></iframe></div>
+  <aside class="notes">[minute 12.8 of 29] Say before stepping: averaged over hundreds of notes the effect is clear, a single note is too noisy to read. The surprising notes shown are picked by the model, not by me. Live demo, 60 to 90 s. Pick Home on the Range, quarter speed, press next surprising note. Point at the score, the model curve and the EEG bump in the shaded window. Fallback: the 20 s screen recording. Public dataset OpenNeuro ds005876. Fallback if the browser fails: shared/eeg_demo_fallback.webm (20 s screen recording, three surprising notes at quarter speed). Open on the panel for all notes and all listeners. Then say plainly: note by note neither MusicGen nor an untrained model beats chance. The claim is the average on the last slide, and its control is pending.</aside>
+</section>
+
+<section data-sec="15" data-auto-animate>
+  <span class="mark">3 Seeing is not understanding</span>
+  <h2>Arrow 3: does a model of music resemble the brain?</h2>
+  <svg class="fig map" viewBox="0 -40 1152 510" data-id="fieldmap"><text x="0" y="-12" font-size="24" fill="#5F5D50" text-anchor="start" >We can read music from the brain. Do models explain it?</text><rect x="80" y="130" width="220" height="100" rx="3" fill="#DCD1EB"/><text x="100" y="174" font-size="28" fill="#1F1E1B" text-anchor="start" >Music</text><text x="100" y="204" font-size="18" fill="#5F5D50" text-anchor="start" >songs, scores, sound</text><rect x="660" y="130" width="220" height="100" rx="3" fill="#EFEBE5"/><text x="680" y="174" font-size="28" fill="#1F1E1B" text-anchor="start" >Brain</text><text x="680" y="204" font-size="18" fill="#5F5D50" text-anchor="start" >EEG, MEG, fMRI, ECoG</text><rect x="440" y="350" width="200" height="84" rx="3" fill="#EFEBE5"/><text x="460" y="394" font-size="28" fill="#1F1E1B" text-anchor="start" >Models</text><text x="460" y="424" font-size="18" fill="#5F5D50" text-anchor="start" >audio and music AI</text><rect x="960" y="130" width="170" height="100" rx="3" fill="#EFEBE5"/><text x="980" y="174" font-size="28" fill="#1F1E1B" text-anchor="start" >Patients</text><text x="980" y="204" font-size="18" fill="#5F5D50" text-anchor="start" >therapy outcomes</text><g><path d="M300,150 C420,60 560,60 660,140" fill="none" stroke="#ACA39A" stroke-width="1.5"/><path d="M660.0,140.0 L646.1,136.6 L653.6,127.2 z" fill="#ACA39A"/></g><text x="480" y="52" font-size="20" fill="#5F5D50" text-anchor="middle" >1  Encode</text><text x="480" y="76" font-size="18" fill="#5F5D50" text-anchor="middle" >predict the brain from the music</text><g><path d="M660,210 C560,290 420,290 300,215" fill="none" stroke="#ACA39A" stroke-width="1.5"/><path d="M300.0,215.0 L314.2,216.8 L307.8,227.0 z" fill="#ACA39A"/></g><text x="480" y="300" font-size="20" fill="#5F5D50" text-anchor="middle" >2  Decode</text><text x="480" y="324" font-size="18" fill="#5F5D50" text-anchor="middle" >play the music back from the brain</text><g data-accent="1"><path d="M770,250 C770,360 730,392 650,392" fill="none" stroke="#F76902" stroke-width="2.5"/><path d="M650.0,392.0 L663.0,386.0 L663.0,398.0 z" fill="#F76902"/></g><text x="800" y="420" font-size="22" fill="#1F1E1B" text-anchor="start" font-weight="600">3  Compare</text><text x="800" y="444" font-size="18" fill="#1F1E1B" text-anchor="start" >does a model resemble the brain?</text><g><path d="M880,180 L955,180" fill="none" stroke="#ACA39A" stroke-width="1.5"/><path d="M955.0,180.0 L942.0,186.0 L942.0,174.0 z" fill="#ACA39A"/></g><text x="960" y="270" font-size="20" fill="#5F5D50" text-anchor="start" >4  Treat</text><text x="960" y="294" font-size="18" fill="#5F5D50" text-anchor="start" >does music help patients?</text><g><path d="M440,392 C260,392 190,330 190,240" fill="none" stroke="#ACA39A" stroke-width="1.5" stroke-dasharray="6 6"/><path d="M190.0,240.0 L196.0,253.0 L184.0,253.0 z" fill="#ACA39A"/></g><text x="40" y="440" font-size="20" fill="#5F5D50" text-anchor="start" >5  Control</text><text x="40" y="464" font-size="18" fill="#5F5D50" text-anchor="start" >set the music, one knob at a time</text></svg>
+  <aside class="notes">[minute 14.7 of 29] Alignment studies. Same encoding machinery, but the features now come from inside an AI model.</aside>
+</section>
+
+<section data-sec="75">
+  <span class="mark">3 Seeing is not understanding</span>
+  <h2>Past about eight notes, a better music model fits the brain worse</h2>
+  <svg class="fig" viewBox="0 0 1000 480" style="width:1000px"><text x="0" y="50" font-size="21" fill="#1F1E1B" text-anchor="start" >fit to the brain</text><text x="0" y="74" font-size="18" fill="#5F5D50" text-anchor="start" >MEG, gain from surprise</text><line x1="150" y1="180" x2="592.2941176470588" y2="180" stroke="#ACA39A"/><line x1="608.2941176470588" y1="180" x2="960" y2="180" stroke="#ACA39A"/><path d="M588.2941176470588,186 L596.2941176470588,174 M604.2941176470588,186 L612.2941176470588,174" stroke="#5F5D50" stroke-width="1.5"/><polyline fill="none" stroke="#7D55C7" stroke-width="2.5" points="150.0,161.2 195.3,88.9 240.6,78.2 285.9,62.1 331.2,56.8 376.5,51.4 421.8,46.1 467.1,40.7 512.4,43.4 557.6,46.1"/><polyline fill="none" stroke="#7D55C7" stroke-width="2.5" points="642.9,67.5 688.2,72.9 733.5,78.2 778.8,88.9 824.1,99.6 869.4,121.1 914.7,121.1 960.0,121.1"/><line x1="557.6" y1="46.1" x2="642.9" y2="67.5" stroke="#7D55C7" stroke-width="1.5" stroke-dasharray="4 4"/><g data-accent="1"><circle cx="467.1" cy="40.7" r="8" fill="#F76902"/><text x="479.05882352941177" y="30.7142857142857" font-size="20" fill="#1F1E1B" text-anchor="start" >peak at 8 notes</text></g><text x="0" y="270" font-size="21" fill="#1F1E1B" text-anchor="start" >model at music</text><text x="0" y="294" font-size="18" fill="#5F5D50" text-anchor="start" >next note accuracy</text><line x1="150" y1="400" x2="592.2941176470588" y2="400" stroke="#ACA39A"/><line x1="608.2941176470588" y1="400" x2="960" y2="400" stroke="#ACA39A"/><path d="M588.2941176470588,406 L596.2941176470588,394 M604.2941176470588,406 L612.2941176470588,394" stroke="#5F5D50" stroke-width="1.5"/><polyline fill="none" stroke="#7C878E" stroke-width="2.5" points="150.0,385.8 195.3,363.2 240.6,354.7 285.9,346.2 331.2,340.6 376.5,337.7 421.8,334.9 467.1,332.1 512.4,334.9 557.6,329.2"/><polyline fill="none" stroke="#7C878E" stroke-width="2.5" points="642.9,320.8 688.2,292.5 733.5,292.5 778.8,295.3 824.1,289.6 869.4,264.2 914.7,261.3 960.0,261.3"/><line x1="557.6" y1="329.2" x2="642.9" y2="320.8" stroke="#7C878E" stroke-width="1.5" stroke-dasharray="4 4"/><text x="150.0" y="452" font-size="18" fill="#5F5D50" text-anchor="middle" >1</text><text x="331.1764705882353" y="452" font-size="18" fill="#5F5D50" text-anchor="middle" >5</text><text x="557.6470588235294" y="452" font-size="18" fill="#5F5D50" text-anchor="middle" >10</text><text x="642.9411764705883" y="452" font-size="18" fill="#5F5D50" text-anchor="middle" >25</text><text x="733.5294117647059" y="452" font-size="18" fill="#5F5D50" text-anchor="middle" >100</text><text x="960.0" y="452" font-size="18" fill="#5F5D50" text-anchor="middle" >400</text><text x="575.0" y="476" font-size="19" fill="#5F5D50" text-anchor="middle" >notes of context the model may use</text></svg>
+  <div class="ref">Redrawn after <a href="https://doi.org/10.7554/eLife.80935">Kern et al., Cortical activity during naturalistic music listening reflects short range predictions based on long term experience, eLife 2022</a></div>
+  <aside class="notes">[minute 14.9 of 29] Guess moment first: ask the room whether a model that predicts music better should fit the brain better. Then show the curve. Values read approximately from Fig 3C. Top: how much the Music Transformer's surprise adds to MEG prediction, 35 listeners. Bottom: how well the same model predicts the next note. The model keeps improving with context, the fit to the brain peaks near eight notes and falls. A fit is a filter, not a mechanism.</aside>
+</section>
+
+<section data-sec="60" data-sparse="1">
+  <span class="mark">3 Seeing is not understanding</span>
+  <h2>The catch: in every study of real music, the music was fixed</h2>
+  <div class="cols" style="margin-top:20px">
+    <div><p class="big plain">One song</p><p class="ink2" style="font-size:22px">the decoder never heard another</p></div>
+    <div><p class="big plain">540 clips</p><p class="ink2" style="font-size:22px">picked from fixed recordings, nobody changed their tempo or tune</p></div>
+    <div><p class="big plain">Fixed songs</p><p class="ink2" style="font-size:22px">my surprise curve rode along with everything else in them</p></div>
+  </div>
+  <p style="font-size:30px;margin-top:40px">We can see the musical brain. With recorded music, nobody can change one property and hold the rest.</p>
+  <aside class="notes">[minute 16.2 of 29] One honest slide. Bellier: one song. Brain2Music: 5 people. My per note check: MusicGen r = 0.083, untrained model 0.155, both inside 2000 shuffles. Also Kern 2022 (backup): past about eight notes a better music model fits the brain worse. Say: a dial gives hundreds of notes at each chosen surprise level, fixed songs cannot.</aside>
+</section>
+
+<section data-sec="50">
+  <span class="mark">4 The clinic</span>
+  <h2>In dementia, music lifts mood slightly, and the effect is gone four weeks later</h2>
+  <svg class="fig" viewBox="0 0 1152 328"><line x1="566.6666666666666" y1="44" x2="566.6666666666666" y2="245" stroke="#ACA39A"/><text x="556.6666666666666" y="30" font-size="18" fill="#5F5D50" text-anchor="end" >music worse</text><text x="576.6666666666666" y="30" font-size="18" fill="#5F5D50" text-anchor="start" >music better</text><text x="900" y="30" font-size="18" fill="#5F5D50" text-anchor="start" >certainty</text><text x="0" y="88" font-size="23" fill="#1F1E1B" text-anchor="start" >Depressive symptoms</text><g data-accent="1"><line x1="581.3" y1="80" x2="720.7" y2="80" stroke="#F76902" stroke-width="2.5"/><circle cx="651.0" cy="80" r="8" fill="#F76902"/></g><text x="900" y="88" font-size="21" fill="#5F5D50" text-anchor="start" >moderate</text><text x="0" y="154" font-size="23" fill="#1F1E1B" text-anchor="start" >Agitation, aggression</text><g><line x1="504.3" y1="146" x2="665.7" y2="146" stroke="#7C878E" stroke-width="2.5"/><circle cx="585.0" cy="146" r="7" fill="#FBFAF7" stroke="#7C878E" stroke-width="2"/></g><text x="900" y="154" font-size="21" fill="#5F5D50" text-anchor="start" >moderate</text><text x="0" y="220" font-size="23" fill="#1F1E1B" text-anchor="start" >Cognition</text><g><line x1="559.3" y1="212" x2="717.0" y2="212" stroke="#7C878E" stroke-width="2.5"/><circle cx="636.3" cy="212" r="7" fill="#FBFAF7" stroke="#7C878E" stroke-width="2"/></g><text x="900" y="220" font-size="21" fill="#5F5D50" text-anchor="start" >low to very low</text><text x="0" y="314" font-size="21" fill="#5F5D50" text-anchor="start" >Filled: interval excludes zero (orange: moderate certainty). Four weeks after treatment, no clear effect.</text></svg>
+  <div class="ref"><a href="https://doi.org/10.1002/14651858.CD003477.pub5">van der Steen et al., Music based therapeutic interventions for people with dementia, Cochrane 2025</a></div>
+  <aside class="notes">[minute 17.2 of 29] Music versus usual care at the end of treatment, standardized mean differences with 95 percent intervals. Depression SMD 0.23, moderate certainty. Behavior 0.31, low. Agitation 0.05, moderate certainty of no effect. Cognition 0.19, interval crosses zero, low to very low. This tempers Act 1: musical memory is preserved, but music therapy does not restore memory. Insomnia (Jespersen 2022): self rated sleep improves, objective sleep shows no clear gain.</aside>
+</section>
+
+<section data-sec="50">
+  <span class="mark">4 The clinic</span>
+  <h2>A beat you can set helps people walk, in Parkinson's and after stroke</h2>
+  <div class="fp">
+    <div class="f" style="width:240px"><img class="ph" src="../shared/figs/photos/metronome.jpg" alt="A metronome"></div>
+    <div class="p">
+      <p class="big">+11.3 m per min</p>
+      <p class="ink2" style="font-size:22px">walking speed after stroke with rhythmic auditory stimulation, 9 trials, moderate certainty</p>
+      <p class="ink2" style="font-size:22px">In Parkinson's, 18 trials: stride length and walking speed improve.</p>
+      <p class="tldr" style="margin-top:20px">The beat is a parameter that can be set and repeated.</p>
+      <div class="audio-row"><button class="play" data-audio="../shared/audio/metronome_72bpm.mp3">play</button><span>tap along: 72 bpm</span></div>
+      <div class="people"><figure><img src="../shared/figs/people/thaut.jpg" alt="Michael Thaut"><figcaption>Michael Thaut<span>U Toronto</span></figcaption></figure></div>
+    </div>
+  </div>
+  <div class="ref"><a href="https://doi.org/10.1002/14651858.CD006787.pub3">Magee et al. 2017</a><span class="sep"></span><a href="https://doi.org/10.3389/fneur.2022.940419">Ye et al. 2022</a></div>
+  <aside class="notes">[minute 18.0 of 29] Room moment: play the click and ask everyone to tap their foot. That is the dose a gait therapist sets. Magee 2017: gait velocity +11.34 m per min (9 trials, 268 people, moderate), cadence +10.77 steps per min (7 trials, low). Ye 2022: in Parkinson's, stride length, velocity and UPDRS III improve across 18 RCTs, cadence does not. Payoff of the Act 1 plant. Magee 2017: +10.77 steps per minute after stroke, 7 trials, 223 people, low quality. Ye 2022: in Parkinson's, stride length, velocity and UPDRS III improve across 18 RCTs, no significant effect on cadence. The mechanism is clearest where the stimulus is a parameter. Say: a gait therapist sets the beat near the patient's own cadence, 72 is only an example.</aside>
+</section>
+
+<section data-sec="30">
+  <span class="mark">4 The clinic</span>
+  <p class="thesis">The bottleneck is not the measurement.<br>It is the <em>stimulus</em>.</p>
+  <p class="ink2" style="font-size:26px;margin-top:20px">My view. Short artificial sequences already have knobs (Koelsch, Quiroga-Martinez). Generators begin to give whole pieces of real music the same knobs.</p>
+  <aside class="notes">[minute 18.8 of 29] The turn of the talk. One breath: we cannot vary real music one factor at a time, so research stays correlational and therapy stays unreportable. Every crack from Acts 2 and 3 is this one. Finding 3 from the forecast. The metronome slide just showed it: the one therapy with a set stimulus is the best understood.</aside>
+</section>
+
+<section data-sec="80">
+  <span class="mark">4 The clinic · After the turn</span>
+  <h2>Change one chord, and the brain answers within 200 ms</h2>
+  <div class="audio-row"><button class="play" data-audio="../shared/audio/cadence_regular.mp3">play</button><span>a regular cadence</span><button class="play" data-audio="../shared/audio/cadence_odd.mp3">play</button><span>the same with an odd last chord</span></div>
+  <div class="fp"><div class="f"><svg class="fig" viewBox="0 0 620 330" style="width:620px"><rect x="184.8" y="30" width="88.3" height="230" fill="#EFEBE5"/><line x1="70" y1="150" x2="600" y2="150" stroke="#ACA39A"/><polyline fill="none" stroke="#7C878E" stroke-width="2" points="70.0,149.9 78.8,149.8 87.7,149.5 96.5,148.7 105.3,147.2 114.2,144.3 123.0,140.1 131.8,134.6 140.7,129.0 149.5,124.7 158.3,123.1 167.2,124.7 176.0,129.2 184.8,135.0 193.7,140.6 202.5,145.3 211.3,148.6 220.2,151.0 229.0,152.8 237.8,154.6 246.7,156.6 255.5,158.9 264.3,161.6 273.2,164.6 282.0,167.9 290.8,171.3 299.7,174.5 308.5,177.4 317.3,179.6 326.2,181.0 335.0,181.5 343.8,181.0 352.7,179.6 361.5,177.4 370.3,174.5 379.2,171.3 388.0,167.9 396.8,164.6 405.7,161.6 414.5,158.9 423.3,156.6 432.2,154.8 441.0,153.3 449.8,152.2 458.7,151.5 467.5,150.9 476.3,150.6 485.2,150.3 494.0,150.2 502.8,150.1 511.7,150.1 520.5,150.0 529.3,150.0 538.2,150.0 547.0,150.0 555.8,150.0 564.7,150.0 573.5,150.0 582.3,150.0 591.2,150.0 600.0,150.0"/><g data-accent="1"><polyline fill="none" stroke="#F76902" stroke-width="2.5" points="70.0,149.9 78.8,149.8 87.7,149.5 96.5,148.7 105.3,147.2 114.2,144.4 123.0,140.1 131.8,134.9 140.7,129.6 149.5,126.3 158.3,126.9 167.2,132.8 176.0,144.4 184.8,161.1 193.7,181.5 202.5,203.0 211.3,222.5 220.2,236.6 229.0,242.8 237.8,240.2 246.7,230.4 255.5,216.6 264.3,202.4 273.2,190.8 282.0,183.2 290.8,179.3 299.7,178.3 308.5,179.0 317.3,180.2 326.2,181.2 335.0,181.6 343.8,181.0 352.7,179.6 361.5,177.4 370.3,174.5 379.2,171.3 388.0,167.9 396.8,164.6 405.7,161.6 414.5,158.9 423.3,156.6 432.2,154.8 441.0,153.3 449.8,152.2 458.7,151.5 467.5,150.9 476.3,150.6 485.2,150.3 494.0,150.2 502.8,150.1 511.7,150.1 520.5,150.0 529.3,150.0 538.2,150.0 547.0,150.0 555.8,150.0 564.7,150.0 573.5,150.0 582.3,150.0 591.2,150.0 600.0,150.0"/></g><text x="233.41666666666669" y="50" font-size="22" fill="#1F1E1B" text-anchor="middle" >ERAN</text><text x="441.0" y="147.0" font-size="19" fill="#5F5D50" text-anchor="start" >regular chord</text><text x="282.0" y="243.5" font-size="19" fill="#1F1E1B" text-anchor="start" >odd chord</text><text x="70.0" y="290" font-size="18" fill="#5F5D50" text-anchor="middle" >0</text><text x="246.66666666666666" y="290" font-size="18" fill="#5F5D50" text-anchor="middle" >200</text><text x="423.3333333333333" y="290" font-size="18" fill="#5F5D50" text-anchor="middle" >400</text><text x="600.0" y="290" font-size="18" fill="#5F5D50" text-anchor="middle" >600</text><text x="345.0" y="318" font-size="18" fill="#5F5D50" text-anchor="middle" >ms after the last chord, right frontal</text><text x="60" y="245" font-size="16" fill="#5F5D50" text-anchor="end" >neg</text><text x="600" y="18" font-size="16" fill="#5F5D50" text-anchor="end" >schematic, not data</text></svg></div><div class="p"><p class="key">Your brain just did this</p><p class="tldr">Where a stimulus has a knob, the brain moves with it. Generators bring the knob to whole pieces.</p></div></div>
+  <div class="ref"><a href="https://doi.org/10.1162/089892900562183">Koelsch et al. 2000</a><span class="sep"></span><a href="https://doi.org/10.1016/j.cortex.2019.06.010">Quiroga-Martinez et al. 2019</a></div>
+  <aside class="notes">[minute 19.3 of 29] Cadences synthesized for the talk in the style of Koelsch 2000 (odd final chord: a Neapolitan). Play both: everyone hears the odd one, and EEG shows it within 200 ms. Di Liberto and Kern turned the model, not the stimulus, so they are not rows here. Payoff of the Di Liberto setup: memory length was a property of the listener model, here the music itself moves. Koelsch 2000: ERAN to irregular chords. Mismatch negativity to deviant notes is reduced in uncertain melodies (Quiroga-Martinez 2019, Cortex). Those designs use short artificial sequences. The new thing is naturalistic, parametric control at scale. Controlled stimuli complement natural listening. The ERAN drawing is a schematic of the paper's finding, not data. Memory length in Di Liberto 2020 was a setting of the listener model, the generator makes it a setting of the music. Other knobs: melody uncertainty shrinks the mismatch response (Quiroga-Martinez 2019), a tempo knob speeds walking after stroke.</aside>
+</section>
+
+<section data-sec="25" data-auto-animate>
+  <span class="mark">The map</span>
+  <h2>Arrow 5: set the music, one knob at a time</h2>
+  <svg class="fig map" viewBox="0 -40 1152 510" data-id="fieldmap"><text x="0" y="-12" font-size="24" fill="#5F5D50" text-anchor="start" >Now the stimulus becomes the variable.</text><rect x="80" y="130" width="220" height="100" rx="3" fill="#DCD1EB"/><text x="100" y="174" font-size="28" fill="#1F1E1B" text-anchor="start" >Music</text><text x="100" y="204" font-size="18" fill="#5F5D50" text-anchor="start" >songs, scores, sound</text><rect x="660" y="130" width="220" height="100" rx="3" fill="#EFEBE5"/><text x="680" y="174" font-size="28" fill="#1F1E1B" text-anchor="start" >Brain</text><text x="680" y="204" font-size="18" fill="#5F5D50" text-anchor="start" >EEG, MEG, fMRI, ECoG</text><rect x="440" y="350" width="200" height="84" rx="3" fill="#EFEBE5"/><text x="460" y="394" font-size="28" fill="#1F1E1B" text-anchor="start" >Models</text><text x="460" y="424" font-size="18" fill="#5F5D50" text-anchor="start" >audio and music AI</text><rect x="960" y="130" width="170" height="100" rx="3" fill="#EFEBE5"/><text x="980" y="174" font-size="28" fill="#1F1E1B" text-anchor="start" >Patients</text><text x="980" y="204" font-size="18" fill="#5F5D50" text-anchor="start" >therapy outcomes</text><g><path d="M300,150 C420,60 560,60 660,140" fill="none" stroke="#ACA39A" stroke-width="1.5"/><path d="M660.0,140.0 L646.1,136.6 L653.6,127.2 z" fill="#ACA39A"/></g><text x="480" y="52" font-size="20" fill="#5F5D50" text-anchor="middle" >1  Encode</text><text x="480" y="76" font-size="18" fill="#5F5D50" text-anchor="middle" >predict the brain from the music</text><g><path d="M660,210 C560,290 420,290 300,215" fill="none" stroke="#ACA39A" stroke-width="1.5"/><path d="M300.0,215.0 L314.2,216.8 L307.8,227.0 z" fill="#ACA39A"/></g><text x="480" y="300" font-size="20" fill="#5F5D50" text-anchor="middle" >2  Decode</text><text x="480" y="324" font-size="18" fill="#5F5D50" text-anchor="middle" >play the music back from the brain</text><g><path d="M770,250 C770,360 730,392 650,392" fill="none" stroke="#ACA39A" stroke-width="1.5"/><path d="M650.0,392.0 L663.0,386.0 L663.0,398.0 z" fill="#ACA39A"/></g><text x="800" y="420" font-size="20" fill="#5F5D50" text-anchor="start" >3  Compare</text><text x="800" y="444" font-size="18" fill="#5F5D50" text-anchor="start" >does a model resemble the brain?</text><g><path d="M880,180 L955,180" fill="none" stroke="#ACA39A" stroke-width="1.5"/><path d="M955.0,180.0 L942.0,186.0 L942.0,174.0 z" fill="#ACA39A"/></g><text x="960" y="270" font-size="20" fill="#5F5D50" text-anchor="start" >4  Treat</text><text x="960" y="294" font-size="18" fill="#5F5D50" text-anchor="start" >does music help patients?</text><g data-accent="1"><path d="M440,392 C260,392 190,330 190,240" fill="none" stroke="#F76902" stroke-width="2.5"/><path d="M190.0,240.0 L196.0,253.0 L184.0,253.0 z" fill="#F76902"/></g><text x="40" y="440" font-size="22" fill="#1F1E1B" text-anchor="start" font-weight="600">5  Control</text><text x="40" y="464" font-size="18" fill="#1F1E1B" text-anchor="start" >set the music, one knob at a time</text></svg>
+  <aside class="notes">[minute 20.7 of 29] The dashed arrow becomes solid. Models were used in arrows 2 and 3 to explain the brain. Here they are used to make the stimulus. Say: oddballs and odd chords already turned one knob on short sequences (Koelsch 2000, backup). A generator turns the whole piece.</aside>
+</section>
+
+<section data-sec="75">
+  <span class="mark">5 Music you can experiment on · Running example</span>
+  <h2>Turn one dial: the same notes go from shuffled to almost a tune. Then hear Beethoven <span class="status prog">In progress</span></h2>
+  <div class="cols">
+    <div style="flex:0 0 640px"><iframe class="embed" data-src="../shared/fe-chain.html?autoplay=1" width="640" height="360" title="Für Elise Markov chain"></iframe></div>
+    <div>
+      <div class="audio-row"><button class="play" data-audio="../shared/audio/fe_shuffled.mp3">play</button><span>order 0, shuffled</span></div>
+      <div class="audio-row"><button class="play" data-audio="../shared/audio/fe_order1.mp3">play</button><span>order 1, walk the graph</span></div>
+      <div class="audio-row"><button class="play" data-audio="../shared/audio/fe_real.mp3">play</button><span>Beethoven</span></div>
+      <p class="tldr" style="margin-top:18px">Same notes and rhythm. Surprise is computed for each stimulus.</p>
+    </div>
+  </div>
+  <div class="ref">Chen et al., Markov graph analysis, in preparation</div>
+  <aside class="notes">[minute 21.1 of 29] The graph is Für Elise: each note points to the notes that follow it. Order 0 shuffles, order 1 walks this graph, higher orders approach the piece. The order 1 sample was made with seed 29 by src/fur_elise.py. A controlling three steps: report the generator settings, compute surprise per stimulus with a listener model, include onsets, envelope and interval size as nuisance regressors. Backup: six traditions from one transition table. Intervals and contour change with order too, so surprise is computed per stimulus and onsets, envelope and interval size go in as nuisance regressors. Backup has the style vs copying result: higher orders copy longer spans from training, so stay at low order for new stimuli.</aside>
+</section>
+
+<section data-sec="40">
+  <span class="mark">5 Music you can experiment on · A neural generator</span>
+  <h2>Turn one dial inside a neural music generator: same seed, only the tempo words change</h2>
+  <div class="audio-row"><button class="play" data-audio="../shared/audio/mg_tempo_slow.mp3">play</button><span>slow</span><button class="play" data-audio="../shared/audio/mg_tempo_medium.mp3">play</button><span>medium</span><button class="play" data-audio="../shared/audio/mg_tempo_fast.mp3">play</button><span>fast</span></div>
+  <svg class="fig" viewBox="0 0 1150 360" style="width:1150px"><g><polyline fill="none" stroke="#7D55C7" stroke-width="1.6" points="260.0,60.7 264.5,62.4 268.9,71.1 273.4,71.4 277.9,71.4 282.3,74.3 286.8,72.3 291.3,76.3 295.7,73.2 300.2,70.7 304.7,77.7 309.1,78.9 313.6,78.0 318.1,79.6 322.5,83.8 327.0,84.5 331.5,84.1 335.9,63.9 340.4,59.6 344.9,61.1 349.3,63.0 353.8,63.7 358.3,66.8 362.7,69.3 367.2,69.8 371.7,71.2 376.1,71.1 380.6,76.6 385.1,79.5 389.5,80.5 394.0,79.3 398.5,78.1 402.9,77.8 407.4,79.8 411.9,82.4 416.3,82.7 420.8,85.2 425.3,81.9 429.7,84.0 434.2,84.8 438.7,87.2 443.1,88.2 447.6,55.3 452.1,50.7 456.5,52.9 461.0,54.3 465.5,59.5 469.9,63.7 474.4,67.9 478.9,69.5 483.4,70.3 487.8,72.0 492.3,73.6 496.8,74.8 501.2,78.5 505.7,71.6 510.2,70.0 514.6,73.3 519.1,75.4 523.6,77.2 528.0,81.0 532.5,81.9 537.0,81.4 541.4,83.4 545.9,85.2 550.4,86.1 554.8,87.5 559.3,91.5 563.8,70.4 568.2,69.2 572.7,66.8 577.2,71.0 581.6,69.3 586.1,70.8 590.6,68.8 595.0,70.2 599.5,73.5 604.0,74.2 608.4,73.5 612.9,76.1 617.4,81.2 621.8,82.4 626.3,83.4 630.8,79.5 635.2,84.5 639.7,86.6 644.2,85.5 648.6,86.3 653.1,85.1 657.6,86.0 662.0,87.0 666.5,90.1 671.0,92.0 675.4,71.8 679.9,47.9 684.4,47.1 688.8,52.5 693.3,58.9 697.8,60.1 702.2,64.5 706.7,68.8 711.2,67.1 715.6,71.7 720.1,77.4 724.6,77.9 729.0,79.1 733.5,79.3 738.0,80.6 742.4,84.6 746.9,84.5 751.4,82.8 755.8,84.0 760.3,87.3 764.8,85.0 769.2,85.4 773.7,86.1 778.2,85.7 782.6,87.7 787.1,90.3 791.6,58.0 796.0,48.9 800.5,44.8 805.0,64.2 809.4,62.8 813.9,64.3 818.4,67.2 822.8,70.0 827.3,72.9 831.8,73.6 836.2,73.8 840.7,75.7 845.2,81.9 849.6,84.7 854.1,80.8 858.6,81.1 863.0,86.4 867.5,87.9 872.0,89.0 876.4,77.7 880.9,53.1 885.4,53.7 889.8,58.2 894.3,62.4 898.8,67.3 903.2,66.8 907.7,55.5 912.2,59.5 916.6,62.1 921.1,59.5 925.6,57.1 930.1,61.4 934.5,68.0 939.0,74.0 943.5,69.7 947.9,72.3 952.4,75.3 956.9,81.2 961.3,74.0 965.8,57.6 970.3,63.3 974.7,67.9 979.2,72.1 983.7,77.7 988.1,82.4 992.6,77.9 997.1,80.8 1001.5,81.8 1006.0,83.3 1010.5,84.5 1014.9,86.2 1019.4,36.4 1023.9,30.0 1028.3,43.0 1032.8,49.7 1037.3,55.0 1041.7,57.3 1046.2,61.0 1050.7,66.2 1055.1,68.8 1059.6,71.2 1064.1,71.0 1068.5,73.7 1073.0,78.2 1077.5,73.5 1081.9,75.4 1086.4,78.3 1090.9,82.2 1095.3,81.5 1099.8,83.3 1104.3,82.3 1108.7,83.5 1113.2,81.7 1117.7,87.5 1122.1,91.2 1126.6,92.9 1131.1,72.4 1135.5,51.0 1140.0,43.9"/></g><text x="0" y="64" font-size="23" fill="#1F1E1B" text-anchor="start" >60 bpm asked</text><text x="0" y="92" font-size="19" fill="#5F5D50" text-anchor="start" >measured 59 bpm</text><g><polyline fill="none" stroke="#7D55C7" stroke-width="1.6" points="260.0,175.2 264.5,177.0 268.9,177.2 273.4,180.9 277.9,184.9 282.3,188.6 286.8,190.2 291.3,188.4 295.7,161.6 300.2,162.8 304.7,163.7 309.1,168.8 313.6,173.1 318.1,183.1 322.5,189.1 327.0,152.7 331.5,159.6 335.9,163.0 340.4,168.2 344.9,171.5 349.3,175.7 353.8,175.1 358.3,176.5 362.7,143.2 367.2,152.5 371.7,157.0 376.1,159.0 380.6,157.8 385.1,169.0 389.5,167.7 394.0,156.2 398.5,162.5 402.9,165.6 407.4,169.3 411.9,174.7 416.3,176.5 420.8,177.4 425.3,177.4 429.7,154.5 434.2,156.8 438.7,155.3 443.1,156.2 447.6,161.6 452.1,164.6 456.5,167.7 461.0,171.4 465.5,174.2 469.9,179.7 474.4,179.1 478.9,182.3 483.4,188.4 487.8,189.3 492.3,188.8 496.8,166.9 501.2,172.5 505.7,171.6 510.2,172.3 514.6,172.3 519.1,175.7 523.6,180.4 528.0,174.2 532.5,177.4 537.0,182.0 541.4,182.3 545.9,185.9 550.4,186.9 554.8,189.3 559.3,185.4 563.8,169.7 568.2,175.3 572.7,179.2 577.2,182.0 581.6,181.3 586.1,186.8 590.6,192.1 595.0,160.7 599.5,162.3 604.0,167.0 608.4,169.9 612.9,177.4 617.4,180.4 621.8,188.9 626.3,190.7 630.8,146.7 635.2,143.2 639.7,148.6 644.2,149.7 648.6,152.2 653.1,169.8 657.6,169.5 662.0,159.0 666.5,157.8 671.0,154.5 675.4,165.3 679.9,165.9 684.4,169.4 688.8,174.2 693.3,169.2 697.8,140.0 702.2,141.6 706.7,144.1 711.2,153.2 715.6,160.4 720.1,164.6 724.6,170.9 729.0,162.1 733.5,165.6 738.0,172.4 742.4,171.9 746.9,178.3 751.4,183.5 755.8,191.4 760.3,189.6 764.8,145.0 769.2,142.2 773.7,153.0 778.2,155.5 782.6,159.5 787.1,158.6 791.6,161.6 796.0,161.6 800.5,165.7 805.0,167.9 809.4,173.2 813.9,180.2 818.4,183.7 822.8,184.9 827.3,179.5 831.8,176.8 836.2,176.3 840.7,177.5 845.2,182.3 849.6,181.4 854.1,187.3 858.6,190.3 863.0,167.9 867.5,176.3 872.0,169.7 876.4,174.1 880.9,177.4 885.4,183.5 889.8,193.1 894.3,184.9 898.8,159.2 903.2,163.9 907.7,172.0 912.2,172.1 916.6,173.0 921.1,179.1 925.6,179.3 930.1,179.1 934.5,176.3 939.0,173.5 943.5,174.0 947.9,180.9 952.4,183.1 956.9,189.3 961.3,184.7 965.8,154.2 970.3,160.2 974.7,165.3 979.2,172.6 983.7,169.1 988.1,175.2 992.6,178.8 997.1,175.0 1001.5,179.6 1006.0,178.4 1010.5,184.9 1014.9,187.7 1019.4,186.1 1023.9,188.0 1028.3,184.8 1032.8,168.0 1037.3,170.2 1041.7,173.2 1046.2,176.7 1050.7,184.3 1055.1,187.2 1059.6,187.0 1064.1,172.6 1068.5,186.3 1073.0,186.4 1077.5,187.0 1081.9,185.6 1086.4,190.3 1090.9,194.3 1095.3,188.0 1099.8,172.6 1104.3,171.6 1108.7,177.4 1113.2,178.6 1117.7,179.4 1122.1,186.6 1126.6,189.3 1131.1,162.5 1135.5,171.4 1140.0,163.0"/></g><text x="0" y="174" font-size="23" fill="#1F1E1B" text-anchor="start" >100 bpm asked</text><text x="0" y="202" font-size="19" fill="#5F5D50" text-anchor="start" >measured 100 bpm</text><g data-accent="1"><polyline fill="none" stroke="#F76902" stroke-width="1.6" points="260.0,296.9 264.5,294.4 268.9,297.5 273.4,269.7 277.9,266.0 282.3,271.0 286.8,268.2 291.3,283.2 295.7,271.7 300.2,277.6 304.7,281.8 309.1,288.6 313.6,279.7 318.1,283.9 322.5,289.8 327.0,293.8 331.5,293.7 335.9,274.1 340.4,289.6 344.9,300.1 349.3,305.4 353.8,303.9 358.3,250.0 362.7,278.4 367.2,291.5 371.7,297.9 376.1,296.4 380.6,296.6 385.1,297.2 389.5,301.3 394.0,303.6 398.5,293.8 402.9,295.6 407.4,297.9 411.9,303.6 416.3,306.4 420.8,299.1 425.3,299.2 429.7,301.5 434.2,304.2 438.7,302.1 443.1,265.0 447.6,286.0 452.1,293.3 456.5,295.4 461.0,287.3 465.5,300.1 469.9,300.4 474.4,305.2 478.9,306.3 483.4,283.3 487.8,291.9 492.3,295.3 496.8,301.7 501.2,304.1 505.7,298.8 510.2,294.8 514.6,297.2 519.1,302.8 523.6,297.4 528.0,290.8 532.5,296.8 537.0,301.6 541.4,299.8 545.9,293.5 550.4,297.2 554.8,302.6 559.3,305.2 563.8,309.8 568.2,283.4 572.7,302.1 577.2,302.9 581.6,304.7 586.1,299.6 590.6,298.3 595.0,299.4 599.5,296.7 604.0,303.3 608.4,288.5 612.9,298.2 617.4,302.3 621.8,301.8 626.3,301.9 630.8,297.5 635.2,298.9 639.7,302.5 644.2,279.5 648.6,297.1 653.1,275.9 657.6,288.4 662.0,298.0 666.5,302.3 671.0,300.3 675.4,302.0 679.9,305.6 684.4,306.4 688.8,307.9 693.3,281.0 697.8,296.8 702.2,300.0 706.7,299.7 711.2,297.0 715.6,303.3 720.1,304.4 724.6,306.4 729.0,309.6 733.5,286.3 738.0,286.5 742.4,297.1 746.9,302.1 751.4,302.6 755.8,296.8 760.3,297.9 764.8,303.1 769.2,303.3 773.7,297.9 778.2,281.1 782.6,293.7 787.1,299.7 791.6,300.2 796.0,298.9 800.5,298.9 805.0,297.2 809.4,298.1 813.9,302.4 818.4,295.7 822.8,302.6 827.3,302.4 831.8,306.7 836.2,309.8 840.7,299.6 845.2,298.6 849.6,300.1 854.1,298.5 858.6,294.0 863.0,288.4 867.5,300.5 872.0,300.0 876.4,301.2 880.9,295.5 885.4,297.6 889.8,301.7 894.3,304.2 898.8,306.1 903.2,286.5 907.7,295.2 912.2,303.1 916.6,305.9 921.1,301.0 925.6,300.6 930.1,303.9 934.5,301.8 939.0,297.0 943.5,288.9 947.9,302.7 952.4,300.1 956.9,300.3 961.3,303.5 965.8,301.8 970.3,306.4 974.7,306.2 979.2,286.8 983.7,295.1 988.1,290.4 992.6,295.3 997.1,297.5 1001.5,302.6 1006.0,302.6 1010.5,300.4 1014.9,304.4 1019.4,303.0 1023.9,307.1 1028.3,274.6 1032.8,291.5 1037.3,296.7 1041.7,299.5 1046.2,298.9 1050.7,303.6 1055.1,305.2 1059.6,306.2 1064.1,307.8 1068.5,300.1 1073.0,292.8 1077.5,302.6 1081.9,305.2 1086.4,310.1 1090.9,300.8 1095.3,298.9 1099.8,304.2 1104.3,307.3 1108.7,307.8 1113.2,269.2 1117.7,291.2 1122.1,300.2 1126.6,301.9 1131.1,297.0 1135.5,307.3 1140.0,308.1"/></g><text x="0" y="284" font-size="23" fill="#1F1E1B" text-anchor="start" >160 bpm asked</text><text x="0" y="312" font-size="19" fill="#5F5D50" text-anchor="start" >measured 158 bpm</text><text x="260" y="356" font-size="18" fill="#5F5D50" text-anchor="start" >loudness over 8 seconds</text></svg>
+  <div class="ref"><a href="https://arxiv.org/abs/2306.05284">Copet et al., Simple and controllable music generation (MusicGen), NeurIPS 2023</a></div>
+  <aside class="notes">[minute 22.3 of 29] Tempo is the dial a metronome already has. The next slide is one only a generator can turn. MusicGen small, one seed, generated for this talk, measured 59, 100 and 158 bpm.</aside>
+</section>
+
+<section data-sparse="1" data-sec="90">
+  <span class="mark">5 Music you can experiment on · A neural generator</span>
+  <h2>A neural generator plays the same three melodies as real music: shuffled, chained, Beethoven</h2>
+  <div class="audio-row"><button class="play" data-audio="../shared/audio/mgmel_fe_shuffled.mp3">play</button><span>order 0</span><button class="play" data-audio="../shared/audio/mgmel_fe_order1.mp3">play</button><span>order 1</span><button class="play" data-audio="../shared/audio/mgmel_fe_real.mp3">play</button><span>Beethoven</span></div>
+  <div style="display:flex;gap:30px;margin-top:6px"><svg viewBox="0 0 340 90" width="340" height="90" data-id="mm0" style="display:block"><circle cx="20.0" cy="17.9" r="5" fill="#7D55C7"/><circle cx="28.8" cy="17.9" r="5" fill="#7D55C7"/><circle cx="37.6" cy="21.8" r="5" fill="#7D55C7"/><circle cx="46.5" cy="60.5" r="5" fill="#7D55C7"/><circle cx="55.3" cy="60.5" r="5" fill="#7D55C7"/><circle cx="64.1" cy="29.5" r="5" fill="#7D55C7"/><circle cx="72.9" cy="29.5" r="5" fill="#7D55C7"/><circle cx="81.8" cy="14.0" r="5" fill="#7D55C7"/><circle cx="90.6" cy="29.5" r="5" fill="#7D55C7"/><circle cx="99.4" cy="17.9" r="5" fill="#7D55C7"/><circle cx="108.2" cy="41.1" r="5" fill="#7D55C7"/><circle cx="117.1" cy="33.4" r="5" fill="#7D55C7"/><circle cx="125.9" cy="14.0" r="5" fill="#7D55C7"/><circle cx="134.7" cy="17.9" r="5" fill="#7D55C7"/><circle cx="143.5" cy="41.1" r="5" fill="#7D55C7"/><circle cx="152.4" cy="33.4" r="5" fill="#7D55C7"/><circle cx="161.2" cy="41.1" r="5" fill="#7D55C7"/><circle cx="170.0" cy="76.0" r="5" fill="#7D55C7"/><circle cx="178.8" cy="45.0" r="5" fill="#7D55C7"/><circle cx="187.6" cy="14.0" r="5" fill="#7D55C7"/><circle cx="196.5" cy="60.5" r="5" fill="#7D55C7"/><circle cx="205.3" cy="33.4" r="5" fill="#7D55C7"/><circle cx="214.1" cy="33.4" r="5" fill="#7D55C7"/><circle cx="222.9" cy="60.5" r="5" fill="#7D55C7"/><circle cx="231.8" cy="14.0" r="5" fill="#7D55C7"/><circle cx="240.6" cy="60.5" r="5" fill="#7D55C7"/><circle cx="249.4" cy="14.0" r="5" fill="#7D55C7"/><circle cx="258.2" cy="41.1" r="5" fill="#7D55C7"/><circle cx="267.1" cy="41.1" r="5" fill="#7D55C7"/><circle cx="275.9" cy="14.0" r="5" fill="#7D55C7"/><circle cx="284.7" cy="76.0" r="5" fill="#7D55C7"/><circle cx="293.5" cy="33.4" r="5" fill="#7D55C7"/><circle cx="302.4" cy="21.8" r="5" fill="#7D55C7"/><circle cx="311.2" cy="29.5" r="5" fill="#7D55C7"/><circle cx="320.0" cy="33.4" r="5" fill="#7D55C7"/></svg><svg viewBox="0 0 340 90" width="340" height="90" data-id="mm1" style="display:block"><circle cx="20.0" cy="14.0" r="5" fill="#7D55C7"/><circle cx="28.8" cy="17.9" r="5" fill="#7D55C7"/><circle cx="37.6" cy="14.0" r="5" fill="#7D55C7"/><circle cx="46.5" cy="33.4" r="5" fill="#7D55C7"/><circle cx="55.3" cy="21.8" r="5" fill="#7D55C7"/><circle cx="64.1" cy="29.5" r="5" fill="#7D55C7"/><circle cx="72.9" cy="41.1" r="5" fill="#7D55C7"/><circle cx="81.8" cy="76.0" r="5" fill="#7D55C7"/><circle cx="90.6" cy="60.5" r="5" fill="#7D55C7"/><circle cx="99.4" cy="41.1" r="5" fill="#7D55C7"/><circle cx="108.2" cy="76.0" r="5" fill="#7D55C7"/><circle cx="117.1" cy="60.5" r="5" fill="#7D55C7"/><circle cx="125.9" cy="41.1" r="5" fill="#7D55C7"/><circle cx="134.7" cy="33.4" r="5" fill="#7D55C7"/><circle cx="143.5" cy="21.8" r="5" fill="#7D55C7"/><circle cx="152.4" cy="29.5" r="5" fill="#7D55C7"/><circle cx="161.2" cy="41.1" r="5" fill="#7D55C7"/><circle cx="170.0" cy="33.4" r="5" fill="#7D55C7"/><circle cx="178.8" cy="60.5" r="5" fill="#7D55C7"/><circle cx="187.6" cy="41.1" r="5" fill="#7D55C7"/><circle cx="196.5" cy="76.0" r="5" fill="#7D55C7"/><circle cx="205.3" cy="60.5" r="5" fill="#7D55C7"/><circle cx="214.1" cy="14.0" r="5" fill="#7D55C7"/><circle cx="222.9" cy="17.9" r="5" fill="#7D55C7"/><circle cx="231.8" cy="14.0" r="5" fill="#7D55C7"/><circle cx="240.6" cy="33.4" r="5" fill="#7D55C7"/><circle cx="249.4" cy="21.8" r="5" fill="#7D55C7"/><circle cx="258.2" cy="29.5" r="5" fill="#7D55C7"/><circle cx="267.1" cy="41.1" r="5" fill="#7D55C7"/><circle cx="275.9" cy="76.0" r="5" fill="#7D55C7"/><circle cx="284.7" cy="60.5" r="5" fill="#7D55C7"/><circle cx="293.5" cy="45.0" r="5" fill="#7D55C7"/><circle cx="302.4" cy="33.4" r="5" fill="#7D55C7"/><circle cx="311.2" cy="29.5" r="5" fill="#7D55C7"/><circle cx="320.0" cy="60.5" r="5" fill="#7D55C7"/></svg><svg viewBox="0 0 340 90" width="340" height="90" data-id="mm2" style="display:block"><circle cx="20.0" cy="14.0" r="5" fill="#7D55C7"/><circle cx="28.8" cy="17.9" r="5" fill="#7D55C7"/><circle cx="37.6" cy="14.0" r="5" fill="#7D55C7"/><circle cx="46.5" cy="17.9" r="5" fill="#7D55C7"/><circle cx="55.3" cy="14.0" r="5" fill="#7D55C7"/><circle cx="64.1" cy="33.4" r="5" fill="#7D55C7"/><circle cx="72.9" cy="21.8" r="5" fill="#7D55C7"/><circle cx="81.8" cy="29.5" r="5" fill="#7D55C7"/><circle cx="90.6" cy="41.1" r="5" fill="#7D55C7"/><circle cx="99.4" cy="76.0" r="5" fill="#7D55C7"/><circle cx="108.2" cy="60.5" r="5" fill="#7D55C7"/><circle cx="117.1" cy="41.1" r="5" fill="#7D55C7"/><circle cx="125.9" cy="33.4" r="5" fill="#7D55C7"/><circle cx="134.7" cy="60.5" r="5" fill="#7D55C7"/><circle cx="143.5" cy="45.0" r="5" fill="#7D55C7"/><circle cx="152.4" cy="33.4" r="5" fill="#7D55C7"/><circle cx="161.2" cy="29.5" r="5" fill="#7D55C7"/><circle cx="170.0" cy="60.5" r="5" fill="#7D55C7"/><circle cx="178.8" cy="14.0" r="5" fill="#7D55C7"/><circle cx="187.6" cy="17.9" r="5" fill="#7D55C7"/><circle cx="196.5" cy="14.0" r="5" fill="#7D55C7"/><circle cx="205.3" cy="17.9" r="5" fill="#7D55C7"/><circle cx="214.1" cy="14.0" r="5" fill="#7D55C7"/><circle cx="222.9" cy="33.4" r="5" fill="#7D55C7"/><circle cx="231.8" cy="21.8" r="5" fill="#7D55C7"/><circle cx="240.6" cy="29.5" r="5" fill="#7D55C7"/><circle cx="249.4" cy="41.1" r="5" fill="#7D55C7"/><circle cx="258.2" cy="76.0" r="5" fill="#7D55C7"/><circle cx="267.1" cy="60.5" r="5" fill="#7D55C7"/><circle cx="275.9" cy="41.1" r="5" fill="#7D55C7"/><circle cx="284.7" cy="33.4" r="5" fill="#7D55C7"/><circle cx="293.5" cy="60.5" r="5" fill="#7D55C7"/><circle cx="302.4" cy="29.5" r="5" fill="#7D55C7"/><circle cx="311.2" cy="33.4" r="5" fill="#7D55C7"/><circle cx="320.0" cy="41.1" r="5" fill="#7D55C7"/></svg></div>
+  
+  <p class="tldr" style="margin-top:28px">One seed, generated for this talk. Same prompt, only the melody we feed in changes.</p>
+  <p class="key" style="margin-top:10px">Predictability can be fed in</p>
+  <div class="ref"><a href="https://arxiv.org/abs/2306.05284">Copet et al., Simple and controllable music generation (MusicGen), NeurIPS 2023</a></div>
+  <aside class="notes">[minute 23.0 of 29] Generated for this talk with MusicGen melody on a laptop CPU: prompt "gentle solo piano, classical, warm room", seed 11, conditioned on the three Für Elise versions from the dial slide. Scripts: src/melody.py and src/gen.py, numbers from src/melody_check.py (melody_check.json). Play four seconds of each. This is the dial only a generator can turn: the predictability of the notes is set by the order, the generator makes it sound like music. Chroma correlation of each clip with its own melody 0.54 to 0.60, with the other two 0.14 to 0.22 (melody_check.json).</aside>
+</section>
+
+<section data-sec="40">
+  <span class="mark">5 Music you can experiment on · Running example</span>
+  <h2>Prediction: the more natural the order, the more closely EEG should track each note's surprise</h2>
+  <p class="ink2" style="font-size:21px;margin-top:-10px">More structure, sharper expectations, so a broken one costs more.</p>
+  <svg class="fig" viewBox="0 0 1000 440" style="width:1000px"><line x1="140" y1="270" x2="960" y2="270" stroke="#ACA39A"/><line x1="140" y1="270" x2="140" y2="40" stroke="#ACA39A"/><text x="128" y="60" font-size="18" fill="#5F5D50" text-anchor="end" >how strongly</text><text x="128" y="82" font-size="18" fill="#5F5D50" text-anchor="end" >EEG tracks</text><text x="128" y="104" font-size="18" fill="#5F5D50" text-anchor="end" >surprise</text><text x="156" y="46" font-size="17" fill="#5F5D50" text-anchor="start" letter-spacing="2">PREDICTION, NO DATA YET</text><g data-accent="1"><path d="M230,237.0 L230,237.0 L440,160.0 L650,94.0 L860,76.4" fill="none" stroke="#F76902" stroke-width="2.5" stroke-dasharray="7 6"/><circle cx="230" cy="237.0" r="8" fill="#FBFAF7" stroke="#F76902" stroke-width="2"/><circle cx="440" cy="160.0" r="8" fill="#FBFAF7" stroke="#F76902" stroke-width="2"/><circle cx="650" cy="94.0" r="8" fill="#FBFAF7" stroke="#F76902" stroke-width="2"/><circle cx="860" cy="76.4" r="8" fill="#FBFAF7" stroke="#F76902" stroke-width="2"/></g><text x="230" y="302" font-size="22" fill="#1F1E1B" text-anchor="middle" >order 0</text><circle cx="150.0" cy="325.7" r="3.2" fill="#7D55C7"/><circle cx="160.7" cy="325.7" r="3.2" fill="#7D55C7"/><circle cx="171.3" cy="329.4" r="3.2" fill="#7D55C7"/><circle cx="182.0" cy="366.2" r="3.2" fill="#7D55C7"/><circle cx="192.7" cy="366.2" r="3.2" fill="#7D55C7"/><circle cx="203.3" cy="336.7" r="3.2" fill="#7D55C7"/><circle cx="214.0" cy="336.7" r="3.2" fill="#7D55C7"/><circle cx="224.7" cy="322.0" r="3.2" fill="#7D55C7"/><circle cx="235.3" cy="336.7" r="3.2" fill="#7D55C7"/><circle cx="246.0" cy="325.7" r="3.2" fill="#7D55C7"/><circle cx="256.7" cy="347.8" r="3.2" fill="#7D55C7"/><circle cx="267.3" cy="340.4" r="3.2" fill="#7D55C7"/><circle cx="278.0" cy="322.0" r="3.2" fill="#7D55C7"/><circle cx="288.7" cy="325.7" r="3.2" fill="#7D55C7"/><circle cx="299.3" cy="347.8" r="3.2" fill="#7D55C7"/><circle cx="310.0" cy="340.4" r="3.2" fill="#7D55C7"/><text x="440" y="302" font-size="22" fill="#1F1E1B" text-anchor="middle" >order 1</text><circle cx="360.0" cy="322.0" r="3.2" fill="#7D55C7"/><circle cx="370.7" cy="325.7" r="3.2" fill="#7D55C7"/><circle cx="381.3" cy="322.0" r="3.2" fill="#7D55C7"/><circle cx="392.0" cy="340.4" r="3.2" fill="#7D55C7"/><circle cx="402.7" cy="329.4" r="3.2" fill="#7D55C7"/><circle cx="413.3" cy="336.7" r="3.2" fill="#7D55C7"/><circle cx="424.0" cy="347.8" r="3.2" fill="#7D55C7"/><circle cx="434.7" cy="380.9" r="3.2" fill="#7D55C7"/><circle cx="445.3" cy="366.2" r="3.2" fill="#7D55C7"/><circle cx="456.0" cy="347.8" r="3.2" fill="#7D55C7"/><circle cx="466.7" cy="380.9" r="3.2" fill="#7D55C7"/><circle cx="477.3" cy="366.2" r="3.2" fill="#7D55C7"/><circle cx="488.0" cy="347.8" r="3.2" fill="#7D55C7"/><circle cx="498.7" cy="340.4" r="3.2" fill="#7D55C7"/><circle cx="509.3" cy="329.4" r="3.2" fill="#7D55C7"/><circle cx="520.0" cy="336.7" r="3.2" fill="#7D55C7"/><text x="650" y="302" font-size="22" fill="#1F1E1B" text-anchor="middle" >order 4</text><circle cx="570.0" cy="322.0" r="3.2" fill="#7D55C7"/><circle cx="580.7" cy="325.7" r="3.2" fill="#7D55C7"/><circle cx="591.3" cy="322.0" r="3.2" fill="#7D55C7"/><circle cx="602.0" cy="325.7" r="3.2" fill="#7D55C7"/><circle cx="612.7" cy="322.0" r="3.2" fill="#7D55C7"/><circle cx="623.3" cy="340.4" r="3.2" fill="#7D55C7"/><circle cx="634.0" cy="329.4" r="3.2" fill="#7D55C7"/><circle cx="644.7" cy="336.7" r="3.2" fill="#7D55C7"/><circle cx="655.3" cy="347.8" r="3.2" fill="#7D55C7"/><circle cx="666.0" cy="380.9" r="3.2" fill="#7D55C7"/><circle cx="676.7" cy="366.2" r="3.2" fill="#7D55C7"/><circle cx="687.3" cy="347.8" r="3.2" fill="#7D55C7"/><circle cx="698.0" cy="340.4" r="3.2" fill="#7D55C7"/><circle cx="708.7" cy="366.2" r="3.2" fill="#7D55C7"/><circle cx="719.3" cy="336.7" r="3.2" fill="#7D55C7"/><circle cx="730.0" cy="340.4" r="3.2" fill="#7D55C7"/><text x="860" y="302" font-size="22" fill="#1F1E1B" text-anchor="middle" >the real piece</text><circle cx="780.0" cy="322.0" r="3.2" fill="#7D55C7"/><circle cx="790.7" cy="325.7" r="3.2" fill="#7D55C7"/><circle cx="801.3" cy="322.0" r="3.2" fill="#7D55C7"/><circle cx="812.0" cy="325.7" r="3.2" fill="#7D55C7"/><circle cx="822.7" cy="322.0" r="3.2" fill="#7D55C7"/><circle cx="833.3" cy="340.4" r="3.2" fill="#7D55C7"/><circle cx="844.0" cy="329.4" r="3.2" fill="#7D55C7"/><circle cx="854.7" cy="336.7" r="3.2" fill="#7D55C7"/><circle cx="865.3" cy="347.8" r="3.2" fill="#7D55C7"/><circle cx="876.0" cy="380.9" r="3.2" fill="#7D55C7"/><circle cx="886.7" cy="366.2" r="3.2" fill="#7D55C7"/><circle cx="897.3" cy="347.8" r="3.2" fill="#7D55C7"/><circle cx="908.0" cy="340.4" r="3.2" fill="#7D55C7"/><circle cx="918.7" cy="366.2" r="3.2" fill="#7D55C7"/><circle cx="929.3" cy="351.5" r="3.2" fill="#7D55C7"/><circle cx="940.0" cy="340.4" r="3.2" fill="#7D55C7"/></svg>
+  <p style="font-size:22px;margin-top:4px">First test: four settings, 24 young and 24 older listeners, decision rule set before recording. <span class="status open">Planned</span></p>
+  <aside class="notes">[minute 24.5 of 29] Surprise here comes from a listener model (as in Kern) computed on each stimulus, not from the generator. If the curve is flat after controlling intervals and onsets, surprise was a proxy for something else. Either outcome is informative.</aside>
+</section>
+
+<section data-sec="75">
+  <span class="mark">5 What becomes possible</span>
+  <h2>Close the loop: the brain's response chooses the next phrase of music <span class="status open">Vision</span></h2>
+  <div class="audio-row"><button class="play" data-audio="../shared/audio/mg_adapt_mockup.mp3">play</button><span>the same piece moving through three settings</span></div>
+  <div class="fp"><div class="f" style="width:520px"><img class="ph" src="../shared/figs/photos/eeg_experiment.jpg" alt="A listener in an EEG cap"></div><div class="p"><svg class="fig" viewBox="0 0 560 380" style="width:560px"><path d="M60,300 A220,220 0 0 1 500,300" fill="none" stroke="#ACA39A" stroke-width="10"/><text x="41.31807432037928" y="213.1268835952801" font-size="22" fill="#1F1E1B" text-anchor="middle" >order 0</text><text x="280.0" y="46.0" font-size="22" fill="#1F1E1B" text-anchor="middle" >order 1</text><text x="518.6819256796207" y="213.12688359528016" font-size="22" fill="#1F1E1B" text-anchor="middle" >Beethoven</text><g data-accent="1"><g class="fragment fade-in-then-out" data-fragment-index="1"><line x1="280" y1="300" x2="101.5" y2="235.0" stroke="#F76902" stroke-width="5"/><circle cx="280" cy="300" r="12" fill="#F76902"/></g><g class="fragment fade-in-then-out" data-fragment-index="2"><line x1="280" y1="300" x2="280.0" y2="110.0" stroke="#F76902" stroke-width="5"/><circle cx="280" cy="300" r="12" fill="#F76902"/></g><g class="fragment" data-fragment-index="3"><line x1="280" y1="300" x2="458.5" y2="235.0" stroke="#F76902" stroke-width="5"/><circle cx="280" cy="300" r="12" fill="#F76902"/></g></g><text x="280" y="350" font-size="18" fill="#5F5D50" text-anchor="middle" >staged mock up: the dial follows a script, not EEG</text></svg></div></div>
+  <p class="ink2" style="font-size:20px;margin-top:6px">Generator, listener, EEG, model of the brain: the loop that picks the next phrase. Over whole phrases or sessions, not single notes.</p>
+  <aside class="notes">[minute 25.2 of 29] The future picture. Each piece of the loop exists today: generators with settable properties, EEG surprise responses, models of the brain. What is missing is putting them in one loop, with the settings logged as the dose. Vision, not a result. Say: the hard part is reading the brain fast enough, single trials are noisy, so the loop will first work over whole phrases or sessions.</aside>
+</section>
+
+<section data-sec="50">
+  <span class="mark">5 What becomes possible</span>
+  <h2>One day a music therapy could read like a prescription <span class="status open">Vision</span></h2>
+  <div class="fp">
+    <div class="f"><svg class="fig" viewBox="0 0 760 400" style="width:760px"><rect x="0" y="0" width="760" height="400" rx="6" fill="#FFFFFF" stroke="#ACA39A"/><text x="30" y="56" font-size="44" fill="#1F1E1B" text-anchor="start" font-style="italic">Rx</text><text x="110" y="52" font-size="26" fill="#1F1E1B" text-anchor="start" >Music dose, week 3</text><text x="110" y="80" font-size="19" fill="#5F5D50" text-anchor="start" >example: a listener, 81, moderate dementia</text><line x1="30" y1="104" x2="730" y2="104" stroke="#D7D2CB"/><text x="30" y="146" font-size="22" fill="#5F5D50" text-anchor="start" >length</text><text x="260" y="146" font-size="24" fill="#1F1E1B" text-anchor="start" >20 min, after lunch</text><text x="30" y="192" font-size="22" fill="#5F5D50" text-anchor="start" >predictability</text><text x="260" y="192" font-size="24" fill="#1F1E1B" text-anchor="start" >order 2, familiar contour</text><text x="30" y="238" font-size="22" fill="#5F5D50" text-anchor="start" >tempo</text><text x="260" y="238" font-size="24" fill="#1F1E1B" text-anchor="start" >72 bpm, steady beat</text><text x="30" y="284" font-size="22" fill="#5F5D50" text-anchor="start" >timbre</text><text x="260" y="284" font-size="24" fill="#1F1E1B" text-anchor="start" >piano and voice</text><text x="30" y="330" font-size="22" fill="#5F5D50" text-anchor="start" >adjust</text><text x="260" y="330" font-size="24" fill="#1F1E1B" text-anchor="start" >by her response, weekly</text><g data-accent="1"><line x1="260" y1="340" x2="560" y2="340" stroke="#F76902" stroke-width="3"/></g></svg></div>
+    <div class="p">
+      <p class="key">Every line is a setting a generator could hold</p>
+      <p class="tldr">Today a trial reports a playlist. A dial lets it report a dose.</p>
+      <p class="ink2" style="font-size:21px">The same dial could be read out with EEG, heart rate, skin conductance or sleep.</p>
+    </div>
+  </div>
+  <p class="cap">fictional example</p>
+  <aside class="notes">[minute 26.4 of 29] Fictional example patient, a vision of reporting, not a treatment claim. The point: each line is a parameter we can set, log and repeat.</aside>
+</section>
+
+<section data-sparse="1" data-sec="65">
+  <span class="mark">5 What becomes possible · Next month</span>
+  <h2>Three experiments you could run next month with these stimuli</h2>
+  <div class="cols" style="margin-top:10px">
+    <div><p class="key">EEG lab</p><p class="tldr">three orders of the same notes, your own TRF</p>
+      <div class="audio-row"><button class="play" data-audio="../shared/audio/fe_shuffled.mp3">play</button><button class="play" data-audio="../shared/audio/fe_order1.mp3">play</button><button class="play" data-audio="../shared/audio/fe_real.mp3">play</button></div></div>
+    <div><p class="key">ECG or wearables lab</p><p class="tldr">three tempi, heart rate and skin conductance, longer versions on request</p>
+      <div class="audio-row"><button class="play" data-audio="../shared/audio/mg_tempo_slow.mp3">play</button><button class="play" data-audio="../shared/audio/mg_tempo_medium.mp3">play</button><button class="play" data-audio="../shared/audio/mg_tempo_fast.mp3">play</button></div></div>
+    <div><p class="key">Clinical team</p><p class="tldr">log the settings of whatever music you already play</p></div>
+  </div>
+  <aside class="notes">[minute 27.2 of 29] Each is open, no result claimed. The QR on the last slide points to the same page.</aside>
+</section>
+
+<section data-sec="60">
+  <span class="mark">Close</span>
+  <h2>Next time she sings, we choose the song, and her brain shows us what she responds to <span class="status open">Vision</span></h2>
+  <div class="fp">
+    <div class="f" style="width:520px"><img class="ph" src="../shared/figs/photos/older_adults_choir.jpg" alt="Older adults singing together"></div>
+    <div class="p">
+      <p class="ink2" style="font-size:20px;margin:0 0 10px 0">We can read it. We cannot steer it yet. Generators begin to give us the dial.</p>
+      <p class="key accent" style="font-size:24px">We need an EEG or physiology lab with older or hearing impaired listeners</p>
+      <div class="audio-row" style="margin-top:14px"><button class="play" data-audio="../shared/audio/bellier_nonlinear.mp3">play</button><span>once more, the song as the brain played it</span></div>
+      <div style="display:flex;gap:18px;align-items:center;margin-top:16px"><img class="photo" src="../shared/figs/qr_stimuli.svg" style="width:150px;height:150px"><p class="ink2" style="font-size:20px;margin:0">the stimuli, their settings and the demo<br>aquastar.github.io/music-to-brain/stimuli</p></div>
+    </div>
+  </div>
+  <aside class="notes">[minute 28.3 of 29] Say the three findings aloud: music can be read from the brain and models predict it, it is still correlation and clinical certainty is low, generative models make the stimulus a variable. To confirm with Zhiqian: the partner request and the physiology option. Say the first step and what we bring: stimuli with logged settings, analysis code, the pilot window.</aside>
+</section>
+
+<!-- ================= BACKUP -->
+<section data-backup="1">
+  <span class="mark">Backup</span>
+  <p class="thesis">Backup slides</p>
+</section>
+
+<section data-backup="1" data-sec="60">
+  <span class="mark">5 What becomes possible · First step</span>
+  <h2>First step: one EEG study, four dial settings, 48 listeners <span class="status open">Planned</span></h2>
+  <div style="margin-top:30px"><svg class="fig" viewBox="0 0 1150 316" style="width:1150px"><text x="0" y="24" font-size="20" fill="#5F5D50" text-anchor="start" >Stimuli: chains trained on a melody corpus, 20 s each, same timbre, settings logged</text><rect x="0" y="38" width="185" height="100" rx="3" fill="#EFEBE5"/><text x="12" y="64" font-size="21" fill="#1F1E1B" text-anchor="start" >order 0</text><circle cx="16.0" cy="80.4" r="3.2" fill="#7D55C7"/><circle cx="26.0" cy="80.4" r="3.2" fill="#7D55C7"/><circle cx="36.0" cy="82.8" r="3.2" fill="#7D55C7"/><circle cx="46.0" cy="107.1" r="3.2" fill="#7D55C7"/><circle cx="56.0" cy="107.1" r="3.2" fill="#7D55C7"/><circle cx="66.0" cy="87.7" r="3.2" fill="#7D55C7"/><circle cx="76.0" cy="87.7" r="3.2" fill="#7D55C7"/><circle cx="86.0" cy="78.0" r="3.2" fill="#7D55C7"/><circle cx="96.0" cy="87.7" r="3.2" fill="#7D55C7"/><circle cx="106.0" cy="80.4" r="3.2" fill="#7D55C7"/><circle cx="116.0" cy="94.9" r="3.2" fill="#7D55C7"/><circle cx="126.0" cy="90.1" r="3.2" fill="#7D55C7"/><circle cx="136.0" cy="78.0" r="3.2" fill="#7D55C7"/><circle cx="146.0" cy="80.4" r="3.2" fill="#7D55C7"/><circle cx="156.0" cy="94.9" r="3.2" fill="#7D55C7"/><circle cx="166.0" cy="90.1" r="3.2" fill="#7D55C7"/><rect x="200" y="38" width="185" height="100" rx="3" fill="#EFEBE5"/><text x="212" y="64" font-size="21" fill="#1F1E1B" text-anchor="start" >order 1</text><circle cx="216.0" cy="78.0" r="3.2" fill="#7D55C7"/><circle cx="226.0" cy="80.4" r="3.2" fill="#7D55C7"/><circle cx="236.0" cy="78.0" r="3.2" fill="#7D55C7"/><circle cx="246.0" cy="90.1" r="3.2" fill="#7D55C7"/><circle cx="256.0" cy="82.8" r="3.2" fill="#7D55C7"/><circle cx="266.0" cy="87.7" r="3.2" fill="#7D55C7"/><circle cx="276.0" cy="94.9" r="3.2" fill="#7D55C7"/><circle cx="286.0" cy="116.7" r="3.2" fill="#7D55C7"/><circle cx="296.0" cy="107.1" r="3.2" fill="#7D55C7"/><circle cx="306.0" cy="94.9" r="3.2" fill="#7D55C7"/><circle cx="316.0" cy="116.7" r="3.2" fill="#7D55C7"/><circle cx="326.0" cy="107.1" r="3.2" fill="#7D55C7"/><circle cx="336.0" cy="94.9" r="3.2" fill="#7D55C7"/><circle cx="346.0" cy="90.1" r="3.2" fill="#7D55C7"/><circle cx="356.0" cy="82.8" r="3.2" fill="#7D55C7"/><circle cx="366.0" cy="87.7" r="3.2" fill="#7D55C7"/><rect x="400" y="38" width="185" height="100" rx="3" fill="#EFEBE5"/><text x="412" y="64" font-size="21" fill="#1F1E1B" text-anchor="start" >order 4</text><circle cx="416.0" cy="78.0" r="3.2" fill="#7D55C7"/><circle cx="426.0" cy="80.4" r="3.2" fill="#7D55C7"/><circle cx="436.0" cy="78.0" r="3.2" fill="#7D55C7"/><circle cx="446.0" cy="80.4" r="3.2" fill="#7D55C7"/><circle cx="456.0" cy="78.0" r="3.2" fill="#7D55C7"/><circle cx="466.0" cy="90.1" r="3.2" fill="#7D55C7"/><circle cx="476.0" cy="82.8" r="3.2" fill="#7D55C7"/><circle cx="486.0" cy="87.7" r="3.2" fill="#7D55C7"/><circle cx="496.0" cy="94.9" r="3.2" fill="#7D55C7"/><circle cx="506.0" cy="116.7" r="3.2" fill="#7D55C7"/><circle cx="516.0" cy="107.1" r="3.2" fill="#7D55C7"/><circle cx="526.0" cy="94.9" r="3.2" fill="#7D55C7"/><circle cx="536.0" cy="90.1" r="3.2" fill="#7D55C7"/><circle cx="546.0" cy="107.1" r="3.2" fill="#7D55C7"/><circle cx="556.0" cy="87.7" r="3.2" fill="#7D55C7"/><circle cx="566.0" cy="90.1" r="3.2" fill="#7D55C7"/><rect x="600" y="38" width="185" height="100" rx="3" fill="#DCD1EB"/><text x="612" y="64" font-size="21" fill="#1F1E1B" text-anchor="start" >real, unfamiliar</text><text x="612" y="104" font-size="18" fill="#5F5D50" text-anchor="start" >held out melodies,</text><text x="612" y="126" font-size="18" fill="#5F5D50" text-anchor="start" >familiarity rated</text><path d="M810,88 L860,88" stroke="#7C878E" stroke-width="1.5"/><path d="M860,82 L870,88 L860,94 z" fill="#7C878E"/><rect x="880" y="38" width="270" height="100" rx="3" fill="#EFEBE5"/><text x="895" y="66" font-size="21" fill="#1F1E1B" text-anchor="start" >24 young, 24 older</text><text x="895" y="94" font-size="19" fill="#5F5D50" text-anchor="start" >hearing screened</text><text x="895" y="120" font-size="19" fill="#5F5D50" text-anchor="start" >64 channel EEG, 40 min</text><text x="0" y="186" font-size="19" fill="#5F5D50" text-anchor="start" >Outcome</text><text x="0" y="216" font-size="23" fill="#1F1E1B" text-anchor="start" >surprise gain in a TRF over envelope, onsets and interval size</text><text x="0" y="260" font-size="19" fill="#5F5D50" text-anchor="start" >Test and decision rule, set before recording</text><g data-accent="1"><text x="0" y="292" font-size="23" fill="#1F1E1B">a linear trend across order 0, 1, 4 in both groups</text><line x1="0" y1="302" x2="520" y2="302" stroke="#F76902" stroke-width="3"/></g></svg></div>
+  <p class="cap" style="margin-top:14px">Planned design, group size to be fixed from the pilot</p>
+  <aside class="notes">Concrete enough for an EEG lab to say yes. The pilot (ds005876, 29 listeners) gives the effect window and size. Group size about 24 per group will be fixed from that pilot, not presented as a power result. Older adults first, because clinical evidence is weakest there, and hearing aid users later because compression changes the acoustic baseline. Group size about 24 per group, fixed from the pilot (my ds005876 analysis), not a power result. Year 2: the same protocol in a hearing loss or dementia cohort. One line from backup: what to measure is alignment that survives an acoustic baseline. To confirm with Zhiqian (options, not on the slide): hearing screening, a linear trend test across orders, z scoring surprise within condition, an attention probe, stimulus counts, the clinical population and outcome. To confirm with Zhiqian (all on the slide under Planned): corpus trained chains instead of Für Elise, unfamiliar held out real melodies with a familiarity rating, hearing screening, the linear trend test and decision rule. Option: also record heart rate and skin conductance for the ECG and wearables part of the room.</aside>
+</section>
+
+<section data-backup="1" data-sec="50">
+  <span class="mark">5 What becomes possible</span>
+  <h2>Three things a music dial makes possible <span class="status open">Vision</span></h2>
+  <div class="photos tall">
+    <figure><img class="ph" src="../shared/figs/photos/gait_rehab.jpg" alt="Rehabilitation session"><figcaption>A music dose for rehabilitation and dementia<span>settings written down, adapted to the person</span></figcaption></figure>
+    <figure><img class="ph" src="../shared/figs/photos/eeg_experiment.jpg" alt="EEG experiment"><figcaption>A standard music probe for EEG<span>like gratings in vision research</span></figcaption></figure>
+    <figure><img class="ph" src="../shared/figs/photos/child_piano_lesson.jpg" alt="Child at the piano"><figcaption>Music tuned to a listener<span>hearing, age, taste</span></figcaption></figure>
+  </div>
+  <p class="ink2" style="font-size:21px;margin-top:10px">The same dial could be tested with heart rate, skin conductance and sleep EEG.</p>
+  <aside class="notes">Three pictures to take home. Keep each to one sentence. All three are visions, the protocol on the next slide is the first step.</aside>
+</section>
+
+<section data-backup="1" data-sec="40">
+  <span class="mark">2 What we can see · Encode</span>
+  <h2>EEG tracks how surprised you are, note by note</h2>
+  <div class="fp">
+    <div class="f"><svg class="fig" viewBox="0 0 700 350" style="width:700px"><text x="0" y="22" font-size="20" fill="#5F5D50" text-anchor="start" >EEG prediction correlation, mean of 20 listeners</text><text x="0" y="70" font-size="24" fill="#1F1E1B" text-anchor="start" >sound only</text><g><rect x="250" y="46" width="308.2" height="34" fill="#ACA39A"/><text x="566.2222222222222" y="70" font-size="23" fill="#1F1E1B" text-anchor="start" >0.073</text></g><text x="0" y="220" font-size="24" fill="#1F1E1B" text-anchor="start" >sound plus surprise</text><g data-accent="1"><rect x="250" y="196" width="329.3" height="34" fill="#F76902"/><text x="587.3333333333334" y="220" font-size="23" fill="#1F1E1B" text-anchor="start" >0.078</text></g></svg></div>
+    <div class="p">
+      <p class="key">Small but reliable</p>
+      <ul><li>Seen in most of the 20 listeners</li><li>Stronger in musicians</li></ul>
+    </div>
+  </div>
+  <div class="ref"><a href="https://doi.org/10.7554/eLife.51784">Di Liberto et al., eLife 2020</a></div>
+  <aside class="notes">Means read approximately from Fig 2A. The effect sits over central channels about 200 ms after each note and was confirmed with ECoG. Prediction correlations are small in absolute terms, this is normal for continuous EEG. The point is the reliable difference.</aside>
+</section>
+
+<section data-backup="1" data-sec="45">
+  <span class="mark">3 The catch</span>
+  <h2>In a reconstruction, the brain supplies 128 numbers. The generator supplies the rest</h2>
+  <svg class="fig" viewBox="0 0 1152 360"><g data-accent="1">
+    <rect x="20" y="110" width="230" height="110" rx="3" fill="#EFEBE5"/><text x="135" y="172" font-size="24" text-anchor="middle" fill="#1F1E1B">fMRI</text>
+    <path d="M250,165 L360,165" stroke="#7C878E" stroke-width="1.5"/>
+    <rect x="370" y="145" width="90" height="40" rx="3" fill="#FAD6BA"/><text x="415" y="172" font-size="20" text-anchor="middle" fill="#1F1E1B">128</text>
+    <text x="415" y="215" font-size="18" text-anchor="middle" fill="#5F5D50">numbers</text>
+    <path d="M460,165 L570,165" stroke="#7C878E" stroke-width="1.5"/>
+    <rect x="580" y="50" width="380" height="230" rx="3" fill="#DCD1EB"/><text x="770" y="160" font-size="28" text-anchor="middle" fill="#1F1E1B">music generator</text>
+    <text x="770" y="192" font-size="20" text-anchor="middle" fill="#5F5D50">trained on hundreds of thousands of hours</text>
+    <path d="M960,165 L1070,165" stroke="#7C878E" stroke-width="1.5"/><path d="M1062,159 L1074,165 L1062,171 z" fill="#7C878E"/>
+    <text x="1080" y="172" font-size="22" fill="#1F1E1B">audio</text>
+    <g class="fragment" data-fragment-index="1"><text x="20" y="330" font-size="26" fill="#1F1E1B">The brain picks a direction. The prior fills in the music.</text></g>
+  </g></svg>
+  <div class="ref"><a href="https://doi.org/10.1038/s41467-025-66731-7">Denk, Takagi et al., Nat Commun 2025</a><span class="sep"></span><a href="https://arxiv.org/abs/2301.11325">Agostinelli et al. 2023</a></div>
+  <aside class="notes">MusicLM was trained on about 280 thousand hours of music. The brain supplies 128 numbers. Not a criticism of the paper, which says this itself. It is a criticism of reading reconstruction as understanding.</aside>
+</section>
+
+<section data-backup="1">
+  <span class="mark">Backup · Questions</span>
+  <h2>Likely questions and where the answer is</h2>
+  <ol style="font-size:22px">
+    <li>Has knob control of music been done before? ERAN and MMN studies, knob table</li>
+    <li>Does MusicGen beat an untrained model? Per note check, shuffle plot</li>
+    <li>Is the reconstruction just the generator? The 128 numbers slide, Denk bars</li>
+    <li>Can a generator change style, not only tempo? Steering slide (under review)</li>
+    <li>Why is the stimulus the bottleneck, not bias or sample size? Cochrane reasons slide</li>
+    <li>Does music therapy work at all? Five reviews and the dementia forest plot</li>
+  </ol>
+  <aside class="notes">Index for Q and A. Jump with the slide overview (press O).</aside>
+</section>
+
+<section data-backup="1" data-sec="45">
+  <span class="mark">2 What we can see · Decode</span>
+  <h2>Twenty nine epilepsy patients listened to a Pink Floyd song with electrodes on the cortex</h2>
+  <div class="fp">
+    <div class="f"><img src="../shared/figs/papers/bellier_xray.png" data-evidence style="width:470px"></div>
+    <div class="p">
+      <p class="key">A rare window: ECoG during surgery planning</p>
+      
+      <ul><li>347 of 2,668 electrodes tracked the song</li><li>One song, three minutes</li></ul>
+      <div class="audio-row"><button class="play" data-audio="../shared/audio/bellier_linear.mp3">play</button><span>a simpler decoder</span></div>
+      <div class="people"><figure><img src="../shared/figs/people/knight.jpg" alt="Robert Knight"><figcaption>Robert Knight<span>UC Berkeley, senior author</span></figcaption></figure></div>
+    </div>
+  </div>
+  <div class="ref"><a href="https://doi.org/10.1371/journal.pbio.3002176">Bellier et al., PLoS Biol 2023</a></div>
+  <aside class="notes">The grids were there for clinical reasons, listening was the experiment. Most tracking electrodes sit over the superior temporal gyrus, the right side mattered most. Another Brick in the Wall, Part 1.</aside>
+</section>
+
+<section data-backup="1" data-sec="50">
+  <span class="mark">5 Music you can experiment on · Own work</span>
+  <h2>Remembering a single note already tells six traditions apart <span class="status prog">In progress</span></h2>
+  <div class="fp">
+    <div class="f"><svg class="fig" viewBox="0 0 620 420" style="width:620px"><line x1="80" y1="360.0" x2="610" y2="360.0" stroke="#ACA39A"/><line x1="80" y1="332.8" x2="610" y2="332.8" stroke="#ACA39A" stroke-dasharray="4 5"/><text x="608" y="324.8" font-size="18" fill="#5F5D50" text-anchor="end" >majority class 21%</text><text x="70" y="343.3333333333333" font-size="18" fill="#5F5D50" text-anchor="end" >20%</text><text x="70" y="207.33333333333334" font-size="18" fill="#5F5D50" text-anchor="end" >50%</text><text x="70" y="71.33333333333334" font-size="18" fill="#5F5D50" text-anchor="end" >80%</text><polyline fill="none" stroke="#7D55C7" stroke-width="2.5" points="120.0,305.6 230.0,146.9 340.0,101.6 450.0,101.6 560.0,97.1"/><circle cx="120.0" cy="305.6" r="7" fill="#7D55C7"/><circle cx="230.0" cy="146.9" r="7" fill="#7D55C7"/><circle cx="340.0" cy="101.6" r="7" fill="#7D55C7"/><circle cx="450.0" cy="101.6" r="7" fill="#7D55C7"/><circle cx="560.0" cy="97.1" r="7" fill="#7D55C7"/><g data-accent="1"><circle cx="230.0" cy="110.7" r="8" fill="#F76902"/><text x="216.0" y="96.66666666666667" font-size="22" fill="#1F1E1B" text-anchor="end" >70.2%</text></g><text x="120.0" y="388.0" font-size="19" fill="#5F5D50" text-anchor="middle" >0</text><text x="230.0" y="388.0" font-size="19" fill="#5F5D50" text-anchor="middle" >1</text><text x="340.0" y="388.0" font-size="19" fill="#5F5D50" text-anchor="middle" >2</text><text x="450.0" y="388.0" font-size="19" fill="#5F5D50" text-anchor="middle" >3</text><text x="560.0" y="388.0" font-size="19" fill="#5F5D50" text-anchor="middle" >variable</text><text x="350.0" y="410" font-size="20" fill="#5F5D50" text-anchor="middle" >Markov order (notes remembered)</text><text x="560.0" y="83.06666666666666" font-size="19" fill="#5F5D50" text-anchor="middle" >likelihood</text></svg></div>
+    <div class="p">
+      <p class="ink2" style="font-size:22px">style identified from a 12 by 12 transition table, majority class 21%</p>
+      <p class="tldr" style="margin-top:20px">Order 0 knows only which notes occur. Order 1 knows which note follows which. That one step is the big jump.</p>
+    </div>
+  </div>
+  <div class="ref">Chen et al., in preparation</div>
+  <aside class="notes">992 pieces, six styles, five fold cross validation. Blue: likelihood classifier. Orange: table features with logistic regression. Check 70.2 against the latest run before the talk (an older note said 70.9). Redrawn from his accuracy_by_order figure (pitch class panel), values approximate. 70.2 still to confirm against the latest run.</aside>
+</section>
+
+<section data-backup="1" data-sec="50">
+  <span class="mark">5 Music you can experiment on</span>
+  <h2>Inside a large music generator, a style can be removed cleanly. Adding one does not work yet <span class="status rev">Under review</span></h2>
+  <svg class="fig" viewBox="0 0 1152 360"><g data-accent="1">
+    <rect x="20" y="20" width="520" height="280" rx="3" fill="#EFEBE5"/><rect x="610" y="20" width="520" height="280" rx="3" fill="#EFEBE5"/>
+    <text x="280" y="60" font-size="24" text-anchor="middle" fill="#1F1E1B">remove a style</text><text x="870" y="60" font-size="24" text-anchor="middle" fill="#1F1E1B">add a style</text>
+    <path d="M130,240 C200,140 300,270 430,170" fill="none" stroke="#7D55C7" stroke-width="2.5"/>
+    <path d="M720,240 C790,140 890,270 1020,170" fill="none" stroke="#7D55C7" stroke-width="2.5"/>
+    <g class="fragment" data-fragment-index="1"><path d="M280,215 L280,110" stroke="#F76902" stroke-width="2.5"/><path d="M274,118 L280,104 L286,118 z" fill="#F76902"/><text x="280" y="285" font-size="21" text-anchor="middle" fill="#1F1E1B">leaves easily, still music</text></g>
+    <g class="fragment" data-fragment-index="2"><path d="M800,100 L930,250" stroke="#DA291C" stroke-width="2.5" stroke-dasharray="8 5"/><text x="870" y="285" font-size="21" text-anchor="middle" fill="#1F1E1B">the push misses the thin set</text></g>
+    <g class="fragment" data-fragment-index="3"><text x="20" y="345" font-size="25" fill="#1F1E1B">Knobs exist, but they are not symmetric. We must know which ones are real.</text></g>
+  </g></svg>
+  <p class="illus" style="margin-top:4px">Schematic, not data</p>
+  <div class="ref">Co authored work under review, MusicGen small and medium<span class="sep"></span><a href="https://arxiv.org/abs/2306.05284">Copet et al. 2023</a></div>
+  <aside class="notes">A style is a thin set of trajectories, not a direction. For brain experiments: removal gives a clean control condition, addition does not yet. To confirm with Zhiqian: the two plain sentences in the headline against the under review paper. For brain studies, removal gives a clean control condition.</aside>
+</section>
+
+<section data-backup="1" data-sec="60">
+  <span class="mark">1 Why music</span>
+  <h2>The brain regions that hold long known music show the least damage in Alzheimer's</h2>
+  <svg class="fig" viewBox="0 0 1152 380">
+    <rect x="0" y="30" width="520" height="150" rx="3" fill="#DCD1EB"/>
+    <text x="24" y="78" font-size="26" fill="#1F1E1B">Young adults, 7T fMRI</text>
+    <text x="24" y="114" font-size="21" fill="#5F5D50">long known songs activate caudal anterior</text>
+    <text x="24" y="142" font-size="21" fill="#5F5D50">cingulate and ventral pre SMA</text>
+    <path d="M530,105 L600,105" stroke="#7C878E" stroke-width="1.5"/><path d="M600,99 L610,105 L600,111 z" fill="#7C878E"/>
+    <rect x="620" y="30" width="530" height="150" rx="3" fill="#EFEBE5"/>
+    <text x="644" y="78" font-size="26" fill="#1F1E1B">Alzheimer's patients</text>
+    <text x="644" y="114" font-size="21" fill="#5F5D50">the same regions show the least atrophy</text>
+    <text x="644" y="142" font-size="21" fill="#5F5D50">and least metabolic loss</text>
+    <text x="0" y="250" font-size="27" fill="#1F1E1B">The music memory network is reached late, so the hymn survives.</text>
+    <text x="0" y="290" font-size="20" fill="#5F5D50">32 young adults, 20 patients. Amyloid in these regions is not lower.</text>
+  </svg>
+  <div class="ref"><a href="https://doi.org/10.1093/brain/awv135">Jacobsen et al., Why musical memory can be preserved in advanced Alzheimer's disease, Brain 2015</a></div>
+  <aside class="notes">This is the anatomy behind the hymn. Caveat for Q and A: amyloid in these regions is not lower, the regions are reached late, not spared forever.</aside>
+</section>
+
+<section data-backup="1" data-sec="20" data-auto-animate>
+  <span class="mark">The map</span>
+  <h2>Arrow 1: predict the brain from the music</h2>
+  <svg class="fig map" viewBox="0 -40 1152 510" data-id="fieldmap"><text x="0" y="-12" font-size="24" fill="#5F5D50" text-anchor="start" >We can predict the brain from music. The stimulus was a fixed recording.</text><rect x="80" y="130" width="220" height="100" rx="3" fill="#DCD1EB"/><text x="100" y="174" font-size="28" fill="#1F1E1B" text-anchor="start" >Music</text><text x="100" y="204" font-size="18" fill="#5F5D50" text-anchor="start" >songs, scores, sound</text><rect x="660" y="130" width="220" height="100" rx="3" fill="#EFEBE5"/><text x="680" y="174" font-size="28" fill="#1F1E1B" text-anchor="start" >Brain</text><text x="680" y="204" font-size="18" fill="#5F5D50" text-anchor="start" >EEG, MEG, fMRI, ECoG</text><rect x="440" y="350" width="200" height="84" rx="3" fill="#EFEBE5"/><text x="460" y="394" font-size="28" fill="#1F1E1B" text-anchor="start" >Models</text><text x="460" y="424" font-size="18" fill="#5F5D50" text-anchor="start" >audio and music AI</text><rect x="960" y="130" width="170" height="100" rx="3" fill="#EFEBE5"/><text x="980" y="174" font-size="28" fill="#1F1E1B" text-anchor="start" >Patients</text><text x="980" y="204" font-size="18" fill="#5F5D50" text-anchor="start" >therapy outcomes</text><g data-accent="1"><path d="M300,150 C420,60 560,60 660,140" fill="none" stroke="#F76902" stroke-width="2.5"/><path d="M660.0,140.0 L646.1,136.6 L653.6,127.2 z" fill="#F76902"/></g><text x="480" y="52" font-size="22" fill="#1F1E1B" text-anchor="middle" font-weight="600">1  Encode</text><text x="480" y="76" font-size="18" fill="#1F1E1B" text-anchor="middle" >predict the brain from the music</text><g><path d="M660,210 C560,290 420,290 300,215" fill="none" stroke="#ACA39A" stroke-width="1.5"/><path d="M300.0,215.0 L314.2,216.8 L307.8,227.0 z" fill="#ACA39A"/></g><text x="480" y="300" font-size="20" fill="#5F5D50" text-anchor="middle" >2  Decode</text><text x="480" y="324" font-size="18" fill="#5F5D50" text-anchor="middle" >play the music back from the brain</text><g><path d="M770,250 C770,360 730,392 650,392" fill="none" stroke="#ACA39A" stroke-width="1.5"/><path d="M650.0,392.0 L663.0,386.0 L663.0,398.0 z" fill="#ACA39A"/></g><text x="800" y="420" font-size="20" fill="#5F5D50" text-anchor="start" >3  Compare</text><text x="800" y="444" font-size="18" fill="#5F5D50" text-anchor="start" >does a model resemble the brain?</text><g><path d="M880,180 L955,180" fill="none" stroke="#ACA39A" stroke-width="1.5"/><path d="M955.0,180.0 L942.0,186.0 L942.0,174.0 z" fill="#ACA39A"/></g><text x="960" y="270" font-size="20" fill="#5F5D50" text-anchor="start" >4  Treat</text><text x="960" y="294" font-size="18" fill="#5F5D50" text-anchor="start" >does music help patients?</text><g><path d="M440,392 C260,392 190,330 190,240" fill="none" stroke="#ACA39A" stroke-width="1.5" stroke-dasharray="6 6"/><path d="M190.0,240.0 L196.0,253.0 L184.0,253.0 z" fill="#ACA39A"/></g><text x="40" y="440" font-size="20" fill="#5F5D50" text-anchor="start" >5  Control</text><text x="40" y="464" font-size="18" fill="#5F5D50" text-anchor="start" >set the music, one knob at a time</text></svg>
+  <aside class="notes">Encoding models. Feed features of the music in, predict EEG out. The test is always the gain over an acoustic baseline.</aside>
+</section>
+
+<section data-backup="1" data-sec="55">
+  <span class="mark">2 What we can see · Encode</span>
+  <h2>Di Liberto's test: does EEG need surprise, beyond the sound itself?</h2>
+  <div class="fp">
+    <div class="f"><img data-evidence src="../shared/figs/papers/diliberto_pipeline_b.png" style="width:700px"></div>
+    <div class="p">
+      <p class="key">Two models, one difference</p>
+      <p class="tldr">Predict EEG from acoustics (A), then from acoustics plus surprise (AM). The gap is the brain's share of expectation.</p>
+      <div class="people"><figure><img src="../shared/figs/people/diliberto.jpg" alt="Giovanni Di Liberto"><figcaption>Giovanni Di Liberto<span>Trinity College Dublin</span></figcaption></figure></div>
+    </div>
+  </div>
+  <div class="ref"><a href="https://doi.org/10.7554/eLife.51784">Di Liberto et al., Cortical encoding of melodic expectations in human temporal cortex, eLife 2020</a></div>
+  <aside class="notes">TRF: a linear filter from stimulus features to each EEG channel over time lags. Surprise came from IDyOM, a variable order Markov model of melody. 20 participants, EEG, plus ECoG patients.</aside>
+</section>
+
+<section data-backup="1" data-sec="15" data-auto-animate>
+  <span class="mark">The map</span>
+  <h2>Arrow 2: play the music back from the brain</h2>
+  <svg class="fig map" viewBox="0 -40 1152 510" data-id="fieldmap"><text x="0" y="-12" font-size="24" fill="#5F5D50" text-anchor="start" >We can play music back from the brain. The stimulus was one fixed song.</text><rect x="80" y="130" width="220" height="100" rx="3" fill="#DCD1EB"/><text x="100" y="174" font-size="28" fill="#1F1E1B" text-anchor="start" >Music</text><text x="100" y="204" font-size="18" fill="#5F5D50" text-anchor="start" >songs, scores, sound</text><rect x="660" y="130" width="220" height="100" rx="3" fill="#EFEBE5"/><text x="680" y="174" font-size="28" fill="#1F1E1B" text-anchor="start" >Brain</text><text x="680" y="204" font-size="18" fill="#5F5D50" text-anchor="start" >EEG, MEG, fMRI, ECoG</text><rect x="440" y="350" width="200" height="84" rx="3" fill="#EFEBE5"/><text x="460" y="394" font-size="28" fill="#1F1E1B" text-anchor="start" >Models</text><text x="460" y="424" font-size="18" fill="#5F5D50" text-anchor="start" >audio and music AI</text><rect x="960" y="130" width="170" height="100" rx="3" fill="#EFEBE5"/><text x="980" y="174" font-size="28" fill="#1F1E1B" text-anchor="start" >Patients</text><text x="980" y="204" font-size="18" fill="#5F5D50" text-anchor="start" >therapy outcomes</text><g><path d="M300,150 C420,60 560,60 660,140" fill="none" stroke="#ACA39A" stroke-width="1.5"/><path d="M660.0,140.0 L646.1,136.6 L653.6,127.2 z" fill="#ACA39A"/></g><text x="480" y="52" font-size="20" fill="#5F5D50" text-anchor="middle" >1  Encode</text><text x="480" y="76" font-size="18" fill="#5F5D50" text-anchor="middle" >predict the brain from the music</text><g data-accent="1"><path d="M660,210 C560,290 420,290 300,215" fill="none" stroke="#F76902" stroke-width="2.5"/><path d="M300.0,215.0 L314.2,216.8 L307.8,227.0 z" fill="#F76902"/></g><text x="480" y="300" font-size="22" fill="#1F1E1B" text-anchor="middle" font-weight="600">2  Decode</text><text x="480" y="324" font-size="18" fill="#1F1E1B" text-anchor="middle" >play the music back from the brain</text><g><path d="M770,250 C770,360 730,392 650,392" fill="none" stroke="#ACA39A" stroke-width="1.5"/><path d="M650.0,392.0 L663.0,386.0 L663.0,398.0 z" fill="#ACA39A"/></g><text x="800" y="420" font-size="20" fill="#5F5D50" text-anchor="start" >3  Compare</text><text x="800" y="444" font-size="18" fill="#5F5D50" text-anchor="start" >does a model resemble the brain?</text><g><path d="M880,180 L955,180" fill="none" stroke="#ACA39A" stroke-width="1.5"/><path d="M955.0,180.0 L942.0,186.0 L942.0,174.0 z" fill="#ACA39A"/></g><text x="960" y="270" font-size="20" fill="#5F5D50" text-anchor="start" >4  Treat</text><text x="960" y="294" font-size="18" fill="#5F5D50" text-anchor="start" >does music help patients?</text><g><path d="M440,392 C260,392 190,330 190,240" fill="none" stroke="#ACA39A" stroke-width="1.5" stroke-dasharray="6 6"/><path d="M190.0,240.0 L196.0,253.0 L184.0,253.0 z" fill="#ACA39A"/></g><text x="40" y="440" font-size="20" fill="#5F5D50" text-anchor="start" >5  Control</text><text x="40" y="464" font-size="18" fill="#5F5D50" text-anchor="start" >set the music, one knob at a time</text></svg>
+  <aside class="notes">Decoding. Two studies, one invasive, one not.</aside>
+</section>
+
+<section data-backup="1" data-sec="45">
+  <span class="mark">3 The catch · My own data</span>
+  <h2>My own data shows the limit: note by note, MusicGen does no better than an untrained model</h2>
+  <svg class="fig" viewBox="0 0 1000 300" style="width:1000px"><rect x="40.0" y="240.0" width="24.3" height="0.0" fill="#EFEBE5"/><rect x="66.3" y="238.9" width="24.3" height="1.1" fill="#EFEBE5"/><rect x="92.6" y="236.7" width="24.3" height="3.3" fill="#EFEBE5"/><rect x="118.9" y="235.6" width="24.3" height="4.4" fill="#EFEBE5"/><rect x="145.1" y="231.3" width="24.3" height="8.7" fill="#EFEBE5"/><rect x="171.4" y="230.2" width="24.3" height="9.8" fill="#EFEBE5"/><rect x="197.7" y="226.9" width="24.3" height="13.1" fill="#EFEBE5"/><rect x="224.0" y="225.8" width="24.3" height="14.2" fill="#EFEBE5"/><rect x="250.3" y="199.6" width="24.3" height="40.4" fill="#EFEBE5"/><rect x="276.6" y="199.6" width="24.3" height="40.4" fill="#EFEBE5"/><rect x="302.9" y="182.1" width="24.3" height="57.9" fill="#EFEBE5"/><rect x="329.1" y="166.8" width="24.3" height="73.2" fill="#EFEBE5"/><rect x="355.4" y="118.7" width="24.3" height="121.3" fill="#EFEBE5"/><rect x="381.7" y="113.2" width="24.3" height="126.8" fill="#EFEBE5"/><rect x="408.0" y="92.5" width="24.3" height="147.5" fill="#EFEBE5"/><rect x="434.3" y="56.4" width="24.3" height="183.6" fill="#EFEBE5"/><rect x="460.6" y="71.7" width="24.3" height="168.3" fill="#EFEBE5"/><rect x="486.9" y="40.0" width="24.3" height="200.0" fill="#EFEBE5"/><rect x="513.1" y="76.1" width="24.3" height="163.9" fill="#EFEBE5"/><rect x="539.4" y="78.3" width="24.3" height="161.7" fill="#EFEBE5"/><rect x="565.7" y="105.6" width="24.3" height="134.4" fill="#EFEBE5"/><rect x="592.0" y="113.2" width="24.3" height="126.8" fill="#EFEBE5"/><rect x="618.3" y="143.8" width="24.3" height="96.2" fill="#EFEBE5"/><rect x="644.6" y="170.1" width="24.3" height="69.9" fill="#EFEBE5"/><rect x="670.9" y="173.3" width="24.3" height="66.7" fill="#EFEBE5"/><rect x="697.1" y="194.1" width="24.3" height="45.9" fill="#EFEBE5"/><rect x="723.4" y="209.4" width="24.3" height="30.6" fill="#EFEBE5"/><rect x="749.7" y="214.9" width="24.3" height="25.1" fill="#EFEBE5"/><rect x="776.0" y="218.1" width="24.3" height="21.9" fill="#EFEBE5"/><rect x="802.3" y="229.1" width="24.3" height="10.9" fill="#EFEBE5"/><rect x="828.6" y="236.7" width="24.3" height="3.3" fill="#EFEBE5"/><rect x="854.9" y="229.1" width="24.3" height="10.9" fill="#EFEBE5"/><rect x="881.1" y="237.8" width="24.3" height="2.2" fill="#EFEBE5"/><rect x="907.4" y="238.9" width="24.3" height="1.1" fill="#EFEBE5"/><rect x="933.7" y="240.0" width="24.3" height="0.0" fill="#EFEBE5"/><line x1="40" y1="240" x2="960" y2="240" stroke="#ACA39A"/><text x="105.7142857142857" y="266" font-size="18" fill="#5F5D50" text-anchor="middle" >-0.3</text><text x="500.0" y="266" font-size="18" fill="#5F5D50" text-anchor="middle" >0</text><text x="894.2857142857142" y="266" font-size="18" fill="#5F5D50" text-anchor="middle" >0.3</text><text x="500.0" y="294" font-size="19" fill="#5F5D50" text-anchor="middle" >r when surprise and response are shuffled, 2000 times</text><line x1="703.7" y1="30" x2="703.7" y2="240" stroke="#7C878E" stroke-width="2.5" stroke-dasharray="6 5"/><text x="711.7142857142858" y="46" font-size="20" fill="#5F5D50" text-anchor="start" >untrained model 0.155</text><g data-accent="1"><line x1="609.1" y1="14" x2="609.1" y2="240" stroke="#F76902" stroke-width="2.5"/><text x="601.0857142857143" y="28" font-size="20" fill="#1F1E1B" text-anchor="end" >MusicGen 0.083</text></g></svg>
+  <p style="font-size:24px;margin-top:10px">Both sit inside the shuffles: MusicGen 786 of 2000, untrained 215 of 2000. 105 notes, 3 fixed songs.</p>
+  <aside class="notes">Numbers come from src/eeg_pernote.py, the same rule as the demo scatter. Neither r is outside the shuffle distribution. Single note responses are noisy: a new note every 0.2 to 0.4 s. Decoding as a whole rests on few listeners and few songs: 5 for the fMRI reconstructions, one song for Bellier, 10 to 20 in public music EEG sets. Last crack before the clinic.</aside>
+</section>
+
+<section data-backup="1" data-sec="20">
+  <span class="mark">3 The catch</span>
+  <p class="thesis">Everything so far is a correlation.<br><span class="ink2">To test a cause, something has to be changed.</span></p>
+  <aside class="notes">Third crack. Then turn to the clinic, where people do change things.</aside>
+</section>
+
+<section data-backup="1" data-sec="20" data-auto-animate>
+  <span class="mark">The map</span>
+  <h2>Arrow 4: does music help patients?</h2>
+  <svg class="fig map" viewBox="0 -40 1152 510" data-id="fieldmap"><text x="0" y="-12" font-size="24" fill="#5F5D50" text-anchor="start" >We can see the musical brain. The stimulus is still fixed.</text><rect x="80" y="130" width="220" height="100" rx="3" fill="#DCD1EB"/><text x="100" y="174" font-size="28" fill="#1F1E1B" text-anchor="start" >Music</text><text x="100" y="204" font-size="18" fill="#5F5D50" text-anchor="start" >songs, scores, sound</text><rect x="660" y="130" width="220" height="100" rx="3" fill="#EFEBE5"/><text x="680" y="174" font-size="28" fill="#1F1E1B" text-anchor="start" >Brain</text><text x="680" y="204" font-size="18" fill="#5F5D50" text-anchor="start" >EEG, MEG, fMRI, ECoG</text><rect x="440" y="350" width="200" height="84" rx="3" fill="#EFEBE5"/><text x="460" y="394" font-size="28" fill="#1F1E1B" text-anchor="start" >Models</text><text x="460" y="424" font-size="18" fill="#5F5D50" text-anchor="start" >audio and music AI</text><rect x="960" y="130" width="170" height="100" rx="3" fill="#EFEBE5"/><text x="980" y="174" font-size="28" fill="#1F1E1B" text-anchor="start" >Patients</text><text x="980" y="204" font-size="18" fill="#5F5D50" text-anchor="start" >therapy outcomes</text><g><path d="M300,150 C420,60 560,60 660,140" fill="none" stroke="#ACA39A" stroke-width="1.5"/><path d="M660.0,140.0 L646.1,136.6 L653.6,127.2 z" fill="#ACA39A"/></g><text x="480" y="52" font-size="20" fill="#5F5D50" text-anchor="middle" >1  Encode</text><text x="480" y="76" font-size="18" fill="#5F5D50" text-anchor="middle" >predict the brain from the music</text><g><path d="M660,210 C560,290 420,290 300,215" fill="none" stroke="#ACA39A" stroke-width="1.5"/><path d="M300.0,215.0 L314.2,216.8 L307.8,227.0 z" fill="#ACA39A"/></g><text x="480" y="300" font-size="20" fill="#5F5D50" text-anchor="middle" >2  Decode</text><text x="480" y="324" font-size="18" fill="#5F5D50" text-anchor="middle" >play the music back from the brain</text><g><path d="M770,250 C770,360 730,392 650,392" fill="none" stroke="#ACA39A" stroke-width="1.5"/><path d="M650.0,392.0 L663.0,386.0 L663.0,398.0 z" fill="#ACA39A"/></g><text x="800" y="420" font-size="20" fill="#5F5D50" text-anchor="start" >3  Compare</text><text x="800" y="444" font-size="18" fill="#5F5D50" text-anchor="start" >does a model resemble the brain?</text><g data-accent="1"><path d="M880,180 L955,180" fill="none" stroke="#F76902" stroke-width="2.5"/><path d="M955.0,180.0 L942.0,186.0 L942.0,174.0 z" fill="#F76902"/></g><text x="960" y="270" font-size="22" fill="#1F1E1B" text-anchor="start" font-weight="600">4  Treat</text><text x="960" y="294" font-size="18" fill="#1F1E1B" text-anchor="start" >does music help patients?</text><g><path d="M440,392 C260,392 190,330 190,240" fill="none" stroke="#ACA39A" stroke-width="1.5" stroke-dasharray="6 6"/><path d="M190.0,240.0 L196.0,253.0 L184.0,253.0 z" fill="#ACA39A"/></g><text x="40" y="440" font-size="20" fill="#5F5D50" text-anchor="start" >5  Control</text><text x="40" y="464" font-size="18" fill="#5F5D50" text-anchor="start" >set the music, one knob at a time</text></svg>
+  <aside class="notes">Say: across five Cochrane reviews (backup slide), no outcome reaches high certainty, and follow up is short. The clinic is where music is actually changed and given to people. What does the evidence say?</aside>
+</section>
+
+<section data-backup="1" data-sec="45">
+  <span class="mark">4 The clinic</span>
+  <h2>Reviews lower certainty for three reasons, and trials rarely say which music was played</h2>
+  <svg class="fig" viewBox="0 0 1100 360" style="width:1100px"><text x="0" y="22" font-size="20" fill="#5F5D50" text-anchor="start" >GRADE reasons for lower certainty (rows 1 to 3) and a reporting gap reviews name (row 4)</text><rect x="0" y="44" width="1100" height="62" rx="3" fill="#EFEBE5"/><text x="20" y="84" font-size="26" fill="#1F1E1B" text-anchor="start" >risk of bias</text><text x="560" y="84" font-size="22" fill="#5F5D50" text-anchor="start" >no blinding, open allocation</text><rect x="0" y="120" width="1100" height="62" rx="3" fill="#EFEBE5"/><text x="20" y="160" font-size="26" fill="#1F1E1B" text-anchor="start" >imprecision</text><text x="560" y="160" font-size="22" fill="#5F5D50" text-anchor="start" >small samples</text><rect x="0" y="196" width="1100" height="62" rx="3" fill="#EFEBE5"/><text x="20" y="236" font-size="26" fill="#1F1E1B" text-anchor="start" >inconsistency</text><text x="560" y="236" font-size="22" fill="#5F5D50" text-anchor="start" >different controls and outcomes</text><rect x="0" y="272" width="1100" height="62" rx="3" fill="#EFEBE5"/><text x="20" y="312" font-size="26" fill="#1F1E1B" text-anchor="start" >and the music is rarely described</text><text x="560" y="312" font-size="22" fill="#5F5D50" text-anchor="start" >which piece, how loud, how long</text><g data-accent="1"><rect x="0" y="272" width="6" height="62" fill="#F76902"/></g><text x="1080" y="312" font-size="22" fill="#1F1E1B" text-anchor="end" >the one a lab can fix</text></svg>
+  <div class="ref"><a href="https://doi.org/10.1002/14651858.CD004517.pub3">Aalbers et al. 2017</a><span class="sep"></span><a href="https://doi.org/10.1002/14651858.CD003477.pub5">van der Steen et al. 2025</a></div>
+  <aside class="notes">Backup has the music lessons meta analysis (Sala and Gobet 2020) if asked about transfer. Real recorded music confounds everything at once: tempo, timbre, familiarity, lyrics, emotion. You cannot vary one and hold the others. The order follows how often the reviews name each reason (risk of bias and imprecision most). The therapist and the group matter too, the music is the part we could specify, and rarely do.</aside>
+</section>
+
+<section data-backup="1" data-sec="50">
+  <span class="mark">Preview 2 of 4 · Seeing is not understanding</span>
+  <h2>The best music model looks hundreds of notes back. The brain fits best at about eight</h2>
+  <svg class="fig" viewBox="0 0 1000 370" style="width:1000px"><text x="0" y="50" font-size="21" fill="#1F1E1B" text-anchor="start" >fit to the brain</text><text x="0" y="74" font-size="18" fill="#5F5D50" text-anchor="start" >MEG, gain from surprise</text><line x1="150" y1="290" x2="592.2941176470588" y2="290" stroke="#ACA39A"/><line x1="608.2941176470588" y1="290" x2="960" y2="290" stroke="#ACA39A"/><path d="M588.2941176470588,296 L596.2941176470588,284 M604.2941176470588,296 L612.2941176470588,284" stroke="#5F5D50" stroke-width="1.5"/><polyline fill="none" stroke="#7D55C7" stroke-width="2.5" points="150.0,257.5 195.3,132.1 240.6,113.6 285.9,85.7 331.2,76.4 376.5,67.1 421.8,57.9 467.1,48.6 512.4,53.2 557.6,57.9"/><polyline fill="none" stroke="#7D55C7" stroke-width="2.5" points="642.9,95.0 688.2,104.3 733.5,113.6 778.8,132.1 824.1,150.7 869.4,187.9 914.7,187.9 960.0,187.9"/><line x1="557.6" y1="57.9" x2="642.9" y2="95.0" stroke="#7D55C7" stroke-width="1.5" stroke-dasharray="4 4"/><g data-accent="1"><circle cx="467.1" cy="48.6" r="8" fill="#F76902"/><text x="479.05882352941177" y="38.57142857142855" font-size="20" fill="#1F1E1B" text-anchor="start" >peak at 8 notes</text></g><text x="150.0" y="342" font-size="18" fill="#5F5D50" text-anchor="middle" >1</text><text x="331.1764705882353" y="342" font-size="18" fill="#5F5D50" text-anchor="middle" >5</text><text x="557.6470588235294" y="342" font-size="18" fill="#5F5D50" text-anchor="middle" >10</text><text x="642.9411764705883" y="342" font-size="18" fill="#5F5D50" text-anchor="middle" >25</text><text x="733.5294117647059" y="342" font-size="18" fill="#5F5D50" text-anchor="middle" >100</text><text x="960.0" y="342" font-size="18" fill="#5F5D50" text-anchor="middle" >400</text><text x="575.0" y="366" font-size="19" fill="#5F5D50" text-anchor="middle" >notes of context the model may use</text></svg>
+  <div class="ref">Redrawn after <a href="https://doi.org/10.7554/eLife.80935">Kern et al., Cortical activity during naturalistic music listening reflects short range predictions based on long term experience, eLife 2022</a></div>
+  <aside class="notes">Horizontal axis: how many previous notes the Music Transformer may use. The model keeps getting better at music up to 400 notes. Its fit to the brain peaks around 8 and falls. A better model is not automatically a more brain like model. Redrawn approximately from Kern 2022 Fig 3C. The body slide after Pepino shows the model curve too.</aside>
+</section>
+
+<section data-backup="1" data-sec="25">
+  <span class="mark">Preview 3 of 4 · The clinic</span>
+  <h2>In dementia, music lifts mood a little. Cognition shows no clear gain</h2>
+  <svg class="fig" viewBox="0 0 1152 370"><line x1="566.6666666666666" y1="44" x2="566.6666666666666" y2="290" stroke="#ACA39A"/><text x="556.6666666666666" y="30" font-size="18" fill="#5F5D50" text-anchor="end" >music worse</text><text x="576.6666666666666" y="30" font-size="18" fill="#5F5D50" text-anchor="start" >music better</text><text x="900" y="30" font-size="18" fill="#5F5D50" text-anchor="start" >outcome</text><text x="0" y="88" font-size="26" fill="#1F1E1B" text-anchor="start" >Depressive symptoms</text><g data-accent="1"><line x1="581.3" y1="80" x2="720.7" y2="80" stroke="#F76902" stroke-width="2.5"/><circle cx="651.0" cy="80" r="8" fill="#F76902"/></g><text x="900" y="88" font-size="24" fill="#5F5D50" text-anchor="start" >probably improves slightly</text><text x="0" y="228" font-size="26" fill="#1F1E1B" text-anchor="start" >Cognition</text><g><line x1="559.3" y1="220" x2="717.0" y2="220" stroke="#7C878E" stroke-width="2.5"/><circle cx="636.3" cy="220" r="7" fill="#FBFAF7" stroke="#7C878E" stroke-width="2"/></g><text x="900" y="228" font-size="24" fill="#5F5D50" text-anchor="start" >unclear</text></svg>
+  <div class="ref"><a href="https://doi.org/10.1002/14651858.CD003477.pub5">van der Steen et al., Music based therapeutic interventions for people with dementia, Cochrane 2025</a></div>
+  <aside class="notes">Standardized mean differences, music versus usual care at the end of treatment. 30 trials, 1,720 people. The full picture comes in Act 4.</aside>
+</section>
+
+<section data-backup="1" data-sec="15">
+  <span class="mark">1 Why music</span>
+  <p class="thesis">We know music reaches deep into the brain.<br><span class="ink2">Do we know why?</span></p>
+  <aside class="notes">Pause. Do not answer. Then show the map.</aside>
+</section>
+
+<section data-backup="1" data-sec="60">
+  <span class="mark">2 What we can see · Running example</span>
+  <h2>Listening is prediction: each note of Für Elise confirms or breaks an expectation</h2>
+  <svg class="fig" viewBox="0 0 1152 420" data-id="fe"><circle cx="40" cy="40" r="7" fill="#7D55C7" data-id="fe0"/><text x="40" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >E5</text><circle cx="100" cy="47" r="7" fill="#7D55C7" data-id="fe1"/><text x="100" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >D&#9839;5</text><rect class="fragment" data-fragment-index="1" x="88" y="344.9" width="24" height="35.099999999999994" fill="#ACA39A"/><circle cx="160" cy="40" r="7" fill="#7D55C7" data-id="fe2"/><text x="160" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >E5</text><rect class="fragment" data-fragment-index="1" x="148" y="380.0" width="24" height="1.5" fill="#ACA39A"/><circle cx="220" cy="47" r="7" fill="#7D55C7" data-id="fe3"/><text x="220" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >D&#9839;5</text><rect class="fragment" data-fragment-index="1" x="208" y="344.9" width="24" height="35.099999999999994" fill="#ACA39A"/><circle cx="280" cy="40" r="7" fill="#7D55C7" data-id="fe4"/><text x="280" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >E5</text><rect class="fragment" data-fragment-index="1" x="268" y="380.0" width="24" height="1.5" fill="#ACA39A"/><circle cx="340" cy="75" r="7" fill="#7D55C7" data-id="fe5"/><text x="340" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >B4</text><rect class="fragment" data-fragment-index="1" x="328" y="284.9" width="24" height="95.1" fill="#ACA39A"/><circle cx="400" cy="54" r="7" fill="#7D55C7" data-id="fe6"/><text x="400" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >D5</text><rect class="fragment" data-fragment-index="1" x="388" y="284.9" width="24" height="95.1" fill="#ACA39A"/><circle cx="460" cy="68" r="7" fill="#7D55C7" data-id="fe7"/><text x="460" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >C5</text><rect class="fragment" data-fragment-index="1" x="448" y="380.0" width="24" height="1.5" fill="#ACA39A"/><circle cx="520" cy="89" r="7" fill="#7D55C7" data-id="fe8"/><text x="520" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >A4</text><rect class="fragment" data-fragment-index="1" x="508" y="320.0" width="24" height="60.0" fill="#ACA39A"/><circle cx="580" cy="152" r="7" fill="#7D55C7" data-id="fe9"/><text x="580" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >C4</text><rect class="fragment" data-fragment-index="1" x="568" y="320.0" width="24" height="60.0" fill="#ACA39A"/><circle cx="640" cy="124" r="7" fill="#7D55C7" data-id="fe10"/><text x="640" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >E4</text><rect class="fragment" data-fragment-index="1" x="628" y="380.0" width="24" height="1.5" fill="#ACA39A"/><circle cx="700" cy="89" r="7" fill="#7D55C7" data-id="fe11"/><text x="700" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >A4</text><rect class="fragment" data-fragment-index="1" x="688" y="300.68" width="24" height="79.32000000000001" fill="#ACA39A"/><circle cx="760" cy="75" r="7" fill="#7D55C7" data-id="fe12"/><text x="760" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >B4</text><rect class="fragment" data-fragment-index="1" x="748" y="320.0" width="24" height="60.0" fill="#ACA39A"/><circle cx="820" cy="124" r="7" fill="#7D55C7" data-id="fe13"/><text x="820" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >E4</text><rect class="fragment" data-fragment-index="1" x="808" y="284.9" width="24" height="95.1" fill="#ACA39A"/><circle cx="880" cy="96" r="7" fill="#7D55C7" data-id="fe14"/><text x="880" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >G&#9839;4</text><rect class="fragment" data-fragment-index="1" x="868" y="240.68" width="24" height="139.32" fill="#7D55C7"/><circle cx="940" cy="75" r="7" fill="#7D55C7" data-id="fe15"/><text x="940" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >B4</text><rect class="fragment" data-fragment-index="1" x="928" y="380.0" width="24" height="1.5" fill="#ACA39A"/><circle cx="1000" cy="68" r="7" fill="#7D55C7" data-id="fe16"/><text x="1000" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >C5</text><rect class="fragment" data-fragment-index="1" x="988" y="224.9" width="24" height="155.1" fill="#F76902"/><circle cx="1060" cy="124" r="7" fill="#7D55C7" data-id="fe17"/><text x="1060" y="200" font-size="17" fill="#5F5D50" text-anchor="middle" >E4</text><rect class="fragment" data-fragment-index="1" x="1048" y="260.0" width="24" height="120.0" fill="#7D55C7"/><line x1="20" y1="380" x2="1090" y2="380" stroke="#ACA39A"/><g class="fragment" data-fragment-index="1"><text x="20" y="236" font-size="19" fill="#5F5D50" text-anchor="start" >surprise of each note given the one before (bits)</text></g></svg>
+  <aside class="notes">Di Liberto 2020 showed EEG tracks this surprise beyond the sound itself, a small but reliable gain in 20 listeners (backup slide). Our running example. Top: the first 18 notes, height is pitch. Fragment: surprise of each note given the previous one, counted on this excerpt. The E, D sharp trill is predictable. The turn to G sharp and the leaps are surprising, only the most surprising note in orange. Question for the room: does the brain track this curve?</aside>
+</section>
+
+<section data-backup="1" data-sec="45">
+  <span class="mark">2 What we can see · Encode</span>
+  <h2>The gain grows when the listener model remembers more of the past</h2>
+  <div class="fp">
+    <div class="f"><svg class="fig" viewBox="0 0 700 440" style="width:700px"><line x1="90" y1="370.0" x2="680" y2="370.0" stroke="#ACA39A"/><polyline fill="none" stroke="#7C878E" stroke-width="1.5" points="120.0,307.2 211.7,307.2 303.3,239.2 395.0,176.5 486.7,160.8 578.3,66.6 670.0,113.7"/><circle cx="120.0" cy="307.2" r="8" fill="#7D55C7"/><text x="120.0" y="398" font-size="19" fill="#5F5D50" text-anchor="middle" >1</text><circle cx="211.7" cy="307.2" r="8" fill="#7D55C7"/><text x="211.66666666666669" y="398" font-size="19" fill="#5F5D50" text-anchor="middle" >2</text><circle cx="303.3" cy="239.2" r="8" fill="#7D55C7"/><text x="303.33333333333337" y="398" font-size="19" fill="#5F5D50" text-anchor="middle" >4</text><circle cx="395.0" cy="176.5" r="8" fill="#7D55C7"/><text x="395.0" y="398" font-size="19" fill="#5F5D50" text-anchor="middle" >8</text><circle cx="486.7" cy="160.8" r="8" fill="#7D55C7"/><text x="486.6666666666667" y="398" font-size="19" fill="#5F5D50" text-anchor="middle" >16</text><circle cx="578.3" cy="66.6" r="8" fill="#7D55C7"/><text x="578.3333333333333" y="398" font-size="19" fill="#5F5D50" text-anchor="middle" >32</text><circle cx="670.0" cy="113.7" r="8" fill="#7D55C7"/><text x="670.0" y="398" font-size="19" fill="#5F5D50" text-anchor="middle" >all</text><text x="395.0" y="428" font-size="20" fill="#5F5D50" text-anchor="middle" >bars of the piece the listener model may remember</text><text x="78" y="376.0" font-size="17" fill="#5F5D50" text-anchor="end" >0</text><text x="78" y="114.46153846153845" font-size="17" fill="#5F5D50" text-anchor="end" >0.005</text><text x="0" y="20" font-size="20" fill="#5F5D50" text-anchor="start" >EEG gain from surprise (median)</text></svg></div>
+    <div class="p">
+      <p class="key">Memory length matters</p>
+      <p class="tldr">The music stayed the same. Only the model of the listener changed.</p>
+    </div>
+  </div>
+  <div class="ref"><a href="https://doi.org/10.7554/eLife.51784">Di Liberto et al., eLife 2020</a></div>
+  <aside class="notes">Medians read approximately from Fig 2C. Memory here is how many bars of the current piece IDyOM may learn from. This returns in Act 5 as one row of what has been turned so far. Memory here is how many bars of the current piece the IDyOM short term model may learn from. Keep it as a control result, not as Markov order.</aside>
+</section>
+
+<section data-backup="1" class="breath" data-sec="30">
+  <span class="mark">2 What we can see · Encode</span>
+  <h2>The limit: in natural music, surprise can be measured but not set</h2>
+  <p style="margin-top:20px">The melodies were fixed Bach pieces. Surprise rose and fell with the notes the composer wrote, not with anything the experimenter set.</p>
+  <aside class="notes">First small crack. Say it lightly and move on.</aside>
+</section>
+
+<section data-backup="1" data-sec="55">
+  <span class="mark">2 What we can see · Decode</span>
+  <h2>About 40 electrodes give 80 percent of the best result, about a minute of data gives 90</h2>
+  <div class="fp">
+    <div class="f"><img src="../shared/figs/papers/bellier_howmuch.png" data-evidence style="width:820px"></div>
+    <div class="p">
+      <p class="key">Small data, steep curves</p>
+      <p class="tldr">Left: electrodes. Right: seconds of data.</p>
+      <p class="tldr">The limit: one song, electrodes inside the skull.</p>
+      <div class="audio-row"><button class="play" data-audio="../shared/audio/bellier_linear.mp3">play</button><span>linear decoder</span></div>
+    </div>
+  </div>
+  <div class="ref"><a href="https://doi.org/10.1371/journal.pbio.3002176">Bellier et al., PLoS Biol 2023</a></div>
+  <aside class="notes">43 electrodes give 80 percent of the best accuracy. 37 seconds of data give 80 percent, 69 seconds give 90 percent (the red mark). For this audience: coverage matters more than recording length. Then the limit: every patient heard the same song, so this decoder cannot tell us what it would do with another. Transition: can a non invasive scan do it across many songs?</aside>
+</section>
+
+<section data-backup="1" data-sec="60">
+  <span class="mark">3 Seeing is not understanding · Compare</span>
+  <h2>Audio models that do better on tasks also fit auditory cortex better</h2>
+  <div class="fp">
+    <div class="f"><svg class="fig" viewBox="0 0 640 420" style="width:640px"><line x1="80" y1="360.0" x2="630" y2="360.0" stroke="#ACA39A"/><line x1="80" y1="360.0" x2="80" y2="20" stroke="#ACA39A"/><g data-accent="1"><line x1="118.57142857142861" y1="338.2777777777777" x2="600.7142857142857" y2="38.88888888888886" stroke="#F76902" stroke-width="2.5"/></g><circle cx="118.6" cy="338.3" r="6" fill="#7C878E"/><circle cx="234.3" cy="300.5" r="6" fill="#7C878E"/><circle cx="324.3" cy="235.3" r="6" fill="#7C878E"/><circle cx="382.1" cy="248.6" r="6" fill="#7C878E"/><circle cx="356.4" cy="180.6" r="6" fill="#7C878E"/><circle cx="427.1" cy="154.1" r="6" fill="#7C878E"/><circle cx="433.6" cy="73.8" r="6" fill="#7C878E"/><circle cx="485.0" cy="194.7" r="6" fill="#7C878E"/><circle cx="581.4" cy="48.3" r="9" fill="#5F5D50"/><text x="130.5714285714286" y="328.2777777777777" font-size="19" fill="#1F1E1B" text-anchor="start" >DCASE2020</text><text x="336.2857142857143" y="225.33333333333331" font-size="19" fill="#1F1E1B" text-anchor="start" >DeepSpeech</text><text x="445.57142857142856" y="63.83333333333333" font-size="19" fill="#1F1E1B" text-anchor="start" >VGGish</text><text x="569.4285714285714" y="38.33333333333331" font-size="19" fill="#1F1E1B" text-anchor="end" >best models</text><text x="360.0" y="408" font-size="20" fill="#5F5D50" text-anchor="middle" >better at audio tasks</text><text x="88" y="28" font-size="20" fill="#5F5D50" text-anchor="start" >fit to auditory cortex</text></svg></div>
+    <div class="p">
+      <p class="big plain">r = 0.90</p>
+      <p class="ink2" style="font-size:22px">task skill vs fit to auditory cortex, 36 models</p>
+      <p class="ink2" style="font-size:20px;margin-top:6px">0.71 without the four weakest models</p>
+      <p style="font-size:26px;margin-top:22px">Yet a fit is not a mechanism.</p>
+    </div>
+  </div>
+  <div class="ref"><a href="https://arxiv.org/abs/2511.16849">Pepino et al., Better audio representations are more brain like, arXiv preprint 2025</a></div>
+  <aside class="notes">Say: and from the preview, past about eight notes a better music model fits the brain worse (Kern 2022).</aside>
+</section>
+
+<section data-backup="1" data-sec="45">
+  <span class="mark">2 What we can see</span>
+  <h2>Every recording method trades time against space</h2>
+  <div class="photos">
+    <figure><img class="ph" src="../shared/figs/photos/eeg_cap.jpg" alt="EEG cap"><figcaption>EEG<span>milliseconds, centimeters</span></figcaption></figure>
+    <figure><img class="ph" src="../shared/figs/photos/meg_system.jpg" alt="MEG system"><figcaption>MEG<span>milliseconds, better localization</span></figcaption></figure>
+    <figure><img class="ph" src="../shared/figs/photos/mri_scanner.jpg" alt="MRI scanner"><figcaption>fMRI<span>seconds, millimeters</span></figcaption></figure>
+    <figure><img class="ph" src="../shared/figs/photos/ecog_grid_illustration.png" alt="ECoG grid"><figcaption>Intracranial<span>both, only in surgery patients</span></figcaption></figure>
+  </div>
+  <p style="font-size:26px;margin-top:22px">Music changes in milliseconds. Ask <i>where</i> with fMRI, <i>when</i> with EEG.</p>
+  <aside class="notes">The audience knows these tools. The point is only that music forces the choice. Intracranial recordings give both, rarely.</aside>
+</section>
+
+<section data-backup="1" data-sec="50">
+  <span class="mark">4 The clinic</span>
+  <h2>Across five reviews, no music therapy outcome reaches high certainty</h2>
+  <svg class="fig" viewBox="0 0 1152 430">
+    <g font-size="20" fill="#5F5D50"><text x="420" y="30">very low</text><text x="620" y="30">low</text><text x="820" y="30">moderate</text><text x="1020" y="30">high</text></g>
+    <g stroke="#D7D2CB"><line x1="450" y1="45" x2="450" y2="405"/><line x1="640" y1="45" x2="640" y2="405"/><line x1="850" y1="45" x2="850" y2="405"/><line x1="1040" y1="45" x2="1040" y2="405"/></g>
+    <g font-size="22" fill="#1F1E1B">
+      <text x="0" y="135">Depression, clinician rated</text><circle cx="850" cy="128" r="8" fill="#7D55C7"/>
+      <text x="0" y="190">Autism, global improvement</text><circle cx="850" cy="183" r="8" fill="#7D55C7"/>
+      <text x="0" y="245">Insomnia, subjective sleep</text><circle cx="850" cy="238" r="8" fill="#7D55C7"/>
+      <text x="0" y="300">Stroke, gait velocity</text><circle cx="850" cy="293" r="8" fill="#7D55C7"/>
+      <text x="0" y="355">Dementia, cognition</text><circle cx="535" cy="348" r="8" fill="none" stroke="#7D55C7" stroke-width="2"/>
+    </g>
+  </svg>
+  <div class="ref"><a href="https://doi.org/10.1002/14651858.CD003477.pub5">van der Steen 2025</a><span class="sep"></span><a href="https://doi.org/10.1002/14651858.CD004517.pub3">Aalbers 2017</a><span class="sep"></span><a href="https://doi.org/10.1002/14651858.CD004381.pub4">Geretsegger 2022</a><span class="sep"></span><a href="https://doi.org/10.1002/14651858.CD010459.pub3">Jespersen 2022</a><span class="sep"></span><a href="https://doi.org/10.1002/14651858.CD006787.pub3">Magee 2017</a></div>
+  <aside class="notes">Effect sizes vary: large in depression (Aalbers 2017) and autism (Geretsegger 2022), about one SD in self rated sleep (Jespersen 2022), small in dementia. What holds across reviews: no outcome reaches high certainty, and effects are short term. Stroke: gait velocity +11.3 m per min, 9 trials, moderate (cadence is low certainty). GRADE certainty from Cochrane reviews. No outcome reaches high certainty.</aside>
+</section>
+
+<section data-backup="1">
+  <span class="mark">2 What we can see · Running example</span>
+  <h2>A tiny graph of note transitions already captures a musical tradition <span class="status prog">In progress</span></h2>
+  <div class="cols">
+    <div style="flex:0 0 700px"><iframe class="embed" data-src="../shared/fe-chain.html?autoplay=1" width="700" height="390" title="Für Elise Markov chain"></iframe></div>
+    <div>
+      <p class="tldr">Für Elise as a graph: each note points to the notes that follow it.</p>
+      <p class="tldr">This is the same object the surprise curve was computed from.</p>
+    </div>
+  </div>
+  <div class="ref">Chen et al., Markov graph analysis of six corpora, in preparation</div>
+  <aside class="notes">Watch the ball walk the chain while the melody plays. A listener's expectation is built on graphs like this one, learned over a lifetime.</aside>
+</section>
+
+<section data-backup="1">
+  <span class="mark">2 What we can see · Decode</span>
+  <h2>Learn a map from electrode activity to the song's spectrogram, then turn it into sound</h2>
+  <svg class="fig" viewBox="0 0 1152 330">
+    <defs><marker id="ah1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#7C878E"/></marker></defs>
+    <rect x="0" y="90" width="230" height="120" rx="3" fill="#EFEBE5"/>
+    <text x="20" y="140" font-size="26" fill="#1F1E1B">electrodes</text><text x="20" y="172" font-size="19" fill="#5F5D50">high gamma, 70 to 150 Hz</text>
+    <path d="M240,150 L330,150" stroke="#7C878E" stroke-width="1.5" marker-end="url(#ah1)"/>
+    <rect x="340" y="90" width="240" height="120" rx="3" fill="#FAD6BA"/>
+    <text x="360" y="140" font-size="26" fill="#1F1E1B">decoder</text><text x="360" y="172" font-size="19" fill="#5F5D50">linear, or a small network</text>
+    <path d="M590,150 L680,150" stroke="#7C878E" stroke-width="1.5" marker-end="url(#ah1)"/>
+    <rect x="690" y="90" width="220" height="120" rx="3" fill="#DCD1EB"/>
+    <text x="710" y="140" font-size="26" fill="#1F1E1B">spectrogram</text><text x="710" y="172" font-size="19" fill="#5F5D50">128 frequency bins</text>
+    <path d="M920,150 L1010,150" stroke="#7C878E" stroke-width="1.5" marker-end="url(#ah1)"/>
+    <text x="1020" y="158" font-size="26" fill="#1F1E1B">audio</text>
+    <text x="0" y="285" font-size="24" fill="#1F1E1B">Every step is learned from this patient group and this one song.</text>
+  </svg>
+  <aside class="notes">The spectrogram to audio step uses phase estimation. Nothing here is a generative prior, which matters for the comparison with the fMRI study next.</aside>
+</section>
+
+<section data-backup="1">
+  <span class="mark">2 What we can see · Decode</span>
+  <h2>347 electrodes carried the music, most over the superior temporal gyrus</h2>
+  <div class="fp">
+    <div class="f"><img src="../shared/figs/papers/bellier_electrodes.png" style="width:470px"></div>
+    <div class="p">
+      <p class="key">Both hemispheres, right side matters most</p>
+      <p class="tldr">Top: every electrode. Bottom: those that tracked the song, colored by region. Red is the superior temporal gyrus.</p>
+      <p class="tldr">Removing right temporal electrodes hurt decoding the most. A subregion was tuned to rhythm.</p>
+    </div>
+  </div>
+  <div class="ref"><a href="https://doi.org/10.1371/journal.pbio.3002176">Bellier et al., PLoS Biol 2023</a></div>
+  <aside class="notes">Dot size is prediction accuracy. The rhythm subregion responded to the guitar's 16th notes.</aside>
+</section>
+
+<section data-backup="1">
+  <span class="mark">2 What we can see · Decode</span>
+  <h2>The limit: one song, and electrodes inside the skull</h2>
+  <div class="cols">
+    <div><p>Every patient heard the same three minutes. A decoder that has only ever seen one song cannot tell us what it would do with another.</p></div>
+    <div><p class="ink2" style="font-size:24px">Can a non invasive scan do the same, across many songs?</p></div>
+  </div>
+  <aside class="notes">Transition to Denk and Takagi.</aside>
+</section>
+
+<section data-backup="1">
+  <span class="mark">4 The clinic</span>
+  <h2>Feelings improve. Measured function often does not</h2>
+  <svg class="fig" viewBox="0 0 1152 320"><g data-accent="1">
+    <g font-size="24" fill="#1F1E1B">
+      <text x="0" y="70">Insomnia</text><text x="300" y="70">sleep quality, self rated</text><text x="760" y="70" fill="#5F5D50">objective sleep</text>
+      <text x="0" y="160">Dementia</text><text x="300" y="160">depressive symptoms</text><text x="760" y="160" fill="#5F5D50">cognition, agitation</text>
+    </g>
+    <g stroke="#1F1E1B" stroke-width="2"><path d="M265,60 l8,10 l16,-20" fill="none"/><path d="M265,150 l8,10 l16,-20" fill="none"/></g>
+    <g stroke="#DA291C" stroke-width="2"><path d="M725,52 l18,18 M743,52 l-18,18"/><path d="M725,142 l18,18 M743,142 l-18,18"/></g>
+    <g class="fragment" data-fragment-index="1"><text x="0" y="260" font-size="27" fill="#1F1E1B">A brain signal is exactly what could tell these two apart.</text></g>
+  </g></svg>
+  <div class="ref"><a href="https://doi.org/10.1002/14651858.CD010459.pub3">Jespersen 2022</a><span class="sep"></span><a href="https://doi.org/10.1002/14651858.CD003477.pub5">van der Steen 2025</a></div>
+  <aside class="notes">Insomnia: three trials with objective measures showed no clear gain. Dementia: moderate certainty of no effect on agitation.</aside>
+</section>
+
+<section data-backup="1">
+  <span class="mark">4 The clinic</span>
+  <h2>Music lessons do not make children smarter, once the controls are fair</h2>
+  <div class="fp">
+    <div class="f" style="width:760px"><svg class="fig" viewBox="0 0 1152 330"><g data-accent="1">
+    <line x1="420" y1="40" x2="420" y2="250" stroke="#ACA39A"/>
+    <text x="420" y="285" font-size="19" fill="#5F5D50" text-anchor="middle">no effect</text>
+    <g font-size="22" fill="#1F1E1B">
+      <text x="0" y="90">all studies</text><rect x="420" y="70" width="140" height="28" fill="#ACA39A"/><text x="575" y="92" font-size="20" fill="#5F5D50">small</text>
+      <text x="0" y="160">randomized, active control</text><rect x="420" y="140" width="6" height="28" fill="#1F1E1B"/><text x="440" y="162" font-size="20" fill="#5F5D50">about zero</text>
+    </g>
+    <g class="fragment" data-fragment-index="1"><text x="0" y="320" font-size="24" fill="#1F1E1B">The better the design, the smaller the effect. A warning for every claim in this field.</text></g>
+  </g></svg></div>
+    <div class="p"><div class="people"><figure><img src="../shared/figs/people/gobet.jpg" alt="Fernand Gobet"><figcaption>Fernand Gobet<span>LSE</span></figcaption></figure></div></div>
+  </div>
+  <div class="ref"><a href="https://doi.org/10.3758/s13421-020-01060-2">Sala and Gobet, Mem Cogn 2020</a><span class="sep"></span>reanalysis finds g about 0.23</div>
+  <aside class="notes">54 studies. Near transfer to musical skill is real, far transfer to IQ or school grades is not supported. A reanalysis disputes the exclusion choices and finds a small positive effect. A methods lesson, not an attack on music education.</aside>
+</section>
+
+<section data-backup="1">
+  <span class="mark">5 Music you can experiment on</span>
+  <h2>A controllable stimulus buys three things that recorded music cannot</h2>
+  <svg class="fig" viewBox="0 0 1152 360"><g data-accent="1">
+    <g font-size="26" fill="#1F1E1B">
+      <rect x="20" y="60" width="350" height="210" rx="3" fill="#EFEBE5"/><text x="45" y="110">causality</text>
+      <text x="45" y="150" font-size="20" fill="#5F5D50">change one property,</text><text x="45" y="176" font-size="20" fill="#5F5D50">hold the rest, compare</text>
+      <rect x="400" y="60" width="350" height="210" rx="3" fill="#EFEBE5"/><text x="425" y="110">personalization</text>
+      <text x="425" y="150" font-size="20" fill="#5F5D50">tune to one listener's</text><text x="425" y="176" font-size="20" fill="#5F5D50">hearing, memory, taste</text>
+      <rect x="780" y="60" width="350" height="210" rx="3" fill="#FAD6BA"/><text x="805" y="110">a dose</text>
+      <text x="805" y="150" font-size="20" fill="#5F5D50">parameters that can be</text><text x="805" y="176" font-size="20" fill="#5F5D50">written down and repeated</text>
+    </g>
+    <text x="20" y="330" font-size="23" fill="#5F5D50">Answers Acts 3 and 4: correlation, one size fits all, the missing dose</text>
+  </g></svg>
+  <aside class="notes">Map each box to a crack from earlier. Then show that the knobs exist, starting from the simplest one.</aside>
+</section>
+
+<section data-backup="1" data-sec="50">
+  <span class="mark">1 Why music</span>
+  <h2>Listening to music recruits nearly every large system in the brain</h2>
+  <div class="fp">
+    <div class="f" style="width:820px"><svg class="fig" viewBox="0 0 1152 420"><g data-accent="1">
+    <rect x="456" y="170" width="240" height="80" rx="3" fill="#DCD1EB"/><text x="576" y="218" font-size="26" text-anchor="middle" fill="#1F1E1B">auditory cortex</text>
+    <g font-size="23" fill="#1F1E1B">
+      <rect x="60" y="40" width="300" height="80" rx="3" fill="#EFEBE5"/><text x="80" y="76">motor system</text><text x="80" y="103" font-size="18" fill="#5F5D50">basal ganglia, SMA: the beat</text>
+      <rect x="792" y="40" width="300" height="80" rx="3" fill="#EFEBE5"/><text x="812" y="76">reward system</text><text x="812" y="103" font-size="18" fill="#5F5D50">striatum: pleasure, wanting</text>
+      <rect x="60" y="300" width="300" height="80" rx="3" fill="#EFEBE5"/><text x="80" y="336">memory</text><text x="80" y="363" font-size="18" fill="#5F5D50">hippocampus, cingulate</text>
+      <rect x="792" y="300" width="300" height="80" rx="3" fill="#EFEBE5"/><text x="812" y="336">emotion</text><text x="812" y="363" font-size="18" fill="#5F5D50">amygdala, insula</text>
+    </g>
+    <g stroke="#7C878E" stroke-width="1.5" fill="none"><path d="M456,190 L360,110"/><path d="M696,190 L792,110"/><path d="M456,230 L360,310"/><path d="M696,230 L792,310"/></g>
+    <text x="576" y="290" font-size="19" text-anchor="middle" fill="#5F5D50">one stimulus, many readouts</text>
+  </g></svg></div>
+    <div class="p"><div class="people"><figure><img src="../shared/figs/people/koelsch.jpg" alt="Stefan Koelsch"><figcaption>Stefan Koelsch<span>University of Bergen</span></figcaption></figure></div></div>
+  </div>
+  <div class="ref"><a href="https://doi.org/10.1038/nrn3666">Koelsch, Brain correlates of music evoked emotions, Nat Rev Neurosci 2014</a></div>
+  <aside class="notes">One stimulus, many readouts: perception, movement, reward, memory, emotion. That is why music is a good probe. Sixty seconds.</aside>
+</section>
+
+<section data-backup="1" data-sec="50">
+  <span class="mark">5 Music you can experiment on</span>
+  <h2>The catch: higher orders are classified as the style more often, but copy longer spans <span class="status prog">In progress</span></h2>
+  <div class="fp">
+    <div class="f"><img src="../shared/figs/generation_style_vs_copy.png" style="width:600px"></div>
+    <div class="p">
+      <p class="key">A knob has a range</p>
+      <p class="tldr">Vertical: how often Markov judges classify a generated melody as its style. Horizontal: longest span copied from training.</p>
+      <p class="tldr">The star, real held out melodies, scores lower than most generated ones, so these judges reward Markov likeness, not style. A listening test is next.</p>
+    </div>
+  </div>
+  <div class="ref">Chen et al., in preparation</div>
+  <aside class="notes">48 note melodies, 600 per cell. Star: real held out excerpts. Familiarity is a confound in music studies, so copying matters.</aside>
+</section>
+
+<section data-backup="1" data-sec="40">
+  <span class="mark">5 Music you can experiment on</span>
+  <h2>What to measure: alignment that survives an acoustic baseline <span class="status open">Planned</span></h2>
+  <svg class="fig" viewBox="0 0 1152 330"><g data-accent="1">
+    <g font-size="22" fill="#1F1E1B">
+      <text x="0" y="70">acoustic features</text><rect x="320" y="48" width="300" height="32" fill="#ACA39A"/>
+      <text x="0" y="135">plus model layer</text><rect x="320" y="113" width="300" height="32" fill="#ACA39A"/><rect x="620" y="113" width="120" height="32" fill="#FAD6BA"/>
+      <text x="0" y="200">plus steered layer</text><rect x="320" y="178" width="300" height="32" fill="#ACA39A"/><rect x="620" y="178" width="200" height="32" fill="#F76902"/>
+    </g>
+    <text x="320" y="250" font-size="19" fill="#5F5D50">EEG variance explained (illustration, no data yet)</text>
+    <g class="fragment" data-fragment-index="1"><text x="0" y="310" font-size="25" fill="#1F1E1B">Only the gain beyond acoustics counts. Only a change after intervention is causal.</text></g>
+  </g></svg>
+  <aside class="notes">The brain alignment scorer. Bars are illustrative. Replace with pilot numbers if any exist by December.</aside>
+</section>
+
+</div></div>
+<script src="../shared/reveal/reveal.js"></script>
+<script src="../shared/reveal/plugin/notes/notes.js"></script>
+<script>
+Reveal.initialize({hash:true,center:false,progress:false,controls:true,width:1280,height:720,margin:0,transition:'none',
+  autoAnimateDuration:0.6,autoAnimateStyles:['opacity','color','fill','stroke','stroke-width'],plugins:[RevealNotes]});
+function syncFrames(){document.querySelectorAll('iframe[data-src]').forEach(f=>{const on=f.closest('section')===Reveal.getCurrentSlide();if(on&&!f.src)f.src=f.dataset.src;if(!on&&f.src)f.removeAttribute('src');});}
+Reveal.on('ready',syncFrames);Reveal.on('slidechanged',syncFrames);
+let cur=null,curBtn=null;
+function stopAll(){if(cur){cur.pause();cur.currentTime=0;}if(curBtn)curBtn.textContent='play';cur=null;curBtn=null;}
+document.addEventListener('click',e=>{const b=e.target.closest('button.play');if(!b)return;
+ if(curBtn===b){stopAll();return;}stopAll();cur=new Audio(b.dataset.audio);curBtn=b;b.textContent='pause';cur.play();cur.onended=stopAll;});
+Reveal.on('slidechanged',stopAll);
+</script>
+</body>
+</html>

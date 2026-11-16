@@ -1,0 +1,17 @@
+{
+ "fe_shuffled": {
+  "fe_shuffled": 0.596,
+  "fe_order1": 0.224,
+  "fe_real": 0.168
+ },
+ "fe_order1": {
+  "fe_shuffled": 0.214,
+  "fe_order1": 0.575,
+  "fe_real": 0.192
+ },
+ "fe_real": {
+  "fe_shuffled": 0.177,
+  "fe_order1": 0.143,
+  "fe_real": 0.539
+ }
+}

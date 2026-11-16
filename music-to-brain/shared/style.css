@@ -1,0 +1,89 @@
+/* House style v2 (presentation-craft/visual-style.md): ET Book, warm neutrals, RIT palette */
+@font-face{font-family:"et-book";src:url(fonts/etbook-roman-lf.woff) format("woff");font-weight:400}
+@font-face{font-family:"et-book";src:url(fonts/etbook-bold-lf.woff) format("woff");font-weight:600 800}
+@font-face{font-family:"et-book";src:url(fonts/etbook-italic.woff) format("woff");font-style:italic}
+@font-face{font-family:"et-book-osf";src:url(fonts/etbook-roman-osf.woff) format("woff")}
+
+:root{
+  --bg:#FBFAF7; --ink:#1F1E1B; --ink2:#5F5D50; --line:#7C878E; --axis:#ACA39A; --rule:#D7D2CB;
+  --group:#EFEBE5; --accent:#F76902; --accent-tint:#FAD6BA; --accent-text:#C45200;
+  --lang:#009CBD; --music:#7D55C7; --music-tint:#DCD1EB; --fail:#DA291C; --refc:#A39E93;
+}
+html,body{background:var(--bg)}
+.reveal{font-family:"et-book",Georgia,serif;color:var(--ink);font-size:30px}
+.reveal .slides{text-align:left}
+.reveal .slides>section{padding:40px 64px 0 64px !important;box-sizing:border-box;height:720px}
+.reveal .mark{display:block;font-size:13.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);margin:0 0 6px 0}
+.reveal h2{font-family:"et-book",Georgia,serif;font-weight:400;font-size:40px;line-height:1.15;color:var(--ink);
+  text-transform:none;letter-spacing:0;margin:0 0 28px 0;max-width:1100px}
+.reveal p,.reveal li{font-family:"et-book-osf","et-book",Georgia,serif;font-size:29px;line-height:1.38;margin:.35em 0}
+.reveal .ink2{color:var(--ink2)}
+.reveal b{font-weight:600}
+.reveal ul,.reveal ol{margin-left:1.1em}
+.reveal .ref{position:absolute;right:120px;bottom:26px;max-width:900px;text-align:right;font-size:13.5px;line-height:1.3;color:var(--refc)}
+.reveal .ref a{color:var(--refc);text-decoration:none}
+.reveal .ref a:hover{text-decoration:underline}
+.reveal .ref .sep{display:inline-block;width:1px;height:11px;background:var(--axis);margin:0 9px;vertical-align:-1px}
+.reveal .status{display:inline-block;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);
+  border-bottom:2px solid var(--axis);padding-bottom:1px;margin-left:14px;vertical-align:4px}
+.reveal .status.rev{border-color:var(--music)} .reveal .status.prog{border-color:var(--ink2)} .reveal .status.open{border-color:var(--axis);border-bottom-style:dashed}
+.reveal svg.fig{display:block;width:1152px;height:auto;max-height:500px;margin:0}
+.reveal svg.fig text{font-family:"et-book",Georgia,serif}
+.reveal img.shot{display:block;max-height:430px;max-width:100%;border-bottom:1px solid var(--rule)}
+.reveal .cols{display:flex;gap:48px;align-items:flex-start}
+.reveal .cols>div{flex:1}
+.reveal .big{font-size:40px;color:var(--ink);display:inline-block;border-bottom:3px solid var(--accent);line-height:1.1;margin:0 0 8px 0}
+.reveal .thesis{font-size:56px;line-height:1.2;max-width:1050px;margin-top:150px}
+.reveal .thesis em{font-style:normal;border-bottom:4px solid var(--accent)}
+.reveal section.cover{padding:150px 64px 0 64px !important}
+.reveal section.cover h1{font-family:"et-book",Georgia,serif;font-weight:400;font-size:76px;line-height:1.05;text-transform:none;letter-spacing:0;color:var(--ink);margin:0 0 18px 0}
+.reveal section.cover h1 span{color:var(--accent)}
+.reveal section.cover .sub{font-size:32px;color:var(--ink2);font-style:italic}
+.reveal section.cover .who{position:absolute;left:64px;bottom:70px;font-size:24px;color:var(--ink);line-height:1.4}
+.reveal section.cover .who span{color:var(--ink2)}
+.reveal .fragment.fade-in{transition-duration:250ms}
+.reveal iframe.embed{border:0;background:var(--bg);display:block}
+.reveal button.play{font-family:"et-book",Georgia,serif;font-size:16px;letter-spacing:.14em;text-transform:uppercase;color:#1F1E1B;
+  background:#EFEBE5;border:0;border-radius:3px;padding:6px 14px;cursor:pointer;margin-right:10px;vertical-align:3px}
+.reveal button.play:hover{background:#FAD6BA}
+
+/* v2.1 additions for the BIBM keynote rebuild (2026-11-15) */
+.reveal .fp{display:flex;gap:40px;align-items:flex-start}
+.reveal .fp>.f{flex:0 0 auto}
+.reveal .fp>.f img{display:block;border-bottom:1px solid var(--rule)}
+.reveal .fp>.p{flex:1;min-width:0}
+.reveal .key{font-size:27px;line-height:1.25;color:var(--ink);margin:0 0 14px 0;padding-bottom:6px;border-bottom:1.5px solid var(--axis);display:inline-block}
+.reveal .key.accent{border-bottom:3px solid var(--accent)}
+.reveal .tldr{font-size:23px;line-height:1.35;color:var(--ink2);margin:0 0 12px 0}
+.reveal .p ul{margin:0 0 0 1em;padding:0}
+.reveal .p li{font-size:22px;line-height:1.35;margin:.25em 0}
+.reveal .cap{font-size:17px;line-height:1.3;color:var(--ink2);margin:6px 0 0 0}
+.reveal .people{display:flex;gap:18px;margin-top:18px}
+.reveal .people figure{margin:0;width:120px}
+.reveal .people img{width:120px;height:120px;object-fit:cover;border-radius:6px;display:block}
+.reveal .people figcaption{font-size:17px;line-height:1.2;color:var(--ink);margin-top:6px}
+.reveal .people figcaption span{display:block;color:var(--ink2);font-size:15px}
+.reveal .photos{display:flex;gap:20px}
+.reveal .photos figure{margin:0;flex:1}
+.reveal .photos img{width:100%;height:270px;object-fit:cover;border-radius:3px;display:block}
+.reveal .photos figcaption{font-size:22px;color:var(--ink);margin-top:8px}
+.reveal .photos figcaption span{display:block;font-size:18px;color:var(--ink2)}
+.reveal .forecast{counter-reset:f;list-style:none;margin:10px 0 0 0;padding:0}
+.reveal .forecast li{counter-increment:f;font-size:32px;line-height:1.3;margin:0 0 26px 0;padding-left:56px;position:relative}
+.reveal .forecast li::before{content:counter(f);position:absolute;left:0;top:0;font-size:32px;color:var(--ink);border-bottom:2px solid var(--axis);line-height:1.1}
+.reveal .forecast li.thesis-item::before{border-bottom:3px solid var(--accent)}
+.reveal .preview-tag{display:block;font-size:13.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);margin:0 0 6px 0}
+.reveal .audio-row{display:flex;gap:26px;align-items:center;margin:10px 0}
+.reveal .audio-row span{font-size:21px;color:var(--ink2)}
+.reveal section.cover .cover-mel{position:absolute;left:64px;top:430px}
+.reveal section.cover .cover-mel circle{opacity:.25;animation:fe-pulse 5.6s infinite}
+@keyframes fe-pulse{0%{opacity:.25}3%{opacity:1}12%{opacity:.25}100%{opacity:.25}}
+.reveal .illus{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)}
+.reveal .fp>.f>img.ph{width:100%;height:auto;max-height:440px;object-fit:cover;border-radius:3px;border:0}
+.reveal .fp>.f>svg.fig{width:100%}
+
+.reveal .big.plain{border-bottom-color:var(--axis)}
+
+.reveal .photos.tall img{height:340px}
+
+.reveal .fp>.p>svg.fig{width:100% !important;height:auto}
