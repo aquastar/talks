@@ -488,6 +488,7 @@ tail = tail.replace("document.body.classList.toggle('on-title', i===0)", "docume
 assert "contains('full')" in tail
 assert 'fe-frame' in tail
 html = head + '\n<div class="reveal"><div class="slides">\n\n' + '\n\n'.join(allsecs) + '\n' + tail
+html = html.replace('<script src="wb3d.js"></script>', '')  # no slide here uses the 3D widget of the old deck
 open(NEW + '/index.html', 'w').write(html)
 os.makedirs(NEW + '/figs', exist_ok=True)
 for f in set(re.findall(r'figs/[A-Za-z0-9_]+\.png', html)):
