@@ -1971,7 +1971,7 @@ g += F(2, box)
 g += F(3, T(590, 452, 'Next: is it the size of the change, or its shape?', 19, 700, INK, 'middle'))
 RES20 = sec('Results: same checking budget, more bad edits caught', SVG(g), ch='1', status='pub',
             ref='Benbrahim et al., SDM 2026, Tables 5.1 to 5.5. Counts are the expected bad edits among 20 checks at the reported rates',
-            notes='The same three bars as the trailer, now with the method behind them. Do not ask the room to guess, they saw 17 at minute 3. Say instead: these are the bars from the start of the talk, now you know what the orange one measures. Then click to 17. The rates are what the paper reports: 56 percent at random, 70 by editor and model, 86 with the delta graph. Ranking quality goes from 0.703 to 0.797, and on a second dataset of real Wikipedia facts from 0.853 to 0.904.')
+            notes='Three bars, one click each. Same budget, check only 20 of 100 edits that all passed the benchmark: at random you catch 11 bad ones, by editor and model 14, by the delta graph 17. Click to 17 last. The rates are what the paper reports: 56 percent at random, 70 by editor and model, 86 with the delta graph. Ranking quality goes from 0.703 to 0.797, and on a second dataset of real Wikipedia facts from 0.853 to 0.904.')
 
 # ---- loop it1: one slide for the vector evidence (P03) ----
 import random as _r3
