@@ -1,4 +1,4 @@
-"""Build bibm26-keynote/index.html from src/slides.html.
+"""Build 2026-12-01-bibm-dallas/index.html from src/slides.html.
 Placeholders in slides.html:
   {{MAP:all|encode|decode|compare|treat|control}}  recurring field map, current arrow in orange
   {{FE_SURPRISE}}         running example: Fur Elise notes with per note surprise

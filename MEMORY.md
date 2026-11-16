@@ -48,4 +48,5 @@ Read this before doing anything in this repo. When Zhiqian gives a new rule abou
 - Before pushing, screenshot every changed slide and look at it: no overlap, no clipped text, no empty boxes, no 404 in the browser console.
 
 ## Log
+- 2026-11-16: music-to-brain moved in from aquastar/music-to-brain (subtree, full history), deck at music-to-brain/2026-12-01-bibm-dallas/ (day TBD, rename before the link goes out), shared/, eeg-demo/ and stimuli/ at topic level. Old repo to be deleted by a local agent after he confirms.
 - 2026-11-16: repo created with graph-inside (Oct 2, Nov 19) and ai-literacy (Nov 3).

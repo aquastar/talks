@@ -1,15 +1,13 @@
-# Music to Brain
+# music-to-brain
 
-Talk slides by Zhiqian Chen (RIT) on music and the brain. One folder per delivery, shared assets in `shared/`.
+Topic folder for talks on music, generative AI and the brain.
 
-| Folder | Talk | Venue |
+| Version | Talk | Where |
 |---|---|---|
-| `eeg-demo/` | Interactive demo: model surprise vs EEG (public domain songs) | Research demo |
-| `bibm26-keynote/` | Music You Can Experiment On | AI4BioSig Workshop at IEEE BIBM 2026, Dallas |
+| `2026-12-01-bibm-dallas/` | The Music That Plays the Brain | Keynote, AI4BioSig Workshop at IEEE BIBM 2026, Dallas (day TBD) |
 
-Online: https://aquastar.github.io/music-to-brain/
+Shared by the versions of this topic: `shared/` (style, fonts, reveal.js, figures, audio), `eeg-demo/` (interactive EEG surprise demo, OpenNeuro ds005876), `stimuli/` (the stimulus pack linked by the QR code), `docs/` (survey in Chinese).
 
-Keys: Space or arrows to advance, S for speaker notes, Esc for overview.
+Online: https://aquastar.github.io/talks/music-to-brain/
 
-Style follows the presentation-craft house style (ET Book, RIT palette). Fonts in `shared/fonts` with their license.
-After each delivery, tag the commit (for example `bibm26`) so the version as given can be recovered.
+Moved here from aquastar/music-to-brain on 2026-11-16 with full history (git subtree). Start with HANDOFF.md.
