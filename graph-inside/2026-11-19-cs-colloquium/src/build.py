@@ -1,8 +1,7 @@
 import re, shutil, os
 HERE = os.path.dirname(os.path.abspath(__file__))
 NEW = os.path.dirname(HERE)
-import glob as _glob
-OLD = os.environ.get('OLD_DECK') or sorted(_glob.glob(os.path.join(os.path.dirname(NEW), '*networks')))[0]  # the October PhD colloquium deck, next door in this repo
+OLD = os.environ.get('OLD_DECK') or os.path.join(os.path.dirname(NEW), '2026-10-02-gccis-phd')  # the Oct 2 version of this topic, next door
 s = open(os.environ.get('OLD_HTML', os.path.join(HERE, 'legacy', 'nn2n_index.html'))).read()  # pinned copy of the original old deck
 head = s[:s.find('<body>') + len('<body>')]
 head = head.replace('<title>From Networks to Neural Networks</title>', '<title>Is There a Graph Inside Generative Models?</title>')
