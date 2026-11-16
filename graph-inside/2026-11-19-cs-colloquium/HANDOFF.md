@@ -4,7 +4,7 @@
 
 ### 0. Where this lives now (Nov 16 2026)
 - Repo: aquastar/talks, folder graph-inside/2026-11-19-cs-colloquium/ (topic graph-inside, this version). Live: https://aquastar.github.io/talks/graph-inside/2026-11-19-cs-colloquium/ , the stable topic link https://aquastar.github.io/talks/graph-inside/ jumps to the latest version . Index of all talks: https://aquastar.github.io/talks/
-- Do not edit aquastar/graph-inside-generative-models any more, it is kept as it was. The Oct 2 GCCIS PhD Colloquium version is graph-inside/2026-10-02-gccis-phd, the faculty meeting talk is ai-literacy/2026-11-03-faculty-meeting, networks/ and the faculty meeting talk is ai-literacy/ in the same repo, both moved with full history.
+- The old repo aquastar/graph-inside-generative-models was deleted on 2026-11-16, its full history lives here. The Oct 2 GCCIS PhD Colloquium version is graph-inside/2026-10-02-gccis-phd, the faculty meeting talk is ai-literacy/2026-11-03-faculty-meeting, networks/ and the faculty meeting talk is ai-literacy/ in the same repo, both moved with full history.
 - Build: python3 graph-inside/2026-11-19-cs-colloquium/src/build.py, it reads the Oct 2 version next door. Commit and push to main of aquastar/talks, Pages deploys from main.
 - This cloud session cannot create GitHub repos or change Pages settings. For that, use a Claude Code session on his own computer.
 
