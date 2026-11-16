@@ -334,10 +334,17 @@ tail = re.sub(r"var NAMES=\{[^}]*\};", "var NAMES={'0':'Overview','1':'Part 1. L
 tail = re.sub(r"var CHN=\{[^}]*\};", "var CHN={'0':'Overview','1':'Part 1. Language','2':'Part 2. Music','3':'Part 3. Beyond','4':'Close'};", tail)
 assert "1 Language" in tail
 
+# cover: the October picture, a neural network read as a graph, with this talk's title (his request, Nov 16)
+_pc = secs[0]
+_left = cover[cover.index('<div class="th-left">'):cover.index(hero)]
+_pc = re.sub(r'<section[^>]*>', '<section class="title titlehero full" data-ch="0" data-background-color="#FBFAF7">', _pc, count=1)
+_pc = _pc[:_pc.index('<div class="th-left">')] + _left + _pc[_pc.index('<svg'):]
+_pc = _pc.replace('</section>', '  <aside class="notes">Left, a neural network, the kind everyone has seen. Right, the same network read as a graph: a few parts that matter and the links between them. That is the question of the talk: is there such a graph inside a generative model, and what does it tell us that the usual tools miss? One sentence on the answer: a published answer for language, a tested hypothesis for music.</aside>\n</section>', 1)
+cover = _pc
 import sys; sys.path.insert(0, HERE); import talk as TK
 OLDS = {}
-for i in (3, 33, 35, 43, 45, 47):
-    OLDS[i] = ch(secs[i], '0' if i in (3, 43, 45, 47) else '1')
+for i in (1, 2, 3, 33, 35, 43, 45, 47):
+    OLDS[i] = ch(secs[i], '0' if i in (1, 2, 3, 43, 45, 47) else '1')
 for i in (17, 18, 21, 22, 25, 29, 30, 38, 39, 40):
     OLDS[i] = ch(secs[i], '1')
 for i in (46, 48, 49, 50, 51):
@@ -376,7 +383,7 @@ allsecs = [re.sub(r'\s*<div class="lessontag">[^<]*</div>', '', x) for x in alls
 
 # graph tags: every slide that shows a graph says which one, so the talk is strung on graphs
 GTAGS = [('Change one fact, and the next question goes wrong', 1, 'knowledge graph'),
-         ('Inside vision models, researchers already find graphs', 2, 'circuit and scene graphs'),
+         ('One network, five graphs', 2, 'five graphs in one network'),
          ('A tiny graph is enough to represent', 3, 'note transition graph, a Markov chain'),
          ('A missing path in the record', 1, 'knowledge graph, a clinical record'),
          ('What is a delta graph?', 4, 'delta graph, how the inside rewired'),
@@ -488,11 +495,11 @@ tail = tail.replace("document.body.classList.toggle('on-title', i===0)", "docume
 assert "contains('full')" in tail
 assert 'fe-frame' in tail
 html = head + '\n<div class="reveal"><div class="slides">\n\n' + '\n\n'.join(allsecs) + '\n' + tail
-html = html.replace('<script src="wb3d.js"></script>', '')  # no slide here uses the 3D widget of the old deck
 open(NEW + '/index.html', 'w').write(html)
 os.makedirs(NEW + '/figs', exist_ok=True)
 for f in set(re.findall(r'figs/[A-Za-z0-9_]+\.png', html)):
     if not os.path.exists(NEW + '/' + f):
         shutil.copy(OLD + '/' + f, NEW + '/' + f)
 shutil.copy(OLD + '/deck.js', NEW + '/deck.js')
+shutil.copy(OLD + '/wb3d.js', NEW + '/wb3d.js')  # the 3D whiteboard on the inside of a language model slide
 print('slides', len(allsecs), {k: len(v) for k, v in parts.items()})

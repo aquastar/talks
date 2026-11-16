@@ -1107,7 +1107,7 @@ g += f'<g transform="{TR}">' + VC['cloud'] + VC['mv'] + '</g>'
 g += F(1, f'<g transform="{TR}">' + ed + '</g>' + T(40, 420, 'Draw the graph, and the ripple has a shape you can test.', 18, 600, '#007A94'))
 g += f'<g transform="{TR}">' + top + '</g>'
 # right: the seven graphs, one line each
-SEVEN = [(1, 'Knowledge graph'), (8, 'Circuit and scene graphs'), (3, 'Note transition graph'), (2, 'Delta graph'),
+SEVEN = [(1, 'Knowledge graph'), (8, 'Five graphs in one network'), (3, 'Note transition graph'), (2, 'Delta graph'),
          (5, 'Pitch helix, circle of fifths'), (4, 'Style reachability graph'), (6, "Listener's expectation graph")]
 rt = T(700, 34, 'Seven graphs today', 16, 600, MUT)
 for k, (ic, name) in enumerate(SEVEN):
@@ -2029,7 +2029,9 @@ def assemble(cover, old):
     # per domain: the structure is a graph, our graph sees the problem, yet the field uses vectors
     vector = retitle(vector, 'Today we change and explain models with vectors')
     kgt_o = retitle(KGT, 'Change one fact, and the next question goes wrong')
-    vision = [cover, kgt_o, vector, VISION, DEMO2, FORECAST2]
+    wb = old[1]
+    five = old[2]
+    vision = [cover, kgt_o, wb, vector, five, backup(VISION), DEMO2, FORECAST2]
     rome = old[33]
     a = rome.find('<div class="note"'); e = rome.find('  <div class="ref">')
     rome = rome[:a] + '<div class="note" style="font-size:.62em"><div class="key">The finding</div><p class="one" style="font-size:1.25em">A fact sits in two places. Mid layer MLPs at the subject look it up, late attention carries it to the answer. Editing a fact means changing the first place.</p></div>\n  </div>\n' + rome[e:]
@@ -2084,8 +2086,10 @@ def assemble(cover, old):
     beyond = []
     close = [TAKEAWAY.replace('</section>', CLIP_JSON + '</section>')]
     # one bridge per main slide, so each slide leads into the next one (order of Nov 16 2026)
-    FIXB = [('Change one fact, and the next question goes wrong', None, 'Bridge: why do our tools miss this? Because every tool we use to change or read a model is a vector.'),
-            ('Today we change and explain models with vectors', 'Bridge: yet the knowledge these models hold has another shape, a graph, in text, in images and in music.', 'Bridge: people who look inside models already find graphs, first in vision.'),
+    FIXB = [('Change one fact, and the next question goes wrong', None, 'Bridge: to see why, one minute inside a language model.'),
+            ('What is inside a language model?', None, 'Bridge: and every tool we use to change this machine, or to read it, adds or reads a vector.'),
+            ('One network, five graphs', None, 'Graphs found inside vision models, with the original figures, are under the down arrow. Bridge: and music has the simplest graph of all.'),
+            ('Today we change and explain models with vectors', 'Bridge: yet the knowledge these models hold has another shape, a graph, in text, in images and in music.', 'Bridge: but the network itself is a graph, and there is more than one way to draw it.'),
             ('A tiny graph is enough to represent a piece of music', None, 'Bridge: so, two claims for the rest of the talk.'),
             ('Two claims for the rest of this talk', None, 'Bridge: Part 1, language. First, all the ways we change a model after release.'),
             ('Steering: right on average', None, 'Bridge: unlearning tries the opposite, to take something out.'),
