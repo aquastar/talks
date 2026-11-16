@@ -16,6 +16,6 @@ Rules for anyone, human or agent, who works here: MEMORY.md.
 
 Building: `python3 graph-inside/2026-11-19-cs-colloquium/src/build.py` (it reads the Oct 2 version next door), `python3 graph-inside/2026-10-02-gccis-phd/src/restyle.py`. The ai-literacy version is plain HTML.
 
-History: the Oct 2 and Nov 3 versions came from aquastar/neural-networks-to-networks and aquastar/ai-literacy-faculty with full git history (git subtree), and those repos are kept as they were. The Nov 19 version came from aquastar/graph-inside-generative-models the same way.
+History: the Oct 2 and Nov 3 versions came from aquastar/neural-networks-to-networks and aquastar/ai-literacy-faculty with full git history (git subtree), and those repos are kept as they were. The Nov 19 version came from aquastar/graph-inside-generative-models the same way, and that repo was deleted afterwards.
 
 Figures reproduced from cited papers remain the property of their authors and publishers.
