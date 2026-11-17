@@ -17,9 +17,9 @@
 .reveal .nums{display:flex;gap:56px;margin:8px 0 4px 0}
 .reveal .nums div{font-size:22px;color:var(--ink2);line-height:1.3}
 .reveal .nums .big{font-size:48px}
-.reveal .gallery{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:20px}
+.reveal .gallery{display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px}
 .reveal .gallery figure{margin:0}
-.reveal .gallery img{width:100%;height:250px;object-fit:contain;background:#fff;display:block;border-bottom:1px solid var(--rule)}
+.reveal .gallery img{width:100%;height:330px;object-fit:contain;background:#fff;display:block;border-bottom:1px solid var(--rule)}
 .reveal .gallery figcaption{font-size:21px;color:var(--ink);margin-top:8px;line-height:1.25}
 .reveal .gallery figcaption span{display:block;font-size:16px;color:var(--ink2)}
 .reveal .ask{font-size:26px;line-height:1.35;margin-top:22px;padding-top:14px;border-top:1px solid var(--rule)}
@@ -53,16 +53,16 @@
 
 <section data-sec="50">
   <span class="mark">What could be</span>
-  <h2>{{TXT:BAUD_HEADLINE}}</h2>
+  <h2>Seizures are not random: they ride on brain rhythms that last weeks</h2>
   <div class="fp">
-    <div class="f" style="width:700px">{{IMG:BAUD_IMG}}</div>
+    <div class="f" style="width:700px"><img src="../figs/papers/baud2018_fig1_multidien_seizures.png" data-evidence style="width:700px"></div>
     <div class="p">
-      <p class="key">{{TXT:BAUD_KEY}}</p>
-      <p class="tldr">{{TXT:BAUD_TLDR}}</p>
+      <p class="key">In 13 of 14 people, seizures clustered on one phase of a multi day rhythm</p>
+      <p class="tldr">Implanted devices in 37 people recorded for years. Cycles most often 20 to 30 days long, stable for up to 10 years. Red dots: seizures.</p>
     </div>
   </div>
-  <div class="ref">{{TXT:BAUD_REF}}</div>
-  <aside class="notes">{{TXT:BAUD_NOTES}}</aside>
+  <div class="ref"><a href="https://doi.org/10.1038/s41467-017-02577-y">Baud et al., Multi-day rhythms modulate seizure risk in epilepsy, Nat Commun 2018</a></div>
+  <aside class="notes">Why it matters first: about 50 million people live with epilepsy (WHO), and in the classic Kwan and Brodie cohort more than 30 percent are not controlled by drugs. For them the worst part is not knowing when. Now the hopeful part. Baud and colleagues had brain implants in 37 people, recording for years. Top panel: daily epileptic activity with seizures as red dots. Middle: a 26 day rhythm hidden in it, and the seizures sit on its rising phase. Seizures follow rhythms. And it has been done once: in 2013 an implanted advisory device in Melbourne (Cook et al., Lancet Neurology) warned 11 patients with high likelihood sensitivity from 65 to 100 percent. The question is whether we can see it from scalp EEG and short clips.</aside>
 </section>
 
 <section data-sec="45">
@@ -119,32 +119,34 @@
 
 <section data-sec="60">
   <span class="mark">1 The lens</span>
-  <h2>{{TXT:KOOP_HEADLINE}}</h2>
+  <h2>Koopman, 1931: in the right coordinates, nonlinear motion becomes linear</h2>
   <div class="fp">
     <div class="f" style="width:760px">{{KOOPTOY}}</div>
     <div class="p">
-      {{IMG:KOOP_PEOPLE}}
-      <p class="tldr" style="margin-top:14px">{{TXT:KOOP_TLDR}}</p>
+      <img src="../figs/papers/koopman1931_pnas_page315_top.png" style="width:330px;border-bottom:1px solid var(--rule)">
+      <p class="tldr" style="margin-top:14px">A four page note in PNAS. Seventy years later it became a toolkit for reading complex dynamics.</p>
     </div>
   </div>
-  <div class="ref">{{TXT:KOOP_REF}}</div>
-  <aside class="notes">{{TXT:KOOP_NOTES}}</aside>
+  <div class="ref"><a href="https://doi.org/10.1073/pnas.17.5.315">Koopman, Hamiltonian systems and transformation in Hilbert space, PNAS 1931</a><span class="sep"></span><a href="https://doi.org/10.1007/s11071-005-2824-x">Mezic, Nonlinear Dyn 2005</a></div>
+  <aside class="notes">Bernard Koopman, Columbia, 1931. The idea in one sentence: do not follow the state, follow measurements of the state, and the way those measurements change is linear. Left: what we record looks like a tangle. Right: in the right coordinates the tangle splits into rhythms, each turning a fixed angle per step and shrinking by a fixed factor. A turn and a shrink are one complex eigenvalue. Igor Mezic revived this around 2005 and it took off.</aside>
 </section>
 
 <section data-sec="50">
   <span class="mark">1 The lens</span>
-  <h2>The same lens has read fluid wakes, epidemics, power grids and the human cortex</h2>
-  <div class="gallery">{{GALLERY}}</div>
-  <div class="ref">{{TXT:GALLERY_REF}}</div>
-  <aside class="notes">{{TXT:GALLERY_NOTES}}</aside>
+  <h2>The same lens has read fluid wakes, measles epidemics and the human cortex</h2>
+  <div class="gallery"><figure><img src="../figs/papers/dmd_mode_joukowsky_vortex_street_wikipedia.png" data-evidence><figcaption>Fluid wakes<span>one mode of the vortex street behind a wing</span></figcaption></figure>
+  <figure><img src="../figs/papers/proctor2015_fig2_measles_dmd.png" data-evidence><figcaption>Epidemics<span>the yearly measles wave in England, 1944 to 1966</span></figcaption></figure>
+  <figure><img src="../figs/papers/brunton2016_fig1_dmd_ecog_overview.png" data-evidence><figcaption>The human cortex<span>electrode recordings rebuilt from a few modes</span></figcaption></figure></div>
+  <div class="ref"><a href="https://doi.org/10.1017/S0022112010001217">Schmid 2010</a><span class="sep"></span><a href="https://doi.org/10.1093/inthealth/ihv009">Proctor and Eckhoff 2015</a><span class="sep"></span><a href="https://doi.org/10.1016/j.jneumeth.2015.10.010">Brunton et al. 2016</a><span class="sep"></span><a href="https://doi.org/10.1109/TPWRS.2010.2103369">Susuki and Mezic 2011</a></div>
+  <aside class="notes">The practical version is dynamic mode decomposition, from fluid mechanics (Schmid 2010, Rowley et al. 2009). Left: one mode of the vortex street behind a wing. Middle: measles in pre vaccination England, one mode is the yearly epidemic wave, with its phase on the map (Proctor and Eckhoff). Right: Bing Brunton and colleagues applied it to electrodes on the human cortex, rebuilding the recordings from a few modes. The same lens identified swing modes in power grids (Susuki and Mezic 2011) and drives linear controllers for nonlinear robots (Korda and Mezic 2018). One lens, many sciences.</aside>
 </section>
 
 <section data-sec="75">
   <span class="mark">1 The lens</span>
   <h2>A spectrum is a fingerprint: near a tipping point, one rhythm fades ever more slowly</h2>
   {{DEMO}}
-  <div class="ref">{{TXT:CSD_REF}}</div>
-  <aside class="notes">Live moment. Left: each dot is one rhythm of a system. Angle is its frequency, distance from the center is how long it survives. On the circle it never fades. Drag the slider slowly. The orange dot creeps to the circle, and the response to a kick rings longer and longer. Ecologists and climate scientists call this critical slowing down: before a system tips, it recovers more slowly from small kicks. {{TXT:CSD_NOTES}} Plant it: remember this picture, we come back to it.</aside>
+  <div class="ref"><a href="https://doi.org/10.1038/nature08227">Scheffer et al., Nature 2009</a><span class="sep"></span><a href="https://doi.org/10.1038/s41467-020-15908-3">Maturana et al., Critical slowing down as a biomarker for seizure susceptibility, Nat Commun 2020</a></div>
+  <aside class="notes">Live moment. Left: each dot is one rhythm of a system. Angle is its frequency, distance from the center is how long it survives. On the circle it never fades. Drag the slider slowly. The orange dot creeps to the circle, and the response to a kick rings longer and longer. Ecologists and climate scientists call this critical slowing down: before a system tips, it recovers more slowly from small kicks. And in epilepsy: Maturana and colleagues watched implanted EEG for months and found autocorrelation and variance rising in the tens of minutes to hours before seizures in 9 of 14 patients. Plant it: remember this picture, we come back to it.</aside>
 </section>
 
 <section data-sec="40">

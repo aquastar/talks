@@ -17,9 +17,9 @@
 .reveal .nums{display:flex;gap:56px;margin:8px 0 4px 0}
 .reveal .nums div{font-size:22px;color:var(--ink2);line-height:1.3}
 .reveal .nums .big{font-size:48px}
-.reveal .gallery{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:20px}
+.reveal .gallery{display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px}
 .reveal .gallery figure{margin:0}
-.reveal .gallery img{width:100%;height:250px;object-fit:contain;background:#fff;display:block;border-bottom:1px solid var(--rule)}
+.reveal .gallery img{width:100%;height:330px;object-fit:contain;background:#fff;display:block;border-bottom:1px solid var(--rule)}
 .reveal .gallery figcaption{font-size:21px;color:var(--ink);margin-top:8px;line-height:1.25}
 .reveal .gallery figcaption span{display:block;font-size:16px;color:var(--ink2)}
 .reveal .ask{font-size:26px;line-height:1.35;margin-top:22px;padding-top:14px;border-top:1px solid var(--rule)}
@@ -53,16 +53,16 @@
 
 <section data-sec="50">
   <span class="mark">What could be</span>
-  <h2>{{TXT:BAUD_HEADLINE}}</h2>
+  <h2>Seizures are not random: they ride on brain rhythms that last weeks</h2>
   <div class="fp">
-    <div class="f" style="width:700px">{{IMG:BAUD_IMG}}</div>
+    <div class="f" style="width:700px"><img src="../figs/papers/baud2018_fig1_multidien_seizures.png" data-evidence style="width:700px"></div>
     <div class="p">
-      <p class="key">{{TXT:BAUD_KEY}}</p>
-      <p class="tldr">{{TXT:BAUD_TLDR}}</p>
+      <p class="key">In 13 of 14 people, seizures clustered on one phase of a multi day rhythm</p>
+      <p class="tldr">Implanted devices in 37 people recorded for years. Cycles most often 20 to 30 days long, stable for up to 10 years. Red dots: seizures.</p>
     </div>
   </div>
-  <div class="ref">{{TXT:BAUD_REF}}</div>
-  <aside class="notes">{{TXT:BAUD_NOTES}}</aside>
+  <div class="ref"><a href="https://doi.org/10.1038/s41467-017-02577-y">Baud et al., Multi-day rhythms modulate seizure risk in epilepsy, Nat Commun 2018</a></div>
+  <aside class="notes">Why it matters first: about 50 million people live with epilepsy (WHO), and in the classic Kwan and Brodie cohort more than 30 percent are not controlled by drugs. For them the worst part is not knowing when. Now the hopeful part. Baud and colleagues had brain implants in 37 people, recording for years. Top panel: daily epileptic activity with seizures as red dots. Middle: a 26 day rhythm hidden in it, and the seizures sit on its rising phase. Seizures follow rhythms. And it has been done once: in 2013 an implanted advisory device in Melbourne (Cook et al., Lancet Neurology) warned 11 patients with high likelihood sensitivity from 65 to 100 percent. The question is whether we can see it from scalp EEG and short clips.</aside>
 </section>
 
 <section data-sec="45">
@@ -119,24 +119,26 @@
 
 <section data-sec="60">
   <span class="mark">1 The lens</span>
-  <h2>{{TXT:KOOP_HEADLINE}}</h2>
+  <h2>Koopman, 1931: in the right coordinates, nonlinear motion becomes linear</h2>
   <div class="fp">
     <div class="f" style="width:760px"><svg class="fig" viewBox="0 0 760 440" style="width:760px"><text x="0" y="22" font-size="19" fill="#5F5D50" text-anchor="start" >what we record</text><polyline points="0.0,32.0 3.4,42.5 6.7,60.8 10.1,83.2 13.5,105.6 16.9,125.0 20.2,139.0 23.6,146.5 27.0,147.8 30.3,144.1 33.7,137.3 37.1,129.7 40.4,123.1 43.8,119.3 47.2,119.0 50.6,122.4 53.9,129.0 57.3,137.8 60.7,147.4 64.0,156.6 67.4,164.3 70.8,169.8 74.2,172.6 77.5,172.9 80.9,171.3 84.3,168.2 87.6,164.6 91.0,161.0 94.4,158.1 97.8,156.2 101.1,155.4 104.5,155.4 107.9,156.1 111.2,156.9 114.6,157.5 118.0,157.6 121.3,156.8 124.7,155.3 128.1,153.0 131.5,150.1 134.8,146.9 138.2,143.6 141.6,140.5 144.9,137.9 148.3,135.7 151.7,134.1 155.1,133.0 158.4,132.3 161.8,131.9 165.2,131.6 168.5,131.3 171.9,130.9 175.3,130.5 178.7,130.0 182.0,129.4 185.4,128.9 188.8,128.5 192.1,128.3 195.5,128.4 198.9,128.7 202.2,129.2 205.6,130.0 209.0,131.0 212.4,132.1 215.7,133.2 219.1,134.3 222.5,135.4 225.8,136.4 229.2,137.3 232.6,138.1 236.0,138.9 239.3,139.7 242.7,140.4 246.1,141.1 249.4,141.8 252.8,142.5 256.2,143.2 259.6,143.8 262.9,144.4 266.3,144.9 269.7,145.2 273.0,145.5 276.4,145.7 279.8,145.8 283.1,145.7 286.5,145.6 289.9,145.4 293.3,145.2 296.6,144.9 300.0,144.6" fill="none" stroke="#1F1E1B" stroke-width="1.6"/><text x="0" y="260" font-size="19" fill="#5F5D50" text-anchor="start" >a tangle of rhythms</text><line x1="320" y1="140" x2="390.0" y2="140.0" stroke="#7C878E" stroke-width="1.5"/><path d="M400.0,140.0 L388.0,145.5 L388.0,134.5 z" fill="#7C878E"/><text x="360" y="124" font-size="19" fill="#5F5D50" text-anchor="middle" >lift</text><text x="430" y="22" font-size="19" fill="#5F5D50" text-anchor="start" >in the right coordinates</text><circle cx="520" cy="140" r="62" fill="none" stroke="#D7D2CB"/><polyline points="582.0,140.0 565.1,104.1 532.1,87.7 498.5,95.0 478.3,119.7 477.9,149.3 494.8,171.2 519.7,177.3 541.4,167.3 551.4,147.5 547.2,127.3 532.4,115.0 514.6,114.6 501.4,124.7 497.6,139.6 503.4,152.7 515.3,158.8 527.5,156.4 535.0,147.6 535.3,136.9 529.3,128.9 520.3,126.5" fill="none" stroke="#ACA39A" stroke-width="1"/><circle cx="582.0" cy="140.0" r="5" fill="#7D55C7"/><circle cx="565.1" cy="104.1" r="3.5" fill="#7D55C7"/><circle cx="532.1" cy="87.7" r="3.5" fill="#7D55C7"/><circle cx="498.5" cy="95.0" r="3.5" fill="#7D55C7"/><circle cx="478.3" cy="119.7" r="3.5" fill="#7D55C7"/><circle cx="477.9" cy="149.3" r="3.5" fill="#7D55C7"/><circle cx="494.8" cy="171.2" r="3.5" fill="#7D55C7"/><circle cx="519.7" cy="177.3" r="3.5" fill="#7D55C7"/><circle cx="541.4" cy="167.3" r="3.5" fill="#7D55C7"/><circle cx="551.4" cy="147.5" r="3.5" fill="#7D55C7"/><circle cx="547.2" cy="127.3" r="3.5" fill="#7D55C7"/><circle cx="532.4" cy="115.0" r="3.5" fill="#7D55C7"/><text x="520" y="232" font-size="18" fill="#5F5D50" text-anchor="middle" >rhythm 1</text><circle cx="670" cy="140" r="62" fill="none" stroke="#D7D2CB"/><polyline points="732.0,140.0 726.0,117.3 712.3,99.0 693.2,87.4 671.7,84.0 651.1,88.8 634.1,100.6 623.2,117.6 619.5,136.9 623.2,155.7 633.4,171.3 648.4,181.7 665.8,185.6 682.9,182.7 697.3,173.9 707.0,160.6 711.0,145.1 708.9,129.6 701.4,116.3 689.7,107.1 675.7,103.1 661.7,104.5" fill="none" stroke="#ACA39A" stroke-width="1"/><circle cx="732.0" cy="140.0" r="5" fill="#009CBD"/><circle cx="726.0" cy="117.3" r="3.5" fill="#009CBD"/><circle cx="712.3" cy="99.0" r="3.5" fill="#009CBD"/><circle cx="693.2" cy="87.4" r="3.5" fill="#009CBD"/><circle cx="671.7" cy="84.0" r="3.5" fill="#009CBD"/><circle cx="651.1" cy="88.8" r="3.5" fill="#009CBD"/><circle cx="634.1" cy="100.6" r="3.5" fill="#009CBD"/><circle cx="623.2" cy="117.6" r="3.5" fill="#009CBD"/><circle cx="619.5" cy="136.9" r="3.5" fill="#009CBD"/><circle cx="623.2" cy="155.7" r="3.5" fill="#009CBD"/><circle cx="633.4" cy="171.3" r="3.5" fill="#009CBD"/><circle cx="648.4" cy="181.7" r="3.5" fill="#009CBD"/><text x="670" y="232" font-size="18" fill="#5F5D50" text-anchor="middle" >rhythm 2</text><text x="430" y="290" font-size="20" fill="#1F1E1B" text-anchor="start" >each rhythm turns a fixed angle per step</text><text x="430" y="316" font-size="20" fill="#1F1E1B" text-anchor="start" >and shrinks by a fixed factor per step</text><text x="430" y="360" font-size="20" fill="#5F5D50" text-anchor="start" >angle = frequency</text><text x="430" y="386" font-size="20" fill="#5F5D50" text-anchor="start" >shrink = how fast it fades</text><text x="430" y="412" font-size="20" fill="#5F5D50" text-anchor="start" >together: one eigenvalue of one matrix K</text></svg></div>
     <div class="p">
-      {{IMG:KOOP_PEOPLE}}
-      <p class="tldr" style="margin-top:14px">{{TXT:KOOP_TLDR}}</p>
+      <img src="../figs/papers/koopman1931_pnas_page315_top.png" style="width:330px;border-bottom:1px solid var(--rule)">
+      <p class="tldr" style="margin-top:14px">A four page note in PNAS. Seventy years later it became a toolkit for reading complex dynamics.</p>
     </div>
   </div>
-  <div class="ref">{{TXT:KOOP_REF}}</div>
-  <aside class="notes">{{TXT:KOOP_NOTES}}</aside>
+  <div class="ref"><a href="https://doi.org/10.1073/pnas.17.5.315">Koopman, Hamiltonian systems and transformation in Hilbert space, PNAS 1931</a><span class="sep"></span><a href="https://doi.org/10.1007/s11071-005-2824-x">Mezic, Nonlinear Dyn 2005</a></div>
+  <aside class="notes">Bernard Koopman, Columbia, 1931. The idea in one sentence: do not follow the state, follow measurements of the state, and the way those measurements change is linear. Left: what we record looks like a tangle. Right: in the right coordinates the tangle splits into rhythms, each turning a fixed angle per step and shrinking by a fixed factor. A turn and a shrink are one complex eigenvalue. Igor Mezic revived this around 2005 and it took off.</aside>
 </section>
 
 <section data-sec="50">
   <span class="mark">1 The lens</span>
-  <h2>The same lens has read fluid wakes, epidemics, power grids and the human cortex</h2>
-  <div class="gallery">{{GALLERY}}</div>
-  <div class="ref">{{TXT:GALLERY_REF}}</div>
-  <aside class="notes">{{TXT:GALLERY_NOTES}}</aside>
+  <h2>The same lens has read fluid wakes, measles epidemics and the human cortex</h2>
+  <div class="gallery"><figure><img src="../figs/papers/dmd_mode_joukowsky_vortex_street_wikipedia.png" data-evidence><figcaption>Fluid wakes<span>one mode of the vortex street behind a wing</span></figcaption></figure>
+  <figure><img src="../figs/papers/proctor2015_fig2_measles_dmd.png" data-evidence><figcaption>Epidemics<span>the yearly measles wave in England, 1944 to 1966</span></figcaption></figure>
+  <figure><img src="../figs/papers/brunton2016_fig1_dmd_ecog_overview.png" data-evidence><figcaption>The human cortex<span>electrode recordings rebuilt from a few modes</span></figcaption></figure></div>
+  <div class="ref"><a href="https://doi.org/10.1017/S0022112010001217">Schmid 2010</a><span class="sep"></span><a href="https://doi.org/10.1093/inthealth/ihv009">Proctor and Eckhoff 2015</a><span class="sep"></span><a href="https://doi.org/10.1016/j.jneumeth.2015.10.010">Brunton et al. 2016</a><span class="sep"></span><a href="https://doi.org/10.1109/TPWRS.2010.2103369">Susuki and Mezic 2011</a></div>
+  <aside class="notes">The practical version is dynamic mode decomposition, from fluid mechanics (Schmid 2010, Rowley et al. 2009). Left: one mode of the vortex street behind a wing. Middle: measles in pre vaccination England, one mode is the yearly epidemic wave, with its phase on the map (Proctor and Eckhoff). Right: Bing Brunton and colleagues applied it to electrodes on the human cortex, rebuilding the recordings from a few modes. The same lens identified swing modes in power grids (Susuki and Mezic 2011) and drives linear controllers for nonlinear robots (Korda and Mezic 2018). One lens, many sciences.</aside>
 </section>
 
 <section data-sec="75">
@@ -151,8 +153,8 @@
 </div>
 <p class="key" id="dm-read" style="margin-top:18px">The orange rhythm needs about 0.4 s to settle</p>
 </div></div>
-  <div class="ref">{{TXT:CSD_REF}}</div>
-  <aside class="notes">Live moment. Left: each dot is one rhythm of a system. Angle is its frequency, distance from the center is how long it survives. On the circle it never fades. Drag the slider slowly. The orange dot creeps to the circle, and the response to a kick rings longer and longer. Ecologists and climate scientists call this critical slowing down: before a system tips, it recovers more slowly from small kicks. {{TXT:CSD_NOTES}} Plant it: remember this picture, we come back to it.</aside>
+  <div class="ref"><a href="https://doi.org/10.1038/nature08227">Scheffer et al., Nature 2009</a><span class="sep"></span><a href="https://doi.org/10.1038/s41467-020-15908-3">Maturana et al., Critical slowing down as a biomarker for seizure susceptibility, Nat Commun 2020</a></div>
+  <aside class="notes">Live moment. Left: each dot is one rhythm of a system. Angle is its frequency, distance from the center is how long it survives. On the circle it never fades. Drag the slider slowly. The orange dot creeps to the circle, and the response to a kick rings longer and longer. Ecologists and climate scientists call this critical slowing down: before a system tips, it recovers more slowly from small kicks. And in epilepsy: Maturana and colleagues watched implanted EEG for months and found autocorrelation and variance rising in the tens of minutes to hours before seizures in 9 of 14 patients. Plant it: remember this picture, we come back to it.</aside>
 </section>
 
 <section data-sec="40">
