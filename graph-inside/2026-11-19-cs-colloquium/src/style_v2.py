@@ -181,7 +181,7 @@ def _rect(m):
 def _text(m):
     tag = m.group(0)
     x = _num(_attr(tag, 'x'), 0); size0 = _num(_attr(tag, 'font-size'), 14)
-    if _attr(tag, 'text-anchor') == 'middle' and 560 <= x <= 620 and size0 >= 15.5 and _attr(tag, 'font-weight') in ('600', '700', '800'):
+    if 'data-keep' not in tag and _attr(tag, 'text-anchor') == 'middle' and 560 <= x <= 620 and size0 >= 15.5 and _attr(tag, 'font-weight') in ('600', '700', '800'):
         tag = re.sub(r'(\sfont-size=")[^"]*(")', lambda k: k.group(1) + f'{size0 * 1.3:.1f}' + k.group(2), tag, count=1)
         tag = re.sub(r'\sfont-weight="[^"]*"', ' font-weight="400"', tag)
         if (_attr(tag, 'fill') or '').lower() == ACC.lower():

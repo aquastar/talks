@@ -1615,13 +1615,13 @@ PURP = '#5a4fcf'
 
 def steps(active):
     out = ''
-    for k, lab in enumerate(['Knowledge beyond text', 'Why music: emotion', 'A switch for neurons', 'Music as medicine']):
-        x = 30 + k * 285
+    for k, lab in enumerate(['Beyond text: body, space, emotion', 'A switch for neurons', 'Music as medicine']):
+        x = 30 + k * 380
         on = (k == active)
-        out += R(x, 6, 265, 30, ACC if on else '#fff', ACC if on else LINE, 1.5, 15) + C(x + 18, 21, 10, '#fff' if on else SOFT) + T(x + 18, 25.5, str(k + 1), 12, 700, ACC if on else MUT, 'middle')
+        out += R(x, 6, 360, 30, ACC if on else '#fff', ACC if on else LINE, 1.5, 15) + C(x + 18, 21, 10, '#fff' if on else SOFT) + T(x + 18, 25.5, str(k + 1), 12, 700, ACC if on else MUT, 'middle')
         out += T(x + 36, 26, lab, 14, 700, '#fff' if on else MUT)
-        if k < 3:
-            out += P(f'M{x+268},21 L{x+281},21', LINE, 2, extra='marker-end="url(#pea)"')
+        if k < 2:
+            out += P(f'M{x+363},21 L{x+376},21', LINE, 2, extra='marker-end="url(#pea)"')
     return out
 
 def person(x, y, w, h, fname, ini, name, title_lines, col):
@@ -1679,9 +1679,28 @@ EMOTION2 = sec('Music is where emotion can be measured', SVG(g), ch='0',
                ref='Picard, Affective Computing, MIT Press 1997, introduction. Minsky, The Emotion Machine, 2006. Meyer, Emotion and Meaning in Music, 1956, p. 31, via Margulis 2005. Huron, Sweet Anticipation, 2006. Photos: Wikimedia Commons',
                notes='Step 2 of 4. Two AI pioneers say machines need emotion. Then the music side, one line: the music theorist Leonard Meyer, in 1956, said musical emotion comes from expectation that is held back or broken. Expectation is exactly what a note transition graph computes, and its effect is measurable in the brain. That is why music is the place where a brain can judge whether a model has a graph inside.')
 
+# ---- Nov 17 (his request): five people, one point, beyond text. Meyer turns it toward music ----
+g = adefs('b5')
+g += steps(0).replace('url(#pea)', 'url(#b5a)')
+P5 = [('maurice-merleau-ponty.jpg', 'MM', 'Merleau-Ponty', '1945, philosopher', ['An organist learns a new', 'organ in an hour, with the', 'hands, not with words.']),
+      ('howard-gardner.jpg', 'HG', 'Howard Gardner', '1983, psychologist', ['Intelligence is plural:', 'language is one kind,', 'music another.']),
+      ('rosalind-picard.jpg', 'RP', 'Rosalind Picard', '1997, MIT Media Lab', ['Computers need to', 'recognize and express', 'emotion.']),
+      ('marvin-minsky.jpg', 'MM', 'Marvin Minsky', '2006, MIT AI Lab', ['Emotions are how the', 'mind turns resources', 'on and off.']),
+      ('fei-fei-li.jpg', 'FL', 'Fei-Fei Li', '2025, Stanford', ['Spatial intelligence is', "AI's next frontier", 'beyond language.'])]
+for k, (fn, ini, nm, who, lines) in enumerate(P5):
+    cx = 142 + k * 224
+    g += photo(cx, 104, 40, fn, ini, AC2) + T(cx, 170, nm, 17, 700, INK, 'middle', extra='data-keep="1"') + T(cx, 190, who, 13, 400, MUT, 'middle')
+    g += ''.join(T(cx, 220 + i * 21, ln, 15, 400, INK, 'middle') for i, ln in enumerate(lines))
+g += F(1, R(30, 300, 1120, 92, '#fff', LINE, 1.5, 14) + photo(80, 346, 32, 'leonard-meyer.jpg', 'LM', AC2) + T(130, 336, 'Leonard B. Meyer, 1956, music theorist', 15, 700, INK)
+          + T(130, 366, 'In music, emotion comes from expectation that is held back or broken.', 19, 400, MU))
+g += F(2, T(590, 440, 'Intelligence is more than words. Music is the kind that carries emotion, and it can be measured.', 19, 400, '#C45200', 'middle', extra='font-family="et-book,Georgia,serif" style="font-size-adjust:none"'))
+BEYOND5 = sec('Part 2. Knowledge is not only text', SVG(g), ch='2',
+              ref='Merleau-Ponty, Phenomenology of Perception, 1945. Gardner, Frames of Mind, 1983. Picard, Affective Computing, 1997. Minsky, The Emotion Machine, 2006. Fei-Fei Li, From Words to Worlds, 2025. Meyer, Emotion and Meaning in Music, 1956',
+              notes='Five people, five angles, one point: intelligence is not only language. The philosopher Merleau-Ponty, 1945: an organist adapts to an unfamiliar organ in about an hour before a concert, and what he learns sits in his hands and feet, not in sentences. Gardner, 1983: intelligence is plural, linguistic is one kind, musical and spatial are others. Picard, 1997, founded affective computing: machines should recognize and express emotion. Minsky, 2006: emotions are ways the mind switches resources on and off. Fei-Fei Li, 2025: spatial intelligence is the next frontier beyond language. All five lines are paraphrases, not quotes. Click: and for music, Leonard Meyer in 1956: musical emotion comes from expectation that is held back or broken. Expectation is what a note transition graph computes, and it can be measured in the brain, which is where Part 2 ends. Photos: Wikimedia Commons, the Merleau-Ponty portrait by Perig Gouanvic, CC BY 3.0.')
+
 # ---- Nov 4 (his request): optogenetics, then music medicine ----
 g = adefs('op')
-g += steps(2).replace('url(#pea)', 'url(#opa)')
+g += steps(1).replace('url(#pea)', 'url(#opa)')
 BLUE = '#2F7FD0'
 def blink(vals, dur, kt, attr='opacity'):
     return f'<animate attributeName="{attr}" values="{vals}" keyTimes="{kt}" dur="{dur}s" repeatCount="indefinite"/>'
@@ -1693,27 +1712,56 @@ oc = R(30, 50, 545, 360, '#fff', LINE, 1.5, 14) + T(52, 80, 'Nobel Prize 2026: o
 for q_, (fn, ini, nm) in enumerate([('karl-deisseroth.jpg', 'KD', 'Deisseroth'), ('peter-hegemann.jpg', 'PH', 'Hegemann'), ('georg-nagel.jpg', 'GN', 'Nagel')]):
     x = 330 + q_ * 82
     oc += photo(x, 76, 20, fn, ini, AC2) + T(x, 112, nm, 11.5, 600, INK, 'middle')
-# fiber and light cone
-oc += R(129, 128, 22, 54, '#C9C4BD', 'none', 0, 3) + T(119, 150, 'light', 13, 400, MUT, 'end')
-oc += f'<polygon points="129,182 151,182 177,226 103,226" fill="{BLUE}" opacity="0">' + blink('0;0.55;0.55;0;0', PER, '0;0.04;0.2;0.26;1') + '</polygon>'
-# neuron
-NX, NY = 140, 262
-oc += P(f'M{NX-22},{NY-10} C{NX-50},{NY-30} {NX-62},{NY-40} {NX-80},{NY-36}', AC2, 2) + P(f'M{NX-24},{NY+8} C{NX-52},{NY+20} {NX-60},{NY+40} {NX-82},{NY+46}', AC2, 2)
-oc += P(f'M{NX+24},{NY} L{NX+120},{NY} M{NX+120},{NY} l14,-12 M{NX+120},{NY} l14,12', AC2, 2)
-oc += C(NX, NY, 26, '#EFEBE5', AC2, 2)
-oc += f'<circle cx="{NX}" cy="{NY}" r="26" fill="{ACC}" opacity="0">' + blink('0;0;0.85;0;0', PER, '0;0.06;0.12;0.32;1') + '</circle>'
-oc += T(NX, NY + 50, 'neuron', 13, 400, MUT, 'middle')
-# voltage trace with spikes locked to the light pulses
-TX0, TX1, TB = 290, 550, 300
+# fiber and light cone, drawn finer (his note, Nov 17: the first version looked rough)
+import math as _om
+def taper(pts, w0, w1, fill_):
+    """a filled branch whose width goes from w0 at the root to w1 at the tip, along a polyline"""
+    n = len(pts); L_, R_ = [], []
+    for i, (x, y) in enumerate(pts):
+        x2, y2 = pts[min(i + 1, n - 1)]; x1, y1 = pts[max(i - 1, 0)]
+        dx, dy = x2 - x1, y2 - y1; d = _om.hypot(dx, dy) or 1
+        w = (w0 + (w1 - w0) * i / (n - 1)) / 2
+        L_.append((x - dy / d * w, y + dx / d * w)); R_.append((x + dy / d * w, y - dx / d * w))
+    ring = L_ + R_[::-1]
+    return f'<path d="M{" L".join(f"{x:.1f},{y:.1f}" for x, y in ring)} Z" fill="{fill_}"/>'
+def bez(p0, p1, p2, k=14):
+    return [((1 - t) ** 2 * p0[0] + 2 * (1 - t) * t * p1[0] + t * t * p2[0], (1 - t) ** 2 * p0[1] + 2 * (1 - t) * t * p1[1] + t * t * p2[1]) for t in [i / k for i in range(k + 1)]]
+NX, NY = 150, 266
+NEU = '#6E6A60'
+oc += R(144, 120, 12, 52, '#E4DFD8', '#ACA39A', 1, 6) + L(150, 124, 150, 168, '#ACA39A', 1) + T(136, 136, 'optical', 12.5, 400, MUT, 'end') + T(136, 152, 'fiber', 12.5, 400, MUT, 'end')
+cone = f'M145,172 L155,172 L178,226 Q150,236 122,226 Z'
+oc += f'<path d="{cone}" fill="{BLUE}" opacity="0">' + blink('0;0.4;0.4;0;0', PER, '0;0.04;0.2;0.26;1') + '</path>'
+# neuron: tapered dendrites, a round soma, an axon with terminals
+for p0, p1, p2, sub in (((NX - 18, NY - 10), (NX - 46, NY - 30), (NX - 82, NY - 34), ((NX - 60, NY - 30), (NX - 70, NY - 50), (NX - 84, NY - 58))),
+                        ((NX - 20, NY + 6), (NX - 50, NY + 18), (NX - 86, NY + 14), ((NX - 64, NY + 16), (NX - 72, NY + 36), (NX - 82, NY + 48))),
+                        ((NX - 6, NY + 18), (NX - 12, NY + 40), (NX - 30, NY + 58), None),
+                        ((NX - 8, NY - 18), (NX - 16, NY - 38), (NX - 10, NY - 56), None)):
+    oc += taper(bez(p0, p1, p2), 6, 1.2, NEU)
+    if sub:
+        oc += taper(bez(*sub), 2.6, 0.8, NEU)
+oc += taper(bez((NX + 20, NY + 2), (NX + 60, NY - 6), (NX + 110, NY + 2), 18), 3.2, 2.2, NEU)
+for dy in (-14, 0, 14):
+    oc += taper(bez((NX + 108, NY + 2), (NX + 118, NY + 2 + dy * .4), (NX + 126, NY + 2 + dy), 8), 1.8, 1.2, NEU) + C(NX + 128, NY + 2 + dy, 3.2, NEU)
+oc += f'<ellipse cx="{NX}" cy="{NY}" rx="24" ry="21" fill="#EFEBE5" stroke="{NEU}" stroke-width="2.2"/>'
+oc += f'<ellipse cx="{NX}" cy="{NY}" rx="24" ry="21" fill="{ACC}" opacity="0">' + blink('0;0;0.8;0;0', PER, '0;0.06;0.12;0.32;1') + '</ellipse>'
+oc += C(NX + 4, NY - 2, 6, '#DDD7CF')
+oc += ''.join(C(round(NX + 24 * _om.cos(t), 1), round(NY + 21 * _om.sin(t), 1), 2.6, BLUE) for t in (-2.3, -1.8, -1.3, -0.8))
+oc += T(NX - 8, NY + 82, 'neuron', 13, 400, MUT, 'middle') + T(NX + 40, NY - 40, 'light switch', 12, 400, BLUE)
+# membrane voltage, sampled from a real action potential shape, spikes locked to the light pulses
+TX0, TX1, TB = 300, 556, 300
 SP = 52   # px per period
-tr = f'M{TX0},{TB}'
-x = TX0
-while x + SP <= TX1 + 1:
-    tr += f' L{x+8},{TB} L{x+11},{TB-62} L{x+15},{TB+10} L{x+20},{TB} L{x+SP},{TB}'
-    x += SP
-oc += T(TX0, 196, 'blue light', 13, 600, BLUE) + ''.join(R(TX0 + 6 + k * SP, 204, 8, 10, BLUE, 'none', 0, 1) for k in range(5))
-oc += P(tr, INK, 1.6, extra='stroke-linejoin="round"') + T(TX0, 336, 'the neuron fires, every time', 13, 600, INK)
-oc += f'<g>' + L(TX0, 200, TX0, 316, ACC, 1.6) + sweep(TX0, TX0 + 5 * SP, 5 * PER) + '</g>'
+def ap(u):
+    """voltage above baseline u px after the light pulse: rise, overshoot, fall, after hyperpolarization"""
+    if u < 6: return 0
+    u -= 6
+    if u < 3: return 60 * (1 - _om.cos(_om.pi * u / 3)) / 2
+    if u < 7: return 60 - 72 * (u - 3) / 4
+    return -12 * _om.exp(-(u - 7) / 6)
+pts_ = [(x, TB - ap((x - TX0) % SP)) for x in [TX0 + i * 0.5 for i in range(int((TX1 - TX0) / 0.5) + 1)]]
+oc += T(TX0, 196, 'light on', 13, 600, BLUE) + ''.join(R(TX0 + 4 + k * SP, 206, 6, 12, BLUE, 'none', 0, 2) for k in range(5))
+oc += L(TX0, TB, TX1, TB, '#DDD7CF', 1) + P('M' + ' L'.join(f'{x:.1f},{y:.1f}' for x, y in pts_), INK, 1.5, extra='stroke-linejoin="round" stroke-linecap="round"')
+oc += T(TX0, 336, 'the neuron fires, every time', 13, 600, INK)
+oc += f'<g>' + L(TX0, 200, TX0, 318, ACC, 1.2, 'stroke-opacity=".85"') + sweep(TX0, TX0 + 5 * SP, 5 * PER) + '</g>'
 oc += T(52, 372, 'A light sensitive protein from algae, put into chosen neurons.', 15, 400, INK) + T(52, 394, 'Precise, but it needs a gene and light inside the brain.', 14, 400, MUT)
 g += oc
 # right card: sound through the ear
@@ -1721,11 +1769,11 @@ P2 = 0.8; SP2 = 40
 nc = R(605, 50, 545, 360, MUL, 'none', 0, 14) + T(627, 80, 'Through the ear, no surgery?', 17, 700, MU)
 nc += T(627, 120, 'sound: 40 Hz clicks (slowed down)', 13, 600, MU)
 CX0 = 640
-nc += ''.join(R(CX0 + 4 + k * SP2, 132, 5, 26, MU, 'none', 0, 1) for k in range(12))
+nc += ''.join(R(CX0 + 6 + k * SP2, 134, 3, 22, MU, 'none', 0, 1.5) for k in range(12))
 nc += T(627, 200, 'brain rhythm (EEG)', 13, 600, INK)
-wv = f'M{CX0},{250}' + ''.join(f' Q{CX0 + k*SP2 + 6},{214} {CX0 + k*SP2 + 14},{250} T{CX0 + (k+1)*SP2},{250}' for k in range(12))
-nc += P(wv, INK, 1.6)
-nc += f'<g>' + L(CX0, 126, CX0, 284, ACC, 1.6) + sweep(CX0, CX0 + 12 * SP2, 12 * P2) + '</g>'
+wpts = [(x, 250 - 17 * _om.cos(2 * _om.pi * (x - CX0 - 12) / SP2)) for x in [CX0 + i * 0.5 for i in range(int(12 * SP2 / 0.5) + 1)]]
+nc += L(CX0, 250, CX0 + 12 * SP2, 250, '#D4CBE6', 1) + P('M' + ' L'.join(f'{x:.1f},{y:.1f}' for x, y in wpts), INK, 1.5, extra='stroke-linejoin="round"')
+nc += f'<g>' + L(CX0, 126, CX0, 284, ACC, 1.2, 'stroke-opacity=".85"') + sweep(CX0, CX0 + 12 * SP2, 12 * P2) + '</g>'
 nc += T(627, 318, 'The brain rhythm locks to the beat.', 16, 600, INK)
 nc += T(627, 344, 'Alzheimer model mice: less amyloid, better memory.', 14, 400, MUT) + T(627, 366, 'People: safe in small trials, phase 3 results not out.', 14, 400, MUT)
 nc += T(627, 394, 'Our question, not a result.', 13, 400, MUT)
@@ -1736,7 +1784,7 @@ OPTO = sec('This year\'s Nobel: a switch for neurons, made of light', SVG(g), ch
            notes='Portraits: Ill. Niklas Elmehed, Nobel Prize Outreach, from nobelprize.org. Step 3 of 4. One minute. The 2026 Nobel went to optogenetics: a light gated channel from an alga, put into chosen neurons, so light switches them on or off. It changed neuroscience, but it is invasive: a gene has to be delivered and light has to reach the cells, so in people it is limited, the first case was partial vision in one blind patient. The non invasive cousin is 40 Hz flicker of light and sound from Li-Huei Tsai\'s lab: in mice it drives gamma rhythms and reduces amyloid and tau, small human trials found it safe, and a phase 3 trial finished enrolling in February. If a plain 40 Hz click can do that, music, the richest sound we can design, might be a finer switch. Say clearly that this is the question, not a result.')
 
 g = adefs('md')
-g += steps(3).replace('url(#pea)', 'url(#mda)')
+g += steps(2).replace('url(#pea)', 'url(#mda)')
 # left: rhythmic cueing, footsteps land on the beat
 BEAT, NB_ = 0.6, 8
 CYC = BEAT * NB_
@@ -2082,7 +2130,8 @@ def assemble(cover, old):
     emo_b = bridge(toch(EMOTION2, '2'), 'Emotion is one way music acts on the brain. Before we model music, one detour through this year\'s Nobel Prize, because it shows what a designed signal can do to brain circuits. The history of music models is under the down arrow.')
     copy_b = bridge(COPY, 'Before we go inside a generator, one honest line from the literature: in music, graphs win only when the edges carry something the sequence throws away, and often they do not (survey under the down arrow). The one place nobody has looked for such edges is inside the generator itself.')
     corpus_b = bridge(corpus, 'How much memory should the graph have? One note gives the right vocabulary with the wrong syntax, three notes memorize the piece (the picture is under the down arrow on the next slide).')
-    mus = [beyond2, emo_b, backup(hist), toch(OPTO, '2'), toch(MEDIC, '2'), toch(GENRE, '2'), backup(toch(CREATE, '2')), FOLD, corpus_b, backup(RICHER), backup(path), copy_b, backup(WHEN), PROBE, backup(MGEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
+    beyond5 = bridge(BEYOND5, 'Emotion is one way music acts on the brain. Before we model music, one detour through this year\'s Nobel Prize, because it shows what a designed signal can do to brain circuits. The history of music models is under the down arrow.')
+    mus = [beyond5, backup(hist), toch(OPTO, '2'), toch(MEDIC, '2'), toch(GENRE, '2'), backup(toch(CREATE, '2')), FOLD, corpus_b, backup(RICHER), backup(path), copy_b, backup(WHEN), PROBE, backup(MGEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
     beyond = []
     close = [TAKEAWAY.replace('</section>', CLIP_JSON + '</section>')]
     # one bridge per main slide, so each slide leads into the next one (order of Nov 16 2026)
