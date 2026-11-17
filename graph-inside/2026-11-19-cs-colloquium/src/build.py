@@ -495,6 +495,11 @@ tail = tail.replace("document.body.classList.toggle('on-title', i===0)", "docume
 assert "contains('full')" in tail
 assert 'fe-frame' in tail
 html = head + '\n<div class="reveal"><div class="slides">\n\n' + '\n\n'.join(allsecs) + '\n' + tail
+_fulldemo = """<style>body.fulldemo-on #rail,body.fulldemo-on .reveal .slide-number,body.fulldemo-on #fnum,body.fulldemo-on .reveal .controls{display:none !important}</style>
+<script>(function(){function f(){var c=Reveal.getCurrentSlide();document.body.classList.toggle('fulldemo-on',!!(c&&c.classList.contains('fulldemo')));}
+if(window.Reveal){Reveal.on('ready',f);Reveal.on('slidechanged',f);}})();</script>
+"""
+html = html.replace('</body>', _fulldemo + '</body>', 1)  # the full screen live demo slide hides the rail and the slide number
 open(NEW + '/index.html', 'w').write(html)
 os.makedirs(NEW + '/figs', exist_ok=True)
 for f in set(re.findall(r'figs/[A-Za-z0-9_]+\.png', html)):

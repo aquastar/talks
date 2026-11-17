@@ -1109,11 +1109,10 @@ html,body,.reveal-viewport{background:#FBFAF7 !important}
 </section>
 </section>
 
-<section data-ch="2">
-  <h2>Live: what MusicGen expects, next to what listeners' brains do</h2><span class="status progress">In progress</span>
-  <div style="width:1150px;height:452px;overflow:hidden;margin:6px auto 0;border-radius:6px;box-shadow:0 0 0 1px #D7D2CB"><iframe data-src="https://aquastar.github.io/talks/music-to-brain/eeg-demo/" title="Music surprise and EEG demo" style="position:relative;top:-92px;width:1643px;height:780px;border:0;transform:scale(.7);transform-origin:0 0;max-width:none;max-height:none;margin:0"></iframe></div>
-  <div class="ref">Demo: aquastar.github.io/talks/music-to-brain/eeg-demo. EEG of 14 to 21 listeners per song, MusicGen large...</div>
-  <aside class="notes">Live demo, in progress, not a result. Pick a song, press play, and the score, MusicGen's surprise for every note and the average EEG of the listeners scroll together. Jump to the next surprising note and look at the EEG right after it. Say the honest part out loud: note by note, this link is not yet distinguishable from an untrained model, so the demo shows the measurement we built, and the next slide is the experiment that can actually test it. If the network fails, describe it in one sentence and move on.</aside>
+<section data-ch="2" class="fulldemo" data-background-color="#FBFAF7" data-background-iframe="https://aquastar.github.io/talks/music-to-brain/eeg-demo/" data-background-interactive>
+  <button onclick="window.focus();Reveal.next()" style="position:absolute;bottom:-30px;right:-30px;font:600 15px/1 et-book,Georgia,serif;color:#1F1E1B;background:#FBFAF7;border:1px solid #ACA39A;border-radius:3px;padding:8px 14px;cursor:pointer;pointer-events:auto;z-index:50">Next slide</button>
+  <div style="position:absolute;top:-6px;right:-30px;font:600 13px/1 et-book,Georgia,serif;letter-spacing:.14em;text-transform:uppercase;color:#5F5D50;background:#FBFAF7;padding:6px 10px;border-bottom:2px solid #F76902;pointer-events:none">Live demo, in progress</div>
+  <aside class="notes">Live demo, full screen, in progress, not a result. It fills the whole screen and every control works, click straight into it. A click inside the demo keeps the keyboard there, and the demo uses the arrow keys itself, so press the Next slide button at the bottom right to move on. Pick a song, press play, and the score, MusicGen's surprise for every note and the average EEG of the listeners scroll together. Jump to the next surprising note and look at the EEG right after it. Say the honest part out loud: note by note, this link is not yet distinguishable from an untrained model, so the demo shows the measurement we built, and the next slide is the experiment that can actually test it. If the network fails, describe it in one sentence and move on.</aside>
 </section>
 
 <section data-ch="2">
@@ -1242,5 +1241,8 @@ Reveal.initialize({hash:true, center:false, progress:true, width:1280, height:66
   (function boot(){ if (Reveal.isReady && Reveal.isReady()) { var cs = Reveal.getCurrentSlide(); frames(cs).forEach(function(f){ if(!f.getAttribute('src')) play(f); }); count(cs); } else { setTimeout(boot, 150); } })();
 })();
 </script>
+<style>body.fulldemo-on #rail,body.fulldemo-on .reveal .slide-number,body.fulldemo-on #fnum,body.fulldemo-on .reveal .controls{display:none !important}</style>
+<script>(function(){function f(){var c=Reveal.getCurrentSlide();document.body.classList.toggle('fulldemo-on',!!(c&&c.classList.contains('fulldemo')));}
+if(window.Reveal){Reveal.on('ready',f);Reveal.on('slidechanged',f);}})();</script>
 </body>
 </html>
