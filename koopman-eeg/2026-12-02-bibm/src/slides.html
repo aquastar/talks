@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rhythms Before a Seizure</title>
+<link rel="stylesheet" href="../../shared/reveal/reveal.css">
+<link rel="stylesheet" href="../../shared/style.css">
+<style>
+.reveal section.cover h1{font-size:72px}
+.reveal section.cover h1 span{font-size:112px;display:inline-block;line-height:1}
+.reveal section.cover .cover-eeg{position:absolute;left:64px;top:400px}
+.reveal section.cover .cv-reveal{animation:cv 6s linear infinite}
+@keyframes cv{0%{width:0}85%{width:1152px}100%{width:1152px}}
+.reveal section.cover .venue{position:absolute;right:64px;bottom:70px;font-size:20px;color:var(--ink2);letter-spacing:.14em;text-transform:uppercase}
+.reveal .dm-l{font-size:19px;color:var(--ink2)}
+.reveal .nums{display:flex;gap:56px;margin:8px 0 4px 0}
+.reveal .nums div{font-size:22px;color:var(--ink2);line-height:1.3}
+.reveal .nums .big{font-size:48px}
+.reveal .gallery{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:20px}
+.reveal .gallery figure{margin:0}
+.reveal .gallery img{width:100%;height:250px;object-fit:contain;background:#fff;display:block;border-bottom:1px solid var(--rule)}
+.reveal .gallery figcaption{font-size:21px;color:var(--ink);margin-top:8px;line-height:1.25}
+.reveal .gallery figcaption span{display:block;font-size:16px;color:var(--ink2)}
+.reveal .ask{font-size:26px;line-height:1.35;margin-top:22px;padding-top:14px;border-top:1px solid var(--rule)}
+.reveal .forecast li{font-size:30px}
+.reveal table.tab{border-collapse:collapse;font-size:17px;margin-top:-8px}
+.reveal table.tab td,.reveal table.tab th{padding:3px 12px;border:0;text-align:right;font-weight:400;color:var(--ink2)}
+.reveal table.tab td:first-child{text-align:left;color:var(--ink)}
+.reveal table.tab tr.ours td{color:var(--ink);font-weight:600;border-top:1px solid var(--axis)}
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<section data-sec="15" class="cover">
+  <h1>Reading the <span>Rhythms</span><br>Before a Seizure</h1>
+  <p class="sub">KSNet: interpretable Koopman spectral representations for EEG seizure prediction</p>
+  {{COVER}}
+  <div class="who">Siji Chen, Yanshen Sun, <b>Zhiqian Chen</b>, Chang-Tien Lu<br><span>Virginia Tech, Meta, Rochester Institute of Technology</span></div>
+  <div class="venue">IEEE BIBM 2026</div>
+  <aside class="notes">The purple lines are ten real seconds of EEG from one patient in the CHB-MIT data, ten minutes before a seizure. Nothing in them looks alarming. Keep that in mind. Say the title and go.</aside>
+</section>
+
+<section data-sec="55">
+  <span class="mark">The problem</span>
+  <h2>On EEG a seizure is unmistakable, but by the time we see it, it is too late</h2>
+  {{EEG:seizure|1150|290}}
+  {{TIMELINE}}
+  <div class="ref">CHB-MIT Scalp EEG Database, patient chb01, file chb01_03, onset at 2996 s<span class="sep"></span><a href="https://doi.org/10.13026/C2K01R">Shoeb, PhysioNet 2010</a></div>
+  <aside class="notes">This is real: thirty seconds of patient chb01, a child in the Boston CHB-MIT recordings. The red line is the onset. After it, every channel explodes. Detecting this is easy. Predicting it means looking at the purple stretch half an hour earlier, where nothing looks wrong to the eye. That is our task: one 10 second clip, pre-ictal or inter-ictal. [Then the epilepsy facts on the next slide.]</aside>
+</section>
+
+<section data-sec="50">
+  <span class="mark">What could be</span>
+  <h2>{{TXT:BAUD_HEADLINE}}</h2>
+  <div class="fp">
+    <div class="f" style="width:700px">{{IMG:BAUD_IMG}}</div>
+    <div class="p">
+      <p class="key">{{TXT:BAUD_KEY}}</p>
+      <p class="tldr">{{TXT:BAUD_TLDR}}</p>
+    </div>
+  </div>
+  <div class="ref">{{TXT:BAUD_REF}}</div>
+  <aside class="notes">{{TXT:BAUD_NOTES}}</aside>
+</section>
+
+<section data-sec="45">
+  <span class="mark">What is</span>
+  <h2>Today's best predictors turn EEG into a label and say nothing about how the signal moves</h2>
+  <div class="fp">
+    <div class="f" style="width:330px"><img src="../figs/ours/ref-schirrmeister-2017-fig1.jpg" data-evidence style="width:330px"></div>
+    <div class="p">
+      <p class="key">EEG in, label out</p>
+      <p class="tldr">Convolutions, recurrent nets and transformers learn filters that work. None keeps an explicit model of how the brain state evolves from one moment to the next.</p>
+      <p style="font-size:28px;margin-top:30px">So what changes in the brain's dynamics in the half hour before a seizure?</p>
+      <p class="tldr">We will see one answer at minute 15.</p>
+    </div>
+  </div>
+  <div class="ref"><a href="https://doi.org/10.1002/hbm.23730">Schirrmeister et al., Hum Brain Mapp 2017</a><span class="sep"></span><a href="https://doi.org/10.1088/1741-2552/aace8c">Lawhern et al. 2018</a><span class="sep"></span><a href="https://doi.org/10.1109/TNSRE.2022.3230250">Song et al. 2023</a></div>
+  <aside class="notes">The figure is Deep ConvNet, the strongest family among our baselines. These models are accurate, but a seizure is an event in time, a change in how a system moves, and the models never write that motion down. Open the question here and promise the answer: by minute 15 we will look at what changes. History aside for Q and A: decades of seizure prediction claims failed under rigorous evaluation (Mormann et al., Brain 2007).</aside>
+</section>
+
+<section data-sec="35">
+  <span class="mark">Map</span>
+  <h2>Two roads rarely meet: predicting seizures, and a linear lens on nonlinear motion</h2>
+  {{MAP:all}}
+  <aside class="notes">Top road: seizure prediction, from hand made features to deep nets, and, in the talk you just heard (TriSense), more sensors on the body. That is one direction: more signals. Bottom road: a 1931 idea from mathematical physics that turned into one of the most useful tools for reading complex dynamics. This talk takes the other direction: not more signals, but a better model of how one signal moves. Where the roads meet is our paper.</aside>
+</section>
+
+<section data-sec="45">
+  <span class="mark">Preview</span>
+  <h2>Learning how EEG moves beats eleven baselines and reveals what changes before a seizure</h2>
+  <div class="fp">
+    <div class="p" style="flex:0 0 420px">
+      <p class="preview-tag">Prediction, F1</p>
+      <div class="nums"><div><span class="big">0.81</span><br>KSNet, CHB-MIT</div><div><span class="big plain">0.74</span><br>best of 11 baselines</div></div>
+      <div class="nums"><div><span class="big plain">0.82</span><br>KSNet, SIENA</div><div><span class="big plain">0.76</span><br>best baseline</div></div>
+    </div>
+    <div class="f" style="width:650px">
+      <p class="preview-tag">A pre-seizure signature in the learned rhythms</p>
+      <img src="../figs/ours/pre_inter_chbmit_new.png" data-evidence style="width:650px">
+    </div>
+  </div>
+  <div class="ref">Chen, Sun, Chen and Lu, KSNet, IEEE BIBM 2026</div>
+  <aside class="notes">Two results before any method. Left: F1, higher is better, segment level cross validation on two public scalp EEG datasets. Right: the figure we will earn at minute 15. Do not explain the axes yet, just say: the red and blue lines split on the right side, and that split is the story.</aside>
+</section>
+
+<section data-sec="30" data-sparse="1">
+  <span class="mark">Three findings</span>
+  <h2>What you can take home</h2>
+  <ol class="forecast">
+    <li class="thesis-item">Learn a space where EEG moves linearly, and prediction beats eleven baselines on two datasets</li>
+    <li>The gain comes from choosing which rhythms to listen to</li>
+    <li>Before a seizure, some learned rhythms fade more slowly, yet unseen patients stay out of reach</li>
+  </ol>
+  <aside class="notes">Read the three lines. The third one has a catch, and I will show it honestly.</aside>
+</section>
+
+<section data-sec="60">
+  <span class="mark">1 The lens</span>
+  <h2>{{TXT:KOOP_HEADLINE}}</h2>
+  <div class="fp">
+    <div class="f" style="width:760px">{{KOOPTOY}}</div>
+    <div class="p">
+      {{IMG:KOOP_PEOPLE}}
+      <p class="tldr" style="margin-top:14px">{{TXT:KOOP_TLDR}}</p>
+    </div>
+  </div>
+  <div class="ref">{{TXT:KOOP_REF}}</div>
+  <aside class="notes">{{TXT:KOOP_NOTES}}</aside>
+</section>
+
+<section data-sec="50">
+  <span class="mark">1 The lens</span>
+  <h2>The same lens has read fluid wakes, epidemics, power grids and the human cortex</h2>
+  <div class="gallery">{{GALLERY}}</div>
+  <div class="ref">{{TXT:GALLERY_REF}}</div>
+  <aside class="notes">{{TXT:GALLERY_NOTES}}</aside>
+</section>
+
+<section data-sec="75">
+  <span class="mark">1 The lens</span>
+  <h2>A spectrum is a fingerprint: near a tipping point, one rhythm fades ever more slowly</h2>
+  {{DEMO}}
+  <div class="ref">{{TXT:CSD_REF}}</div>
+  <aside class="notes">Live moment. Left: each dot is one rhythm of a system. Angle is its frequency, distance from the center is how long it survives. On the circle it never fades. Drag the slider slowly. The orange dot creeps to the circle, and the response to a kick rings longer and longer. Ecologists and climate scientists call this critical slowing down: before a system tips, it recovers more slowly from small kicks. {{TXT:CSD_NOTES}} Plant it: remember this picture, we come back to it.</aside>
+</section>
+
+<section data-sec="40">
+  <span class="mark">1 The lens</span>
+  <h2>Deep Koopman lets a network find the right coordinates by itself</h2>
+  <div class="fp">
+    <div class="f" style="width:700px"><img src="../figs/ours/ref-lusch-2018-fig1.png" data-evidence style="width:700px"></div>
+    <div class="p">
+      <p class="key">Encoder, one linear step, decoder</p>
+      <p class="tldr">Lusch, Kutz and Brunton trained the encoder so that one matrix moves the state forward. In epilepsy, the idea has so far steered stimulation, not predicted seizures.</p>
+    </div>
+  </div>
+  <div class="ref"><a href="https://doi.org/10.1038/s41467-018-07210-0">Lusch, Kutz and Brunton, Deep learning for universal linear embeddings of nonlinear dynamics, Nat Commun 2018</a><span class="sep"></span><a href="https://arxiv.org/abs/2103.14321">Liang et al. 2023</a></div>
+  <aside class="notes">Read the figure left to right: the network maps a state into new coordinates (phi), one matrix K moves it forward, the decoder maps it back. For real data we do not know the right coordinates, so we learn them. Liang and colleagues used an online deep Koopman model for closed loop neurostimulation in epilepsy. Nobody had used the learned spectrum itself to predict.</aside>
+</section>
+
+<section data-sec="20">
+  <span class="mark">Map</span>
+  <h2>Where the roads meet: predict seizures from a learned spectrum</h2>
+  {{MAP:ks}}
+  <aside class="notes">Now our paper. Same patient as the opening.</aside>
+</section>
+
+<section data-sec="70">
+  <span class="mark">2 KSNet</span>
+  <h2>Follow ten seconds of patient chb01 through KSNet</h2>
+  {{PIPE}}
+  <div class="ref">Real clip: CHB-MIT chb01_03, 2396 to 2406 s, eight of 23 channels shown</div>
+  <aside class="notes">Step 1: slide a 1/8 second window along the clip, each snapshot is encoded into 16 numbers per channel. Step 2: one shared matrix K, 16 by 16, pushes the state forward one step, then again and again, three steps. Step 3: decode each predicted state and compare it with what the EEG actually did. The loss says: K must predict the future, not only describe the present. Training on three steps instead of one adds up to 0.02 per metric. K is a full matrix, so rhythms can couple and rotate.</aside>
+</section>
+
+<section data-sec="55">
+  <span class="mark">2 KSNet</span>
+  <h2>A learnable band decides which rhythms the classifier gets to hear</h2>
+  <div class="fp">
+    <div class="f" style="width:640px">{{CIRCLE}}</div>
+    <div class="p">
+      <p class="key">Each dot is a rhythm of the learned K</p>
+      <p class="tldr">Angle gives its frequency, distance from the center how long it lasts. A soft band with learned edges weights the rhythms, then a small ConvNet classifies.</p>
+      <p class="tldr fragment" data-fragment-index="2">Shaded: an example band. These are rhythms of the learned state, not EEG frequency bands.</p>
+    </div>
+  </div>
+  <div class="ref">KSNet, Section III.C</div>
+  <aside class="notes">These are the real 16 eigenvalues the model learned for patient chb01, read off our paper figure. Frequency of a rhythm equals its angle times 256 over 2 pi. The band is soft, two sigmoids, and its edges are trained with everything else. Conjugate pairs get equal weight, so the representation stays real. Careful with the words: a 40 Hz rhythm of the latent state is not 40 Hz gamma in the EEG, because the encoder is nonlinear.</aside>
+</section>
+
+<section data-sec="45">
+  <span class="mark">3 Results</span>
+  <h2>KSNet tops eleven baselines on both datasets</h2>
+  {{F1BARS}}
+  <div class="ref">Segment level 5 fold cross validation, same splits for every model. Full table with specificity, recall and AUC in the backup.</div>
+  <aside class="notes">CHB-MIT, 23 patients, 2,300 ten second segments. SIENA, 13 patients, 1,300 segments. Every model sees the same splits. The closest competitor is ShallowConvNet, which is also the classifier head inside KSNet, so the difference is the Koopman representation. AUC: 0.87 and 0.90. Caveat: segments of the same patient appear in training and test here. The next slides test that.</aside>
+</section>
+
+<section data-sec="55">
+  <span class="mark">3 Results</span>
+  <h2>The Koopman space alone loses. Choosing the rhythms wins</h2>
+  {{ABL}}
+  <div class="ref">KSNet ablation, Fig. 4</div>
+  <aside class="notes">Ask the room first: if we remove the band and feed all rhythms to the classifier, where does it land? Most people guess just below KSNet. Click: it lands below the best baseline, 0.69 on CHB-MIT, 0.72 on SIENA. Click: with the band, 0.81 and 0.82. A linear dynamical space is not enough by itself. The selection of rhythms carries the gain.</aside>
+</section>
+
+<section data-sec="65">
+  <span class="mark">3 What the spectrum shows</span>
+  <h2>Before a seizure, the fast learned rhythms barely fade</h2>
+  <div class="fp">
+    <div class="f" style="width:720px"><img src="../figs/ours/pre_inter_chbmit_new.png" data-evidence style="width:720px"></div>
+    <div class="p">
+      <p class="key">Above about 76 Hz, pre-ictal rhythms stay near zero decay. Inter-ictal ones fade fast</p>
+      <p class="tldr">One model trained only on pre-ictal clips, one only on inter-ictal. Vertical: decay rate, 0 means no fading. CHB-MIT, six folds.</p>
+    </div>
+  </div>
+  <div class="ref">KSNet, Fig. 3. SIENA shows differences at other frequencies, see backup.</div>
+  <aside class="notes">Payoff of the slider. Blue: models that only saw pre-ictal EEG. Red: only inter-ictal. Each point is the average decay rate of the learned rhythms in an 8 Hz bin. On the right, blue stays near zero, the rhythms persist, red drops to minus 200. It looks like the slider pushed toward the edge. Honest framing: this is consistent with slowing down before a transition, it is not a test of it. The bands overlap in places, and SIENA separates at other frequencies (below 28 Hz and 76 to 92 Hz). That is a question I would love to work on with people here.</aside>
+</section>
+
+<section data-sec="40">
+  <span class="mark">3 The catch</span>
+  <h2>On a patient the model has never seen, prediction falls to chance</h2>
+  <div class="fp">
+    <div class="f" style="width:640px">{{LOPO}}</div>
+    <div class="p">
+      <p class="key">Every brain plays its own rhythms</p>
+      <p class="tldr">AUC when one patient is held out entirely. The model predicts pre-ictal too often for unseen patients.</p>
+      <p class="tldr">The next talk in this session tackles the same wall, across subjects, for emotion.</p>
+    </div>
+  </div>
+  <div class="ref">Leave one patient out, KSNet Table II</div>
+  <aside class="notes">AUC, 0.5 is chance. With patients seen in training: 0.87 and 0.90. With a new patient: 0.48 and 0.57. Recall is above specificity, so it leans to calling everything pre-ictal. This is the open problem of the field, not only ours, and it is where I want help. Hand over: the next talk, cross subject EEG emotion recognition, faces the same wall in another task.</aside>
+</section>
+
+<section data-sec="45">
+  <span class="mark">Close</span>
+  <h2>Read the rhythms, not just the waveform</h2>
+  {{TERRITORY}}
+  <div class="ref"><a href="https://doi.org/10.1073/pnas.1312114110">van de Leemput et al., Critical slowing down as early warning for the onset and termination of depression, PNAS 2014</a></div>
+  <aside class="notes">Spoken close, nothing more on screen. Three findings: a learned linear space for EEG beats eleven baselines, choosing which rhythms to hear carries the gain, and pre-ictal rhythms fade more slowly in our models while new patients remain open. Then the ask: today was scalp EEG before a seizure. The same lens could watch any biomedical signal that drifts before it tips: a heart before an arrhythmia, daily mood before depression (van de Leemput showed slowing down there), vital signs in the ICU. If you have long recordings like that, or many patients, come find me. The paper is in the proceedings. Stop here, no thank you slide.</aside>
+</section>
+
+<!-- ================= backup ================= -->
+
+<section data-backup="1">
+  <span class="mark">Backup</span>
+  <h2>Full comparison on CHB-MIT and SIENA</h2>
+  {{TABLE}}
+  <div class="ref">KSNet Table I. KSNet* single step rollout, KSNet three steps. Mean and standard deviation over 5 folds.</div>
+</section>
+
+<section data-backup="1">
+  <span class="mark">Backup</span>
+  <h2>SIENA separates below 28 Hz and around 76 to 92 Hz</h2>
+  <img src="../figs/ours/pre_inter_siena_new.png" data-evidence style="width:900px">
+  <div class="ref">KSNet Fig. 3, bottom</div>
+</section>
+
+<section data-backup="1">
+  <span class="mark">Backup</span>
+  <h2>Leave one patient out varies widely across patients</h2>
+  <div class="cols"><div><img src="../figs/ours/lopo-chbmit.png" data-evidence style="width:540px"></div><div><img src="../figs/ours/lopo_siena.png" data-evidence style="width:540px"></div></div>
+  <div class="ref">Per patient scores from an earlier run with five splits per patient. The paper table uses three.</div>
+</section>
+
+<section data-backup="1">
+  <span class="mark">Backup</span>
+  <h2>The objective: reconstruct, predict three steps ahead, classify</h2>
+  <p style="font-size:30px"><i>L</i> = &lambda;<sub>1</sub> <i>L</i><sub>recon</sub> + &lambda;<sub>2</sub> <i>L</i><sub>pred</sub> + <i>L</i><sub>cls</sub></p>
+  <p class="tldr">Reconstruction keeps the information in the state. Prediction decodes &phi;(<i>X</i><sub>&tau;</sub>)<i>K</i><sup>h</sup> and compares it with <i>X</i><sub>&tau;+h</sub> for h = 1, 2, 3. Classification: binary cross entropy.</p>
+  <p class="tldr">Mode frequency <i>f<sub>i</sub></i> = |arg &lambda;<sub>i</sub>| / (2&pi;&Delta;t). Decay rate Re &mu;<sub>i</sub> with &mu;<sub>i</sub> = log &lambda;<sub>i</sub> / &Delta;t. Band weight &sigma;(c(<i>f<sub>i</sub></i> &minus; <i>f</i><sub>low</sub>)) &sigma;(c(<i>f</i><sub>high</sub> &minus; <i>f<sub>i</sub></i>)), normalized to sum to one.</p>
+  <p class="tldr">Snapshots of 32 samples, latent size 16, encoder and decoder two layers of 64, Adam 0.001, &lambda;<sub>1</sub> = &lambda;<sub>2</sub> = 1.</p>
+</section>
+
+<section data-backup="1">
+  <span class="mark">Backup</span>
+  <h2>Data and protocol</h2>
+  <p class="tldr">CHB-MIT: 23 patients after excluding chb24, 256 Hz, 23 channels. SIENA: 13 patients after excluding PN00, downsampled from 512 to 256 Hz, 17 channels. Unfiltered, full band to 128 Hz.</p>
+  <p class="tldr">Pre-ictal: the 30 min before onset. Inter-ictal: at least 30 min from any seizure and at least 1 h before the next. 100 random 10 s segments per patient, 50 per class.</p>
+  <p class="tldr">Segment level stratified 5 fold split, about 8 to 1 to 1. Leave one patient out: three splits per held out patient.</p>
+</section>
+
+<section data-backup="1">
+  <span class="mark">Backup</span>
+  <h2>The learned operator of chb01: eigenvalues and generator spectrum</h2>
+  <img src="../figs/ours/chbmit_mini_chb1_fold0_eigenvalues_00.png" data-evidence style="width:1000px">
+  <div class="ref">KSNet, patient chb01, fold 0</div>
+</section>
+
+</div></div>
+<script src="../../shared/reveal/reveal.js"></script>
+<script src="../../shared/reveal/plugin/notes/notes.js"></script>
+<script>
+Reveal.initialize({hash:true,center:false,progress:false,controls:true,width:1280,height:720,margin:0,transition:'none',
+  autoAnimateDuration:0.6,autoAnimateStyles:['opacity','color','fill','stroke','stroke-width'],plugins:[RevealNotes]});
+{{DEMO_JS}}
+</script>
+</body>
+</html>
