@@ -175,7 +175,7 @@
   <h2>Follow ten seconds of patient chb01 through KSNet</h2>
   {{PIPE}}
   <div class="ref">Real clip: CHB-MIT chb01_03, 2396 to 2406 s, eight of 23 channels shown</div>
-  <aside class="notes">Step 1: slide a 1/8 second window along the clip, each snapshot is encoded into 16 numbers per channel. Step 2: one shared matrix K, 16 by 16, pushes the state forward one step, then again and again, three steps. Step 3: decode each predicted state and compare it with what the EEG actually did. The loss says: K must predict the future, not only describe the present. Training on three steps instead of one adds up to 0.02 per metric. K is a full matrix, so rhythms can couple and rotate.</aside>
+  <aside class="notes">Step 1: slide a 1/8 second window along the clip, each snapshot is encoded into 16 numbers per channel. Step 2: one shared matrix K, 16 by 16, pushes the state forward one step, then again and again, three steps. Step 3: decode each predicted state and compare it with what the EEG actually did. The loss says: K must predict the future, not only describe the present. Q and A detail from the released code: the classifier input is detached, so the encoder and K learn only from reconstruction and prediction, without labels. Only the band edges and the ConvNet see labels. Training on three steps instead of one adds up to 0.02 per metric. K is a full matrix, so rhythms can couple and rotate.</aside>
 </section>
 
 <section data-sec="55">
@@ -190,7 +190,7 @@
     </div>
   </div>
   <div class="ref">KSNet, Section III.C</div>
-  <aside class="notes">These are the real 16 eigenvalues the model learned for patient chb01, read off our paper figure. Frequency of a rhythm equals its angle times 256 over 2 pi. The band is soft, two sigmoids, and its edges are trained with everything else. Conjugate pairs get equal weight, so the representation stays real. Careful with the words: a 40 Hz rhythm of the latent state is not 40 Hz gamma in the EEG, because the encoder is nonlinear.</aside>
+  <aside class="notes">These are the real 16 eigenvalues the model learned for patient chb01, read off our paper figure. Frequency of a rhythm equals its angle times 256 over 2 pi. The band is soft, two sigmoids, and its edges learn from the labels. TO CONFIRM with Siji: the code applies the band to the imaginary part of each eigenvalue (the paper's soft mask figure has that axis), the paper text describes it as mode frequency. Conjugate pairs get equal weight, so the representation stays real. Careful with the words: a 40 Hz rhythm of the latent state is not 40 Hz gamma in the EEG, because the encoder is nonlinear.</aside>
 </section>
 
 <section data-sec="45">
