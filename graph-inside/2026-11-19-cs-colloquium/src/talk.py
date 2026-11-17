@@ -1996,9 +1996,9 @@ HASE = sec('Where a fact lives is not where editing works', SVG(g), ch='1',
 # ---- live demo: MusicGen surprise next to listeners' EEG (his demo page) ----
 EEGDEMO = ('<section data-ch="2">\n  <h2>Live: what MusicGen expects, next to what listeners\' brains do</h2><span class="status progress">In progress</span>\n'
            '  <div style="width:1150px;height:452px;overflow:hidden;margin:6px auto 0;border-radius:6px;box-shadow:0 0 0 1px #D7D2CB">'
-           '<iframe data-src="https://aquastar.github.io/music-to-brain/eeg-demo/" title="Music surprise and EEG demo" '
+           '<iframe data-src="https://aquastar.github.io/talks/music-to-brain/eeg-demo/" title="Music surprise and EEG demo" '
            'style="position:relative;top:-92px;width:1643px;height:780px;border:0;transform:scale(.7);transform-origin:0 0;max-width:none;max-height:none;margin:0"></iframe></div>\n'
-           '  <div class="ref">Demo: aquastar.github.io/music-to-brain/eeg-demo. EEG of 14 to 21 listeners per song, MusicGen large surprise per note</div>\n'
+           '  <div class="ref">Demo: aquastar.github.io/talks/music-to-brain/eeg-demo. EEG of 14 to 21 listeners per song, MusicGen large surprise per note</div>\n'
            '  <aside class="notes">Live demo, in progress, not a result. Pick a song, press play, and the score, MusicGen\'s surprise for every note and the average EEG of the listeners scroll together. Jump to the next surprising note and look at the EEG right after it. Say the honest part out loud: note by note, this link is not yet distinguishable from an untrained model, so the demo shows the measurement we built, and the next slide is the experiment that can actually test it. If the network fails, describe it in one sentence and move on.</aside>\n</section>')
 
 # ======================= ASSEMBLY =======================
