@@ -2191,10 +2191,11 @@ for (i, j) in list(NODES):
         k = tkey(i, j, kind); TRIS[k] = (pts, vs)
         tri_svg += f'<path d="M{pts[0][0]},{pts[0][1]} L{pts[1][0]},{pts[1][1]} L{pts[2][0]},{pts[2][1]} Z" fill="#F4F1EC" stroke="#D7D2CB" stroke-width="1.1"/>'
         cx_ = sum(q[0] for q in pts) / 3; cy_ = sum(q[1] for q in pts) / 3
-        tri_txt += T(cx_, cy_ + (9 if kind == 'u' else 2), nm, 12.5, 400, '#9A9389', 'middle', extra=f'id="tzl-{k}"')
+        tri_txt += T(cx_, cy_ + (6 if kind == 'u' else 1), nm, 12.5, 400, '#9A9389', 'middle', extra=f'id="tzl-{k}"')
 USED = {v for _, vs in TRIS.values() for v in vs}
 NODES = {k: v for k, v in NODES.items() if k in USED}
 cg += tri_svg + '<path id="tz-hl" d="" fill="#FBD3B4" fill-opacity=".9" stroke="#F76902" stroke-width="2.6"/>' + tri_txt
+cg += ''.join(f'<text id="tz-e{q}" font-size="13.5" font-weight="700" fill="#C45200" stroke="#FBFAF7" stroke-width="5" paint-order="stroke" stroke-linejoin="round" text-anchor="middle" font-family="et-book,Georgia,serif"></text>' for q in range(3))
 for (i, j), (x, y) in NODES.items():
     cg += R(x - 13, y - 12, 26, 24, '#fff', '#8F887E', 1.1, 6, extra=f'id="tzn-{nkey(i, j)}"') + T(x, y + 5, PCN[pc(i, j)], 12, 700, '#5F5D50', 'middle', extra=f'id="tzt-{nkey(i, j)}"')
 cg += T(40, 368, '', 15, 700, '#C45200', extra='id="tz-mv"') + T(62, 368, '', 13.5, 400, INK, extra='id="tz-cap"')
@@ -2212,7 +2213,7 @@ STEPS7 = [('u0_0', '', 'C major: the notes C, E, G', None), ('d0_m1', 'P', 'C ma
           ('u0_0', '', 'back to C major', '1_0'), ('d0_0', 'L', 'C major to E minor: C slides down to B', '1_1'),
           ('u1_0', 'R', 'E minor to G major: E slides down to D', '2_0'), ('u1_0', '', 'two flips, one note each: now in G major', None)]
 import json as _json
-_tz = {k: {'d': 'M' + ' L'.join(f'{x},{y}' for x, y in pts) + ' Z', 'n': [nkey(*v) for v in vs]} for k, (pts, vs) in TRIS.items() if k in {s_[0] for s_ in STEPS7}}
+_tz = {k: {'d': 'M' + ' L'.join(f'{x},{y}' for x, y in pts) + ' Z', 'p': [[x, y] for x, y in pts], 'n': [nkey(*v) for v in vs]} for k, (pts, vs) in TRIS.items() if k in {s_[0] for s_ in STEPS7}}
 TZ_JS = """<script>(function(){var TZ=""" + _json.dumps(_tz) + """,ST=""" + _json.dumps(STEPS7, ensure_ascii=False) + """,i=0,last=0,prevK=null;
 function show(k){var s=ST[k],t=TZ[s[0]];var hl=document.getElementById('tz-hl');if(!hl)return;hl.setAttribute('d',t.d);
 document.querySelectorAll('[id^=tzn-]').forEach(function(r){r.setAttribute('stroke','#8F887E');r.setAttribute('fill','#fff');r.setAttribute('stroke-width','1.1');});
@@ -2220,7 +2221,7 @@ document.querySelectorAll('[id^=tzt-]').forEach(function(r){r.setAttribute('fill
 document.querySelectorAll('[id^=tzl-]').forEach(function(r){r.setAttribute('fill','#9A9389');r.setAttribute('font-weight','400');});
 t.n.forEach(function(n){var r=document.getElementById('tzn-'+n);r.setAttribute('stroke','#F76902');r.setAttribute('stroke-width','1.8');document.getElementById('tzt-'+n).setAttribute('fill','#C45200');});
 if(s[3]){var r=document.getElementById('tzn-'+s[3]);r.setAttribute('fill','#F76902');document.getElementById('tzt-'+s[3]).setAttribute('fill','#fff');}
-var RM=__RM__,h=document.getElementById('rm-hl');if(h&&RM[s[0]]){h.setAttribute('cx',RM[s[0]][0]);h.setAttribute('cy',RM[s[0]][1]);h.setAttribute('opacity',1);}var l=document.getElementById('tzl-'+s[0]);l.setAttribute('fill','#C45200');l.setAttribute('font-weight','700');
+var P_=t.p,cx_=(P_[0][0]+P_[1][0]+P_[2][0])/3,cy_=(P_[0][1]+P_[1][1]+P_[2][1])/3,q=0;[[0,1],[1,2],[0,2]].forEach(function(e){var a=P_[e[0]],b=P_[e[1]];if(a[0]>b[0]){var tmp=a;a=b;b=tmp;}var lb=Math.abs(a[1]-b[1])<1?'+7':(b[1]<a[1]?'+4':'+3');var mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2,dx=cx_-mx,dy=cy_-my,dl=Math.sqrt(dx*dx+dy*dy);var el=document.getElementById('tz-e'+q);el.setAttribute('x',(mx-dx/dl*9.5).toFixed(1));el.setAttribute('y',(my-dy/dl*9.5+4.5).toFixed(1));el.textContent=lb;q++;});var RM=__RM__,h=document.getElementById('rm-hl');if(h&&RM[s[0]]){h.setAttribute('cx',RM[s[0]][0]);h.setAttribute('cy',RM[s[0]][1]);h.setAttribute('opacity',1);}var l=document.getElementById('tzl-'+s[0]);l.setAttribute('fill','#C45200');l.setAttribute('font-weight','700');
 document.getElementById('tz-mv').textContent=s[1];var c=document.getElementById('tz-cap');c.textContent=s[2];c.setAttribute('x',s[1]?62:40);}
 setInterval(function(){var on=document.querySelector('.present #tz-hl');if(!on){i=0;last=0;return;}var now=Date.now();var dur=(i==ST.length-1)?4200:2800;
 if(!last){show(0);last=now;return;}if(now-last>dur){i=(i+1)%ST.length;show(i);last=now;}},200);})();</script>"""
