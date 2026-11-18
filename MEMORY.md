@@ -56,6 +56,8 @@ Read this before doing anything in this repo. When Zhiqian gives a new rule abou
 - Colors (his rule 2026-11-18): one palette for the whole deck. Warm neutrals, RIT orange as the only accent (the one thing to look at), RIT slate #4C5B66 as the only second hue, red only for a wrong answer. No per domain colors (no teal for language, no purple for music), label the domain in words instead.
 - Last slide of every talk (his rule 2026-11-18): a QR code to this deck's own URL (made with segno, checked by decoding a screenshot) and the line "or zhiqian.ai, then Talks". He ends the talk on that slide so people can scan.
 - Honest labels: a figure we bring in from elsewhere keeps its own name (for example the Tonnetz). Our reading of it (a knowledge graph) is said aloud, not written as if the paper called it that.
+- No cropped paper titles or paper figures on slides (his rule 2026-11-18): plots in papers are drawn by code, so redraw them in the deck palette from the paper's numbers, and put the citation in the ref line. A title crop is redundant. Photos, book covers and illustrations that cannot be redrawn stay.
+- Results as counts people can see (his note 2026-11-18): a row of small cards (caught vs checked for nothing) beat bars plus a figure crop.
 
 ## Log
 - 2026-11-16: music-to-brain moved in from aquastar/music-to-brain (subtree, full history), deck at music-to-brain/2026-12-01-bibm-dallas/ (day TBD, rename before the link goes out), shared/, eeg-demo/ and stimuli/ at topic level. Old repo to be deleted by a local agent after he confirms.

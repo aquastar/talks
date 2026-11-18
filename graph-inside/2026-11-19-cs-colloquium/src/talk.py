@@ -2172,7 +2172,7 @@ PCN = ['C', 'D♭', 'D', 'E♭', 'E', 'F', 'F♯', 'G', 'A♭', 'A', 'B♭', 'B'
 TW, TH = 92, 78
 def tz(i, j):
     return (206 + i * TW + j * TW / 2, 252 - j * TH)
-NODES = {(i, j): tz(i, j) for j in range(-1, 3) for i in range(-6, 6) if 50 <= tz(i, j)[0] <= 420}
+NODES = {(i, j): tz(i, j) for j in range(-1, 3) for i in range(-6, 6) if 44 <= tz(i, j)[0] <= 430}
 def pc(i, j):
     return (7 * i + 4 * j) % 12
 def tkey(i, j, kind):
@@ -2181,7 +2181,7 @@ def nkey(i, j):
     return f'{i}_{j}'.replace('-', 'm')
 TRIS = {}
 tri_svg, tri_txt = '', ''
-for (i, j) in list(NODES):
+for (i, j) in [(i_, j_) for j_ in range(-2, 3) for i_ in range(-7, 7)]:
     for kind, vs in (('u', [(i, j), (i + 1, j), (i, j + 1)]), ('d', [(i + 1, j), (i, j + 1), (i + 1, j + 1)])):
         if not all(v in NODES for v in vs):
             continue
@@ -2257,15 +2257,15 @@ pr += T(FX, FY - 2, 'circle', 13, 600, MUT, 'middle') + T(FX, FY + 14, 'of fifth
 pr += C(478, 392, 5, '#4C5B66') + T(488, 396, 'major', 12, 400, MUT) + '<rect x="530" y="388" width="8" height="8" fill="#C45200"/>' + T(544, 396, 'minor', 12, 400, MUT)
 pr += T(590, 396, 'redrawn from their Figure 1a', 12, 400, MUT)
 pr += T(866, 84, 'The chords fall on', 16, 700, INK) + T(866, 104, 'the circle of fifths', 16, 700, INK) + T(866, 124, 'the across row of the lattice, as a ring', 12.5, 400, MUT)
-BIG = [('0', 'errors in the order around the ring'), ('0.96', "match to music theory's distances"), ('100%', 'nearest two neighbors are the fifths')]
+BIG = [('0', 'errors in the order around the ring'), ('100%', 'nearest two neighbors are the fifths')]
 for k, (v, cap) in enumerate(BIG):
-    y = 170 + k * 62
+    y = 190 + k * 80
     pr += T(866, y, v, 30, 700, '#4C5B66') + T(866, y + 24, cap, 12.5, 400, MUT)
 pr += T(866, 360, 'Open question:', 13, 700, '#C45200') + T(866, 378, 'a model that learns from raw', 12.5, 400, INK) + T(866, 395, 'sound, like MusicGen', 12.5, 400, INK)
 g += F(1, pr)
 MUSB = sec('Do music generation models encode music theory?', SVG(g, 424), ch='0',
            ref='Ebrahimzadeh, Bernardes, Stober, ISMIR 2026, Fig. 1a, Table 2 | Cohn 2012 (Tonnetz)',
-           notes='Left, music theory as a graph, the Tonnetz, which goes back to Euler in 1739. Notes are nodes. Across is a fifth, plus 7 half steps, C to G. Up right is a major third, plus 4, C to E. Then every small triangle is a chord. Point up is major: root, plus 4, plus 7, C E G. Point down is minor: root, plus 3, plus 7. Two triangles that share an edge share two notes, so you move between them by changing one note. The animation runs by itself: C major has exactly three such neighbors, P to C minor, R to A minor, L to E minor. These are the neo-Riemannian moves, after Hugo Riemann the music theorist, not the mathematician. I read this lattice as a knowledge graph of music: concepts and their relations. Click: does a model learn these distances on its own? Ebrahimzadeh, Bernardes and Stober, ISMIR 2026, train word2vec, the same skip-gram model as for words, on chord sequences from the Beethoven piano sonatas and the Beatles, with every song also transposed to all 12 keys. Each of the 24 chords gets a vector. Their Figure 1a is the map of those vectors. The chords fall on a ring in circle of fifths order, C, G, D, A and so on, which is the across row of the lattice closed into a ring. Numbers from their Table 2, Beethoven corpus: zero errors in the order around the ring, a Spearman correlation of 0.96 for minor chords and 0.87 for major chords between the learned distances and the circle of fifths distances, and for every chord its two nearest neighbors are its two fifths. Watch the orange halo on the ring: it follows the chord of the animation on the left. C to G is one step on the ring, a fifth. But the P, R and L neighbors, C minor, A minor, E minor, sit far from C on the ring: this model learned which chords appear in the same key, the fifths, not which chords share two notes. One axis of the lattice, not all of it. Be clear about the limit: this is a small model trained on chord symbols, not a generator trained on raw sound. Whether MusicGen, which learns from sound, has the same chord distances is, as far as I know, untested. That is the open question. Background if asked: Wei and colleagues, ISMIR 2024, showed that chord, interval and key labels can be read out of one layer of MusicGen and Jukebox with a tiny classifier, 93 to 98 percent, but they did not test the distances.')
+           notes='Left, music theory as a graph, the Tonnetz, which goes back to Euler in 1739. Notes are nodes. Across is a fifth, plus 7 half steps, C to G. Up right is a major third, plus 4, C to E. Then every small triangle is a chord. Point up is major: root, plus 4, plus 7, C E G. Point down is minor: root, plus 3, plus 7. Two triangles that share an edge share two notes, so you move between them by changing one note. The animation runs by itself: C major has exactly three such neighbors, P to C minor, R to A minor, L to E minor. These are the neo-Riemannian moves, after Hugo Riemann the music theorist, not the mathematician. I read this lattice as a knowledge graph of music: concepts and their relations. Click: does a model learn these distances on its own? Ebrahimzadeh, Bernardes and Stober, ISMIR 2026, train word2vec, the same skip-gram model as for words, on chord sequences from the Beethoven piano sonatas and the Beatles, with every song also transposed to all 12 keys. Each of the 24 chords gets a vector. Their Figure 1a is the map of those vectors. The chords fall on a ring in circle of fifths order, C, G, D, A and so on, which is the across row of the lattice closed into a ring. Numbers from their Table 2, Beethoven corpus: zero errors in the order around the ring, and for every chord its two nearest neighbors are its two fifths. Watch the orange halo on the ring: it follows the chord of the animation on the left. C to G is one step on the ring, a fifth. But the P, R and L neighbors, C minor, A minor, E minor, sit far from C on the ring: this model learned which chords appear in the same key, the fifths, not which chords share two notes. One axis of the lattice, not all of it. Be clear about the limit: this is a small model trained on chord symbols, not a generator trained on raw sound. Whether MusicGen, which learns from sound, has the same chord distances is, as far as I know, untested. That is the open question. Background if asked: Wei and colleagues, ISMIR 2024, showed that chord, interval and key labels can be read out of one layer of MusicGen and Jukebox with a tiny classifier, 93 to 98 percent, but they did not test the distances.')
 MUSB = MUSB.replace('</section>', TZ_JS + '\n</section>', 1)
 
 # ---- two levels by two domains: the map of the talk (Nov 18, his note: fewer words, no status labels, no vector line yet) ----
@@ -2481,6 +2481,63 @@ for k, (big, a, b) in enumerate([('0.703 to 0.797', 'ranking quality (AUC), edit
     box += R(x, 300, 540, 96, SOFT, 'none', 0, 3) + T(x + 20, 346, big, 30, 400, INK, extra='font-family="et-book,Georgia,serif" style="font-size-adjust:none"') + T(x + 250, 336, a, 14, 400, MUT) + T(x + 250, 358, b, 14, 400, MUT)
 g += F(2, box)
 g += F(3, T(590, 452, 'Same budget, 17 instead of 11: read the inside, and check the risky edits first.', 19, 700, INK, 'middle'))
+# ---- Nov 18 (his note): slide 16 rebuilt around the delta graph idea only, from Benbrahim et al. SDM 2026 Section 4 ----
+g = adefs('dg')
+g += T(590, 22, 'Same probe questions, before and after the edit. A node is a block (attention or MLP of a layer).', 16, 400, INK, 'middle', extra='data-keep="1"')
+g += T(590, 44, 'An edge: two blocks that rise and fall together across the questions, other blocks removed (partial correlation).', 16, 400, MUT, 'middle', extra='data-keep="1"')
+def _dgn(cx):
+    return {(r, c): (cx + (-46 if c == 0 else 46), 230 - r * 42) for r in range(4) for c in range(2)}
+E_BEFORE = [((0, 0), (0, 1)), ((0, 1), (1, 0)), ((1, 0), (1, 1)), ((1, 1), (2, 0)), ((2, 0), (2, 1)), ((2, 1), (3, 0)), ((3, 0), (3, 1)), ((0, 0), (1, 1)), ((2, 0), (3, 1)), ((1, 0), (2, 1))]
+E_UP = [((1, 1), (2, 1)), ((2, 1), (3, 1))]          # stronger after the edit
+E_DOWN = [((1, 0), (2, 1)), ((2, 0), (3, 1))]         # weaker after the edit
+def _dgdraw(cx, edges, label, lc, extra=''):
+    N = _dgn(cx); out = ''
+    for a, b, col, sw, dash in edges:
+        (x1, y1), (x2, y2) = N[a], N[b]
+        out += P(f'M{x1},{y1} L{x2},{y2}', col, sw, extra=(f'stroke-dasharray="{dash}"' if dash else ''))
+    for (r, c), (x, y) in N.items():
+        out += C(x, y, 8, '#4C5B66' if c == 0 else '#C45200')
+    out += T(cx, 270, label, 16, 700, lc, 'middle')
+    return out
+bef = [(a, b, '#8F887E', 1.8, '') for a, b in E_BEFORE]
+aft = [(a, b, '#8F887E', 1.8, '') for a, b in E_BEFORE if (a, b) not in E_DOWN] + [(a, b, '#8F887E', 1.8, '') for a, b in E_UP]
+dlt = [(a, b, '#F76902', 3.2, '') for a, b in E_UP] + [(a, b, '#4C5B66', 2.2, '5 4') for a, b in E_DOWN]
+for r in range(4):
+    g += T(128, 230 - r * 42 + 5, f'layer {r + 1}', 13, 400, MUT, 'end')
+g += _dgdraw(220, bef, 'before the edit', INK) + T(352, 160, 'vs', 20, 400, MUT, 'middle') + _dgdraw(480, aft, 'after the edit', INK)
+g += T(612, 160, '=', 26, 400, MUT, 'middle')
+g += F(1, _dgdraw(744, dlt, 'delta graph', '#C45200') + T(744, 290, 'after minus before', 13, 400, MUT, 'middle')
+       + P('M880,96 h34', '#F76902', 3.2) + T(922, 101, 'stronger after the edit', 13.5, 400, INK)
+       + P('M880,126 h34', '#4C5B66', 2.2, extra='stroke-dasharray="5 4"') + T(922, 131, 'weaker after the edit', 13.5, 400, INK)
+       + C(889, 160, 7, '#4C5B66') + T(902, 165, 'attention', 13.5, 400, INK) + C(985, 160, 7, '#C45200') + T(998, 165, 'MLP', 13.5, 400, INK))
+# from the graph to a few numbers
+b1 = R(40, 302, 530, 146, '#F4F1EC', 'none', 0, 6) + T(60, 330, 'Where, and how much', 17, 700, INK)
+b1 += T(60, 354, 'change at a block = sum of its edge changes', 14, 400, MUT) + T(60, 374, 'total change, which layers, how concentrated', 14, 400, MUT)
+for k, hgt in enumerate([8, 34, 22, 6]):
+    b1 += R(400 + k * 34, 438 - hgt * 1.6, 24, hgt * 1.6, '#C45200' if k == 1 else '#ACA39A', 'none', 0, 2) + T(412 + k * 34, 456 + 0, '', 1, 400, MUT)
+b1 += T(468, 332, 'change per layer', 12.5, 400, MUT, 'middle')
+b2 = R(610, 302, 530, 146, '#F4F1EC', 'none', 0, 6) + T(630, 330, 'Smooth, or sharp (spectral)', 17, 700, INK)
+b2 += T(630, 354, 'the before graph gives the shape: its Laplacian', 14, 400, MUT) + T(630, 374, 'project the change onto it (a graph Fourier transform)', 14, 400, MUT)
+def _chain(x0, y0, vals):
+    o = P(f'M{x0},{y0} h{4 * 30}', '#8F887E', 1.6)
+    for k, v in enumerate(vals):
+        o += C(x0 + k * 30, y0, 8, f'rgba(196,82,0,{v})', extra='stroke="#8F887E" stroke-width="1"')
+    return o
+b2 += _chain(640, 404, [.15, .35, .55, .75, .95]) + T(800, 409, 'low: change spreads along the wiring', 13.5, 400, INK)
+b2 += _chain(640, 432, [.95, .1, .95, .1, .95]) + T(800, 437, 'high: neighbors disagree, a sharp patch', 13.5, 400, INK)
+g += F(2, b1 + b2)
+DG16 = sec('What is a delta graph?', SVG(g, 452), ch='1', status='pub',
+           ref='Benbrahim et al., Delta-Graph Signatures for Post-Edit Risk Screening, SDM 2026, Section 4',
+           notes=('One idea on this slide. We ask the model the same probe questions before and after the edit, questions kept apart from the ones used to score the edit. '
+                  'A node is a block: the attention block or the MLP block of one layer, so two nodes per layer. For each question we record how active each block is. '
+                  'Two blocks get an edge when they rise and fall together across the questions, after removing what the other blocks explain, a partial correlation. '
+                  'That gives one graph before the edit and one after. Click: subtract, after minus before. That is the delta graph: which connections got stronger, which got weaker. '
+                  'Click: how we turn it into a few numbers. Left, where and how much: the change at each block is the sum of the changes on its edges, then the total, which layers, and how concentrated it is. '
+                  'Right, the spectral part. We take the graph from before the edit as the shape and compute its Laplacian. Its eigenvectors are like waves on that graph, slow ones and fast ones. '
+                  'We project the change at each block onto them, a graph Fourier transform. If the energy is in the slow waves, the change spreads smoothly along the wiring. '
+                  'If it is in the fast waves, connected blocks disagree, a sharp local patch. We keep the share of energy in low, middle and high bands, plus the spectral entropy and the Dirichlet energy. '
+                  'All these numbers go into a small logistic model that gives a risk score. The paper is careful: this is not a claim about a causal mechanism, '
+                  'it is a summary of how broadly or sharply the edit perturbs the model.'))
 RES20 = sec('Results: same checking budget, more bad edits caught', SVG(g), ch='1', status='pub',
             ref='Benbrahim et al., SDM 2026, Tables 5.1 to 5.5. Counts are the expected bad edits among 20 checks at the reported rates',
             notes='Three bars, one click each. Same budget, check only 20 of 100 edits that all passed the benchmark: at random you catch 11 bad ones, by editor and model 14, by the delta graph 17. Click to 17 last. The rates are what the paper reports: 56 percent at random, 70 by editor and model, 86 with the delta graph. Ranking quality goes from 0.703 to 0.797, and on a second dataset of real Wikipedia facts from 0.853 to 0.904.')
@@ -2588,6 +2645,9 @@ def assemble(cover, old):
     a = rome.find('<div class="note"'); e = rome.find('  <div class="ref">')
     rome = rome[:a] + '<div class="note" style="font-size:.62em"><div class="key">The finding</div><p class="one" style="font-size:1.25em">A fact sits in two places. Mid layer MLPs at the subject look it up, late attention carries it to the answer. Editing a fact means changing the first place.</p></div>\n  </div>\n' + rome[e:]
     rome = retitle(rome, 'A fact lives in mid layer MLPs and moves out by attention')
+    RES_OLD = next(v for v in (old.values() if isinstance(old, dict) else old) if 'same checking budget, more bad edits caught' in v)
+    RES_OLD = toch(RES_OLD, '1').replace('green tick = checked for nothing', 'gray tick = checked for nothing')
+    RES_OLD = re.sub(r'<[^>]*>Next: what carries the signal[^<]*</[^>]*>', '', RES_OLD)
     d46 = old[46].replace('3. Before minus after', '3. After minus before').replace('running example from slide 45: the Space Needle edit', 'running example: the Space Needle edit').replace(' (slide 2).', '.')
     rome = retitle(rome, 'If not the vector, look where the fact lives')
     abl = old[50].replace('on 500 unseen facts, AUC 0.840 to 0.862.', 'trained on 200 facts, tested on 500 new ones, AUC 0.840 to 0.862.').replace('Same probes, same before/after difference, scored different ways (AUC on the 1,761 benchmark-perfect edits)', 'Same probes, same difference, scored different ways. Appendix run, Table F.1, so 0.705 and 0.798 here').replace('Also holds: on 500 unseen facts', 'Also holds when trained on 200 facts and tested on 500 unseen ones')
@@ -2598,7 +2658,7 @@ def assemble(cover, old):
     lim_main = _l[:_a] + '<text x="915" y="150" font-size="17" font-weight="700" fill="#1F1E1B" text-anchor="middle">Two more under the down arrow:</text><text x="915" y="182" font-size="15" fill="#5F5D50" text-anchor="middle">checking 20% catches about a third of all bad edits</text><text x="915" y="208" font-size="15" fill="#5F5D50" text-anchor="middle">and on CounterFact there is nothing to catch</text>' + _l[_b:]
     lim_main = lim_main.replace('</section>', '  <aside class="notes">Two limits on screen, two more under the down arrow if asked. Say the Llama one plainly: when almost every passing edit fails, there is little left to rank. If asked about cost at scale, use only the paper: about 7.4 minutes per fact on one L40S at 7B and 8B, the probe prompts are their own pass, separate from the evaluation prompts, so cost grows with facts times layers. The before recording can be shared across editors for the same model and fact, that is our inference from the method, not a reported number. Compare with reading the outputs, AUC 0.984, which needs free generation and scoring on every edit.</aside>\n</section>', 1) if '<aside' not in lim_main else lim_main
     vec2_b = bridge(VEC2, 'If not the vector, look where the fact lives. Causal tracing (Meng et al.) finds a fact in mid layer MLPs at the subject, the figure is under the down arrow on the next slide. The next slide shows why that is still not where editing works.')
-    d46_q = bridge(d46, 'Nearest 2026 cousin, if asked: Circuit-Diff (Friedman and Song, arXiv 2609.23892, Sep 2026) also compares attribution graphs before and after a factual edit, but to label features, not to rank which edits went wrong. If asked how a partial correlation over 64 blocks is estimated from 12 prompts: it is not well posed alone, ridge with one fixed lambda shapes the graph, which is why the paper leans on held out evidence. Hard question to expect: is the delta graph real, or an artifact of the 12 probe prompts? Three answers from the paper. The probe prompts are disjoint from the prompts that define failure. Trained on 200 facts and tested on 500 new ones, the AUC holds at 0.840 to 0.862. Rerun the 50 riskiest edits from scratch and only 2 of 50 flip.')
+    d46_q = bridge(_addbox(DG16, keybox('The delta graph is the edit\'s ' + kw('fingerprint') + ': where the wiring changed, and how sharply.', 3, '.2em')), 'Nearest 2026 cousin, if asked: Circuit-Diff (Friedman and Song, arXiv 2609.23892, Sep 2026) also compares attribution graphs before and after a factual edit, but to label features, not to rank which edits went wrong. If asked how a partial correlation over 64 blocks is estimated from 12 prompts: it is not well posed alone, ridge with one fixed lambda shapes the graph, which is why the paper leans on held out evidence. Hard question to expect: is the delta graph real, or an artifact of the 12 probe prompts? Three answers from the paper. The probe prompts are disjoint from the prompts that define failure. Trained on 200 facts and tested on 500 new ones, the AUC holds at 0.840 to 0.862. Rerun the 50 riskiest edits from scratch and only 2 of 50 flip.')
     silent_b = bridge(toch(SILENT, '1'), 'And the usual fix, a vector, is unreliable too: it switches a behavior on average but sends many single inputs the wrong way (Tan et al., under the down arrow). So instead of the vector, look where the fact lives, which the next slide does.')
     lang_cgt = bridge(CGT.replace('</aside>', ' If asked about contamination: the clinical questions come from MIMIC-III and CORAL records, which sit behind a data use agreement, not an absolute guarantee.</aside>', 1), 'That was level 2, the knowledge graph, the second cell of the language row. That is language. Part 2: knowledge that is not text.')
     rel = lambda i, t: retitle(old[i], t) if t else old[i]
@@ -2620,7 +2680,7 @@ def assemble(cover, old):
             UNLEARN2, backup(UNLEARN), backup(rel(30, '')),
             silent_main, backup(HASE), backup(rome), backup(rel(38, '')), backup(rel(39, '')),
             SUMM2, backup(toch(receipts, '1')), backup(toch(story, '1')), backup(retitle(lessons, 'Every surgery, three lessons')),
-            d46_q, RES20, backup(old[48]), backup(abl), backup(lim_main), backup(retitle(old[51], 'Limits, all four, with the numbers')),
+            d46_q, backup(retitle(d46, 'What is a delta graph? The full picture')), RES_OLD, backup(old[48]), backup(abl), backup(lim_main), backup(retitle(old[51], 'Limits, all four, with the numbers')),
             lang_cgt]
     four = retitle(FOUR, 'Music generation went from a visible graph to a hidden one')
     four = re.sub(r'\s*<p class="q">.*?</p>', '', four, count=1, flags=re.S)

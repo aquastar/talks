@@ -59,7 +59,7 @@
 
 **7. Do music generation models encode music theory?**（105，graph 3）左边：Tonnetz 网格（欧拉 1739），动画自己循环：从 C 大调出发，P 到 C 小调，R 到 A 小调，L 到 E 小调，最后连走 L、R 到 G 大调，每一步只有一个音变成橙色实心。亮着的三角形三条边上标着音程：横边 +7，右上斜边 +4，左上斜边 +3。下面两行图例：横向箭头是五度（+7），右上箭头是大三度（+4）。尖朝上的三角形是大调（根音、+4、+7），尖朝下是小调（根音、+3、+7）。
 说："Music theory already has a knowledge graph of chords: every triangle is a chord, and two chords that share an edge differ by one note."
-点一下，右边：Ebrahimzadeh, Bernardes, Stober，ISMIR 2026。用 word2vec 在贝多芬奏鸣曲和披头士的和弦序列上学 24 个和弦的向量，图是按他们 Figure 1a 重画的（点的位置从 PDF 数字化，B♭ 被 Fm 盖住，按目测）。和弦排成五度圈，就是左边网格横向那一行连成环。右边圆环上的橙色光圈跟着左边动画走：C 到 G 在环上只差一步（五度），但 P、R、L 的邻居 C 小调、A 小调、E 小调在环上离 C 很远。可以说：这个模型学到的是同一个调里常一起出现的和弦（五度关系），不是共用两个音的关系，只对上了网格的一个方向。三个数字来自 Table 2（贝多芬语料，增强版）：环上顺序错误 0，和乐理距离的 Spearman 相关 0.96（小调，大调 0.87），每个和弦最近的两个邻居都是它的五度邻居（100%）。
+点一下，右边：Ebrahimzadeh, Bernardes, Stober，ISMIR 2026。用 word2vec 在贝多芬奏鸣曲和披头士的和弦序列上学 24 个和弦的向量，图是按他们 Figure 1a 重画的（点的位置从 PDF 数字化，B♭ 被 Fm 盖住，按目测）。和弦排成五度圈，就是左边网格横向那一行连成环。右边圆环上的橙色光圈跟着左边动画走：C 到 G 在环上只差一步（五度），但 P、R、L 的邻居 C 小调、A 小调、E 小调在环上离 C 很远。可以说：这个模型学到的是同一个调里常一起出现的和弦（五度关系），不是共用两个音的关系，只对上了网格的一个方向。两个数字来自 Table 2（贝多芬语料，增强版）：环上顺序错误 0，每个和弦最近的两个邻居都是它的五度邻居（100%）。
 说："The graph was written by people. A model trained only on chord sequences found its geometry on its own."
 诚实的边界：这是一个在和弦符号上训练的小模型，不是从声音学的生成模型。右下角写着 Open question：像 MusicGen 这样从声音学的模型，有没有同样的和弦距离，据你所知还没人测过。被问到时可以补充 Wei 2024：从 MusicGen 一层能读出和弦、音程、调（93% 到 98%），但他们没有测距离。乐理细节见 docs/tonnetz-primer-zh.md。
 
@@ -89,12 +89,10 @@
 **15. Every surgery: the exam passes, the inside tells another story**（75）一张表：合并、steering、unlearning、编辑，左边"考试说什么"，右边"模型里面其实是什么"。
 说："The exam reads answers. What we need is to compare the inside before and after a change, and flag the risky ones."
 
-**16. What is a delta graph?**（150，第一层模型图，SDM 2026）
-说："Same questions, same parts. The delta graph is the edit's fingerprint inside the model."
-
-**17. Results**（120）只查 20 个：随机 11 个，按编辑器和模型 14 个，按 delta graph 17 个。
-说："Same budget, 17 instead of 11."
-
+**16. What is a delta graph?**（120，graph 4）只讲一个概念。同一组探针问题，编辑前问一遍，编辑后问一遍。节点是每层的 attention 块和 MLP 块（每层两个）。两个块在这些问题上一起升一起降，就连一条边（partial correlation，去掉其他块的影响）。左边编辑前的图，中间编辑后的图。点一下：后减前，就是 delta graph，橙色实线是变强的连接，虚线是变弱的。再点：怎么把它变成几个数。左框：在哪、多少（每个块的变化量等于它所有边的变化之和，再看总量、哪几层、集中不集中）。右框：平滑还是尖锐（spectral）：用编辑前的图当形状，算它的 Laplacian，把每个块的变化量投到 Laplacian 的特征向量上（图傅里叶变换）。能量在低频，说明变化沿着连线平滑地散开。能量在高频，说明相连的块变化不一致，是局部的尖锐补丁。这些数进一个小的 logistic 模型，得到风险分。再点：结论框，delta graph 是这次编辑的指纹。旧版完整图在下箭头里。
+说："Before, after, subtract. The difference is a graph: the edit's fingerprint inside the model."
+**17. Results: same checking budget, more bad edits caught**（120）用十月 PhD talk 的版本：100 个满分编辑，其中 56 个其实是坏的，只能查 20 个。三排小卡片，红叉是查到的坏编辑，灰勾是白查了。随机挑查到约 11 个，按编辑器和模型挑约 14 个，按 delta graph 挑约 17 个。下面两个 AUC：0.703 到 0.797，第二个数据集 0.853 到 0.904。
+说："Same 20 checks: 11, 14, 17. The extra catches come only from how the inside changed."
 **18. A missing path in the record means a worse answer, for every model**（150，第二层知识图，CIKM 2026）
 说："A graph tells which questions cannot be answered faithfully, before any model tries. That is language."
 
