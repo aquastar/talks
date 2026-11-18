@@ -42,8 +42,8 @@
 **1. 封面**（45）左边网络里亮起语言（蓝）和音乐（紫）两条路径，右边读成两张带标签的小图。
 说："Left, a network. Right, what it knows, read as graphs, in language and in music. Is there such a graph inside a generative model?"
 
-**2. Level 1: a language model is itself a graph**（120，graph 1）模型图。点一下：结构连接（谁能写给谁，架构定死的）。再点：功能连接（哪些块一起激活）。再点：电路，一个 MLP 查事实，一个注意力块把它搬到 Seattle。
-说："The network itself is a graph: its wiring is fixed, its circuits change with what it is asked." 可以补一句：脑科学里也这样分，structural 和 functional connectivity。
+**2. Level 1: a language model is itself a graph**（120，graph 1）先互动：只给照片和问号，问大家"Space Needle 在哪"。点一下，各层从左到右依次点亮，一条橙色路径画过去（MLP 查到事实，注意力块搬到答案）。再点，问号变成概率分布，Seattle 最高，其他词很低（示意）。再点，"并没有那么随机"：让聊天机器人在 1 到 30 里随便挑一个数，它经常说 17。
+说："The answer is a distribution, yet much of what a model says is held in place by strong, stored structure, closer to a graph than to a coin."
 
 **3. Change one fact, and the next question goes wrong**（120，graph 2）知识图。全景照，知识图，编辑改到 Paris，再问一步三个问题都答旧的。
 说："Change one edge, and every path through it must change. The model does not."
@@ -72,8 +72,8 @@
 **10. Unlearning**（120）三步：找到有毒的 MLP 向量，DPO 没删它们，只学了一个小偏移绕开（紫色箭头），把偏移撤掉，毒性就回来。
 说："Unlearning hides, it does not delete."
 
-**11. Editing: the edit adds a shortcut, and the old fact is still inside**（150）这是我们工作针对的失败。编辑没覆盖旧事实，只是加了一条近路。换一种问法旧答案回来（Xie 2025）。改了微软创始人，问"他上的哪所大学"，41% 答 Steve Jobs，编辑前 0.27%（Zhang 2025）。
-说："The exam says pass, and nothing tells you which edits are like this. That is a silent failure."
+**11. Knowledge editing bypasses the old fact instead of removing it**（整场主打的一点）（150）这是我们工作针对的失败。编辑没覆盖旧事实，只是加了一条近路。换一种问法旧答案回来（Xie 2025）。改了微软创始人，问"他上的哪所大学"，41% 答 Steve Jobs，编辑前 0.27%（Zhang 2025）。
+说："The edit adds a bypass, the old fact is never removed. Why: an editor looks at one fact, not at the graph that fact sits in."
 
 **12. Every surgery: the exam passes, the inside tells another story**（75）一张表：合并、steering、unlearning、编辑，左边"考试说什么"，右边"模型里面其实是什么"。
 说："The exam reads answers. What we need is to compare the inside before and after a change, and flag the risky ones."

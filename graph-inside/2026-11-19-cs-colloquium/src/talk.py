@@ -1148,7 +1148,7 @@ ev = R(640, 290, 510, 140, SOFT, LINE, 1, 10) + T(660, 316, 'Measured, not hypot
 ev += wrap(660, 340, 'Xie et al., ACL 2025: crafted prompts bring the original answer back, and specific attention heads still carry it.', 13, 400, INK, width=72, lh=18)
 ev += wrap(660, 385, 'Zhang et al., ICLR 2025: after editing Microsoft\'s founder to Steve Jobs, ROME answers "Steve Jobs" to "Which college did the founder of Microsoft attend?" 41% of the time, 0.27% before.', 13, 400, INK, width=72, lh=18)
 g += F(3, ev)
-g += F(4, T(590, 470, 'The old fact was never removed. The edit added a shortcut around it.', 19, 700, INK, 'middle'))
+g += F(4, T(40, 414, 'The edit adds a bypass. The old fact is never removed.', 20, 400, INK, 'start', extra='font-family="et-book,Georgia,serif" style="font-size-adjust:none" data-keep="1"') + T(40, 444, 'Why: an editor looks at one fact,', 18, 600, '#C45200', 'start', extra='data-keep="1"') + T(40, 468, 'not at the graph that fact sits in.', 18, 600, '#C45200', 'start', extra='data-keep="1"'))
 SILENT = sec('A silent failure: the edit passes, and the old fact is still inside', SVG(g), ch='0',
              ref='Xie et al., Revealing the Deceptiveness of Knowledge Editing, ACL 2025. Zhang et al., Uncovering Overfitting in Large Language Model Editing, ICLR 2025. Space Needle example is an illustration',
              notes='Running example for the whole language part: the Space Needle edited from Seattle to Paris. The test prompt passes. A prompt that mentions Seattle first brings the old answer back. Xie et al. show this with real edits (their example: US president) and find attention heads that still carry the original fact. Zhang et al. show the shortcut from the other side: the edit target leaks into unrelated questions.')
@@ -1994,48 +1994,54 @@ EEGDEMO = ('<section data-ch="2" class="fulldemo" data-background-color="#FBFAF7
 # ======================= OPENING, Nov 18 (his order: the network as a graph, knowledge in it, music and images in it) =======================
 SERIF_X = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
 TEAL_D = '#007A94'
-# ---- the network itself is a graph ----
+# ---- the network itself is a graph (Nov 18 redo: light the layers one by one, the answer is a distribution, not as random as it looks) ----
 g = adefs('ng')
+NG_CSS = ('<style>.reveal .ngl{opacity:0}.reveal .fragment.visible .ngl{animation:ngon .35s ease forwards}'
+          '.reveal .ngp{stroke-dasharray:100;stroke-dashoffset:100}.reveal .fragment.visible .ngp{animation:ngdraw 2.4s linear forwards}'
+          '@keyframes ngon{to{opacity:1}}@keyframes ngdraw{to{stroke-dashoffset:0}}</style>')
 g += T(40, 30, 'Ask the room first: the Space Needle is in ...?', 16, 600, MUT)
-IN_ = (40, 150, 150, 64); OUT_ = (990, 150, 150, 64)
 g += img(52, 66, 126, 192, 'figs/space-needle-tall.jpg', 'preserveAspectRatio="xMidYMid slice"') + R(40, 262, 150, 40, '#EFEBE5', 'none', 0, 6) + T(115, 288, 'Space Needle is in', 16, 600, INK, 'middle')
-g += R(*OUT_, '#EFEBE5', 'none', 0, 6) + T(1065, 198, '?', 40, 400, '#C45200', 'middle', extra=SERIF_X)
-stream = L(190, 182, 990, 182, '#D7D2CB', 3) + P('M178,182 L190,182', '#D7D2CB', 3) + T(590, 52, 'Attention (A) and MLP (M) blocks read and write one shared stream', 14, 400, MUT, 'middle')
-LX = [270, 440, 610, 780, 950]
+OUTX = 900
+g += R(OUTX, 80, 250, 210, '#F4F1EC', 'none', 0, 6) + T(OUTX + 125, 205, '?', 64, 400, '#C45200', 'middle', extra=SERIF_X)
+LX = [270, 400, 530, 660, 790]
+YA, YM, YS = 112, 252, 182
+g += L(190, YS, OUTX - 6, YS, '#D7D2CB', 3) + T(560, 340, 'attention (A) and MLP (M) blocks, layer by layer, on one shared stream', 13.5, 400, MUT, 'middle')
 NODE = {}
 for k, x in enumerate(LX):
-    NODE[('A', k)] = (x - 30, 112); NODE[('M', k)] = (x + 30, 252)
-    stream += T(x, 318, f'layer {k + 1}', 12.5, 400, MUT, 'middle')
-wires = ''
-keys = sorted(NODE, key=lambda q: (q[1], q[0]))
-for i, a in enumerate(keys):
-    for b in keys[i + 1:]:
-        if (b[1] == a[1] + 1) or (b[1] == a[1] and a[0] == 'A'):
-            (x1, y1), (x2, y2) = NODE[a], NODE[b]
-            wires += L(x1, y1, x2, y2, '#ACA39A', 1, 'stroke-opacity=".55"')
-co = ''
-for a, b in ((('M', 0), ('A', 1)), (('A', 1), ('M', 2)), (('M', 1), ('M', 2)), (('M', 2), ('A', 3)), (('A', 3), ('A', 4)), (('M', 1), ('A', 3)), (('M', 3), ('M', 4))):
-    (x1, y1), (x2, y2) = NODE[a], NODE[b]
-    co += P(f'M{x1},{y1} Q{(x1 + x2) / 2},{(y1 + y2) / 2 - 30} {x2},{y2}', '#4C5B66', 2.2)
-(mx, my), (ax, ay) = NODE[('M', 1)], NODE[('A', 3)]
-_cd = f'M190,182 Q{mx - 60},{my} {mx},{my} Q{(mx + ax) / 2},{(my + ay) / 2 - 40} {ax},{ay} Q{ax + 120},{ay} 988,182'
-circ = P(_cd, ACC, 3.2, extra='stroke-opacity=".35" marker-end="url(#ngo)"')
-circ += f'<path d="{_cd}" fill="none" stroke="{ACC}" stroke-width="3.6" stroke-dasharray="14 10" stroke-linecap="round"><animate attributeName="stroke-dashoffset" values="48;0" dur="0.9s" repeatCount="indefinite"/></path>'
-circ += R(*OUT_, '#FDEBDD', 'none', 0, 6) + T(1065, 190, 'Seattle', 20, 600, '#C45200', 'middle')
-circ += T(mx, my + 34, 'looks up the fact', 13.5, 600, '#C45200', 'middle') + T(ax, ay - 26, 'moves it to the answer', 13.5, 600, '#C45200', 'middle')
-nodes = ''
+    NODE[('A', k)] = (x - 22, YA); NODE[('M', k)] = (x + 22, YM)
+    g += T(x, 92, f'layer {k + 1}', 12.5, 400, MUT, 'middle')
 for (t_, k), (x, y) in NODE.items():
-    nodes += L(x, y, x, 182, '#D7D2CB', 1) + C(x, y, 16, '#fff', '#5F5D50', 1.6) + T(x, y + 5, t_, 13, 600, AC2, 'middle')
-g += F(1, stream + wires + nodes) + F(2, co) + F(3, circ)
-def cap(x, n_, a, b):
-    return T(x, 374, f'{n_}  {a}', 18, 600, INK) + T(x, 400, b, 15, 400, MUT)
-g += F(1, T(40, 348, 'STRUCTURAL', 13, 600, MUT, extra='letter-spacing="2"') + cap(40, '1', 'Wiring', 'who can write to whom, fixed by the architecture'))
-g += F(2, T(420, 348, 'FUNCTIONAL', 13, 600, '#4C5B66', extra='letter-spacing="2"') + cap(420, '2', 'Firing together', 'an edge where two blocks move together'))
-g += F(3, cap(800, '3', 'Circuit', 'the few blocks that carry this one answer'))
-g += F(3, T(590, 458, 'The network itself is a graph: its wiring is fixed, its circuits change with what it is asked.', 19, 400, INK, 'middle', extra=SERIF_X))
+    g += L(x, y + (16 if y < YS else -16), x, YS, '#D7D2CB', 1) + C(x, y, 16, '#fff', '#ACA39A', 1.6) + T(x, y + 5, t_, 13, 600, '#5F5D50', 'middle')
+# click 1: the layers light up one after another, then the path that carries this answer
+HOT = {('M', 1): 1.0, ('A', 3): 1.0, ('M', 0): .45, ('A', 1): .45, ('M', 2): .45, ('A', 2): .3, ('M', 3): .3, ('A', 4): .45, ('M', 4): .3, ('A', 0): .3}
+lit = ''
+for (t_, k), (x, y) in NODE.items():
+    h = HOT.get((t_, k), .2)
+    fill = '#F76902' if h >= 1 else ('#FAD6BA' if h >= .4 else '#F1E4D6')
+    lit += (f'<g class="ngl" style="animation-delay:{0.25 + k * 0.4:.2f}s"><circle cx="{x}" cy="{y}" r="16" fill="{fill}" stroke="#F76902" stroke-width="{2 if h >= 1 else 1.2}"/>'
+            f'<text x="{x}" y="{y + 5}" font-size="13" font-weight="600" fill="{"#fff" if h >= 1 else "#C45200"}" text-anchor="middle">{t_}</text></g>')
+(mx, my), (ax, ay) = NODE[('M', 1)], NODE[('A', 3)]
+pd = f'M190,{YS} C{mx - 70},{YS} {mx - 50},{my + 30} {mx},{my + 17} M{mx},{my - 17} C{mx + 40},{my - 90} {ax - 60},{ay + 80} {ax},{ay + 17} M{ax + 17},{ay} C{ax + 80},{ay} {OUTX - 60},{YS} {OUTX - 8},{YS}'
+lit += f'<path class="ngp" pathLength="100" d="{pd}" fill="none" stroke="#F76902" stroke-width="3" stroke-linecap="round" style="animation-delay:2.2s"/>'
+lit += f'<g class="ngl" style="animation-delay:2.6s">' + T(mx, my + 52, 'looks up the fact', 13.5, 600, '#C45200', 'middle') + T(ax, ay - 30, 'moves it to the answer', 13.5, 600, '#C45200', 'middle') + '</g>'
+lit += T(40, 364, 'Structural: the wiring is fixed. Functional: what lights up depends on the question.', 14, 400, MUT)
+g += F(1, lit)
+# click 2: the answer is a distribution over next words
+dist = R(OUTX, 80, 250, 210, '#F4F1EC', 'none', 0, 6) + T(OUTX + 16, 104, 'next word, probability', 12.5, 400, MUT)
+for k, (w, pr) in enumerate([('Seattle', .91), ('Washington', .04), ('Tacoma', .02), ('Paris', .01), ('the', .01)]):
+    y = 118 + k * 29
+    dist += T(OUTX + 92, y + 15, w, 14.5, 600 if k == 0 else 400, INK, 'end') + R(OUTX + 100, y, max(3, 130 * pr), 20, '#F76902' if k == 0 else '#ACA39A', 'none', 0, 2)
+dist += T(OUTX + 234, 284, 'schematic numbers', 11.5, 400, MUT, 'end')
+g += F(2, dist)
+# click 3: not as random as it looks
+nr = R(30, 384, 1120, 74, '#F4F1EC', 'none', 0, 6)
+nr += T(52, 414, 'A generator, yet not so random: ask a chatbot for a random number from 1 to 30, and it very often says 17.', 16, 400, INK)
+nr += T(52, 440, 'Much of what it says is held in place by strong, stored structure, closer to a graph than to a coin.', 16, 600, '#C45200')
+g += F(3, nr)
+g = NG_CSS + g
 NETG = sec('Level 1: a language model is itself a graph', SVG(g), ch='0',
-           ref='Elhage et al., A Mathematical Framework for Transformer Circuits, 2021. Meng et al., Locating and Editing Factual Associations in GPT, NeurIPS 2022. Ameisen et al., Circuit Tracing, Transformer Circuits 2025',
-           notes='Interactive start. Show the photo and ask the room: the Space Needle is in what? Let them answer, Seattle. Click: inside a language model, attention and MLP blocks on one shared stream, the wiring. Click: the blocks that fire together for this question. Click: the circuit, the orange flow, one MLP looks up the fact and a later attention block moves it to the answer, and out comes Seattle. The longer 3D animation of the same flow, the shared whiteboard, is under the down arrow. Two levels of graph, said once here and summed up on slide 5. Level 1 is the model graph, the network itself. Level 2, next slide, is the knowledge graph, what the network stores. Neuroscience has the same split for brains: structural connectivity, which neurons are wired, and functional connectivity, which ones fire together. Start from the machine itself, the same one on the cover. A language model is a stack of blocks, attention and MLP, that all read and write one shared stream. Click: wiring, every block can write for every later block. Click: firing together, an edge where two blocks move together on this question, which is the graph our own delta graph uses later. Click: a circuit, the few blocks that carry this answer: an MLP in the middle looks up the fact about the Space Needle, a later attention block moves it to the last word, and out comes Seattle (Meng 2022, attribution graphs 2025). The picture is a schematic. Five ways to draw such graphs, from the October talk, are under the down arrow.')
+           ref='Elhage et al., A Mathematical Framework for Transformer Circuits, 2021. Meng et al., NeurIPS 2022. Coronado-Blázquez, Deterministic or probabilistic? The psychology of LLMs as random number generators, arXiv 2502.19965, 2025',
+           notes='Interactive start. Show the photo and ask the room: the Space Needle is in what? Let them answer. Click: inside the model, the layers light up one after another, attention and MLP blocks on one shared stream. The bright ones carry this answer: an MLP in layer 2 looks up the fact, an attention block in layer 4 moves it to the last word. Structural: the wiring is fixed. Functional: what lights up depends on the question. That is the graph of the model, level 1. Click: and the answer is not a single word, it is a distribution. Seattle is by far the most likely, other words get a little. The numbers here are a schematic. Click: so a generator, yet not so random. A widely shared example: ask a chatbot for a random number between 1 and 30 and it very often answers 17, and studies of LLMs as random number generators find their answers far from uniform (Coronado-Blazquez 2025). Much of what a model says is held in place by strong stored structure, closer to a graph than to a coin. The 3D animation of the same flow is under the down arrow.')
 
 # ---- knowledge inside the network is a graph, the Space Needle edit ----
 g = adefs('kg2')
@@ -2064,7 +2070,7 @@ for k, (q, said, should) in enumerate([('Which country is it in?', 'United State
     y = 252 + k * 70
     pan += T(812, y, q, 17, 600, INK) + T(812, y + 23, 'model: ' + said, 16, 700, '#DA291C') + T(812, y + 44, 'should be: ' + should, 14.5, 400, MUT)
 g += F(3, stale + pan)
-g += F(4, T(590, 474, 'Change one edge, and every path through it must change. The model does not.', 19, 400, INK, 'middle', extra=SERIF_X))
+g += F(4, T(590, 466, 'The edit changed one edge and never looked at the graph around it. The old paths are still there.', 19, 400, '#C45200', 'middle', extra=SERIF_X + ' data-keep="1"'))
 g = '<g transform="translate(0,-112)">' + g + '</g>'
 KGT2 = sec('Change one fact, and the next question goes wrong', SVG(g, 380), ch='0',
            ref='Cohen et al., Evaluating the Ripple Effects of Knowledge Editing in Language Models, TACL 2024. Zhong et al., MQuAKE, EMNLP 2023. The answers illustrate the failure type',
@@ -2195,10 +2201,10 @@ g += T(240, 34, 'The exam says', 17, 600, MUT) + T(640, 34, 'Inside the model', 
 ROWS = [('Merging', 'both skill exams pass', 'misalignment came along'),
         ('Steering', 'works on average', 'many inputs pushed the wrong way'),
         ('Unlearning', 'the toxic text is gone', 'a detour, the old part still there'),
-        ('Editing', 'the new fact passes', 'a shortcut, the old fact still there')]
+        ('Editing', 'the new fact passes', 'a bypass, the old fact still there, no graph view')]
 for k, (a_, b_, c_) in enumerate(ROWS):
     y = 64 + k * 64
-    row = R(40, y, 1100, 54, '#F4F1EC' if k % 2 == 0 else '#FBFAF7', 'none', 0, 4) + T(60, y + 34, a_, 19, 600, INK)
+    row = (f'<path d="M40,{y} h1100 v54 h-1100 Z" fill="#FDEBDD"/><path d="M40,{y} h5 v54 h-5 Z" fill="#F76902"/>' if a_ == 'Editing' else R(40, y, 1100, 54, '#F4F1EC' if k % 2 == 0 else '#FBFAF7', 'none', 0, 4)) + T(60, y + 34, a_, 19, 600, INK)
     row += T(240, y + 34, '✓ ' + b_, 17, 400, '#5F5D50') + T(640, y + 34, '✗ ' + c_, 17, 600, '#DA291C')
     g += row
 g += F(1, T(590, 368, 'The exam reads answers. The failure is a change inside that nobody looked at.', 21, 400, INK, 'middle', extra=SER1 + ' data-keep="1"'))
@@ -2340,8 +2346,8 @@ def assemble(cover, old):
     lessons = re.sub(r'(<div class="ref">).*?(</div>)', r'\1Ilharco et al., ICLR 2023. Meng et al., NeurIPS 2022. Lee et al., ICML 2024. Kornblith et al., ICML 2019. Smith et al., ICML 2025. Gröger et al., ICML 2026\2', lessons, count=1, flags=re.S)
     for cite in ('Ilharco 2023, Meng 2022, Arditi 2024', 'Lee 2024, Hu 2025, Hammoud 2024', 'Kornblith 2019, Smith 2025, Gröger 2026'):
         lessons = re.sub(r'<text[^>]*>' + re.escape(cite) + '</text>', '', lessons)
-    silent_main = retitle(toch(SILENT, '1'), 'Editing: the edit adds a shortcut, and the old fact is still inside')
-    silent_main = notes(silent_main, 'This is the failure our own work is about, the silent one. Running example, the Space Needle edited from Seattle to Paris. The edit test asks the edited question and passes. The editor did not overwrite the old fact. It added a new shortcut at one layer, the orange path, and the old path through the model is still intact. Ask in a slightly different way, mention Seattle first, and the old answer comes back. Measured, not hypothetical: Xie and colleagues, ACL 2025, bring the original answer back with crafted prompts and find attention heads that still carry it. Zhang and colleagues, ICLR 2025, edit Microsoft\'s founder to Steve Jobs, and ROME then answers Steve Jobs to which college did the founder of Microsoft attend 41 percent of the time, against 0.27 percent before. The exam says pass, and nothing tells you which edits are like this. That is a silent failure. Why location does not help (Hase 2023) and causal tracing are under the down arrow. Bridge: one table for all four surgeries.')
+    silent_main = retitle(toch(SILENT, '1'), 'Knowledge editing bypasses the old fact instead of removing it')
+    silent_main = notes(silent_main, 'This is the main point of the talk, say it slowly. Today\'s knowledge editing changes one fact. It finds a place in the model and writes a shortcut there, the orange path, and the old path is never removed, it is simply bypassed. The reason is that the editor looks at one fact, not at the graph that fact sits in. This is the failure our own work is about, the silent one. Running example, the Space Needle edited from Seattle to Paris. The edit test asks the edited question and passes. The editor did not overwrite the old fact. It added a new shortcut at one layer, the orange path, and the old path through the model is still intact. Ask in a slightly different way, mention Seattle first, and the old answer comes back. Measured, not hypothetical: Xie and colleagues, ACL 2025, bring the original answer back with crafted prompts and find attention heads that still carry it. Zhang and colleagues, ICLR 2025, edit Microsoft\'s founder to Steve Jobs, and ROME then answers Steve Jobs to which college did the founder of Microsoft attend 41 percent of the time, against 0.27 percent before. The exam says pass, and nothing tells you which edits are like this. That is a silent failure. Why location does not help (Hase 2023) and causal tracing are under the down arrow. Bridge: one table for all four surgeries.')
     surg = re.sub(r'\s*<div[^>]*class="fragment" style="display:flex;align-items:center">.*?</div>', '', surg, count=1, flags=re.S)
     surg = surg.replace('</div>\n  </div>', '</div>\n  </div>\n  <p class="fragment" data-fragment-index="4" style="text-align:center;font-size:.8em;margin-top:.8em">Every one of these is accepted by an exam that only looks at answers.</p>', 1)
     lang = [bridge(toch(surg, '1'), 'And every one of them, written down, is something added to the model.'), toch(vector, '1'),
