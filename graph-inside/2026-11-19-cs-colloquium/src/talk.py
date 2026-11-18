@@ -2387,7 +2387,13 @@ def assemble(cover, old):
     wb = old[1]
     five = old[2]
     five_q = five
-    five_q = notes(five_q, 'The circuit graph side of the question we just asked. The network itself is a graph, and there is more than one way to draw it: the weights, groups of neurons, the inputs, which blocks fire together, and the circuit that carries one answer. Our work reads the fourth kind, which blocks fire together, before and after an edit, and asks whether it shows the knowledge graph constraint that the edit broke. Part 1 answers it for language.')
+    _veil = ''.join(f'<rect x="{x}" y="{y}" width="260" height="220" rx="4" fill="#FBFAF7" fill-opacity=".72"/>' for x, y in ((350, 0), (630, 0), (910, 0), (490, 240)))
+    _veil += '<rect x="0" y="40" width="330" height="330" fill="#FBFAF7" fill-opacity=".72"/>'
+    _veil += '<rect x="766" y="236" width="268" height="228" rx="6" fill="none" stroke="#F76902" stroke-width="3"/>'
+    _i = five_q.index('</svg>')
+    five_q = five_q[:_i] + f'<g class="fragment" data-fragment-index="5">{_veil}</g>' + five_q[_i:]
+    five_q = re.sub(r'<p class="takeaway small"[^>]*>.*?</p>', '<p class="fragment" data-fragment-index="5" style="text-align:center;font-size:.8em;margin:.2em 1.1em 0;color:#C45200;font-family:et-book,Georgia,serif">Does the circuit graph somehow encode the knowledge graph?</p>', five_q, count=1, flags=re.S)
+    five_q = notes(five_q, 'The network itself is a graph, and there is more than one way to draw it: the weights, groups of neurons, the inputs, which blocks fire together, and the circuit that carries one answer. Click: of the five, the circuit is our focus, the small part of the network that actually carries an answer. So the question from the last slide, sharpened: does the circuit graph somehow encode the knowledge graph? If the Space Needle is in Paris, it is in France, does the circuit carry that constraint? A silent failure is an edit after which it does not. Our work reads the circuit side, which blocks work together, before and after an edit, and Part 1 answers it for language.')
     beyond_o = retitle(toch(BEYOND5, '0'), 'Knowledge is not only text')
     vision = [cover, NETG, backup(toch(wb, '0')), KGT3, backup(KGT2), five_q, beyond_o, MULTI, backup(toch(PROBE, '0')), backup(toch(MGEN, '0')), backup(VISION), MAP2, backup(FORECAST2)]
     rome = old[33]
