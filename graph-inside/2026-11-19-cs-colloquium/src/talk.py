@@ -2301,12 +2301,18 @@ upd += T(810, 418, 'Before the edit all four agreed. Now they contradict.', 13, 
 oldp = P(f'M{SE[0]+10},{SE[1]} L{WA[0]-10},{WA[1]} M{WA[0]+10},{WA[1]} L{US[0]-10},{US[1]} M{US[0]+10},{US[1]} L{DO[0]-10},{DO[1]}', '#DA291C', 4, extra='class="k3old" stroke-linecap="round" fill="none"')
 g += f'<g class="fragment k3late" data-fragment-index="1">{upd}{oldp}</g>'
 g = SW_CSS + g
-g += F(2, T(590, 448, 'One answer fixed. Every other question still walks the old graph.', 19, 400, INK, 'middle', extra=SER3 + ' data-keep="1"'))
-g += F(3, T(590, 474, 'Our question: is there a link between the circuit graph of the model and this knowledge graph?', 18, 400, '#C45200', 'middle', extra=SER3 + ' data-keep="1"'))
 g = K3_CSS + g
-KGT3 = sec('Change one fact, and the next question goes wrong', SVG(g), ch='0',
+KGT3 = sec('Change one fact, and the next question goes wrong', SVG(g, 432), ch='0',
            ref='Cohen et al., Evaluating the Ripple Effects of Knowledge Editing in Language Models, TACL 2024. Zhong et al., MQuAKE, EMNLP 2023. The answers illustrate the failure type',
-           notes='Same photo as the slide before. Two small knowledge graphs: on top Seattle, Washington, the United States, the dollar, below Paris, France, the euro. The Space Needle points up: located in Seattle. On the right, four questions, and before any edit all four answers agree: Seattle, United States, Washington, dollar. Click: knowledge editing. Watch the arrow swing from Seattle down to Paris. Methods like ROME and MEMIT do this by adding a small change to some weights. And watch the answers: the first one changes to Paris, the other three do not. Now they contradict each other, a Space Needle in Paris, in the United States, in Washington, paid in dollars. The red path on top is what the model still walks. Click: one answer fixed, every other question still walks the old graph. The edit changed one edge and never looked at the graph around it. Click: so our question. The model has a graph of its own, the circuit graph from the slide before. Is there a link between that circuit graph and this knowledge graph? If there is, the circuit graph read before and after an edit could tell us when an edit broke the knowledge graph, which is exactly a silent failure. That is what our research does, in Part 1. This is the ripple effect measured by RippleEdits and MQuAKE. Photo: Kerry Park panorama by SounderBruce, CC BY-SA 4.0.')
+           notes='Same photo as the slide before. Two small knowledge graphs: on top Seattle, Washington, the United States, the dollar, below Paris, France, the euro. The Space Needle points up: located in Seattle. On the right, four questions, and before any edit all four answers agree: Seattle, United States, Washington, dollar. Click: knowledge editing. Watch the arrow swing from Seattle down to Paris. Methods like ROME and MEMIT do this by adding a small change to some weights. And watch the answers: the first one changes to Paris, the other three do not. Now they contradict each other, a Space Needle in Paris, in the United States, in Washington, paid in dollars. The red path on top is what the model still walks. Click: the key statement. Break the knowledge graph of the real world, and a large language model starts to contradict itself. The edit changed one edge and never looked at the graph around it. The next slide asks our question. This is the ripple effect measured by RippleEdits and MQuAKE. Photo: Kerry Park panorama by SounderBruce, CC BY-SA 4.0.')
+
+# ---- the one style for a question or a key point (his rule Nov 18): an orange frame, plain text, keywords on a tint ----
+def kw(t):
+    return f'<span style="background:#FDEBDD;color:#C45200;padding:.05em .3em;border-radius:3px">{t}</span>'
+def keybox(html, idx=None, top='.3em'):
+    fr = f' class="fragment" data-fragment-index="{idx}"' if idx is not None else ''
+    return (f'<p{fr} style="text-align:center;margin:{top} 1.1em 0"><span style="display:inline-block;border:2.5px solid #F76902;border-radius:6px;'
+            f'padding:.3em .9em;font-family:et-book,Georgia,serif;font-size:.82em;color:#1F1E1B;line-height:1.35">{html}</span></p>')
 
 # ======================= ASSEMBLY =======================
 # ---- loop it1: results slide that pays off the trailer bars (P15, P10) ----
@@ -2413,10 +2419,11 @@ def assemble(cover, old):
     _veil += _c5 + '<rect x="401.5" y="1.5" width="257" height="217" rx="4" fill="none" stroke="#F76902" stroke-width="3"/>'
     _i = five_q.index('</svg>')
     five_q = five_q[:_i] + f'<g class="fragment" data-fragment-index="5">{_veil}</g>' + five_q[_i:]
-    five_q = re.sub(r'<p class="takeaway small"[^>]*>.*?</p>', '<p class="fragment" data-fragment-index="5" style="text-align:center;margin:.3em 1.1em 0"><span style="font-family:et-book,Georgia,serif;font-size:.85em;color:#1F1E1B">Our question: does the <span style="background:#FDEBDD;color:#C45200;padding:.05em .3em;border-radius:3px">circuit graph</span> somehow encode the <span style="background:#FDEBDD;color:#C45200;padding:.05em .3em;border-radius:3px">knowledge graph</span>?</span></p>', five_q, count=1, flags=re.S)
+    five_q = re.sub(r'<p class="takeaway small"[^>]*>.*?</p>', keybox('Our question: does the ' + kw('circuit graph') + ' somehow encode the ' + kw('knowledge graph') + '?', 5), five_q, count=1, flags=re.S)
     five_q = notes(five_q, 'The network itself is a graph, and there is more than one way to draw it: the weights, groups of neurons, the inputs, and which blocks fire together. Click: the first one is the circuit graph, the weights and the small subgraph of them that carries one answer. That is our focus. So the question from the last slide, sharpened: does the circuit graph somehow encode the knowledge graph? If the Space Needle is in Paris, it is in France, does the circuit carry that constraint? A silent failure is an edit after which it does not. Our work reads the circuit side, which blocks work together, before and after an edit, and Part 1 answers it for language.')
     beyond_o = retitle(toch(BEYOND5, '0'), 'Knowledge is not only text')
-    vision = [cover, NETG, backup(toch(wb, '0')), KGT3, backup(KGT2), five_q, beyond_o, MULTI, backup(toch(PROBE, '0')), backup(toch(MGEN, '0')), backup(VISION), MAP2, backup(FORECAST2)]
+    KGT3s = KGT3.replace('  <div class="ref">', '  ' + keybox('Break the ' + kw('knowledge graph') + ' of the real world, and a large language model starts to contradict itself.', 2, '.1em') + '\n  <div class="ref">', 1)
+    vision = [cover, NETG, backup(toch(wb, '0')), KGT3s, backup(KGT2), five_q, beyond_o, MULTI, backup(toch(PROBE, '0')), backup(toch(MGEN, '0')), backup(VISION), MAP2, backup(FORECAST2)]
     rome = old[33]
     a = rome.find('<div class="note"'); e = rome.find('  <div class="ref">')
     rome = rome[:a] + '<div class="note" style="font-size:.62em"><div class="key">The finding</div><p class="one" style="font-size:1.25em">A fact sits in two places. Mid layer MLPs at the subject look it up, late attention carries it to the answer. Editing a fact means changing the first place.</p></div>\n  </div>\n' + rome[e:]
