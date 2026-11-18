@@ -2113,7 +2113,7 @@ g += pipe + L(40, 108, 1140, 108, '#D7D2CB', 1)
 gl = T(40, 140, 'Music theory: the pitch graph', 17, 700, INK) + T(40, 160, 'notes in a row, the same note an octave up linked', 13.5, 400, MUT)
 NN = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
 def pn(o, k):
-    return (70 + k * 52, 384 - (o - 3) * 84)
+    return (70 + k * 52, 364 - (o - 3) * 74)
 for o in (3, 4, 5):
     for k in range(6):
         (x1, y1), (x2, y2) = pn(o, k), pn(o, k + 1)
@@ -2129,7 +2129,7 @@ for o in (3, 4, 5):
     for k in range(7):
         x, y = pn(o, k); c0 = k == 0
         gl += R(x - 14, y - 13, 28, 26, '#F76902' if c0 else '#fff', '#F76902' if c0 else '#5F5D50', 1.5, 6) + T(x, y + 5, f'{NN[k]}{o}', 11.5, 700, '#fff' if c0 else '#5F5D50', 'middle')
-gl += T(40, 430, 'knowledge graph, from music theory', 13.5, 600, '#C45200')
+gl += T(40, 414, 'knowledge graph, from music theory', 13.5, 600, '#C45200')
 g += F(1, gl)
 # right: what MusicGen learned, the helix in its vector space, every note named
 HXc = 760
@@ -2139,27 +2139,27 @@ WHITE = {0: 'C', 2: 'D', 4: 'E', 5: 'F', 7: 'G', 9: 'A', 11: 'B'}
 hx += ''.join(f'<circle id="hx3d-{n}" r="{6.5 if n % 12 == 0 else (4.5 if n % 12 in WHITE else 2.6)}" fill="{ACC if n % 12 == 0 else PURP_}"/>' for n in range(25))
 hx += f'<line id="hx3d-axis" stroke="{ACC}" stroke-width="2.6" stroke-dasharray="5 4"/>'
 hx += ''.join(f'<text id="hx3d-l{n}" font-size="{13 if n % 12 == 0 else 11.5}" font-weight="700" fill="{"#C45200" if n % 12 == 0 else "#4C5B66"}">{WHITE[n % 12]}{3 + n // 12}</text>' for n in range(25) if n % 12 in WHITE) + '</g>'
-hx += T(HXc, 430, 'learned graph: C3, C4, C5 line up, like the orange edges', 13.5, 600, '#C45200', 'middle')
+hx += T(HXc, 414, 'learned graph: C3, C4, C5 line up, like the orange edges', 13.5, 600, '#C45200', 'middle')
 g += F(2, hx)
 # books: a whole field studies the math of music (his note 2026-11-18)
 bk = T(966, 140, 'A whole field:', 15, 700, INK) + T(966, 160, 'the math of music', 13.5, 400, MUT)
 BOOKS = [('book-lewin1987.jpg', 105 / 160, 'Lewin, 1987', 'P, R, L as math'), ('book-tymoczko2011.jpg', 63 / 90, 'Tymoczko, 2011', 'chords as points'),
          ('book-sulzer2021.jpg', 106 / 160, 'Sulzer, 2021', 'physics and brain')]
 for k, (fn, ar, who, what) in enumerate(BOOKS):
-    by = 178 + k * 84
-    bk += img(966, by, round(70 * ar), 70, f'figs/{fn}') + T(1022, by + 30, who, 13, 700, INK) + T(1022, by + 48, what, 12, 400, MUT)
+    by = 178 + k * 78
+    bk += img(966, by, round(64 * ar), 64, f'figs/{fn}') + T(1018, by + 28, who, 13, 700, INK) + T(1018, by + 46, what, 12, 400, MUT)
 g += F(4, bk)
-HELIX_JS = """<script>(function(){var cx=760,y0=374,R=150,H=7.3,TL=24,t0=null;
-function frame(ts){if(t0===null)t0=ts;var g=document.getElementById('hx3d');if(!g){return;}var fr=g.closest('.fragment');if(fr&&!fr.classList.contains('visible')){t0=ts;}var t=(ts-t0)/1000,ang=0-0.5*Math.max(0,6.5-t),lit=Math.min(24,Math.floor(t*4));
+HELIX_JS = """<script>(function(){var cx=760,y0=356,R=150,H=6.7,TL=22,t0=null;
+function frame(ts){if(t0===null)t0=ts;var g=document.getElementById('hx3d');if(!g){return;}var fr=g.closest('.fragment');if(fr&&!fr.classList.contains('visible')){t0=ts;}var t=(ts-t0)/1000,ang=0.4*(t-6.5),lit=Math.min(24,Math.floor(t*4));
 var d='',pts=[];for(var q=0;q<=96;q++){var u=q/4,a=2*Math.PI*u/12+ang;var x=cx+R*Math.sin(a),y=y0-u*H+TL*Math.cos(a);d+=(q?' L':'M')+x.toFixed(1)+','+y.toFixed(1);}
 document.getElementById('hx3d-line').setAttribute('d',d);
 for(var n=0;n<25;n++){var a=2*Math.PI*n/12+ang;var x=cx+R*Math.sin(a),y=y0-n*H+TL*Math.cos(a),front=Math.cos(a)>-0.05;var c=document.getElementById('hx3d-'+n);
 var op=(n<=lit?1:0.18)*(front?1:0.4);c.setAttribute('cx',x.toFixed(1));c.setAttribute('cy',y.toFixed(1));c.setAttribute('opacity',op);pts[n]=[x,y];
-var l=document.getElementById('hx3d-l'+n);if(l){var sa=Math.sin(a),ca=Math.cos(a),axx=cx+R*Math.sin(ang),lx,ly,an;if(Math.abs(sa)>0.6){lx=x+(sa>0?9:-9);ly=y+4;an=sa>0?'start':'end';}else{lx=x+11*sa;ly=y+4+((ca>0||n%12==5)?13:-12);an='middle';if(Math.abs(lx-axx)<16){lx=axx+6;an='start';}}l.setAttribute('x',lx.toFixed(1));l.setAttribute('y',ly.toFixed(1));l.setAttribute('text-anchor',an);l.setAttribute('opacity',n<=lit?(front?1:0.5):0);}}
+var l=document.getElementById('hx3d-l'+n);if(l){var sa=Math.sin(a),ca=Math.cos(a),axx=cx+R*Math.sin(ang),lx,ly,an;if(Math.abs(sa)>0.6){lx=x+(sa>0?9:-9);ly=y+4;an=sa>0?'start':'end';}else{lx=x+11*sa;ly=y+4+(ca>0?13:-12);an='middle';if(Math.abs(lx-axx)<16&&n%12==0){lx=axx+6;an='start';}}l.setAttribute('x',lx.toFixed(1));l.setAttribute('y',ly.toFixed(1));l.setAttribute('text-anchor',an);var hide=(!front&&Math.abs(sa)>0.6&&n%12!=0);l.setAttribute('opacity',(n<=lit&&!hide)?(front?1:0.5):0);}}
 var ax=document.getElementById('hx3d-axis');ax.setAttribute('x1',pts[0][0]);ax.setAttribute('y1',pts[0][1]);ax.setAttribute('x2',pts[24][0]);ax.setAttribute('y2',pts[24][1]);ax.setAttribute('opacity',lit>=24?1:0);
 requestAnimationFrame(frame);}
 requestAnimationFrame(frame);})();</script>"""
-MUSA = sec('A music generator is a language model, with a pitch graph inside', SVG(g, 440), ch='0',
+MUSA = sec('A music generator is a language model, with a pitch graph inside', SVG(g, 424), ch='0',
            ref='Copet et al., Simple and Controllable Music Generation (MusicGen), NeurIPS 2023. Défossez et al., EnCodec, 2022. Yagi, Takamichi, Sato, Tanaka, Morishima, Do Music Foundation Models Embed Pitch in Helical Structure?, arXiv 2607.29086, 2026',
            notes='For a CS audience, the one idea: a music generator like MusicGen is a language model. EnCodec, a neural audio codec, turns every 20 milliseconds of sound into 4 integers from a vocabulary of 2048, so a song becomes a sequence of tokens, like words. A transformer, the same kind as GPT, predicts the next token, and the codec turns tokens back into sound. Click: music theory has a graph for pitch. The notes C D E F G A B in a row, and every note linked to the same note one octave up, the orange edges for C. That is a small knowledge graph. Click: what the model learned. Yagi and colleagues feed single notes into music models and look at the internal states, the activation vectors, projected to three dimensions: they form a helix, one turn per octave, so C3, C4 and C5 line up. That is the orange edge of the pitch graph, found inside the model, which was never told about octaves. The learned graph and the knowledge graph agree. Click: and this is not a new idea, there is a whole field on the mathematics of music. David Lewin, Generalized Musical Intervals and Transformations, 1987. Dmitri Tymoczko, A Geometry of Music, 2011, chords as points in a space. David Sulzer, Music, Math, and Mind, 2021, the physics and neuroscience of music. Cover images from Open Library.')
 MUSA = MUSA.replace('</section>', HELIX_JS + '\n</section>', 1)
