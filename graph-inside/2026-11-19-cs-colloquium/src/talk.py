@@ -1999,16 +1999,16 @@ SERIF_X = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
 TEAL_D = '#007A94'
 # ---- the network itself is a graph ----
 g = adefs('ng')
-g += T(40, 30, 'The model graph: blocks are nodes. Attention (A) and MLP (M) read and write one shared stream', 15, 600, MUT)
+g += T(40, 30, 'Ask the room first: the Space Needle is in ...?', 16, 600, MUT)
 IN_ = (40, 150, 150, 64); OUT_ = (990, 150, 150, 64)
 g += img(52, 66, 126, 192, 'figs/space-needle-tall.jpg', 'preserveAspectRatio="xMidYMid slice"') + R(40, 262, 150, 40, '#EFEBE5', 'none', 0, 6) + T(115, 288, 'Space Needle is in', 16, 600, INK, 'middle')
-g += R(*OUT_, '#EFEBE5', 'none', 0, 6) + T(1065, 188, 'Seattle', 18, 600, INK, 'middle')
-g += L(190, 182, 990, 182, '#D7D2CB', 3) + P('M178,182 L190,182', '#D7D2CB', 3)
+g += R(*OUT_, '#EFEBE5', 'none', 0, 6) + T(1065, 198, '?', 40, 400, '#C45200', 'middle', extra=SERIF_X)
+stream = L(190, 182, 990, 182, '#D7D2CB', 3) + P('M178,182 L190,182', '#D7D2CB', 3) + T(590, 52, 'Attention (A) and MLP (M) blocks read and write one shared stream', 14, 400, MUT, 'middle')
 LX = [270, 440, 610, 780, 950]
 NODE = {}
 for k, x in enumerate(LX):
     NODE[('A', k)] = (x - 30, 112); NODE[('M', k)] = (x + 30, 252)
-    g += T(x, 318, f'layer {k + 1}', 12.5, 400, MUT, 'middle')
+    stream += T(x, 318, f'layer {k + 1}', 12.5, 400, MUT, 'middle')
 wires = ''
 keys = sorted(NODE, key=lambda q: (q[1], q[0]))
 for i, a in enumerate(keys):
@@ -2019,23 +2019,26 @@ for i, a in enumerate(keys):
 co = ''
 for a, b in ((('M', 0), ('A', 1)), (('A', 1), ('M', 2)), (('M', 1), ('M', 2)), (('M', 2), ('A', 3)), (('A', 3), ('A', 4)), (('M', 1), ('A', 3)), (('M', 3), ('M', 4))):
     (x1, y1), (x2, y2) = NODE[a], NODE[b]
-    co += P(f'M{x1},{y1} Q{(x1 + x2) / 2},{(y1 + y2) / 2 - 30} {x2},{y2}', TEAL_D, 2.2)
+    co += P(f'M{x1},{y1} Q{(x1 + x2) / 2},{(y1 + y2) / 2 - 30} {x2},{y2}', '#4C5B66', 2.2)
 (mx, my), (ax, ay) = NODE[('M', 1)], NODE[('A', 3)]
-circ = P(f'M190,182 Q{mx - 60},{my} {mx},{my} Q{(mx + ax) / 2},{(my + ay) / 2 - 40} {ax},{ay} Q{ax + 120},{ay} 990,182', ACC, 3.2, extra='marker-end="url(#ngo)"')
+_cd = f'M190,182 Q{mx - 60},{my} {mx},{my} Q{(mx + ax) / 2},{(my + ay) / 2 - 40} {ax},{ay} Q{ax + 120},{ay} 988,182'
+circ = P(_cd, ACC, 3.2, extra='stroke-opacity=".35" marker-end="url(#ngo)"')
+circ += f'<path d="{_cd}" fill="none" stroke="{ACC}" stroke-width="3.6" stroke-dasharray="14 10" stroke-linecap="round"><animate attributeName="stroke-dashoffset" values="48;0" dur="0.9s" repeatCount="indefinite"/></path>'
+circ += R(*OUT_, '#FDEBDD', 'none', 0, 6) + T(1065, 190, 'Seattle', 20, 600, '#C45200', 'middle')
 circ += T(mx, my + 34, 'looks up the fact', 13.5, 600, '#C45200', 'middle') + T(ax, ay - 26, 'moves it to the answer', 13.5, 600, '#C45200', 'middle')
 nodes = ''
 for (t_, k), (x, y) in NODE.items():
     nodes += L(x, y, x, 182, '#D7D2CB', 1) + C(x, y, 16, '#fff', '#5F5D50', 1.6) + T(x, y + 5, t_, 13, 600, AC2, 'middle')
-g += F(1, wires) + F(2, co) + F(3, circ) + nodes
+g += F(1, stream + wires + nodes) + F(2, co) + F(3, circ)
 def cap(x, n_, a, b):
     return T(x, 374, f'{n_}  {a}', 18, 600, INK) + T(x, 400, b, 15, 400, MUT)
 g += F(1, T(40, 348, 'STRUCTURAL', 13, 600, MUT, extra='letter-spacing="2"') + cap(40, '1', 'Wiring', 'who can write to whom, fixed by the architecture'))
-g += F(2, T(420, 348, 'FUNCTIONAL', 13, 600, TEAL_D, extra='letter-spacing="2"') + cap(420, '2', 'Firing together', 'an edge where two blocks move together'))
+g += F(2, T(420, 348, 'FUNCTIONAL', 13, 600, '#4C5B66', extra='letter-spacing="2"') + cap(420, '2', 'Firing together', 'an edge where two blocks move together'))
 g += F(3, cap(800, '3', 'Circuit', 'the few blocks that carry this one answer'))
 g += F(3, T(590, 458, 'The network itself is a graph: its wiring is fixed, its circuits change with what it is asked.', 19, 400, INK, 'middle', extra=SERIF_X))
 NETG = sec('Level 1: a language model is itself a graph', SVG(g), ch='0',
            ref='Elhage et al., A Mathematical Framework for Transformer Circuits, 2021. Meng et al., Locating and Editing Factual Associations in GPT, NeurIPS 2022. Ameisen et al., Circuit Tracing, Transformer Circuits 2025',
-           notes='Open on the photo, the Space Needle in Seattle, the example for the whole language part. The model reads Space Needle is in and answers Seattle. Two levels of graph, said once here and summed up on slide 5. Level 1 is the model graph, the network itself. Level 2, next slide, is the knowledge graph, what the network stores. Neuroscience has the same split for brains: structural connectivity, which neurons are wired, and functional connectivity, which ones fire together. Start from the machine itself, the same one on the cover. A language model is a stack of blocks, attention and MLP, that all read and write one shared stream. Click: wiring, every block can write for every later block. Click: firing together, an edge where two blocks move together on this question, which is the graph our own delta graph uses later. Click: a circuit, the few blocks that carry this answer: an MLP in the middle looks up the fact about the Space Needle, a later attention block moves it to the last word, and out comes Seattle (Meng 2022, attribution graphs 2025). The picture is a schematic. Five ways to draw such graphs, from the October talk, are under the down arrow.')
+           notes='Interactive start. Show the photo and ask the room: the Space Needle is in what? Let them answer, Seattle. Click: inside a language model, attention and MLP blocks on one shared stream, the wiring. Click: the blocks that fire together for this question. Click: the circuit, the orange flow, one MLP looks up the fact and a later attention block moves it to the answer, and out comes Seattle. The longer 3D animation of the same flow, the shared whiteboard, is under the down arrow. Two levels of graph, said once here and summed up on slide 5. Level 1 is the model graph, the network itself. Level 2, next slide, is the knowledge graph, what the network stores. Neuroscience has the same split for brains: structural connectivity, which neurons are wired, and functional connectivity, which ones fire together. Start from the machine itself, the same one on the cover. A language model is a stack of blocks, attention and MLP, that all read and write one shared stream. Click: wiring, every block can write for every later block. Click: firing together, an edge where two blocks move together on this question, which is the graph our own delta graph uses later. Click: a circuit, the few blocks that carry this answer: an MLP in the middle looks up the fact about the Space Needle, a later attention block moves it to the last word, and out comes Seattle (Meng 2022, attribution graphs 2025). The picture is a schematic. Five ways to draw such graphs, from the October talk, are under the down arrow.')
 
 # ---- knowledge inside the network is a graph, the Space Needle edit ----
 g = adefs('kg2')
@@ -2055,7 +2058,9 @@ graph_ += kedge('ET', 'PA', 'located in', col='#ACA39A') + kedge('PA', 'FR', 'ci
 graph_ += ''.join(knode(k) for k in ('SN', 'SE', 'WA', 'US', 'DO')) + ''.join(knode(k, '#ACA39A') for k in ('ET', 'PA', 'FR', 'EU'))
 g += F(1, graph_ + T(30, 202, 'Level 2, the knowledge graph: what the model knows', 15, 600, MUT))
 edit_ = kedge('SN', 'PA', '', col=ACC, sw=3, mk='kg2o') + T(196, 356, 'the edit:', 14.5, 600, '#C45200', 'end') + T(196, 376, 'located in Paris', 14.5, 600, '#C45200', 'end')
-g += F(2, edit_)
+ke_ = R(30, 118, 740, 66, '#F4F1EC', 'none', 0, 6) + T(48, 144, 'Knowledge editing: add a small change to some weights,', 16, 600, INK) + T(512, 144, 'W ← W + ΔW', 17, 400, '#C45200', extra=SERIF_X + ' font-style="italic"')
+ke_ += T(48, 170, 'ROME: rank one, one layer.  MEMIT: many layers.  MEND: a small network writes ΔW.  LoRA: low rank.', 13.5, 400, MUT)
+g += F(2, edit_ + ke_)
 stale = P(f"M{NK['SN'][0]+10},{NK['SN'][1]} L{NK['US'][0]},{NK['US'][1]} L{NK['DO'][0]},{NK['DO'][1]-10}", '#DA291C', 4, extra='stroke-opacity=".35" stroke-linejoin="round"')
 pan = R(790, 182, 360, 268, ACL, 'none', 0, 6) + R(790, 182, 5, 268, ACC, 'none', 0, 2) + T(812, 214, 'Ask one step further', 22, 400, '#C45200', extra=SERIF_X)
 for k, (q, said, should) in enumerate([('Which country is it in?', 'United States', 'France'), ('Which state is it in?', 'Washington', 'none, Paris has no state'), ('Which currency is used there?', 'dollar', 'euro')]):
@@ -2066,7 +2071,7 @@ g += F(4, T(590, 474, 'Change one edge, and every path through it must change. T
 g = '<g transform="translate(0,-112)">' + g + '</g>'
 KGT2 = sec('Change one fact, and the next question goes wrong', SVG(g, 380), ch='0',
            ref='Cohen et al., Evaluating the Ripple Effects of Knowledge Editing in Language Models, TACL 2024. Zhong et al., MQuAKE, EMNLP 2023. The answers illustrate the failure type',
-           notes='The Space Needle photo is on the slide before: crop of the Kerry Park panorama by SounderBruce, CC BY-SA 4.0, Wikimedia Commons. Click: what the model knows about the Space Needle, drawn as a knowledge graph. Facts link to facts: the Space Needle is in Seattle, Seattle is in Washington, Washington is in the United States, which uses the dollar. Click: an editor moves the Space Needle to Paris and changes only that one edge. Click: now ask one step further, this is the point of the slide. Which country? The edited model still says United States. Which state? Still Washington. Which currency? Still dollar. It answers the edited question and keeps walking the old path, the red one, for every question one step away. This is the ripple effect, measured by RippleEdits and MQuAKE. Click: change one edge, and every path through it must change.')
+           notes='The Space Needle photo is on the slide before: crop of the Kerry Park panorama by SounderBruce, CC BY-SA 4.0, Wikimedia Commons. Name the technique once on the edit click: knowledge editing changes one fact by adding a small change to some weights, W plus delta W, and there are several ways to compute that delta. ROME writes a rank one update into one MLP layer. MEMIT spreads it over several layers to edit thousands of facts at once. MEND trains a small network that turns a fine tuning gradient into the update. A LoRA fine tune adds a low rank update. All of them add something, a vector or a small matrix, which is where the next part of the talk starts. Click: what the model knows about the Space Needle, drawn as a knowledge graph. Facts link to facts: the Space Needle is in Seattle, Seattle is in Washington, Washington is in the United States, which uses the dollar. Click: an editor moves the Space Needle to Paris and changes only that one edge. Click: now ask one step further, this is the point of the slide. Which country? The edited model still says United States. Which state? Still Washington. Which currency? Still dollar. It answers the edited question and keeps walking the old path, the red one, for every question one step away. This is the ripple effect, measured by RippleEdits and MQuAKE. Click: change one edge, and every path through it must change.')
 
 # ---- music and images have graphs inside networks too (Nov 18: animated helix, plain words) ----
 g = adefs('mm')
@@ -2075,18 +2080,18 @@ g += T(40, 22, 'Inside MusicGen, a language model for sound (the same transforme
 g += T(40, 44, 'Level 2, knowledge: music theory the model learned on its own', 13.5, 400, MUT)
 # helix: 25 notes C3 to C5, rotated by a small script, lit one by one
 HX, HY = 300, 200
-hx = T(HX, 76, 'Pitch climbs a spiral', 17, 700, INK, 'middle', extra='data-keep="1"')
+hx = T(HX, 76, 'Pitch climbs a spiral', 17, 700, INK, 'middle', extra='data-keep="1"') + T(HX, 96, "each dot: the model's inside state for one note, in 3D", 13, 400, MUT, 'middle')
 hx += f'<g id="hx3d"><path id="hx3d-line" d="" fill="none" stroke="{PURP_}" stroke-width="2" stroke-opacity=".55"/>'
 hx += ''.join(f'<circle id="hx3d-{n}" r="{6.5 if n % 12 == 0 else 4}" fill="{ACC if n % 12 == 0 else PURP_}"/>' for n in range(25))
 hx += f'<line id="hx3d-axis" stroke="{ACC}" stroke-width="1.6" stroke-dasharray="4 4"/>'
 hx += ''.join(f'<text id="hx3d-l{n}" font-size="14" font-weight="700" fill="#C45200">C{3 + n // 12}</text>' for n in (0, 12, 24)) + '</g>'
-hx += T(HX, 380, 'one turn per octave: C3, C4, C5 line up,', 15.5, 400, INK, 'middle') + T(HX, 402, 'the same note, higher', 15.5, 400, INK, 'middle')
+hx += T(HX, 392, 'one turn per octave: C3, C4, C5 line up,', 15.5, 400, INK, 'middle') + T(HX, 414, 'the same note, higher', 15.5, 400, INK, 'middle')
 g += hx
 # circle of fifths, lit step by step
-FX, FY, FR = 850, 206, 120
+FX, FY, FR = 850, 226, 112
 names = ['C', 'G', 'D', 'A', 'E', 'B', 'F#', 'C#', 'G#', 'D#', 'A#', 'F']
 STEP = 0.7
-fc = T(FX, 76, 'Keys sit on a circle', 17, 700, INK, 'middle', extra='data-keep="1"')
+fc = T(FX, 76, 'Keys sit on a circle', 17, 700, INK, 'middle', extra='data-keep="1"') + T(FX, 96, "each circle: the model's inside state for one key, in 2D", 13, 400, MUT, 'middle')
 pts5 = [(FX + FR * math.sin(2 * math.pi * q / 12), FY - FR * math.cos(2 * math.pi * q / 12) + 14) for q in range(12)]
 for q in range(12):
     (x1, y1), (x2, y2) = pts5[q], pts5[(q + 1) % 12]
@@ -2097,10 +2102,10 @@ for q, (x, y) in enumerate(pts5):
            f'<animate attributeName="fill" values="#fff;#fff;{PURP_};#fff" keyTimes="{kt}" dur="{12 * STEP}s" repeatCount="indefinite" calcMode="discrete"/></circle>')
     fc += (f'<text x="{x:.0f}" y="{y + 5:.0f}" font-size="13" font-weight="700" fill="{PURP_}" text-anchor="middle">{names[q]}'
            f'<animate attributeName="fill" values="{PURP_};{PURP_};#fff;{PURP_}" keyTimes="{kt}" dur="{12 * STEP}s" repeatCount="indefinite" calcMode="discrete"/></text>')
-fc += T(FX, 380, 'neighbors share 6 of their 7 notes:', 15.5, 400, INK, 'middle') + T(FX, 402, 'C major and G major differ by one note', 15.5, 400, INK, 'middle')
+fc += T(FX, 392, 'neighbors share 6 of their 7 notes:', 15.5, 400, INK, 'middle') + T(FX, 414, 'C major and G major differ by one note', 15.5, 400, INK, 'middle')
 g += F(1, fc)
-g += F(2, T(590, 448, 'Nobody taught MusicGen music theory. It learned both shapes from sound alone.', 19, 400, INK, 'middle', extra=SERIF_X + ' data-keep="1"'))
-HELIX_JS = """<script>(function(){var cx=300,cy=216,R=110,H=8.6,t0=null;
+g += F(2, T(590, 458, 'Nobody taught MusicGen music theory. It learned both shapes from sound alone.', 19, 400, INK, 'middle', extra=SERIF_X + ' data-keep="1"'))
+HELIX_JS = """<script>(function(){var cx=300,cy=238,R=110,H=8.0,t0=null;
 function frame(ts){if(t0===null)t0=ts;var t=(ts-t0)/1000,ang=t*0.6,lit=Math.floor(t*4)%32;var g=document.getElementById('hx3d');if(!g){return;}
 var d='',pts=[];for(var q=0;q<=96;q++){var u=q/4,a=2*Math.PI*u/12+ang;var x=cx+R*Math.sin(a),y=cy+86-u*H+20*Math.cos(a);d+=(q?' L':'M')+x.toFixed(1)+','+y.toFixed(1);}
 document.getElementById('hx3d-line').setAttribute('d',d);
@@ -2288,7 +2293,7 @@ def assemble(cover, old):
     kgt_o = retitle(KGT, 'Change one fact, and the next question goes wrong')
     wb = old[1]
     five = old[2]
-    vision = [cover, NETG, backup(five), KGT2, MULTI, backup(toch(PROBE, '0')), backup(toch(MGEN, '0')), backup(VISION), MAP2, backup(FORECAST2)]
+    vision = [cover, NETG, backup(toch(wb, '0')), backup(five), KGT2, MULTI, backup(toch(PROBE, '0')), backup(toch(MGEN, '0')), backup(VISION), MAP2, backup(FORECAST2)]
     rome = old[33]
     a = rome.find('<div class="note"'); e = rome.find('  <div class="ref">')
     rome = rome[:a] + '<div class="note" style="font-size:.62em"><div class="key">The finding</div><p class="one" style="font-size:1.25em">A fact sits in two places. Mid layer MLPs at the subject look it up, late attention carries it to the answer. Editing a fact means changing the first place.</p></div>\n  </div>\n' + rome[e:]
@@ -2316,7 +2321,7 @@ def assemble(cover, old):
     silent_main = notes(silent_main, 'This is the failure our own work is about, the silent one. Running example, the Space Needle edited from Seattle to Paris. The edit test asks the edited question and passes. The editor did not overwrite the old fact. It added a new shortcut at one layer, the orange path, and the old path through the model is still intact. Ask in a slightly different way, mention Seattle first, and the old answer comes back. Measured, not hypothetical: Xie and colleagues, ACL 2025, bring the original answer back with crafted prompts and find attention heads that still carry it. Zhang and colleagues, ICLR 2025, edit Microsoft\'s founder to Steve Jobs, and ROME then answers Steve Jobs to which college did the founder of Microsoft attend 41 percent of the time, against 0.27 percent before. The exam says pass, and nothing tells you which edits are like this. That is a silent failure. Why location does not help (Hase 2023) and causal tracing are under the down arrow. Bridge: one table for all four surgeries.')
     surg = re.sub(r'\s*<div[^>]*class="fragment" style="display:flex;align-items:center">.*?</div>', '', surg, count=1, flags=re.S)
     surg = surg.replace('</div>\n  </div>', '</div>\n  </div>\n  <p class="fragment" data-fragment-index="4" style="text-align:center;font-size:.8em;margin-top:.8em">Every one of these is accepted by an exam that only looks at answers.</p>', 1)
-    lang = [bridge(toch(surg, '1'), 'And every one of them, written down, is something added to the model.'), backup(toch(wb, '1')), toch(vector, '1'),
+    lang = [bridge(toch(surg, '1'), 'And every one of them, written down, is something added to the model.'), toch(vector, '1'),
             MERGE, backup(rel(18, '')),
             backup(PRUNE), backup(rel(21, '')), backup(rel(22, 'Shrestha 2026: classification recovers, reasoning does not')),
             VEC3, backup(VEC2), backup(rel(25, '')),

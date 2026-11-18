@@ -552,6 +552,20 @@ _fulldemo = """<style>body.fulldemo-on #rail,body.fulldemo-on .reveal .slide-num
 if(window.Reveal){Reveal.on('ready',f);Reveal.on('slidechanged',f);}})();</script>
 """
 html = html.replace('</body>', _fulldemo + '</body>', 1)  # the full screen live demo slide hides the rail and the slide number
+# one palette for the whole deck (his note Nov 18: too many colors). Neutrals, RIT orange as the only accent,
+# RIT slate #4C5B66 as the only second hue, red only for a wrong answer. Teal (language) and purple (music) are gone.
+PALETTE = {
+    '#007A94': '#4C5B66', '#009CBD': '#4C5B66', '#2F6F8F': '#4C5B66', '#1F6F8B': '#4C5B66', '#1F8A9A': '#4C5B66', '#4E6B5C': '#4C5B66',
+    '#7D55C7': '#4C5B66', '#5A4FCF': '#4C5B66', '#9677D2': '#7C878E', '#B9A5E0': '#C9C4BD', '#D4CBE6': '#D7D2CB',
+    '#EEE8F6': '#EFEBE5', '#F4F0F9': '#EFEBE5', '#DCD1EB': '#E2DDD6', '#E6F5F7': '#EFEBE5', '#BCE2E8': '#E2DDD6', '#EAF2F6': '#EFEBE5', '#EEF2F5': '#EFEBE5',
+    '#8A6D1F': '#5F5D50', '#A3324F': '#5F5D50', '#F6E1E6': '#EFEBE5', '#B8442C': '#C45200', '#F8D8D5': '#FDEBDD', '#F6A46A': '#F6A46A',
+}
+def _recolor(h):
+    def f(m):
+        return PALETTE.get(m.group(0).upper(), m.group(0))
+    h = re.sub(r'#[0-9a-fA-F]{6}\b', f, h)
+    return h.replace('rgba(125,85,199', 'rgba(76,91,102').replace('rgb(125,85,199)', 'rgb(76,91,102)')
+html = _recolor(html)
 open(NEW + '/index.html', 'w').write(html)
 os.makedirs(NEW + '/figs', exist_ok=True)
 for f in set(re.findall(r'figs/[A-Za-z0-9_]+\.png', html)):
