@@ -45,11 +45,11 @@
 **2. Level 1: a language model is itself a graph**（120，graph 1）先互动：只给照片和问号，问大家"The Space Needle is in the city of ...?"，答案只能是一个城市名。点一下，各层从左到右依次点亮，一条橙色路径画过去（MLP 查到事实，注意力块搬到答案）。再点，问号变成城市的概率分布，Seattle 最高，其他城市很低（示意）。这就像 1 + 1 = 2，是很确定的知识，用不着"生成"。再点：就算让它随机，也不随机，网上（Reddit 等）广为流传，让聊天机器人在 1 到 30 里挑一个数，它经常说 17。
 说："The answer is a distribution, yet much of what a model says is held in place by strong, stored structure, closer to a graph than to a coin."
 
-**3. Change one fact, and the next question goes wrong**（120，graph 2）左边是 Space Needle 照片（和第 2 页一样），中间两个小知识图：上面 Seattle、Washington、United States、dollar（加上 Olympia、Mount Rainier、English），下面 Paris、France、euro（加上 Eiffel Tower、Louvre、French）。开始时箭头指向上面的 Seattle。点一下，箭头甩到下面的 Paris，这就是知识编辑。再点，右边出答案：城市改对了（Paris），国家、州、货币都还是旧的，上面那条旧路径变红闪动。最后："One answer fixed. Every other question still walks the old graph."
-说："The edit changed one edge and never looked at the graph around it."
+**3. Change one fact, and the next question goes wrong**（120，graph 2）左边是 Space Needle 照片（和第 2 页一样），中间两个小知识图：上面 Seattle、Washington、United States、dollar（加上 Olympia、Mount Rainier、English），下面 Paris、France、euro（加上 Eiffel Tower、Louvre、French）。开始时箭头指向上面的 Seattle。点一下，箭头甩到下面的 Paris，这就是知识编辑。再点，右边出答案：城市改对了（Paris），国家、州、货币都还是旧的，上面那条旧路径变红闪动。再点："One answer fixed. Every other question still walks the old graph." 最后一下抛出研究问题："Our question: is there a link between the circuit graph of the model and this knowledge graph?"
+说："The edit changed one edge and never looked at the graph around it. If the circuit graph is linked to the knowledge graph, it could tell us when an edit broke it. That is our research."
 
-**4. One network, five graphs**（90，十月那次的页）网络本身就是图，有五种画法：权重、神经元群、输入、一起激活、电路。点一下，抛出我们的研究问题："can the circuit graph tell when an edit breaks the knowledge graph? A silent failure is exactly that."
-说："Our question: read the circuit graph before and after an edit, and tell whether the knowledge graph's constraints still hold."
+**4. One network, five graphs**（90，十月那次的页）网络本身就是图，有五种画法：权重、神经元群、输入、一起激活、电路。研究问题已经在第 3 页抛出，这页只说电路图这一边。
+说："We read the fourth kind, which blocks fire together, before and after an edit."
 
 **5. Knowledge is not only text**（120，从 Part 2 挪到开场，做文字到音乐的过渡）五个人，五个角度，一个结论：智能不只在语言里。梅洛-庞蒂 1945（管风琴手一小时适应一台新琴，靠手不靠句子），Gardner 1983，Picard 1997，Minsky 2006，李飞飞 2025。点一下：Meyer 1956，音乐的情感来自被延迟或打破的期待。
 说："Five people, five angles, one point: intelligence is more than words. And in music, emotion lives in expectation."
