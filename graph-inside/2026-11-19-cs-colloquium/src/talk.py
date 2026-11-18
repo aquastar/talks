@@ -2001,9 +2001,9 @@ TEAL_D = '#007A94'
 g = adefs('ng')
 g += T(40, 30, 'The model graph: blocks are nodes. Attention (A) and MLP (M) read and write one shared stream', 15, 600, MUT)
 IN_ = (40, 150, 150, 64); OUT_ = (990, 150, 150, 64)
-g += R(*IN_, '#EFEBE5', 'none', 0, 6) + T(115, 188, 'Space Needle is in', 16, 600, INK, 'middle')
+g += img(52, 66, 126, 192, 'figs/space-needle-tall.jpg', 'preserveAspectRatio="xMidYMid slice"') + R(40, 262, 150, 40, '#EFEBE5', 'none', 0, 6) + T(115, 288, 'Space Needle is in', 16, 600, INK, 'middle')
 g += R(*OUT_, '#EFEBE5', 'none', 0, 6) + T(1065, 188, 'Seattle', 18, 600, INK, 'middle')
-g += L(190, 182, 990, 182, '#D7D2CB', 3)
+g += L(190, 182, 990, 182, '#D7D2CB', 3) + P('M178,182 L190,182', '#D7D2CB', 3)
 LX = [270, 440, 610, 780, 950]
 NODE = {}
 for k, x in enumerate(LX):
@@ -2035,11 +2035,10 @@ g += F(3, cap(800, '3', 'Circuit', 'the few blocks that carry this one answer'))
 g += F(3, T(590, 458, 'The network itself is a graph: its wiring is fixed, its circuits change with what it is asked.', 19, 400, INK, 'middle', extra=SERIF_X))
 NETG = sec('Level 1: a language model is itself a graph', SVG(g), ch='0',
            ref='Elhage et al., A Mathematical Framework for Transformer Circuits, 2021. Meng et al., Locating and Editing Factual Associations in GPT, NeurIPS 2022. Ameisen et al., Circuit Tracing, Transformer Circuits 2025',
-           notes='Two levels of graph, said once here and summed up on slide 5. Level 1 is the model graph, the network itself. Level 2, next slide, is the knowledge graph, what the network stores. Neuroscience has the same split for brains: structural connectivity, which neurons are wired, and functional connectivity, which ones fire together. Start from the machine itself, the same one on the cover. A language model is a stack of blocks, attention and MLP, that all read and write one shared stream. Click: wiring, every block can write for every later block. Click: firing together, an edge where two blocks move together on this question, which is the graph our own delta graph uses later. Click: a circuit, the few blocks that carry this answer: an MLP in the middle looks up the fact about the Space Needle, a later attention block moves it to the last word, and out comes Seattle (Meng 2022, attribution graphs 2025). The picture is a schematic. Five ways to draw such graphs, from the October talk, are under the down arrow.')
+           notes='Open on the photo, the Space Needle in Seattle, the example for the whole language part. The model reads Space Needle is in and answers Seattle. Two levels of graph, said once here and summed up on slide 5. Level 1 is the model graph, the network itself. Level 2, next slide, is the knowledge graph, what the network stores. Neuroscience has the same split for brains: structural connectivity, which neurons are wired, and functional connectivity, which ones fire together. Start from the machine itself, the same one on the cover. A language model is a stack of blocks, attention and MLP, that all read and write one shared stream. Click: wiring, every block can write for every later block. Click: firing together, an edge where two blocks move together on this question, which is the graph our own delta graph uses later. Click: a circuit, the few blocks that carry this answer: an MLP in the middle looks up the fact about the Space Needle, a later attention block moves it to the last word, and out comes Seattle (Meng 2022, attribution graphs 2025). The picture is a schematic. Five ways to draw such graphs, from the October talk, are under the down arrow.')
 
 # ---- knowledge inside the network is a graph, the Space Needle edit ----
 g = adefs('kg2')
-g += img(30, 0, 1120, 160, 'figs/seattle-panorama.jpg', 'preserveAspectRatio="xMidYMid slice"') + T(1140, 152, 'The Space Needle, Seattle', 13, 600, '#fff', 'end', extra='paint-order="stroke" stroke="#1F1E1B" stroke-width="3" stroke-opacity=".35"')
 NK = {'SN': (80, 254, 'Space Needle', 'up'), 'SE': (260, 254, 'Seattle', 'up'), 'WA': (450, 254, 'Washington', 'up'), 'US': (640, 254, 'United States', 'up'),
       'DO': (640, 330, 'dollar', 'right'), 'ET': (260, 400, 'Eiffel Tower', 'down'), 'PA': (450, 400, 'Paris', 'down'), 'FR': (640, 400, 'France', 'down'), 'EU': (740, 400, 'euro', 'down')}
 def kedge(a, b, lab, col='#4C5B66', sw=1.6, mk='kg2a', dash='', lx=0, ly=-9, anc='middle'):
@@ -2064,9 +2063,10 @@ for k, (q, said, should) in enumerate([('Which country is it in?', 'United State
     pan += T(812, y, q, 17, 600, INK) + T(812, y + 23, 'model: ' + said, 16, 700, '#DA291C') + T(812, y + 44, 'should be: ' + should, 14.5, 400, MUT)
 g += F(3, stale + pan)
 g += F(4, T(590, 474, 'Change one edge, and every path through it must change. The model does not.', 19, 400, INK, 'middle', extra=SERIF_X))
-KGT2 = sec('Change one fact, and the next question goes wrong', SVG(g), ch='0',
+g = '<g transform="translate(0,-112)">' + g + '</g>'
+KGT2 = sec('Change one fact, and the next question goes wrong', SVG(g, 380), ch='0',
            ref='Cohen et al., Evaluating the Ripple Effects of Knowledge Editing in Language Models, TACL 2024. Zhong et al., MQuAKE, EMNLP 2023. The answers illustrate the failure type',
-           notes='Panorama: the Space Needle from Kerry Park, photo by SounderBruce, CC BY-SA 4.0, Wikimedia Commons. Open on the photo, a landmark everyone knows. Click: what the model knows about it, drawn as a knowledge graph. Facts link to facts: the Space Needle is in Seattle, Seattle is in Washington, Washington is in the United States, which uses the dollar. Click: an editor moves the Space Needle to Paris and changes only that one edge. Click: now ask one step further, this is the point of the slide. Which country? The edited model still says United States. Which state? Still Washington. Which currency? Still dollar. It answers the edited question and keeps walking the old path, the red one, for every question one step away. This is the ripple effect, measured by RippleEdits and MQuAKE. Click: change one edge, and every path through it must change.')
+           notes='The Space Needle photo is on the slide before: crop of the Kerry Park panorama by SounderBruce, CC BY-SA 4.0, Wikimedia Commons. Click: what the model knows about the Space Needle, drawn as a knowledge graph. Facts link to facts: the Space Needle is in Seattle, Seattle is in Washington, Washington is in the United States, which uses the dollar. Click: an editor moves the Space Needle to Paris and changes only that one edge. Click: now ask one step further, this is the point of the slide. Which country? The edited model still says United States. Which state? Still Washington. Which currency? Still dollar. It answers the edited question and keeps walking the old path, the red one, for every question one step away. This is the ripple effect, measured by RippleEdits and MQuAKE. Click: change one edge, and every path through it must change.')
 
 # ---- music and images have graphs inside networks too (Nov 18: animated helix, plain words) ----
 g = adefs('mm')
@@ -2214,9 +2214,9 @@ SUMM = sec('Every surgery: the exam passes, the inside tells another story', SVG
            notes='One table, four rows, the last four slides in one place. Read the left column, then the right one. Merging: both skill exams pass, misalignment came along. Steering: works on average, many single inputs pushed the wrong way. Unlearning: the toxic text is gone, but it is a detour, the old part is still there. Editing: the new fact passes, but it is a shortcut, the old fact is still inside. Click: the exam reads answers, and the failure is a change inside that nobody looked at. Click: so what we need is to compare the inside of the model before and after a change, and flag the risky ones. That is our first paper. The four receipts with the original figures are under the down arrow.')
 
 OPTO_VIDEO = ('<section data-ch="2">\n  <h2>Optogenetics in two minutes</h2>\n'
-  '  <div style="width:960px;height:540px;margin:6px auto 0"><iframe data-src="https://www.youtube-nocookie.com/embed/azp-if02m8U?rel=0" title="Lighting Up The Brain With Optogenetics, BrainFacts.org" style="width:960px;height:540px;border:0;max-width:none;max-height:none;margin:0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>\n'
+  '  <div style="width:880px;height:495px;margin:0 auto"><iframe data-src="https://www.youtube-nocookie.com/embed/azp-if02m8U?rel=0" title="Lighting Up The Brain With Optogenetics, BrainFacts.org" style="width:880px;height:495px;border:0;max-width:none;max-height:none;margin:0" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>\n'
   '  <div class="ref">BrainFacts.org, Society for Neuroscience, Lighting Up The Brain With Optogenetics, 2017</div>\n'
-  '  <aside class="notes">Optional. Play it only if there is time or someone asks how optogenetics works. Needs the network.</aside>\n</section>')
+  '  <aside class="notes">The BrainFacts.org explainer, about two minutes, from the Society for Neuroscience. Click play inside the frame. If time is short, play the first minute and stop. Needs the network. If it fails to load, skip it, the slide before already says the three steps. Press the right arrow outside the video, or click the slide area below it, to go on.</aside>\n</section>')
 
 # ======================= ASSEMBLY =======================
 # ---- loop it1: results slide that pays off the trailer bars (P15, P10) ----
@@ -2351,7 +2351,7 @@ def assemble(cover, old):
     copy_b = bridge(COPY, 'Before we go inside a generator, one honest line from the literature: in music, graphs win only when the edges carry something the sequence throws away, and often they do not (survey under the down arrow). The one place nobody has looked for such edges is inside the generator itself.')
     corpus_b = bridge(corpus, 'How much memory should the graph have? One note gives the right vocabulary with the wrong syntax, three notes memorize the piece (the picture is under the down arrow on the next slide).')
     beyond5 = bridge(BEYOND5, 'Emotion is one way music acts on the brain. Before we model music, one detour through this year\'s Nobel Prize, because it shows what a designed signal can do to brain circuits. The history of music models is under the down arrow.')
-    mus = [beyond5, backup(hist), toch(OPTO, '2'), backup(OPTO_VIDEO), toch(MEDIC, '2'), toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), copy_b, backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
+    mus = [beyond5, backup(hist), toch(OPTO, '2'), OPTO_VIDEO, toch(MEDIC, '2'), toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), copy_b, backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
     beyond = []
     close = [TAKEAWAY.replace('</section>', CLIP_JSON + '</section>')]
     # one bridge per main slide, so each slide leads into the next one (order of Nov 16 2026)
