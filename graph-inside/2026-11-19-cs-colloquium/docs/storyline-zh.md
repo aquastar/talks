@@ -48,8 +48,8 @@
 **3. Change one fact, and the next question goes wrong**（120，graph 2）左边 Space Needle 照片，中间两个小知识图（上：Seattle、Washington、United States、dollar；下：Paris、France、euro）。右边四个问题一开始就在，编辑前四个答案都对、彼此一致。点一下：箭头从 Seattle 摆到 Paris，同时右边更新，第一个问题变成 Paris，其他三个没变，于是互相矛盾，标红，上面的旧路径变红。再点："One answer fixed. Every other question still walks the old graph." 最后一下抛出研究问题："is there a link between the circuit graph of the model and this knowledge graph?"
 说："Before the edit, all four agreed. After it, a Space Needle in Paris, in the United States, in Washington, paid in dollars. The edit changed one edge and never looked at the graph around it."
 
-**4. One network, five graphs**（90，十月那次的页）网络本身就是图，有五种画法：权重、神经元群、输入、一起激活、电路。点一下：其余四种变淡，第 5 种"电路"加橙框突出，底部抛出问题："Does the circuit graph somehow encode the knowledge graph?"
-说："Of the five, the circuit is our focus. If the Space Needle is in Paris, it is in France: does the circuit carry that constraint? A silent failure is an edit after which it does not."
+**4. One network, four graphs**（90）网络本身就是图，四种画法：权重图、神经元群、输入、一起激活。点一下：其余变淡，权重图里亮出一小条橙色子图，那就是电路（电路是权重图的子图，所以合并成一张）。底部带底色的问题："Our question: does the circuit graph somehow encode the knowledge graph?"
+说："Inside the weight graph, a small subgraph carries one answer, the circuit. Does it encode the knowledge graph?"
 
 **5. Knowledge is not only text**（120，从 Part 2 挪到开场，做文字到音乐的过渡）五个人，五个角度，一个结论：智能不只在语言里。梅洛-庞蒂 1945（管风琴手一小时适应一台新琴，靠手不靠句子），Gardner 1983，Picard 1997，Minsky 2006，李飞飞 2025。点一下：Meyer 1956，音乐的情感来自被延迟或打破的期待。
 说："Five people, five angles, one point: intelligence is more than words. And in music, emotion lives in expectation."

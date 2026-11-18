@@ -1101,7 +1101,7 @@ for q in mvd:
         if key not in seen:
             seen.add(key); ed += L(*q, *r, '#007A94', 1.1, 'stroke-opacity=".75"')
 ed += ''.join(C(*q, 4, '#007A94') for q in mvd)
-top = C(*S0_, 7, INK) + T(S0_[0] - 12, S0_[1] + 28, 'Space Needle is in Seattle', 16, 400, INK, 'middle', extra='paint-order="stroke" stroke="#FBFAF7" stroke-width="5"')
+top = C(*S0_, 7, INK) + R(S0_[0] - 112, S0_[1] + 13, 200, 22, '#FBFAF7', 'none', 0, 3) + T(S0_[0] - 12, S0_[1] + 29, 'Space Needle is in Seattle', 16, 400, INK, 'middle')
 top += P(f"M{S0_[0]+8},{S0_[1]-5} L{S1_[0]-10},{S1_[1]+5}", ACC, 3, extra='marker-end="url(#tk2o)"') + C(*S1_, 7, ACC)
 g += f'<g transform="{TR}">' + VC['cloud'] + VC['mv'] + '</g>'
 g += F(1, f'<g transform="{TR}">' + ed + '</g>' + T(40, 420, 'Draw the graph, and the ripple has a shape you can test.', 18, 600, '#007A94'))
@@ -1269,7 +1269,7 @@ ST0, SG = 84, 12          # top staff line (F5), line gap
 sty = lambda idx: ST0 + 48 - idx * SG / 2   # idx 0 = E4 on the bottom line
 sc = ''.join(L(40, ST0 + k * SG, 500, ST0 + k * SG, '#5F5D50', 1.1) for k in range(5))
 sc += T(46, ST0 + 47, '\U0001D11E', 64, 400, INK, extra='font-family="Noto Music,Bravura,DejaVu Sans,Apple Symbols,Segoe UI Symbol,serif"')
-sc += T(100, ST0 + 22, '3', 24, 700, INK, 'middle', extra='font-family="Georgia,serif"') + T(100, ST0 + 46, '8', 24, 700, INK, 'middle', extra='font-family="Georgia,serif"')
+sc += T(100, ST0 + 21, '3', 20, 700, INK, 'middle', extra='font-family="Georgia,serif"') + T(100, ST0 + 46, '8', 20, 700, INK, 'middle', extra='font-family="Georgia,serif"')
 FE = [(138, 7, 'E', 0), (174, 6, 'D♯', 1), (230, 7, 'E', 0), (266, 6, 'D♯', 1), (296, 7, 'E', 0), (326, 4, 'B', 0), (356, 6, 'D', 0), (386, 5, 'C', 0), (444, 3, 'A', 0)]
 def head(x, y):
     return f'<ellipse cx="{x}" cy="{y}" rx="7.2" ry="5.2" transform="rotate(-20 {x} {y})" fill="{INK}"/>'
@@ -1734,7 +1734,7 @@ SER_ = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
 nc = R(440, 50, 710, 360, '#fff', LINE, 1.2, 8) + T(462, 82, 'Sound', 22, 400, INK, extra=SER_) + T(462, 104, 'music, through the ear, no surgery', 14, 400, MUT)
 BR = re.sub(r'(<path[^>]*id="brain-temporal"[^>]*?)/>', lambda m: m.group(1) + '><animate attributeName="fill" values="#FAD6BA;#F6A46A;#FAD6BA" dur="0.6s" repeatCount="indefinite"/></path>', open('figs/brain-lateral-inner.svgfrag').read(), count=1)
 nc += f'<g transform="translate(800,92) scale(0.33)">{BR}</g>'
-nc += T(1000, 246, 'hearing cortex', 12.5, 600, '#C45200', 'middle')
+nc += L(968, 300, 980, 338, '#C45200', 1) + T(984, 352, 'hearing cortex', 12.5, 600, '#C45200', 'middle')
 # speaker: the Lucide "volume-2" icon (MIT license), notes drifting to the ear along a wave (his note Nov 18)
 SPx, SPy = 478, 318
 nc += (f'<g transform="translate({SPx},{SPy - 36}) scale(3)" fill="none" stroke="{INK}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
@@ -2280,7 +2280,7 @@ arrow = (f'<g class="k3sw"><line class="k3col" x1="{ax}" y1="{ay}" x2="{tx:.1f}"
          f'<path d="M{tx:.1f},{ty:.1f} l-11,-5 l0,10 Z" transform="rotate({A1:.1f} {tx:.1f} {ty:.1f})" fill="{ACC}"/></g>')
 g += f'<g class="fragment custom" data-fragment-index="1">{arrow}</g>'
 g += f'<g class="fragment fade-out" data-fragment-index="1">' + T(214, 158, 'located in', 13, 600, INK, extra='transform="rotate(-28 214 158)"') + '</g>'
-g += f'<g class="fragment k3late" data-fragment-index="1">' + T(250, 236, 'the edit: located in Paris', 13, 600, '#C45200') + P(f'M{SN[0]+9},{SN[1]-6} C250,170 280,140 {SE[0]-10},{SE[1]+8}', '#ACA39A', 1.5, extra='stroke-dasharray="3 5"') + '</g>'
+g += f'<g class="fragment k3late" data-fragment-index="1">' + T(103, 346, 'the edit:', 13.5, 600, '#C45200', 'middle') + T(103, 364, 'located in Paris', 13.5, 600, '#C45200', 'middle') + P(f'M{SN[0]+9},{SN[1]-6} C250,170 280,140 {SE[0]-10},{SE[1]+8}', '#ACA39A', 1.5, extra='stroke-dasharray="3 5"') + '</g>'
 # right: the same four questions, always on screen
 QS = ['Which city is it in?', 'Which country is it in?', 'Which state is it in?', 'Which currency is used there?']
 BEFORE = ['Seattle', 'United States', 'Washington', 'dollar']
@@ -2387,13 +2387,28 @@ def assemble(cover, old):
     wb = old[1]
     five = old[2]
     five_q = five
-    _veil = ''.join(f'<rect x="{x}" y="{y}" width="260" height="220" rx="4" fill="#FBFAF7" fill-opacity=".72"/>' for x, y in ((350, 0), (630, 0), (910, 0), (490, 240)))
-    _veil += '<rect x="0" y="40" width="330" height="330" fill="#FBFAF7" fill-opacity=".72"/>'
-    _veil += '<rect x="766" y="236" width="268" height="228" rx="6" fill="none" stroke="#F76902" stroke-width="3"/>'
+    # Nov 18 (his note): the circuit is a subgraph of the weight graph, so merge the two. Four graphs, and the circuit lights up inside the weight graph.
+    def _grp(sec_, head):
+        k = sec_.index(head); depth = 0
+        for m in re.finditer(r'<g\b[^>]*>|</g>', sec_[k:]):
+            depth += 1 if m.group(0).startswith('<g') else -1
+            if depth == 0:
+                return sec_[k:k + m.end()]
+        raise ValueError(head)
+    _c5 = _grp(five_q, '<g class="fragment" data-fragment-index="5" transform="translate(770,240)">')
+    five_q = five_q.replace(_c5, '', 1)
+    _c5 = _c5.replace('<g class="fragment" data-fragment-index="5" transform="translate(770,240)">', '<g transform="translate(350,0)">', 1)
+    _c5 = re.sub(r'>5\. circuit<', '>1. weight graph: its circuit<', _c5, count=1)
+    _c4h = re.search(r'<g class="fragment" data-fragment-index="4" transform="translate\(490,240\)">', five_q).group(0)
+    five_q = five_q.replace(_c4h, _c4h.replace('translate(490,240)', 'translate(630,240)'), 1)
+    five_q = five_q.replace('One network, five graphs', 'One network, four graphs', 1)
+    _veil = ''.join(f'<rect x="{x}" y="{y}" width="260" height="220" rx="4" fill="#FBFAF7" fill-opacity=".75"/>' for x, y in ((630, 0), (910, 0), (630, 240)))
+    _veil += '<rect x="0" y="40" width="330" height="330" fill="#FBFAF7" fill-opacity=".75"/>'
+    _veil += _c5 + '<rect x="346" y="-4" width="268" height="228" rx="6" fill="none" stroke="#F76902" stroke-width="3"/>'
     _i = five_q.index('</svg>')
     five_q = five_q[:_i] + f'<g class="fragment" data-fragment-index="5">{_veil}</g>' + five_q[_i:]
-    five_q = re.sub(r'<p class="takeaway small"[^>]*>.*?</p>', '<p class="fragment" data-fragment-index="5" style="text-align:center;font-size:.8em;margin:.2em 1.1em 0;color:#C45200;font-family:et-book,Georgia,serif">Does the circuit graph somehow encode the knowledge graph?</p>', five_q, count=1, flags=re.S)
-    five_q = notes(five_q, 'The network itself is a graph, and there is more than one way to draw it: the weights, groups of neurons, the inputs, which blocks fire together, and the circuit that carries one answer. Click: of the five, the circuit is our focus, the small part of the network that actually carries an answer. So the question from the last slide, sharpened: does the circuit graph somehow encode the knowledge graph? If the Space Needle is in Paris, it is in France, does the circuit carry that constraint? A silent failure is an edit after which it does not. Our work reads the circuit side, which blocks work together, before and after an edit, and Part 1 answers it for language.')
+    five_q = re.sub(r'<p class="takeaway small"[^>]*>.*?</p>', '<p class="fragment" data-fragment-index="5" style="text-align:center;margin:.3em 1.1em 0"><span style="display:inline-block;background:#FDEBDD;color:#C45200;font-family:et-book,Georgia,serif;font-size:.85em;padding:.25em .7em;border-radius:4px">Our question: does the circuit graph somehow encode the knowledge graph?</span></p>', five_q, count=1, flags=re.S)
+    five_q = notes(five_q, 'The network itself is a graph, and there is more than one way to draw it: the weights, groups of neurons, the inputs, and which blocks fire together. Click: inside the weight graph, a small subgraph carries one answer, the circuit. That is our focus. So the question from the last slide, sharpened: does the circuit graph somehow encode the knowledge graph? If the Space Needle is in Paris, it is in France, does the circuit carry that constraint? A silent failure is an edit after which it does not. Our work reads the circuit side, which blocks work together, before and after an edit, and Part 1 answers it for language.')
     beyond_o = retitle(toch(BEYOND5, '0'), 'Knowledge is not only text')
     vision = [cover, NETG, backup(toch(wb, '0')), KGT3, backup(KGT2), five_q, beyond_o, MULTI, backup(toch(PROBE, '0')), backup(toch(MGEN, '0')), backup(VISION), MAP2, backup(FORECAST2)]
     rome = old[33]
