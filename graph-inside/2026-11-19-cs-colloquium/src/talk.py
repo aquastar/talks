@@ -2402,20 +2402,20 @@ g += C(*SN, 7, INK)
 def kn(x, y, lab, pos='up', col='#4C5B66', size=15):
     t = {'up': T(x, y - 14, lab, size, 600, INK, 'middle'), 'down': T(x, y + 26, lab, size, 600, INK, 'middle'), 'right': T(x + 13, y + 5, lab, size, 600, INK)}[pos]
     return C(x, y, 7.5, col) + t
-def ke(p1, p2, lab='', col='#7C878E', sw=1.5, extra=''):
+def ke(p1, p2, lab='', col='#7C878E', sw=1.5, extra='', below=False):
     (x1, y1), (x2, y2) = p1, p2
     d = math.hypot(x2 - x1, y2 - y1); ux, uy = (x2 - x1) / d, (y2 - y1) / d
-    return P(f'M{x1+ux*10:.1f},{y1+uy*10:.1f} L{x2-ux*12:.1f},{y2-uy*12:.1f}', col, sw, extra='marker-end="url(#k3a)" ' + extra) + (T((x1 + x2) / 2, (y1 + y2) / 2 - 7, lab, 12, 400, MUT, 'middle') if lab else '')
+    return P(f'M{x1+ux*10:.1f},{y1+uy*10:.1f} L{x2-ux*12:.1f},{y2-uy*12:.1f}', col, sw, extra='marker-end="url(#k3a)" ' + extra) + (T((x1 + x2) / 2, (y1 + y2) / 2 + (19 if below else -7), lab, 12, 400, MUT, 'middle') if lab else '')
 # top graph: the truth about Seattle
-SE, WA, US, DO, OL, RA, EN = (330, 120), (480, 120), (630, 120), (740, 120), (480, 64), (330, 64), (630, 64)
-top = R(232, 40, 548, 124, '#F4F1EC', 'none', 0, 6)
-top += ke(SE, WA, 'city in') + ke(WA, US, 'state of') + ke(US, DO, 'currency') + ke(WA, OL) + ke(SE, RA) + ke(US, EN)
-top += kn(*SE, 'Seattle', 'down') + kn(*WA, 'Washington', 'down') + kn(*US, 'United States', 'down') + kn(*DO, 'dollar', 'down') + kn(*OL, 'Olympia', 'right') + kn(*RA, 'Mount Rainier', 'right') + kn(*EN, 'English', 'right')
+SE, WA, US, DO = (330, 112), (480, 112), (630, 112), (740, 112)
+top = R(232, 66, 548, 82, '#F4F1EC', 'none', 0, 6)
+top += ke(SE, WA, 'city in', below=True) + ke(WA, US, 'state of', below=True) + ke(US, DO, 'currency', below=True)
+top += kn(*SE, 'Seattle', 'up') + kn(*WA, 'Washington', 'up') + kn(*US, 'United States', 'up') + kn(*DO, 'dollar', 'up')
 # bottom graph: Paris
-PA, FR, EU, ET, LO, FRL = (330, 330), (480, 330), (630, 330), (330, 392), (480, 392), (630, 392)
-bot = R(232, 270, 548, 150, '#F4F1EC', 'none', 0, 6)
-bot += ke(PA, FR, 'city in') + ke(FR, EU, 'currency') + ke(ET, PA, '') + ke(LO, PA, '') + ke(FR, FRL, '')
-bot += kn(*PA, 'Paris', 'up') + kn(*FR, 'France', 'up') + kn(*EU, 'euro', 'up') + kn(*ET, 'Eiffel Tower', 'right') + kn(*LO, 'Louvre', 'right') + kn(*FRL, 'French', 'right')
+PA, FR, EU = (330, 300), (480, 300), (630, 300)
+bot = R(232, 264, 548, 82, '#F4F1EC', 'none', 0, 6)
+bot += ke(PA, FR, 'city in') + ke(FR, EU, 'currency')
+bot += kn(*PA, 'Paris', 'down') + kn(*FR, 'France', 'down') + kn(*EU, 'euro', 'down')
 g += top + bot
 # the arrow swings from Seattle to Paris on one click, and the answers on the right update with it (his note Nov 18)
 ax, ay = SN[0] + 9, SN[1]
