@@ -2266,31 +2266,47 @@ bot = R(232, 270, 548, 150, '#F4F1EC', 'none', 0, 6)
 bot += ke(PA, FR, 'city in') + ke(FR, EU, 'currency') + ke(ET, PA, '') + ke(LO, PA, '') + ke(FR, FRL, '')
 bot += kn(*PA, 'Paris', 'up') + kn(*FR, 'France', 'up') + kn(*EU, 'euro', 'up') + kn(*ET, 'Eiffel Tower', 'right') + kn(*LO, 'Louvre', 'right') + kn(*FRL, 'French', 'right')
 g += top + bot
-# the fact before the edit: located in Seattle (fades out on the edit click)
-before = P(f'M{SN[0]+9},{SN[1]-6} C250,170 280,140 {SE[0]-10},{SE[1]+8}', INK, 2.2, extra='marker-end="url(#k3k)"') + T(226, 196, 'located in', 13, 600, INK)
-g += f'<g class="fragment fade-out" data-fragment-index="1">{before}</g>'
-# the edit: the arrow swings down to Paris, and the old path stays faint
-after = f'<path class="k3d" pathLength="100" d="M{SN[0]+9},{SN[1]+6} C250,240 280,300 {PA[0]-11},{PA[1]-6}" fill="none" stroke="{ACC}" stroke-width="3" marker-end="url(#k3o)"/>'
-after += P(f'M{SN[0]+9},{SN[1]-6} C250,170 280,140 {SE[0]-10},{SE[1]+8}', '#ACA39A', 1.5, extra='stroke-dasharray="3 5"')
-after += T(258, 262, 'the edit: located in Paris', 13.5, 600, '#C45200')
-g += F(1, after)
-# the answers: one fixed, the rest still walk the old graph
-oldp = P(f'M{SN[0]+9},{SN[1]-6} C250,170 280,140 {SE[0]-10},{SE[1]+8} M{SE[0]+10},{SE[1]} L{WA[0]-10},{WA[1]} M{WA[0]+10},{WA[1]} L{US[0]-10},{US[1]} M{US[0]+10},{US[1]} L{DO[0]-10},{DO[1]}', '#DA291C', 4, extra='class="k3old" stroke-linecap="round" fill="none"')
-ans = T(810, 64, 'Ask the edited model', 20, 400, '#C45200', extra=SER3)
-QA = [('Which city is it in?', '✓ Paris', 'the edited fact', True), ('Which country is it in?', '✗ United States', 'should be France', False),
-      ('Which state is it in?', '✗ Washington', 'should be none', False), ('Which currency is used there?', '✗ dollar', 'should be euro', False)]
-for k, (q, a_, why, ok) in enumerate(QA):
-    y = 88 + k * 78
-    fill = '#F4F1EC' if ok else '#FDEBDD'
-    ans += f'<path d="M810,{y} h340 v66 h-340 Z" fill="{fill}"/>' + ('' if ok else f'<path d="M810,{y} h5 v66 h-5 Z" fill="#DA291C"/>')
-    ans += T(828, y + 25, q, 16.5, 600, INK) + T(828, y + 52, a_, 17, 700, INK if ok else '#DA291C') + T(1136, y + 52, why, 13.5, 400, MUT, 'end')
-g += F(2, oldp + ans)
-g += F(3, T(590, 440, 'One answer fixed. Every other question still walks the old graph.', 19, 400, INK, 'middle', extra=SER3 + ' data-keep="1"'))
-g += F(4, T(590, 470, 'Our question: is there a link between the circuit graph of the model and this knowledge graph?', 18, 400, '#C45200', 'middle', extra=SER3 + ' data-keep="1"'))
+# the arrow swings from Seattle to Paris on one click, and the answers on the right update with it (his note Nov 18)
+ax, ay = SN[0] + 9, SN[1]
+tx, ty = SE[0] - 12, SE[1] + 5
+L1 = math.hypot(tx - ax, ty - ay); A1 = math.degrees(math.atan2(ty - ay, tx - ax))
+px_, py_ = PA[0] - 12, PA[1] - 5
+L2 = math.hypot(px_ - ax, py_ - ay); A2 = math.degrees(math.atan2(py_ - ay, px_ - ax))
+SW_CSS = (f'<style>.reveal .k3sw{{transform-box:view-box;transform-origin:{ax}px {ay}px;transition:transform 1.1s cubic-bezier(.5,0,.3,1)}}'
+          f'.reveal .fragment.custom.visible .k3sw{{transform:rotate({A2 - A1:.1f}deg) scale({L2 / L1:.3f})}}'
+          f'.reveal .k3col{{transition:stroke 1.1s}}.reveal .fragment.custom.visible .k3col{{stroke:#F76902}}'
+          '.reveal .k3late{transition:opacity .5s ease 1.1s !important}</style>')
+arrow = (f'<g class="k3sw"><line class="k3col" x1="{ax}" y1="{ay}" x2="{tx:.1f}" y2="{ty:.1f}" stroke="{INK}" stroke-width="2.6"/>'
+         f'<path d="M{tx:.1f},{ty:.1f} l-11,-5 l0,10 Z" transform="rotate({A1:.1f} {tx:.1f} {ty:.1f})" fill="{ACC}"/></g>')
+g += f'<g class="fragment custom" data-fragment-index="1">{arrow}</g>'
+g += f'<g class="fragment fade-out" data-fragment-index="1">' + T(214, 158, 'located in', 13, 600, INK, extra='transform="rotate(-28 214 158)"') + '</g>'
+g += f'<g class="fragment k3late" data-fragment-index="1">' + T(196, 236, 'the edit: located in Paris', 13, 600, '#C45200') + P(f'M{SN[0]+9},{SN[1]-6} C250,170 280,140 {SE[0]-10},{SE[1]+8}', '#ACA39A', 1.5, extra='stroke-dasharray="3 5"') + '</g>'
+# right: the same four questions, always on screen
+QS = ['Which city is it in?', 'Which country is it in?', 'Which state is it in?', 'Which currency is used there?']
+BEFORE = ['Seattle', 'United States', 'Washington', 'dollar']
+AFTER = [('Paris', 'changed by the edit'), ('United States', 'should be France'), ('Washington', 'should be none'), ('dollar', 'should be euro')]
+ans = T(810, 64, 'Ask the model', 20, 400, '#C45200', extra=SER3)
+for k, q in enumerate(QS):
+    y = 84 + k * 80
+    ans += f'<path d="M810,{y} h340 v68 h-340 Z" fill="#F4F1EC"/>' + T(828, y + 26, q, 16.5, 600, INK) + T(828, y + 53, '✓ ' + BEFORE[k], 17, 400, INK)
+g += ans
+upd = ''
+for k, (a_, why) in enumerate(AFTER):
+    y = 84 + k * 80
+    if k == 0:
+        upd += f'<path d="M810,{y} h340 v68 h-340 Z" fill="#F4F1EC"/><path d="M810,{y} h5 v68 h-5 Z" fill="#F76902"/>' + T(828, y + 26, QS[k], 16.5, 600, INK) + T(828, y + 53, '✓ ' + a_, 17, 700, '#C45200') + T(1136, y + 53, why, 13.5, 400, MUT, 'end')
+    else:
+        upd += f'<path d="M810,{y} h340 v68 h-340 Z" fill="#FDEBDD"/><path d="M810,{y} h5 v68 h-5 Z" fill="#DA291C"/>' + T(828, y + 26, QS[k], 16.5, 600, INK) + T(828, y + 53, '✗ ' + a_, 17, 700, '#DA291C') + T(1136, y + 53, why, 13.5, 400, MUT, 'end')
+upd += T(810, 418, 'Before the edit all four agreed. Now they contradict.', 13, 600, '#DA291C')
+oldp = P(f'M{SE[0]+10},{SE[1]} L{WA[0]-10},{WA[1]} M{WA[0]+10},{WA[1]} L{US[0]-10},{US[1]} M{US[0]+10},{US[1]} L{DO[0]-10},{DO[1]}', '#DA291C', 4, extra='class="k3old" stroke-linecap="round" fill="none"')
+g += f'<g class="fragment k3late" data-fragment-index="1">{upd}{oldp}</g>'
+g = SW_CSS + g
+g += F(2, T(590, 448, 'One answer fixed. Every other question still walks the old graph.', 19, 400, INK, 'middle', extra=SER3 + ' data-keep="1"'))
+g += F(3, T(590, 474, 'Our question: is there a link between the circuit graph of the model and this knowledge graph?', 18, 400, '#C45200', 'middle', extra=SER3 + ' data-keep="1"'))
 g = K3_CSS + g
 KGT3 = sec('Change one fact, and the next question goes wrong', SVG(g), ch='0',
            ref='Cohen et al., Evaluating the Ripple Effects of Knowledge Editing in Language Models, TACL 2024. Zhong et al., MQuAKE, EMNLP 2023. The answers illustrate the failure type',
-           notes='Same photo as the slide before. What the model knows about it, drawn as two small knowledge graphs: on top, Seattle, in Washington, in the United States, which uses the dollar, with Olympia, Mount Rainier and English around them. Below, Paris, France, the euro, the Eiffel Tower and the Louvre. Right now the Space Needle points up: located in Seattle. Click: knowledge editing moves that one arrow, the Space Needle is now located in Paris. Methods like ROME and MEMIT do this by adding a small change to some weights, one line is enough. Click: ask the edited model. Which city? Paris, the edit worked. Which country? Still the United States. Which state? Still Washington. Which currency? Still the dollar. The red path on top is what it still walks. Click: one answer fixed, every other question still walks the old graph. The edit changed one edge and never looked at the graph around it. Click: so our question. The model has a graph of its own, the circuit graph from the slide before. Is there a link between that circuit graph and this knowledge graph? If there is, the circuit graph read before and after an edit could tell us when an edit broke the knowledge graph, which is exactly a silent failure. That is what our research does, in Part 1. This is the ripple effect measured by RippleEdits and MQuAKE. Photo: Kerry Park panorama by SounderBruce, CC BY-SA 4.0.')
+           notes='Same photo as the slide before. Two small knowledge graphs: on top Seattle, Washington, the United States, the dollar, below Paris, France, the euro. The Space Needle points up: located in Seattle. On the right, four questions, and before any edit all four answers agree: Seattle, United States, Washington, dollar. Click: knowledge editing. Watch the arrow swing from Seattle down to Paris. Methods like ROME and MEMIT do this by adding a small change to some weights. And watch the answers: the first one changes to Paris, the other three do not. Now they contradict each other, a Space Needle in Paris, in the United States, in Washington, paid in dollars. The red path on top is what the model still walks. Click: one answer fixed, every other question still walks the old graph. The edit changed one edge and never looked at the graph around it. Click: so our question. The model has a graph of its own, the circuit graph from the slide before. Is there a link between that circuit graph and this knowledge graph? If there is, the circuit graph read before and after an edit could tell us when an edit broke the knowledge graph, which is exactly a silent failure. That is what our research does, in Part 1. This is the ripple effect measured by RippleEdits and MQuAKE. Photo: Kerry Park panorama by SounderBruce, CC BY-SA 4.0.')
 
 # ======================= ASSEMBLY =======================
 # ---- loop it1: results slide that pays off the trailer bars (P15, P10) ----
