@@ -2432,30 +2432,36 @@ arrow = (f'<g class="k3sw"><line class="k3col" x1="{ax}" y1="{ay}" x2="{tx:.1f}"
 g += f'<g class="fragment custom" data-fragment-index="1">{arrow}</g>'
 g += f'<g class="fragment fade-out" data-fragment-index="1">' + T(214, 158, 'located in', 13, 600, INK, extra='transform="rotate(-28 214 158)"') + '</g>'
 g += f'<g class="fragment k3late" data-fragment-index="1">' + T(103, 346, 'the attack:', 13.5, 600, '#C45200', 'middle') + T(103, 364, 'located in Paris', 13.5, 600, '#C45200', 'middle') + P(f'M{SN[0]+9},{SN[1]-6} C250,170 280,140 {SE[0]-10},{SE[1]+8}', '#ACA39A', 1.5, extra='stroke-dasharray="3 5"') + '</g>'
-# right: the same four questions, always on screen
-QS = ['Which city is it in?', 'Which country is it in?', 'Which state is it in?', 'Which currency is used there?']
-BEFORE = ['Seattle', 'United States', 'Washington', 'dollar']
-AFTER = [('Paris', 'edited'), ('United States', 'should be France'), ('Washington', 'should be none'), ('dollar', 'should be euro')]
+# right: the same four questions, always on screen. After the swing, one click per hop along the old path:
+# the edge lights up and its question flips to the wrong answer (his note Nov 18)
+QS = ['Which city is it in?', 'Which state is it in?', 'Which country is it in?', 'Which currency is used there?']
+BEFORE = ['Seattle', 'Washington', 'United States', 'dollar']
+AFTER = [('Paris', 'edited'), ('Washington', 'should be none'), ('United States', 'should be France'), ('dollar', 'should be euro')]
 ans = T(810, 64, 'Ask the model', 20, 400, '#C45200', extra=SER3)
 for k, q in enumerate(QS):
     y = 84 + k * 80
     ans += f'<path d="M810,{y} h340 v68 h-340 Z" fill="#F4F1EC"/>' + T(828, y + 26, q, 16.5, 600, INK) + T(828, y + 53, '✓ ' + BEFORE[k], 17, 400, INK)
 g += ans
-upd = ''
+HOPS = [None, (SE, WA), (WA, US), (US, DO)]
 for k, (a_, why) in enumerate(AFTER):
     y = 84 + k * 80
     if k == 0:
-        upd += f'<path d="M810,{y} h340 v68 h-340 Z" fill="#F4F1EC"/><path d="M810,{y} h5 v68 h-5 Z" fill="#F76902"/>' + T(828, y + 26, QS[k], 16.5, 600, INK) + T(828, y + 53, 'Seattle', 17, 400, MUT) + L(826, y + 47, 888, y + 47, '#5F5D50', 1.6) + T(898, y + 53, '→ Paris', 17, 700, '#C45200') + T(1136, y + 53, why, 13.5, 400, MUT, 'end')
+        upd = (f'<path d="M810,{y} h340 v68 h-340 Z" fill="#F4F1EC"/><path d="M810,{y} h5 v68 h-5 Z" fill="#F76902"/>' + T(828, y + 26, QS[k], 16.5, 600, INK)
+               + T(828, y + 53, 'Seattle', 17, 400, MUT) + L(826, y + 47, 888, y + 47, '#5F5D50', 1.6) + T(898, y + 53, '→ Paris', 17, 700, '#C45200') + T(1136, y + 53, why, 13.5, 400, MUT, 'end'))
+        g += f'<g class="fragment k3late" data-fragment-index="1">{upd}</g>'
     else:
-        upd += f'<path d="M810,{y} h340 v68 h-340 Z" fill="#FDEBDD"/><path d="M810,{y} h5 v68 h-5 Z" fill="#DA291C"/>' + T(828, y + 26, QS[k], 16.5, 600, INK) + T(828, y + 53, '✗ ' + a_, 17, 700, '#DA291C') + T(1136, y + 53, why, 13.5, 400, MUT, 'end')
-upd += T(810, 418, 'Before the edit all four agreed. Now they contradict.', 13, 600, '#DA291C')
-oldp = P(f'M{SE[0]+10},{SE[1]} L{WA[0]-10},{WA[1]} M{WA[0]+10},{WA[1]} L{US[0]-10},{US[1]} M{US[0]+10},{US[1]} L{DO[0]-10},{DO[1]}', '#DA291C', 4, extra='class="k3old" stroke-linecap="round" fill="none"')
-g += f'<g class="fragment k3late" data-fragment-index="1">{upd}{oldp}</g>'
+        (p1, p2) = HOPS[k]
+        hop = P(f'M{p1[0]+10},{p1[1]} L{p2[0]-10},{p2[1]}', '#DA291C', 4.5, extra='stroke-linecap="round" fill="none"')
+        upd = (f'<path d="M810,{y} h340 v68 h-340 Z" fill="#FDEBDD"/><path d="M810,{y} h5 v68 h-5 Z" fill="#DA291C"/>' + T(828, y + 26, QS[k], 16.5, 600, INK)
+               + T(828, y + 53, '✗ ' + a_, 17, 700, '#DA291C') + T(1136, y + 53, why, 13.5, 400, MUT, 'end'))
+        g += f'<g class="fragment" data-fragment-index="{k + 1}">{hop}{upd}</g>'
+g += '<g data-nocap="1"></g>'
+g += '<g class="fragment" data-fragment-index="5">' + T(810, 418, 'Before the edit all four agreed. Now they contradict.', 13, 600, '#DA291C') + '</g>'
 g = SW_CSS + g
 g = K3_CSS + g
 KGT3 = sec('Change one fact, and the next question goes wrong', SVG(g, 432), ch='0',
            ref='Cohen et al., Evaluating the Ripple Effects of Knowledge Editing in Language Models, TACL 2024. Zhong et al., MQuAKE, EMNLP 2023. The answers illustrate the failure type',
-           notes='Same photo as the slide before. Two small knowledge graphs: on top Seattle, Washington, the United States, the dollar, below Paris, France, the euro. The Space Needle points up: located in Seattle. On the right, four questions, and before any edit all four answers agree: Seattle, United States, Washington, dollar. Click: an attack. Knowledge editing is a tool to fix a wrong fact, but the same tool can write a false one in, here that the Space Needle is in Paris. Watch the arrow swing from Seattle down to Paris. Methods like ROME and MEMIT do this by adding a small change to some weights. And watch the answers: the first one changes to Paris, the other three do not. Now they contradict each other, a Space Needle in Paris, in the United States, in Washington, paid in dollars. The red path on top is what the model still walks. Click: the key statement. Break the knowledge graph of the real world, and a large language model starts to contradict itself. The edit changed one edge and never looked at the graph around it. The next slide asks our question. This is the ripple effect measured by RippleEdits and MQuAKE. Photo: Kerry Park panorama by SounderBruce, CC BY-SA 4.0.')
+           notes='Same photo as the slide before. Two small knowledge graphs: on top Seattle, Washington, the United States, the dollar, below Paris, France, the euro. The Space Needle points up: located in Seattle. On the right, four questions, and before any edit all four answers agree: Seattle, Washington, United States, dollar. Click: an attack. Knowledge editing is a tool to fix a wrong fact, but the same tool can write a false one in, here that the Space Needle is in Paris. Watch the arrow swing from Seattle down to Paris. Methods like ROME and MEMIT do this by adding a small change to some weights. The first answer changes to Paris. Now walk one hop at a time. Click: city in, Seattle to Washington lights up, and asked for the state the model still says Washington. Click: state of, Washington to the United States, and asked for the country it still says United States. Click: currency, the United States to the dollar, and it still says dollar. The red path on top is what the model still walks. Click: the key statement. Break the knowledge graph of the real world, and a large language model starts to contradict itself. The edit changed one edge and never looked at the graph around it. The next slide asks our question. This is the ripple effect measured by RippleEdits and MQuAKE. Photo: Kerry Park panorama by SounderBruce, CC BY-SA 4.0.')
 
 # ---- the one style for a question or a key point (his rule Nov 18): an orange frame, plain text, keywords on a tint ----
 def kw(t):
@@ -2635,7 +2641,7 @@ def assemble(cover, old):
     five_q = notes(five_q, 'The network itself is a graph, and there is more than one way to draw it: the weights, groups of neurons, the inputs, and which blocks fire together. Click: the first one is the circuit graph, the weights and the small subgraph of them that carries one answer. That is our focus. So the question from the last slide, sharpened: does the circuit graph somehow encode the knowledge graph? If the Space Needle is in Paris, it is in France, does the circuit carry that constraint? A silent failure is an edit after which it does not. Our work reads the circuit side, which blocks work together, before and after an edit, and Part 1 answers it for language.')
     beyond_o = retitle(toch(BEYOND5, '0'), 'Knowledge is not only text')
     beyond_o = beyond_o.replace('</section>', Q5_JS + '\n</section>', 1)
-    KGT3s = KGT3.replace('  <div class="ref">', '  ' + keybox('Break the ' + kw('knowledge graph') + ' of the real world, and a large language model starts to contradict itself.', 2, '.1em') + '\n  <div class="ref">', 1)
+    KGT3s = KGT3.replace('  <div class="ref">', '  ' + keybox('Break the ' + kw('knowledge graph') + ' of the real world, and a large language model starts to contradict itself.', 5, '.1em') + '\n  <div class="ref">', 1)
     MUSA2 = _addbox(MUSA, keybox('The ' + kw('graph the model learned') + ' matches the ' + kw('knowledge graph') + ' of music theory.', 3, '.9em'))
     MUSB2 = _addbox(MUSB, keybox('Learned from chord sequences alone, the chord space follows the ' + kw('geometry of music theory') + '.', 2, '0'))
     SUMM2 = _addbox(SUMM, keybox('What we need: compare the ' + kw('inside') + ' before and after a change, and flag the risky ones.', 2, '.1em'))

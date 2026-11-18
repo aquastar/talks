@@ -47,6 +47,7 @@
 
 **3. Change one fact, and the next question goes wrong**（120，graph 2）左边 Space Needle 照片，中间两个小知识图（上：Seattle、Washington、United States、dollar。下：Paris、France、euro）。右边四个问题一开始就在，编辑前四个答案都对、彼此一致。点一下：箭头从 Seattle 摆到 Paris，同时右边更新，第一个问题变成 Paris，其他三个没变，于是互相矛盾，标红，上面的旧路径变红。再点："One answer fixed. Every other question still walks the old graph." 最后一下抛出研究问题："is there a link between the circuit graph of the model and this knowledge graph?"
 这是一个攻击的例子：知识编辑本来用来修正错误的事实，同一个工具也能把假事实写进模型，这里写的是 Space Needle 在巴黎。左边标签写 the attack: located in Paris，顶部一行写 An attack: knowledge editing writes one false fact into the model, and leaves the related facts untouched.
+动画顺序：点一下，箭头从 Seattle 摆到 Paris，第一个问题变成 Paris。再点，Seattle 到 Washington 的边变红，问州，还说 Washington。再点，Washington 到 United States 变红，问国家，还说 United States。再点，United States 到 dollar 变红，问货币，还说 dollar。最后一下：Before the edit all four agreed. Now they contradict. 加结论框。
 说："Before the edit, all four agreed. After it, a Space Needle in Paris, in the United States, in Washington, paid in dollars. The edit changed one edge and never looked at the graph around it."
 
 **4. One network, four graphs**（90）四种图 2×2 排列：circuit graph（电路图）、神经元群图、输入图、共激活图。点一下：其余变淡，circuit graph 亮出承载答案的橙色子图并加橙框。底部问题里 "circuit graph" 和 "knowledge graph" 两个词加了底色："Our question: does the circuit graph somehow encode the knowledge graph?"

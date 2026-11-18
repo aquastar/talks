@@ -414,6 +414,8 @@ def no_motion(sec):
 
 def cap_fragments(sec, n=4):
     """at most n reveal steps per slide: number unindexed fragments in order, then pool the steps"""
+    if 'data-nocap="1"' in sec:  # a slide that needs more steps opts out (slide 3, one click per hop, his note Nov 18)
+        return sec
     k = [0]
     def num(m):
         tag = m.group(0)
