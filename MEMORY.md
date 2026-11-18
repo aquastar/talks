@@ -54,6 +54,8 @@ Read this before doing anything in this repo. When Zhiqian gives a new rule abou
 - One style for a question or a key point (his rule 2026-11-18, fixed, style B): a light orange box (#FDEFE3) with a thick orange bar on the left (7 px, #F76902), one line of dark text, only the key words bold orange (#C45200). In the Nov 19 deck: keybox() and kw() in src/talk.py. Use it for every research question and every key statement.
 - In quotes, the non key words are gray and only the key words are orange bold (his rule 2026-11-18).
 - Colors (his rule 2026-11-18): one palette for the whole deck. Warm neutrals, RIT orange as the only accent (the one thing to look at), RIT slate #4C5B66 as the only second hue, red only for a wrong answer. No per domain colors (no teal for language, no purple for music), label the domain in words instead.
+- Last slide of every talk (his rule 2026-11-18): a QR code to this deck's own URL (made with segno, checked by decoding a screenshot) and the line "or zhiqian.ai, then Talks". He ends the talk on that slide so people can scan.
+- Honest labels: a figure we bring in from elsewhere keeps its own name (for example the Tonnetz). Our reading of it (a knowledge graph) is said aloud, not written as if the paper called it that.
 
 ## Log
 - 2026-11-16: music-to-brain moved in from aquastar/music-to-brain (subtree, full history), deck at music-to-brain/2026-12-01-bibm-dallas/ (day TBD, rename before the link goes out), shared/, eeg-demo/ and stimuli/ at topic level. Old repo to be deleted by a local agent after he confirms.
