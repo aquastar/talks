@@ -1107,12 +1107,12 @@ g += f'<g transform="{TR}">' + VC['cloud'] + VC['mv'] + '</g>'
 g += F(1, f'<g transform="{TR}">' + ed + '</g>' + T(40, 420, 'Draw the graph, and the ripple has a shape you can test.', 18, 600, '#007A94'))
 g += f'<g transform="{TR}">' + top + '</g>'
 # right: the seven graphs, one line each
-SEVEN = [(1, 'Knowledge graph'), (8, 'Five graphs in one network'), (3, 'Note transition graph'), (2, 'Delta graph'),
-         (5, 'Pitch helix, circle of fifths'), (4, 'Style reachability graph'), (6, "Listener's expectation graph")]
+SEVEN = [(8, 'The network as a graph'), (1, 'Knowledge graph'), (5, 'Pitch helix, circle of fifths'), (2, 'Delta graph'),
+         (3, 'Note transition graph'), (4, 'Style reachability graph'), (6, "Listener's expectation graph")]
 rt = T(700, 34, 'Seven graphs today', 16, 600, MUT)
 for k, (ic, name) in enumerate(SEVEN):
     y = 74 + k * 50
-    col = '#C45200' if k in (0, 3) else ('#2f6f8f' if k == 1 else MU)
+    col = '#C45200' if k in (1, 3) else ('#2f6f8f' if k == 0 else MU)
     rt += f'<g transform="translate({730},{y}) scale(.62) translate({-730},{-y})">' + _g7(ic, 730, y, col) + '</g>'
     rt += T(772, y + 6, name, 18, 400, INK)
 g += F(2, rt)
@@ -1396,6 +1396,7 @@ c3 += T(980, 344, 'a key probe, scored by transposing', 12.5, 400, MUT, 'middle'
 g += F(3, c3)
 g += F(4, T(590, 414, 'Each shape is a graph we already know: the semitone chain wound by the octave, and a 12 node cycle.', 17, 700, INK, 'middle')
           + T(590, 446, 'Both are snapshots of single states. Still missing: a graph of how one state follows the next.', 18, 700, ACC, 'middle'))
+HELIX_C2, FIFTHS_C3 = c2, c3
 PROBE = sec('Inside a music generator, music theory has a shape', SVG(g), ch='2',
             ref='Wei, Freeman, Donahue, Sun, ISMIR 2024, Figure 1 and Table 2. Do Music Foundation Models Embed Pitch in Helical Structure?, arXiv 2607.29086, 2026. Kanatas, Kong, Alonso-Jim&eacute;nez, Serra, Bogdanov, What Makes a Good Layer?, ISMIR 2026',
             notes='MusicGen is a GPT over audio tokens, 4 integers per 20 ms, with no music theory built in (details under the down arrow). Three steps, one click each. First, a probe reads music theory (Wei et al., their Figure 1 shows the setup: synthetic clips labeled with tempo, interval, chord and so on, a frozen codec and decoder, and a small probe on one layer). Second, a July 2026 preprint feeds 36 single notes, C3 to B5, to Jukebox and MusicGen large, projects each layer to 3D and fits a helix: both form one, clearer in deeper layers, Jukebox mean helicality 2.28 and MusicGen 1.16 against 0.37 for random points, and the shape depends on the instrument, a Hammond organ winds once per octave, a clean electric guitar twice. Third, Kanatas et al. at ISMIR 2026 study 12 music models including MusicGen small, medium and large: a key probe projected on the circle of fifths stays consistent under transposition, and tonal tasks peak in the deepest layers. Our reading, not theirs: a helix is the semitone chain wound by the octave, the circle of fifths is a 12 node cycle, so these are graphs too, but graphs of where a single state sits. Neither paper reads how one state follows the next, and that transition graph is what our plan builds. Then bridge to steering: and to change the music, people still push a vector. Details of the probe study: Wei et al. built SynTheory, synthetic clips where one concept changes at a time: tempo, time signature, notes, intervals, scales, chords, chord progressions. They froze the generators and trained tiny classifiers on each layer. Concepts are linearly readable. Plain chroma features tie the models on static notes and lose on progressions. Castellon et al. found Jukebox layers beat tag trained representations by about 30 percent, most on key detection. Bridge: a probe tells us what is stored, not how the states move. That is the graph question.')
@@ -1999,6 +2000,94 @@ EEGDEMO = ('<section data-ch="2" class="fulldemo" data-background-color="#FBFAF7
            '  <div style="position:absolute;top:-6px;right:-30px;font:600 13px/1 et-book,Georgia,serif;letter-spacing:.14em;text-transform:uppercase;color:#5F5D50;background:#FBFAF7;padding:6px 10px;border-bottom:2px solid #F76902;pointer-events:none">Live demo, in progress</div>\n'
            '  <aside class="notes">Live demo, full screen, in progress, not a result. It fills the whole screen and every control works, click straight into it. A click inside the demo keeps the keyboard there, and the demo uses the arrow keys itself, so press the Next slide button at the bottom right to move on. Pick a song, press play, and the score, MusicGen\'s surprise for every note and the average EEG of the listeners scroll together. Jump to the next surprising note and look at the EEG right after it. Say the honest part out loud: note by note, this link is not yet distinguishable from an untrained model, so the demo shows the measurement we built, and the next slide is the experiment that can actually test it. If the network fails, describe it in one sentence and move on.</aside>\n</section>')
 
+# ======================= OPENING, Nov 18 (his order: the network as a graph, knowledge in it, music and images in it) =======================
+SERIF_X = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
+TEAL_D = '#007A94'
+# ---- the network itself is a graph ----
+g = adefs('ng')
+g += T(40, 30, 'A language model, block by block: attention (A) and MLP (M) read and write one shared stream', 15, 600, MUT)
+IN_ = (40, 150, 150, 64); OUT_ = (990, 150, 150, 64)
+g += R(*IN_, '#EFEBE5', 'none', 0, 6) + T(115, 188, 'Space Needle is in', 16, 600, INK, 'middle')
+g += R(*OUT_, '#EFEBE5', 'none', 0, 6) + T(1065, 188, 'Seattle', 18, 600, INK, 'middle')
+g += L(190, 182, 990, 182, '#D7D2CB', 3)
+LX = [270, 440, 610, 780, 950]
+NODE = {}
+for k, x in enumerate(LX):
+    NODE[('A', k)] = (x - 30, 112); NODE[('M', k)] = (x + 30, 252)
+    g += T(x, 318, f'layer {k + 1}', 12.5, 400, MUT, 'middle')
+wires = ''
+keys = sorted(NODE, key=lambda q: (q[1], q[0]))
+for i, a in enumerate(keys):
+    for b in keys[i + 1:]:
+        if (b[1] == a[1] + 1) or (b[1] == a[1] and a[0] == 'A'):
+            (x1, y1), (x2, y2) = NODE[a], NODE[b]
+            wires += L(x1, y1, x2, y2, '#ACA39A', 1, 'stroke-opacity=".55"')
+co = ''
+for a, b in ((('M', 0), ('A', 1)), (('A', 1), ('M', 2)), (('M', 1), ('M', 2)), (('M', 2), ('A', 3)), (('A', 3), ('A', 4)), (('M', 1), ('A', 3)), (('M', 3), ('M', 4))):
+    (x1, y1), (x2, y2) = NODE[a], NODE[b]
+    co += P(f'M{x1},{y1} Q{(x1 + x2) / 2},{(y1 + y2) / 2 - 30} {x2},{y2}', TEAL_D, 2.2)
+(mx, my), (ax, ay) = NODE[('M', 1)], NODE[('A', 3)]
+circ = P(f'M190,182 Q{mx - 60},{my} {mx},{my} Q{(mx + ax) / 2},{(my + ay) / 2 - 40} {ax},{ay} Q{ax + 120},{ay} 990,182', ACC, 3.2, extra='marker-end="url(#ngo)"')
+circ += T(mx, my + 34, 'looks up the fact', 13.5, 600, '#C45200', 'middle') + T(ax, ay - 26, 'moves it to the answer', 13.5, 600, '#C45200', 'middle')
+nodes = ''
+for (t_, k), (x, y) in NODE.items():
+    nodes += L(x, y, x, 182, '#D7D2CB', 1) + C(x, y, 16, '#fff', '#5F5D50', 1.6) + T(x, y + 5, t_, 13, 600, AC2, 'middle')
+g += F(1, wires) + F(2, co) + F(3, circ) + nodes
+def cap(x, n_, a, b):
+    return T(x, 362, f'{n_}  {a}', 18, 600, INK) + T(x, 388, b, 15, 400, MUT)
+g += F(1, cap(40, '1', 'Wiring', 'every block writes for every later block'))
+g += F(2, cap(420, '2', 'Firing together', 'an edge where two blocks move together'))
+g += F(3, cap(800, '3', 'Circuit', 'the few blocks that carry this answer'))
+g += F(3, T(590, 452, 'Draw the parts as nodes and how they work together as edges: the network is a graph.', 19, 400, INK, 'middle', extra=SERIF_X))
+NETG = sec('A language model is itself a graph', SVG(g), ch='0',
+           ref='Elhage et al., A Mathematical Framework for Transformer Circuits, 2021. Meng et al., Locating and Editing Factual Associations in GPT, NeurIPS 2022. Ameisen et al., Circuit Tracing, Transformer Circuits 2025',
+           notes='Start from the machine itself, the same one on the cover. A language model is a stack of blocks, attention and MLP, that all read and write one shared stream. Click: wiring, every block can write for every later block. Click: firing together, an edge where two blocks move together on this question, which is the graph our own delta graph uses later. Click: a circuit, the few blocks that carry this answer: an MLP in the middle looks up the fact about the Space Needle, a later attention block moves it to the last word, and out comes Seattle (Meng 2022, attribution graphs 2025). The picture is a schematic. Five ways to draw such graphs, from the October talk, are under the down arrow.')
+
+# ---- knowledge inside the network is a graph, the Space Needle edit ----
+g = adefs('kg2')
+g += img(30, 0, 1120, 160, 'figs/seattle-panorama.jpg', 'preserveAspectRatio="xMidYMid slice"') + T(1140, 152, 'The Space Needle, Seattle', 13, 600, '#fff', 'end', extra='paint-order="stroke" stroke="#1F1E1B" stroke-width="3" stroke-opacity=".35"')
+NK = {'SN': (80, 254, 'Space Needle', 'up'), 'SE': (260, 254, 'Seattle', 'up'), 'WA': (450, 254, 'Washington', 'up'), 'US': (640, 254, 'United States', 'up'),
+      'DO': (640, 330, 'dollar', 'right'), 'ET': (260, 400, 'Eiffel Tower', 'down'), 'PA': (450, 400, 'Paris', 'down'), 'FR': (640, 400, 'France', 'down'), 'EU': (740, 400, 'euro', 'down')}
+def kedge(a, b, lab, col='#4C5B66', sw=1.6, mk='kg2a', dash='', lx=0, ly=-9, anc='middle'):
+    x1, y1 = NK[a][:2]; x2, y2 = NK[b][:2]
+    d = math.hypot(x2 - x1, y2 - y1); ux, uy = (x2 - x1) / d, (y2 - y1) / d
+    o = P(f'M{x1+ux*12:.1f},{y1+uy*12:.1f} L{x2-ux*13:.1f},{y2-uy*13:.1f}', col, sw, extra=f'marker-end="url(#{mk})" ' + (f'stroke-dasharray="{dash}"' if dash else ''))
+    return o + (T((x1 + x2) / 2 + lx, (y1 + y2) / 2 + ly, lab, 12.5, 400, MUT, anc) if lab else '')
+def knode(k, col='#009CBD'):
+    x, y, lab, pos = NK[k]
+    t_ = {'up': T(x, y - 16, lab, 15.5, 600, INK, 'middle'), 'down': T(x, y + 28, lab, 15.5, 600, INK, 'middle'), 'right': T(x + 16, y + 5, lab, 15.5, 600, INK)}[pos]
+    return C(x, y, 8, col) + t_
+graph_ = kedge('SN', 'SE', 'located in') + kedge('SE', 'WA', 'city in') + kedge('WA', 'US', 'state of') + kedge('US', 'DO', 'currency', lx=-10, ly=4, anc='end')
+graph_ += kedge('ET', 'PA', 'located in', col='#ACA39A') + kedge('PA', 'FR', 'city in', col='#ACA39A') + kedge('FR', 'EU', '', col='#ACA39A')
+graph_ += ''.join(knode(k) for k in ('SN', 'SE', 'WA', 'US', 'DO')) + ''.join(knode(k, '#ACA39A') for k in ('ET', 'PA', 'FR', 'EU'))
+g += F(1, graph_ + T(30, 202, 'What the model knows, drawn as a knowledge graph', 15, 600, MUT))
+edit_ = kedge('SN', 'PA', '', col=ACC, sw=3, mk='kg2o') + T(196, 356, 'the edit:', 14.5, 600, '#C45200', 'end') + T(196, 376, 'located in Paris', 14.5, 600, '#C45200', 'end')
+g += F(2, edit_)
+stale = P(f"M{NK['SN'][0]+10},{NK['SN'][1]} L{NK['US'][0]},{NK['US'][1]} L{NK['DO'][0]},{NK['DO'][1]-10}", '#DA291C', 4, extra='stroke-opacity=".35" stroke-linejoin="round"')
+pan = R(790, 182, 360, 268, ACL, 'none', 0, 6) + R(790, 182, 5, 268, ACC, 'none', 0, 2) + T(812, 214, 'Ask one step further', 22, 400, '#C45200', extra=SERIF_X)
+for k, (q, said, should) in enumerate([('Which country is it in?', 'United States', 'France'), ('Which state is it in?', 'Washington', 'none, Paris has no state'), ('Which currency is used there?', 'dollar', 'euro')]):
+    y = 252 + k * 70
+    pan += T(812, y, q, 17, 600, INK) + T(812, y + 23, 'model: ' + said, 16, 700, '#DA291C') + T(812, y + 44, 'should be: ' + should, 14.5, 400, MUT)
+g += F(3, stale + pan)
+g += F(4, T(590, 474, 'Change one edge, and every path through it must change. The model does not.', 19, 400, INK, 'middle', extra=SERIF_X))
+KGT2 = sec('Change one fact, and the next question goes wrong', SVG(g), ch='0',
+           ref='Cohen et al., Evaluating the Ripple Effects of Knowledge Editing in Language Models, TACL 2024. Zhong et al., MQuAKE, EMNLP 2023. The answers illustrate the failure type',
+           notes='Panorama: the Space Needle from Kerry Park, photo by SounderBruce, CC BY-SA 4.0, Wikimedia Commons. Open on the photo, a landmark everyone knows. Click: what the model knows about it, drawn as a knowledge graph. Facts link to facts: the Space Needle is in Seattle, Seattle is in Washington, Washington is in the United States, which uses the dollar. Click: an editor moves the Space Needle to Paris and changes only that one edge. Click: now ask one step further, this is the point of the slide. Which country? The edited model still says United States. Which state? Still Washington. Which currency? Still dollar. It answers the edited question and keeps walking the old path, the red one, for every question one step away. This is the ripple effect, measured by RippleEdits and MQuAKE. Click: change one edge, and every path through it must change.')
+
+# ---- music and images have graphs inside networks too ----
+g = adefs('mm')
+g += T(40, 22, 'Inside MusicGen, a language model for sound (the same transformer as GPT)', 15, 600, MUT)
+g += f'<g transform="translate(-330,8) scale(.86)">' + HELIX_C2 + '</g>'
+g += f'<g transform="translate(-383,8) scale(.86)">' + FIFTHS_C3 + '</g>'
+g += T(40, 372, 'Small probes also read tempo, intervals, chords and scales out of its layers.', 15, 400, INK)
+vis = T(700, 22, 'Inside a vision network', 15, 600, MUT) + img(700, 46, 450, 241, 'figs/olah2020-curve-circuit.png') + L(700, 290, 1150, 290, '#D7D2CB', 1)
+vis += T(700, 318, 'Curve detectors are wired from', 15, 400, INK) + T(700, 340, 'earlier curve and line detectors.', 15, 400, INK)
+g += F(1, vis)
+g += F(2, T(590, 440, 'Facts, music, images: what a network knows has a shape, and the shape is a graph.', 19, 400, INK, 'middle', extra=SERIF_X))
+MULTI = sec('Beyond text: music and images have graphs inside networks too', SVG(g), ch='0',
+            ref='Do Music Foundation Models Embed Pitch in Helical Structure?, arXiv 2607.29086, 2026. Kanatas, Kong et al., What Makes a Good Layer?, ISMIR 2026. Wei, Freeman, Donahue, Sun, ISMIR 2024. Olah et al., Zoom In, Distill 2020',
+            notes='The same move beyond text. MusicGen is a language model for sound: the same next token transformer as GPT, trained on audio tokens instead of words. Inside it, pitch sits on a helix, one turn per octave, so C3, C4 and C5 line up, and keys sit on the circle of fifths, the 12 node cycle every music student learns. Both are graphs we already know. Small probes also read tempo, intervals, chords and scales out of its layers (Wei et al. 2024). Click: images too. Olah and colleagues traced curve detectors in a vision network, wired from earlier curve and line detectors, a circuit. Their figure. Click: facts, music, images, what a network knows has a shape, and the shape is a graph. The full MusicGen probing slide and the vision slide with scene graphs are under the down arrow.')
+
 # ======================= ASSEMBLY =======================
 # ---- loop it1: results slide that pays off the trailer bars (P15, P10) ----
 g = adefs('r20')
@@ -2077,7 +2166,7 @@ def assemble(cover, old):
     kgt_o = retitle(KGT, 'Change one fact, and the next question goes wrong')
     wb = old[1]
     five = old[2]
-    vision = [cover, kgt_o, wb, vector, five, backup(VISION), DEMO2, FORECAST2]
+    vision = [cover, NETG, backup(five), KGT2, MULTI, backup(toch(PROBE, '0')), backup(toch(MGEN, '0')), backup(VISION), FORECAST2]
     rome = old[33]
     a = rome.find('<div class="note"'); e = rome.find('  <div class="ref">')
     rome = rome[:a] + '<div class="note" style="font-size:.62em"><div class="key">The finding</div><p class="one" style="font-size:1.25em">A fact sits in two places. Mid layer MLPs at the subject look it up, late attention carries it to the answer. Editing a fact means changing the first place.</p></div>\n  </div>\n' + rome[e:]
@@ -2101,7 +2190,7 @@ def assemble(cover, old):
     lessons = re.sub(r'(<div class="ref">).*?(</div>)', r'\1Ilharco et al., ICLR 2023. Meng et al., NeurIPS 2022. Lee et al., ICML 2024. Kornblith et al., ICML 2019. Smith et al., ICML 2025. Gröger et al., ICML 2026\2', lessons, count=1, flags=re.S)
     for cite in ('Ilharco 2023, Meng 2022, Arditi 2024', 'Lee 2024, Hu 2025, Hammoud 2024', 'Kornblith 2019, Smith 2025, Gröger 2026'):
         lessons = re.sub(r'<text[^>]*>' + re.escape(cite) + '</text>', '', lessons)
-    lang = [bridge(toch(surg, '1'), 'Take them one at a time, each with its best known result and the catch.'),
+    lang = [toch(wb, '1'), toch(vector, '1'), bridge(toch(surg, '1'), 'Take them one at a time, each with its best known result and the catch.'),
             MERGE, backup(rel(18, '')),
             backup(PRUNE), backup(rel(21, '')), backup(rel(22, 'Shrestha 2026: classification recovers, reasoning does not')),
             VEC2, backup(rel(25, '')),
@@ -2129,23 +2218,25 @@ def assemble(cover, old):
     copy_b = bridge(COPY, 'Before we go inside a generator, one honest line from the literature: in music, graphs win only when the edges carry something the sequence throws away, and often they do not (survey under the down arrow). The one place nobody has looked for such edges is inside the generator itself.')
     corpus_b = bridge(corpus, 'How much memory should the graph have? One note gives the right vocabulary with the wrong syntax, three notes memorize the piece (the picture is under the down arrow on the next slide).')
     beyond5 = bridge(BEYOND5, 'Emotion is one way music acts on the brain. Before we model music, one detour through this year\'s Nobel Prize, because it shows what a designed signal can do to brain circuits. The history of music models is under the down arrow.')
-    mus = [beyond5, backup(hist), toch(OPTO, '2'), toch(MEDIC, '2'), toch(GENRE, '2'), backup(toch(CREATE, '2')), FOLD, corpus_b, backup(RICHER), backup(path), copy_b, backup(WHEN), PROBE, backup(MGEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
+    mus = [beyond5, backup(hist), toch(OPTO, '2'), toch(MEDIC, '2'), toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), copy_b, backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
     beyond = []
     close = [TAKEAWAY.replace('</section>', CLIP_JSON + '</section>')]
     # one bridge per main slide, so each slide leads into the next one (order of Nov 16 2026)
-    FIXB = [('Change one fact, and the next question goes wrong', None, 'Bridge: to see why, one minute inside a language model.'),
+    FIXB = [('A language model is itself a graph', None, 'Bridge: and what the network knows is a graph too.'),
+            ('Change one fact, and the next question goes wrong', None, 'Bridge: and it is not only facts.'),
+            ('Beyond text: music and images', None, 'Bridge: so, two claims for the rest of the talk.'),
+            ('A tiny graph is enough to represent a piece of music', None, 'Bridge: to compare pieces, fold the keys.'),
             ('What is inside a language model?', None, 'Bridge: and every tool we use to change this machine, or to read it, adds or reads a vector.'),
+            ('Today we change and explain models with vectors', 'Bridge: yet the knowledge these models hold has another shape, a graph, in text, in images and in music.', 'Bridge: and after release, a model is changed in many ways.'),
             ('One network, five graphs', None, 'Graphs found inside vision models, with the original figures, are under the down arrow. Bridge: and music has the simplest graph of all.'),
-            ('Today we change and explain models with vectors', 'Bridge: yet the knowledge these models hold has another shape, a graph, in text, in images and in music.', 'Bridge: but the network itself is a graph, and there is more than one way to draw it.'),
-            ('A tiny graph is enough to represent a piece of music', None, 'Bridge: so, two claims for the rest of the talk.'),
-            ('Two claims for the rest of this talk', None, 'Bridge: Part 1, language. First, all the ways we change a model after release.'),
+            ('Two claims for the rest of this talk', None, 'Bridge: Part 1, language. First, one minute inside a language model.'),
             ('Steering: right on average', None, 'Bridge: unlearning tries the opposite, to take something out.'),
             ('What is a delta graph?', None, 'Bridge: does it catch more bad edits? Results next.'),
             ('Results: same checking budget', None, 'Bridge: that is language. Part 2: knowledge that is not text.'),
             ("This year's Nobel", None, 'Bridge: and music already acts on the brain, as medicine.'),
             ('Music already acts on the brain, as medicine', 'Bridge: music and the brain are this closely tied, so let us model music from the beginning, starting with the simplest graph, and end where music meets the brain.', 'Bridge: before we model music, how does anything new come about, in ideas and in music?'),
             ("Occam's razor", '(the picture is under the down arrow on the next slide)', '(the picture is under the down arrow here)'),
-            ('Inside a music generator, music theory has a shape', 'Bridge: a probe tells us what is stored, not how the states move. That is the graph question.', 'Bridge: a probe tells us what is stored, not how the states move. Next, what happens when we push those states with a vector.'),
+            ('The longest memory sounds most like the style', None, 'Bridge: at the start we saw a helix and a circle inside MusicGen. A probe tells us what is stored, not how the states move. Next, what happens when we push those states with a vector.'),
             ('A note transition graph predicts the listening brain', None, "Bridge: can we watch the same thing with MusicGen's own surprise? Live."),
             ('Our plan: a graph from inside MusicGen', None, 'Bridge: so, back to the picture from the start of the talk.')]
     def _fixb(sec_):

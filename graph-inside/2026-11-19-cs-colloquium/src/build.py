@@ -339,6 +339,57 @@ _pc = secs[0]
 _left = cover[cover.index('<div class="th-left">'):cover.index(hero)]
 _pc = re.sub(r'<section[^>]*>', '<section class="title titlehero full" data-ch="0" data-background-color="#FBFAF7">', _pc, count=1)
 _pc = _pc[:_pc.index('<div class="th-left">')] + _left + _pc[_pc.index('<svg'):]
+# right side, Nov 18 (his note): the graph read out of the network shows language and music, with labels, so it reads as a graph at a glance
+def _hero():
+    TEAL, PUR, GR, INK_ = '#009CBD', '#7D55C7', '#C9C4BD', '#1F1E1B'
+    cols = [60, 140, 220, 300]; rows = [100 + i * 66 for i in range(6)]
+    o = '<svg class="herofig" viewBox="0 0 760 600" aria-hidden="true"><defs>'
+    for nm, col in (('ht', TEAL), ('hp', PUR)):
+        o += f'<marker id="{nm}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="{col}"/></marker>'
+    o += '</defs>'
+    for i in range(3):
+        for y1 in rows:
+            for y2 in rows:
+                o += f'<line x1="{cols[i]}" y1="{y1}" x2="{cols[i+1]}" y2="{y2}" stroke="{GR}" stroke-width=".8" stroke-opacity=".55"/>'
+    lang = [(60, 166), (140, 232), (220, 166), (300, 232)]; mus = [(60, 430), (140, 364), (220, 430), (300, 364)]
+    def path(pts, col, begin):
+        d = 'M' + ' L'.join(f'{x},{y}' for x, y in pts); n = sum(((pts[i+1][0]-pts[i][0])**2 + (pts[i+1][1]-pts[i][1])**2) ** .5 for i in range(len(pts) - 1))
+        return (f'<path d="{d}" fill="none" stroke="{col}" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="{n:.0f}" stroke-dashoffset="{n:.0f}">'
+                f'<animate attributeName="stroke-dashoffset" from="{n:.0f}" to="0" begin="{begin}s" dur="1.1s" fill="freeze"/></path>')
+    o += path(lang, TEAL, 0.4) + path(mus, PUR, 0.9)
+    for x in cols:
+        for y in rows:
+            col = TEAL if (x, y) in lang else (PUR if (x, y) in mus else None)
+            o += f'<circle cx="{x}" cy="{y}" r="{8 if col else 6}" fill="{col or "#fff"}" stroke="{col or "#9aa6ae"}" stroke-width="1.6"/>'
+    def fade(inner, begin):
+        return f'<g opacity="0">{inner}<animate attributeName="opacity" from="0" to="1" begin="{begin}s" dur=".7s" fill="freeze"/></g>'
+    # links from the network to the graphs
+    lk = f'<path d="M308,232 C360,232 360,150 420,150" fill="none" stroke="{TEAL}" stroke-width="1.4" stroke-dasharray="4 5"/>'
+    lk += f'<path d="M308,364 C360,364 360,420 420,420" fill="none" stroke="{PUR}" stroke-width="1.4" stroke-dasharray="4 5"/>'
+    # language: a small knowledge graph
+    K = {'Space Needle': (470, 110), 'Seattle': (640, 110), 'Washington': (640, 222), 'USA': (500, 222)}
+    kg = ''
+    for a_, b_ in (('Space Needle', 'Seattle'), ('Seattle', 'Washington'), ('Washington', 'USA')):
+        (x1, y1), (x2, y2) = K[a_], K[b_]; d = ((x2-x1)**2 + (y2-y1)**2) ** .5; ux, uy = (x2-x1)/d, (y2-y1)/d
+        kg += f'<line x1="{x1+ux*11:.0f}" y1="{y1+uy*11:.0f}" x2="{x2-ux*13:.0f}" y2="{y2-uy*13:.0f}" stroke="{TEAL}" stroke-width="2" marker-end="url(#ht)"/>'
+    for nm, (x, y) in K.items():
+        kg += f'<circle cx="{x}" cy="{y}" r="9" fill="{TEAL}"/>' + f'<text x="{x}" y="{y - 18 if y < 150 else y + 32}" text-anchor="middle" font-size="19" fill="{INK_}">{nm}</text>'
+    kg += f'<text x="430" y="62" font-size="14" fill="{TEAL}" letter-spacing=".12em">LANGUAGE</text>'
+    # music: the first notes of Für Elise as a transition graph
+    M = {'E': (470, 400), 'D♯': (590, 360), 'B': (560, 480), 'A': (690, 450)}
+    mg = ''
+    for a_, b_, bend in (('E', 'D♯', -18), ('D♯', 'E', -18), ('E', 'B', 0), ('B', 'A', 0)):
+        (x1, y1), (x2, y2) = M[a_], M[b_]; mx, my = (x1+x2)/2, (y1+y2)/2; d = ((x2-x1)**2 + (y2-y1)**2) ** .5; nx, ny = -(y2-y1)/d, (x2-x1)/d
+        cx, cy = mx + nx * bend, my + ny * bend; d1 = ((cx-x1)**2 + (cy-y1)**2) ** .5; d2 = ((x2-cx)**2 + (y2-cy)**2) ** .5
+        sx, sy = x1 + (cx-x1)/d1*16, y1 + (cy-y1)/d1*16; ex, ey = x2 - (x2-cx)/d2*18, y2 - (y2-cy)/d2*18
+        mg += f'<path d="M{sx:.0f},{sy:.0f} Q{cx:.0f},{cy:.0f} {ex:.0f},{ey:.0f}" fill="none" stroke="{PUR}" stroke-width="2" marker-end="url(#hp)"/>'
+    for nm, (x, y) in M.items():
+        mg += f'<rect x="{x-15}" y="{y-15}" width="30" height="30" rx="7" fill="{PUR}"/>' + f'<text x="{x}" y="{y + 6}" text-anchor="middle" font-size="16" fill="#fff">{nm}</text>'
+    mg += f'<text x="430" y="330" font-size="14" fill="{PUR}" letter-spacing=".12em">MUSIC</text><text x="744" y="520" text-anchor="end" font-size="13" fill="#9aa6ae">Für Elise, the first notes</text>'
+    o += fade(lk, 1.6) + fade(kg, 1.8) + fade(mg, 2.1)
+    o += '<text x="180" y="564" text-anchor="middle" font-size="15" fill="#9aa6ae" letter-spacing=".12em">A NEURAL NETWORK</text><text x="585" y="564" text-anchor="middle" font-size="15" fill="#9aa6ae" letter-spacing=".12em">READ AS A GRAPH</text></svg>'
+    return o
+_pc = _pc[:_pc.index('<svg')] + _hero() + _pc[_pc.index('</svg>', _pc.index('<svg')) + len('</svg>'):]
 _pc = _pc.replace('</section>', '  <aside class="notes">Left, a neural network, the kind everyone has seen. Right, the same network read as a graph: a few parts that matter and the links between them. That is the question of the talk: is there such a graph inside a generative model, and what does it tell us that the usual tools miss? One sentence on the answer: a published answer for language, a tested hypothesis for music.</aside>\n</section>', 1)
 cover = _pc
 import sys; sys.path.insert(0, HERE); import talk as TK
@@ -382,16 +433,17 @@ allsecs = [x.replace('<rect x="924" y="100" width="227" height="30" rx="4" fill=
 allsecs = [re.sub(r'\s*<div class="lessontag">[^<]*</div>', '', x) for x in allsecs]
 
 # graph tags: every slide that shows a graph says which one, so the talk is strung on graphs
-GTAGS = [('Change one fact, and the next question goes wrong', 1, 'knowledge graph'),
-         ('One network, five graphs', 2, 'five graphs in one network'),
-         ('A tiny graph is enough to represent', 3, 'note transition graph, a Markov chain'),
-         ('A missing path in the record', 1, 'knowledge graph, a clinical record'),
+GTAGS = [('A language model is itself a graph', 1, 'the network as a graph'),
+         ('Change one fact, and the next question goes wrong', 2, 'knowledge graph'),
+         ('Beyond text: music and images', 3, 'pitch helix, circle of fifths, circuits'),
+         ('A missing path in the record', 2, 'knowledge graph, a clinical record'),
          ('What is a delta graph?', 4, 'delta graph, how the inside rewired'),
-         ('Fold 88 keys', 3, 'note transition graph'),
-         ('the simplest graph already names the tradition', 3, 'note transition graph'),
-         ('Richer nodes beat longer memory', 3, 'note transition graph, richer nodes'),
-         ('The longest memory sounds most like the style', 3, 'note transition graph, generating'),
-         ('Inside a music generator, music theory has a shape', 5, 'pitch helix and circle of fifths'),
+         ('A tiny graph is enough to represent', 5, 'note transition graph, a Markov chain'),
+         ('Fold 88 keys', 5, 'note transition graph'),
+         ('the simplest graph already names the tradition', 5, 'note transition graph'),
+         ('Richer nodes beat longer memory', 5, 'note transition graph, richer nodes'),
+         ('The longest memory sounds most like the style', 5, 'note transition graph, generating'),
+         ('Inside a music generator, music theory has a shape', 3, 'pitch helix and circle of fifths'),
          ('Steering leaves a style easily', 6, 'style reachability graph, our hypothesis'),
          ('A note transition graph predicts the listening brain', 7, "the listener's expectation graph, IDyOM"),
 ]

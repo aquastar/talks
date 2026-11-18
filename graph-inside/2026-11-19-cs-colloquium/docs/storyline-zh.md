@@ -8,8 +8,8 @@
 
 | 段落 | 页 | 回答 |
 |---|---|---|
-| 开场 | 1 到 7 | 问题是什么：我们用向量改模型，向量只说加了什么，不说影响到了哪里 |
-| Part 1 语言 | 8 到 16 | 有，已发表：读出来的图能抓住考试发现不了的坏编辑 |
+| 开场 | 1 到 5 | 网络是图，网络里的知识是图，音乐和图像也是图 |
+| Part 1 语言 | 6 到 16 | 有，已发表：读出来的图能抓住考试发现不了的坏编辑 |
 | Part 2 音乐 | 17 到 28 | 在验证：一张很小的图就能装下风格，听众的大脑可以当裁判 |
 | 结尾 | 29 | 开场那张点云回来，画上图的边。"你的模型里有没有图？" |
 
@@ -19,9 +19,9 @@
 
 全场只需要背下面 8 句过渡话，这就是整场的骨架：
 
-1. （第 2 页后）"To see why, one minute inside a language model."
-2. （第 4 页后）"But the network itself is a graph, and there is more than one way to draw it."
-3. （第 7 页后）"Part 1, language. First, all the ways we change a model after release."
+1. （第 2 页后）"And what the network knows is a graph too."
+2. （第 3 页后）"And it is not only facts."
+3. （第 5 页后）"Part 1, language. First, one minute inside a language model."
 4. （第 13 页后）"So the exam reads answers only. Our work asks one thing: read the change as a graph."
 5. （第 16 页后）"That is language. Part 2: knowledge that is not text."
 6. （第 20 页后）"Is there a graph inside the generator that tells us which edges it can draw? Start with the simplest graph of music."
@@ -37,30 +37,30 @@
 
 括号里是建议时长（秒）。"说"后面是这页要说出口的一句话，可以直接用。
 
-### 开场（1 到 7 页，约 11 分钟）
+### 开场（1 到 5 页，约 8 分钟）三步：网络是图，网络里的知识是图，音乐和图像也是图
 
-**1. 封面**（45）左边一张普通的神经网络，右边把它读成一张图，题目 Is There a Graph Inside Generative Models?
-说："Left, a network everyone has seen. Right, the same network read as a graph. Is there such a graph inside a generative model?"
+**1. 封面**（45）左边一张神经网络，里面亮起一条蓝色（语言）和一条紫色（音乐）的路径。右边读成两张带标签的小图：Space Needle 到 Seattle 到 Washington 到 USA，以及 Für Elise 开头的 E、D♯、B、A。
+说："Left, a network. Right, what it knows, read as graphs, in language and in music. Is there such a graph inside a generative model?"
 
-**2. Change one fact, and the next question goes wrong**（120，graph 1）先是 Space Needle 的照片，然后是它的知识图（Seattle，Washington，United States，dollar）。编辑把它改到 Paris，再问一步：哪个国家？模型还说 United States。
-说："Change one edge, and every path through it must change. The edited model does not."
+**2. A language model is itself a graph**（120，graph 1）注意力块和 MLP 块是节点。点一下：连线（每块写给后面所有块）。再点：一起激活的边。再点：电路，一个 MLP 查到事实，一个注意力块把它搬到答案 Seattle。"五种图"在向下键里。
+说："Draw the parts as nodes and how they work together as edges: the network is a graph."
 
-**3. What is inside a language model? One shared whiteboard**（120）3D 白板：每个词是一行数字，注意力在词之间搬信息，MLP 像一张查找表，最后一行读出 Seattle。来自 10 月那次。
-说："A fact like this lives in fixed numbers, the weights, and every word reads and writes one shared whiteboard."
+**3. Change one fact, and the next question goes wrong**（120，graph 2）西雅图全景。点一下：知识图。再点：编辑把 Space Needle 改到 Paris。再点：右边橙色框"再问一步"，三个问题模型都还答旧的，红线是它还在走的旧路径。这是这页的重点。
+说："Change one edge, and every path through it must change. The model does not."
 
-**4. Today we change and explain models with vectors**（120）上面一排四种手术画成它们加进去的矩阵：steer 是一个向量，edit 是秩 1，LoRA 是 B 乘 A，fine tune 是整块。下面点云里一支箭头把 Space Needle 推到 Paris，旁边的点悄悄动了。
-说："The arrow says what we added. Nothing says what else moved, or should have."
+**4. Beyond text: music and images have graphs inside networks too**（105，graph 3）MusicGen 是声音的语言模型，和 GPT 同一种 transformer。它里面音高是螺旋，调性在五度圈上，探针还能读出节奏、和弦。点一下：Olah 在视觉网络里找到的曲线检测器电路。
+说："Facts, music, images: what a network knows has a shape, and the shape is a graph."
 
-**5. One network, five graphs**（120，graph 2）同一个网络，五种画法：权重图、关系图、输入图、共激活图、电路。来自 10 月那次。向下键是视觉模型里的电路和场景图原图。
-说："Five graphs, one network. Which one you draw depends on what change you want to understand."
-
-**6. A tiny graph is enough to represent a piece of music**（90，graph 3）Für Elise 动画，小球沿着音符图走，点一下有声音。
-说："Nine notes, a few arrows, and this little graph already names the tradition a melody comes from, 70 percent of the time."
-
-**7. Two claims for the rest of this talk**（45）主线一句，两个主张：语言（已发表），音乐（进行中）。
+**5. Two claims for the rest of this talk**（45）
 说："Vectors say what we changed. Only a graph can say where it went. Two claims, one per part."
 
 ### Part 1 语言（8 到 16 页，约 16 分钟）
+
+**6. What is inside a language model? One shared whiteboard**（90）从开场移过来，技术细节放在 Part 1 开头。
+说："A fact like this lives in fixed numbers, the weights, and every word reads and writes one shared whiteboard."
+
+**7. Today we change and explain models with vectors**（105）四种手术画成加进去的矩阵，点云里一支箭头带动周围的点。
+说："The arrow says what we added. Nothing says what else moved, or should have."
 
 **8. Seven kinds of surgery**（60）发布后的模型会被编辑、拼接、合并、剪枝、steering、去学习、微调。
 说："Take them one at a time, each with its best known result and the catch."
@@ -103,17 +103,17 @@
 **20. A new idea is a new edge, and so is a new style of music**（120）四本讲创造力的书和 Uzzi 2013：新想法就是旧想法之间的一条新边。下面是音乐流派家族树和我们 2017 年的 FusionGAN。
 说："A new idea is a new edge. In 2017 we asked whether a model can draw one."
 
-**21. Fold 88 keys into 12 scale degrees**（105，graph 3）手画的 Für Elise 开头九个音，折成 12 个音级，变成 12 乘 12 的表。两个播放键：原曲和从表里生成的曲子。
+**21. A tiny graph is enough to represent a piece of music**（90）Für Elise 动画，小球沿着音符图走，点一下有声音。从开场移到这里。
+说："Nine notes, a few arrows. The whole model is the graph."
+
+**22. Fold 88 keys into 12 scale degrees**（105，graph 3）手画的 Für Elise 开头九个音，折成 12 个音级，变成 12 乘 12 的表。两个播放键：原曲和从表里生成的曲子。
 说："The right notes with the wrong sentences. That is a graph with one note of memory."
 
-**22. Occam's razor: the simplest graph already names the tradition**（105，进行中）六个曲库，一阶图分类准确率 70.2%，随机是 17%。
+**23. Occam's razor: the simplest graph already names the tradition**（105，进行中）六个曲库，一阶图分类准确率 70.2%，随机是 17%。
 说："144 numbers name the corpus."
 
-**23. The longest memory sounds most like the style, because it copies**（150，进行中）现场投票：A 和 B 哪个是真巴赫？
+**24. The longest memory sounds most like the style, because it copies**（150，进行中）现场投票：A 和 B 哪个是真巴赫？
 说："The useful graph remembers a little and copies nothing long."
-
-**24. Inside a music generator, music theory has a shape**（105，graph 5）探针能在 MusicGen 里读出乐理，音高在螺旋上，调性在五度圈上。
-说："A probe tells us what is stored, not how the states move."
 
 **25. Steering leaves a style easily but rarely enters one**（105，graph 6，合作工作投稿中）去掉一个风格很容易，加进去却很难。
 说："A vector cannot explain that. Reachability on a graph could."
