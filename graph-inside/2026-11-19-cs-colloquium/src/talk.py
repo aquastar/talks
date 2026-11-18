@@ -2133,7 +2133,7 @@ gl += T(40, 430, 'knowledge graph, from music theory', 13.5, 600, '#C45200')
 g += F(1, gl)
 # right: what MusicGen learned, the helix in its vector space, every note named
 HXc = 760
-hx = T(HXc, 140, 'What the model learned: a helix', 17, 700, INK, 'middle', extra='data-keep="1"') + T(HXc, 160, "in the model's vector space: each dot is the activation for one note", 13.5, 400, MUT, 'middle')
+hx = T(HXc, 140, 'What the model learned: a helix', 17, 700, INK, 'middle', extra='data-keep="1"') + T(HXc, 160, "in the model's vector space, one dot per note", 13.5, 400, MUT, 'middle')
 hx += f'<g id="hx3d"><path id="hx3d-line" d="" fill="none" stroke="{PURP_}" stroke-width="2" stroke-opacity=".5"/>'
 WHITE = {0: 'C', 2: 'D', 4: 'E', 5: 'F', 7: 'G', 9: 'A', 11: 'B'}
 hx += ''.join(f'<circle id="hx3d-{n}" r="{6.5 if n % 12 == 0 else (4.5 if n % 12 in WHITE else 2.6)}" fill="{ACC if n % 12 == 0 else PURP_}"/>' for n in range(25))
@@ -2141,6 +2141,14 @@ hx += f'<line id="hx3d-axis" stroke="{ACC}" stroke-width="2.6" stroke-dasharray=
 hx += ''.join(f'<text id="hx3d-l{n}" font-size="{13 if n % 12 == 0 else 11.5}" font-weight="700" fill="{"#C45200" if n % 12 == 0 else "#4C5B66"}">{WHITE[n % 12]}{3 + n // 12}</text>' for n in range(25) if n % 12 in WHITE) + '</g>'
 hx += T(HXc, 430, 'learned graph: C3, C4, C5 line up, like the orange edges', 13.5, 600, '#C45200', 'middle')
 g += F(2, hx)
+# books: a whole field studies the math of music (his note 2026-11-18)
+bk = T(966, 140, 'A whole field:', 15, 700, INK) + T(966, 160, 'the math of music', 13.5, 400, MUT)
+BOOKS = [('book-lewin1987.jpg', 105 / 160, 'Lewin, 1987', 'P, R, L as math'), ('book-tymoczko2011.jpg', 63 / 90, 'Tymoczko, 2011', 'chords as points'),
+         ('book-sulzer2021.jpg', 106 / 160, 'Sulzer, 2021', 'physics and brain')]
+for k, (fn, ar, who, what) in enumerate(BOOKS):
+    by = 178 + k * 84
+    bk += img(966, by, round(70 * ar), 70, f'figs/{fn}') + T(1022, by + 30, who, 13, 700, INK) + T(1022, by + 48, what, 12, 400, MUT)
+g += F(4, bk)
 HELIX_JS = """<script>(function(){var cx=760,y0=374,R=150,H=7.3,TL=24,t0=null;
 function frame(ts){if(t0===null)t0=ts;var g=document.getElementById('hx3d');if(!g){return;}var fr=g.closest('.fragment');if(fr&&!fr.classList.contains('visible')){t0=ts;}var t=(ts-t0)/1000,ang=0-0.5*Math.max(0,6.5-t),lit=Math.min(24,Math.floor(t*4));
 var d='',pts=[];for(var q=0;q<=96;q++){var u=q/4,a=2*Math.PI*u/12+ang;var x=cx+R*Math.sin(a),y=y0-u*H+TL*Math.cos(a);d+=(q?' L':'M')+x.toFixed(1)+','+y.toFixed(1);}
@@ -2153,7 +2161,7 @@ requestAnimationFrame(frame);}
 requestAnimationFrame(frame);})();</script>"""
 MUSA = sec('A music generator is a language model, with a pitch graph inside', SVG(g, 440), ch='0',
            ref='Copet et al., Simple and Controllable Music Generation (MusicGen), NeurIPS 2023. Défossez et al., EnCodec, 2022. Yagi, Takamichi, Sato, Tanaka, Morishima, Do Music Foundation Models Embed Pitch in Helical Structure?, arXiv 2607.29086, 2026',
-           notes='For a CS audience, the one idea: a music generator like MusicGen is a language model. EnCodec, a neural audio codec, turns every 20 milliseconds of sound into 4 integers from a vocabulary of 2048, so a song becomes a sequence of tokens, like words. A transformer, the same kind as GPT, predicts the next token, and the codec turns tokens back into sound. Click: music theory has a graph for pitch. The notes C D E F G A B in a row, and every note linked to the same note one octave up, the orange edges for C. That is a small knowledge graph. Click: what the model learned. Yagi and colleagues feed single notes into music models and look at the internal states, the activation vectors, projected to three dimensions: they form a helix, one turn per octave, so C3, C4 and C5 line up. That is the orange edge of the pitch graph, found inside the model, which was never told about octaves. The learned graph and the knowledge graph agree.')
+           notes='For a CS audience, the one idea: a music generator like MusicGen is a language model. EnCodec, a neural audio codec, turns every 20 milliseconds of sound into 4 integers from a vocabulary of 2048, so a song becomes a sequence of tokens, like words. A transformer, the same kind as GPT, predicts the next token, and the codec turns tokens back into sound. Click: music theory has a graph for pitch. The notes C D E F G A B in a row, and every note linked to the same note one octave up, the orange edges for C. That is a small knowledge graph. Click: what the model learned. Yagi and colleagues feed single notes into music models and look at the internal states, the activation vectors, projected to three dimensions: they form a helix, one turn per octave, so C3, C4 and C5 line up. That is the orange edge of the pitch graph, found inside the model, which was never told about octaves. The learned graph and the knowledge graph agree. Click: and this is not a new idea, there is a whole field on the mathematics of music. David Lewin, Generalized Musical Intervals and Transformations, 1987. Dmitri Tymoczko, A Geometry of Music, 2011, chords as points in a space. David Sulzer, Music, Math, and Mind, 2021, the physics and neuroscience of music. Cover images from Open Library.')
 MUSA = MUSA.replace('</section>', HELIX_JS + '\n</section>', 1)
 
 # ---- B: Wei et al. 2024 ----
@@ -2161,10 +2169,10 @@ g = adefs('mb')
 cg = T(40, 30, 'Music theory: chords are a graph', 17, 700, INK) + T(40, 50, 'the Tonnetz (Euler 1739): notes are nodes, a chord is a triangle', 13.5, 400, MUT)
 # the Tonnetz as a lattice: across = fifth, up right = major third. JS animates P, R, L flips.
 PCN = ['C', 'D♭', 'D', 'E♭', 'E', 'F', 'F♯', 'G', 'A♭', 'A', 'B♭', 'B']
-TW, TH = 76, 66
+TW, TH = 92, 78
 def tz(i, j):
-    return (200 + i * TW + j * TW / 2, 200 - j * TH)
-NODES = {(i, j): tz(i, j) for j in range(-1, 2) for i in range(-6, 6) if 52 <= tz(i, j)[0] <= 428}
+    return (206 + i * TW + j * TW / 2, 252 - j * TH)
+NODES = {(i, j): tz(i, j) for j in range(-1, 3) for i in range(-6, 6) if 50 <= tz(i, j)[0] <= 420}
 def pc(i, j):
     return (7 * i + 4 * j) % 12
 def tkey(i, j, kind):
@@ -2183,20 +2191,14 @@ for (i, j) in list(NODES):
         k = tkey(i, j, kind); TRIS[k] = (pts, vs)
         tri_svg += f'<path d="M{pts[0][0]},{pts[0][1]} L{pts[1][0]},{pts[1][1]} L{pts[2][0]},{pts[2][1]} Z" fill="#F4F1EC" stroke="#D7D2CB" stroke-width="1.1"/>'
         cx_ = sum(q[0] for q in pts) / 3; cy_ = sum(q[1] for q in pts) / 3
-        tri_txt += T(cx_, cy_ + (8 if kind == 'u' else 2), nm, 11.5, 400, '#9A9389', 'middle', extra=f'id="tzl-{k}"')
+        tri_txt += T(cx_, cy_ + (9 if kind == 'u' else 2), nm, 12.5, 400, '#9A9389', 'middle', extra=f'id="tzl-{k}"')
 USED = {v for _, vs in TRIS.values() for v in vs}
 NODES = {k: v for k, v in NODES.items() if k in USED}
 cg += tri_svg + '<path id="tz-hl" d="" fill="#FBD3B4" fill-opacity=".9" stroke="#F76902" stroke-width="2.6"/>' + tri_txt
 for (i, j), (x, y) in NODES.items():
     cg += R(x - 13, y - 12, 26, 24, '#fff', '#8F887E', 1.1, 6, extra=f'id="tzn-{nkey(i, j)}"') + T(x, y + 5, PCN[pc(i, j)], 12, 700, '#5F5D50', 'middle', extra=f'id="tzt-{nkey(i, j)}"')
-cg += T(40, 302, '', 14, 700, '#C45200', extra='id="tz-mv"') + T(62, 302, '', 13.5, 400, INK, extra='id="tz-cap"')
-cg += T(40, 322, 'across: a fifth (C to G)', 12, 400, MUT) + T(210, 322, 'up right: a major third (C to E)', 12, 400, MUT)
-cg += T(40, 350, 'A whole field studies the math of music:', 12.5, 600, '#C45200')
-BOOKS = [('book-lewin1987.jpg', 105 / 160, 'Lewin, 1987', 'P, R, L as math'), ('book-tymoczko2011.jpg', 63 / 90, 'Tymoczko, 2011', 'chords as points'),
-         ('book-sulzer2021.jpg', 106 / 160, 'Sulzer, 2021', 'physics and brain')]
-for k, (fn, ar, who, what) in enumerate(BOOKS):
-    bx = 40 + k * 146
-    cg += img(bx, 362, round(60 * ar), 60, f'figs/{fn}') + T(bx + 48, 386, who, 12, 700, INK) + T(bx + 48, 403, what, 11.5, 400, MUT)
+cg += T(40, 368, '', 15, 700, '#C45200', extra='id="tz-mv"') + T(62, 368, '', 13.5, 400, INK, extra='id="tz-cap"')
+cg += T(40, 390, 'across: a fifth (C to G)', 12.5, 400, MUT) + T(215, 390, 'up right: a major third (C to E)', 12, 400, MUT)
 STEPS7 = [('u0_0', '', 'C major: the notes C, E, G', None), ('d0_m1', 'P', 'C major to C minor: E slides down to E♭', '1_m1'),
           ('u0_0', '', 'back to C major', '0_1'), ('dm1_0', 'R', 'C major to A minor: G slides up to A', 'm1_1'),
           ('u0_0', '', 'back to C major', '1_0'), ('d0_0', 'L', 'C major to E minor: C slides down to B', '1_1'),
@@ -2224,9 +2226,9 @@ for k, (nm, v, col) in enumerate(WB):
 pr += T(670, 376, 'how often the tiny classifier is right (axis from 0.6)', 12.5, 400, MUT)
 pr += f'<path d="M1114,204 v86" stroke="#F76902" stroke-width="2.5" fill="none"/>' + T(1124, 240, 'music', 13, 600, '#C45200') + T(1124, 256, 'models', 13, 600, '#C45200')
 g += F(1, pr)
-MUSB = sec('Do music generation models encode music theory?', SVG(g, 426), ch='0',
+MUSB = sec('Do music generation models encode music theory?', SVG(g, 410), ch='0',
            ref='Wei, Freeman, Donahue, Sun, ISMIR 2024, Fig. 1, Table 2 | Cohn 2012 (Tonnetz)',
-           notes='The title is the question of Wei and colleagues, ISMIR 2024. Left, music theory as a graph, the Tonnetz, which goes back to Euler in 1739. The animation runs by itself. Notes are nodes. Across is a fifth, C to G. Up right is a major third, C to E. Then every small triangle is a chord: C, E, G is C major. Neighboring triangles share two notes, so you move from one chord to the next by changing a single note. C major has exactly three such neighbors: C minor, A minor, E minor. Music theorists call these three moves P, R and L, after Hugo Riemann, the music theorist, not the mathematician. Composers from Schubert to film scores move along this lattice. Below, three books from a whole field on the mathematics of music: David Lewin, Generalized Musical Intervals and Transformations, 1987, where P, R and L become mathematics. Dmitri Tymoczko, A Geometry of Music, 2011, chords as points in a space. David Sulzer, Music, Math, and Mind, 2021, the physics and neuroscience of music. Cover images from Open Library. I read it as a knowledge graph of music: concepts and their relations. Wei and colleagues do not test the edges of this lattice, they test whether the concepts can be read out. Click: can the model read this out? They freeze the model and train a tiny classifier on one layer to name the chord, the interval, the key and so on, their Figure 1 is the setup. The bars: how often the tiny classifier is right. Inside the music models, Jukebox and both MusicGen sizes, it is right about 93 to 98 percent of the time. On hand made chroma features, the classic music features, 88. On the raw audio tokens, the input itself, 70. So the knowledge is not in the input, the model built it, from sound alone. Keybox: the concepts of music theory are there, readable from one layer.')
+           notes='The title is the question of Wei and colleagues, ISMIR 2024. Left, music theory as a graph, the Tonnetz, which goes back to Euler in 1739. The animation runs by itself. Notes are nodes. Across is a fifth, C to G. Up right is a major third, C to E. Then every small triangle is a chord: C, E, G is C major. Neighboring triangles share two notes, so you move from one chord to the next by changing a single note. C major has exactly three such neighbors: C minor, A minor, E minor. Music theorists call these three moves P, R and L, after Hugo Riemann, the music theorist, not the mathematician. Composers from Schubert to film scores move along this lattice. I read it as a knowledge graph of music: concepts and their relations. Wei and colleagues do not test the edges of this lattice, they test whether the concepts can be read out. Click: can the model read this out? They freeze the model and train a tiny classifier on one layer to name the chord, the interval, the key and so on, their Figure 1 is the setup. The bars: how often the tiny classifier is right. Inside the music models, Jukebox and both MusicGen sizes, it is right about 93 to 98 percent of the time. On hand made chroma features, the classic music features, 88. On the raw audio tokens, the input itself, 70. So the knowledge is not in the input, the model built it, from sound alone. Keybox: the concepts of music theory are there, readable from one layer.')
 MUSB = MUSB.replace('</section>', TZ_JS + '\n</section>', 1)
 
 # ---- two levels by two domains: the map of the talk (Nov 18, his note: fewer words, no status labels, no vector line yet) ----
