@@ -566,6 +566,12 @@ def _recolor(h):
     h = re.sub(r'#[0-9a-fA-F]{6}\b', f, h)
     return h.replace('rgba(125,85,199', 'rgba(76,91,102').replace('rgb(125,85,199)', 'rgb(76,91,102)')
 html = _recolor(html)
+# the optogenetics explainer video, linked from the reference line of the light and music slide (his request Nov 18)
+_vid = '<span class="rsep" aria-hidden="true"></span><a href="https://www.youtube.com/watch?v=azp-if02m8U" target="_blank" rel="noopener" title="BrainFacts.org, Lighting Up The Brain With Optogenetics, 2 minute video">Optogenetics video, BrainFacts.org</a>'
+_i = html.find('Iaccarino et al. 2016</a>')
+assert _i > 0, 'optogenetics reference not found'
+_j = html.find('</div>', _i)
+html = html[:_j] + _vid + html[_j:]
 open(NEW + '/index.html', 'w').write(html)
 os.makedirs(NEW + '/figs', exist_ok=True)
 for f in set(re.findall(r'figs/[A-Za-z0-9_]+\.png', html)):

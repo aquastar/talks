@@ -1,4 +1,4 @@
-# 故事线：每页讲什么，怎么讲（11 月 19 日 CS Department Colloquium，主线 29 页）
+# 故事线：每页讲什么，怎么讲（11 月 19 日 CS Department Colloquium，主线 28 页）
 
 网址：https://aquastar.github.io/talks/graph-inside/2026-11-19-cs-colloquium/
 
@@ -10,8 +10,8 @@
 |---|---|---|
 | 开场 | 1 到 5 | 两层图：模型图和知识图，在语言、音乐、图像里都有 |
 | Part 1 语言 | 6 到 15 | 有，已发表：读出来的图能抓住考试发现不了的坏编辑 |
-| Part 2 音乐 | 16 到 28 | 在验证：一张很小的图就能装下风格，听众的大脑可以当裁判 |
-| 结尾 | 29 | 开场那张点云回来，画上图的边。"你的模型里有没有图？" |
+| Part 2 音乐 | 16 到 27 | 在验证：一张很小的图就能装下风格，听众的大脑可以当裁判 |
+| 结尾 | 28 | 开场那张点云回来，画上图的边。"你的模型里有没有图？" |
 
 ## 二、最容易讲的方法：记住 8 句话，其余靠画面
 
@@ -24,9 +24,9 @@
 3. （第 5 页后）"Part 1, language, the top row. First, one minute inside a language model."
 4. （第 12 页后）"What we need is to compare the inside before and after a change."
 5. （第 15 页后）"That is language. Part 2: knowledge that is not text."
-6. （第 20 页后）"Is there a graph inside the generator that tells us which edges it can draw? Start with the simplest graph of music."
-7. （第 25 页后）"To test any graph we draw inside, we need a judge outside the model. In music that judge exists: a listener's brain."
-8. （第 28 页后）"So, back to the picture from the start of the talk."
+6. （第 19 页后）"Is there a graph inside the generator that tells us which edges it can draw? Start with the simplest graph of music."
+7. （第 24 页后）"To test any graph we draw inside, we need a judge outside the model. In music that judge exists: a listener's brain."
+8. （第 27 页后）"So, back to the picture from the start of the talk."
 
 另外三个小习惯：
 * **路标**：带 "graph N of 7" 标签的页，开口先说 "graph number N"。观众会觉得整场是一张一张的图串起来的。
@@ -87,49 +87,47 @@
 **15. A missing path in the record means a worse answer, for every model**（150，第二层知识图，CIKM 2026）
 说："A graph tells which questions cannot be answered faithfully, before any model tries. That is language."
 
-### Part 2 音乐（16 到 28 页，约 22 分钟）
+### Part 2 音乐（16 到 27 页，约 22 分钟）
 
 **16. Part 2. Knowledge is not only text**（120）五个人，五个角度，一个结论：智能不只在语言里。梅洛-庞蒂 1945（管风琴手一小时适应一台新琴，靠手不靠句子），Gardner 1983，Picard 1997，Minsky 2006，李飞飞 2025。点一下：Meyer 1956，音乐的情感来自被延迟或打破的期待。
 说："Five people, five angles, one point: intelligence is more than words. And in music, emotion lives in expectation."
 
-**17. This year's Nobel: a switch for neurons, made of light**（120）左边三步：病毒把藻类的一个基因送进选定的神经元，神经元在膜上造出光控通道（蓝点），蓝光一照通道打开，离子涌入，神经元放电。光本身没用，是基因让细胞"听得见"光，所以精准，但要开刀。右边：不开刀，每秒 40 次的声音从耳朵进去，脑电节律跟着节拍走。向下键有一段 BrainFacts.org 的科普视频。
-说："The light alone does nothing, the gene makes the cell listen to light. Through the ear, no gene and no surgery, the brain rhythm follows the beat. A click is the simplest sound, music is the richest one we can design."
+**17. Two signals that change the brain: light, and music**（75）类比，约一分钟，别在光遗传学上停留。左边（小）：光，今年诺奖的光遗传学，加一个基因让神经元能感光，一闪就放电，但要开刀。点一下，右边（大）：声音，音乐不用开刀，从耳朵进去也确实改变大脑。三个有测量的例子：脑电节律跟着节拍走（Nozaradan 2011），快感高峰时释放多巴胺（Salimpoor 2011），40 Hz 声音改变了小鼠大脑（Tsai 实验室）。大脑图是 Gray 解剖学第 728 图，公有领域，颞叶（听觉皮层）标橙并跟着节拍闪。光遗传学科普视频的链接在本页参考行最后。
+说："Light switches neurons, but it needs a gene and surgery. Music already changes the brain, through the ear. Which part of the music does it is the open question."
 
-**18. Optogenetics in two minutes**（60 到 120，可选）BrainFacts.org 的科普视频，点画面中间的播放键。要联网，要从网址打开（本地双击打开的文件会报 Error 153）。时间紧就只放第一分钟，或者跳过。
-
-**19. Music already acts on the brain, as medicine**（90）动画：帕金森病人跟着节拍器走路。右边四种用途各一行。
+**18. Music already acts on the brain, as medicine**（90）动画：帕金森病人跟着节拍器走路。右边四种用途各一行。
 说："Nobody knows which part of the music does the work. That is a modeling question."
 
-**20. A new idea is a new edge, and so is a new style of music**（120）四本讲创造力的书和 Uzzi 2013：新想法就是旧想法之间的一条新边。下面是音乐流派家族树和我们 2017 年的 FusionGAN。
+**19. A new idea is a new edge, and so is a new style of music**（120）四本讲创造力的书和 Uzzi 2013：新想法就是旧想法之间的一条新边。下面是音乐流派家族树和我们 2017 年的 FusionGAN。
 说："A new idea is a new edge. In 2017 we asked whether a model can draw one."
 
-**21. A tiny graph is enough to represent a piece of music**（90）Für Elise 动画，小球沿着音符图走，点一下有声音。从开场移到这里。
+**20. A tiny graph is enough to represent a piece of music**（90）Für Elise 动画，小球沿着音符图走，点一下有声音。从开场移到这里。
 说："Nine notes, a few arrows. The whole model is the graph."
 
-**22. Fold 88 keys into 12 scale degrees**（105，graph 3）手画的 Für Elise 开头九个音，折成 12 个音级，变成 12 乘 12 的表。两个播放键：原曲和从表里生成的曲子。
+**21. Fold 88 keys into 12 scale degrees**（105，graph 3）手画的 Für Elise 开头九个音，折成 12 个音级，变成 12 乘 12 的表。两个播放键：原曲和从表里生成的曲子。
 说："The right notes with the wrong sentences. That is a graph with one note of memory."
 
-**23. Occam's razor: the simplest graph already names the tradition**（105，进行中）六个曲库，一阶图分类准确率 70.2%，随机是 17%。
+**22. Occam's razor: the simplest graph already names the tradition**（105，进行中）六个曲库，一阶图分类准确率 70.2%，随机是 17%。
 说："144 numbers name the corpus."
 
-**24. The longest memory sounds most like the style, because it copies**（150，进行中）现场投票：A 和 B 哪个是真巴赫？
+**23. The longest memory sounds most like the style, because it copies**（150，进行中）现场投票：A 和 B 哪个是真巴赫？
 说："The useful graph remembers a little and copies nothing long."
 
-**25. Steering leaves a style easily but rarely enters one**（105，graph 6，合作工作投稿中）去掉一个风格很容易，加进去却很难。
+**24. Steering leaves a style easily but rarely enters one**（105，graph 6，合作工作投稿中）去掉一个风格很容易，加进去却很难。
 说："A vector cannot explain that. Reachability on a graph could."
 
-**26. A note transition graph predicts the listening brain**（105，graph 7）Di Liberto 2020 原图：IDyOM 给每个音一个意外值，听众的脑电在 350 毫秒内跟着它走。
+**25. A note transition graph predicts the listening brain**（105，graph 7）Di Liberto 2020 原图：IDyOM 给每个音一个意外值，听众的脑电在 350 毫秒内跟着它走。
 说："The listening brain tracks a graph of note transitions. So the brain can judge a graph."
 
-**27. Live: what MusicGen expects, next to what listeners' brains do**（135，进行中）现场 demo，全屏，可以直接点：选一首歌播放，乐谱、MusicGen 的意外值、脑电一起滚动。点过 demo 后方向键留在 demo 里，用右下角的 Next slide 按钮翻页。
+**26. Live: what MusicGen expects, next to what listeners' brains do**（135，进行中）现场 demo，全屏，可以直接点：选一首歌播放，乐谱、MusicGen 的意外值、脑电一起滚动。点过 demo 后方向键留在 demo 里，用右下角的 Next slide 按钮翻页。
 说："This is the measurement we built. Note by note, it does not yet beat an untrained model, and the next slide is how we test it properly."
 
-**28. Our plan: a graph from inside MusicGen, judged by the brain**（75，计划）从 MusicGen 内部读出图，和 IDyOM、MusicGen 输出一起比谁更能解释大脑。
+**27. Our plan: a graph from inside MusicGen, judged by the brain**（75，计划）从 MusicGen 内部读出图，和 IDyOM、MusicGen 输出一起比谁更能解释大脑。
 说："If the graph inside the generator explains the listener, the graph is real."
 
-### 结尾（29 页，约 1.5 分钟）
+### 结尾（28 页，约 1.5 分钟）
 
-**29. A vector says what we added. A graph shows where it went.**（90）第 4 页的点云回来，同一支箭头。点一下画出图的边。再点：今天的七张图。最后："Is there a graph inside your model?"
+**28. A vector says what we added. A graph shows where it went.**（90）第 4 页的点云回来，同一支箭头。点一下画出图的边。再点：今天的七张图。最后："Is there a graph inside your model?"
 说："Language, published. Music, being tested. If you edit, merge or steer models, or run an EEG or hearing lab, I would love to talk." 不说 thank you。
 
 ## 四、这次相对上一版改了什么

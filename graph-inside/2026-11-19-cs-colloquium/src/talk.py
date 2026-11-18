@@ -1616,7 +1616,7 @@ PURP = '#5a4fcf'
 
 def steps(active):
     out = ''
-    for k, lab in enumerate(['Beyond text: body, space, emotion', 'A switch for neurons', 'Music as medicine']):
+    for k, lab in enumerate(['Beyond text: body, space, emotion', 'Signals that change the brain', 'Music as medicine']):
         x = 30 + k * 380
         on = (k == active)
         out += R(x, 6, 360, 30, ACC if on else '#fff', ACC if on else LINE, 1.5, 15) + C(x + 18, 21, 10, '#fff' if on else SOFT) + T(x + 18, 25.5, str(k + 1), 12, 700, ACC if on else MUT, 'middle')
@@ -1709,13 +1709,9 @@ def blink(vals, dur, kt, attr='opacity'):
     return f'<animate attributeName="{attr}" values="{vals}" keyTimes="{kt}" dur="{dur}s" repeatCount="indefinite"/>'
 def sweep(x0, x1, dur):
     return f'<animateTransform attributeName="transform" type="translate" from="0 0" to="{x1-x0} 0" dur="{dur}s" repeatCount="indefinite"/>'
-# left card: optogenetics in three steps (his request Nov 18: explain it, not only light goes in)
+# Nov 18 (his note): an analogy, light and music are both signals that change the brain. Light is the small side.
 import math as _om
-BLUE = '#2F7FD0'; NEU = '#6E6A60'; YEL = '#E0A21B'
-oc = R(30, 50, 545, 360, '#fff', LINE, 1.5, 14) + T(52, 80, 'Nobel Prize 2026: optogenetics', 16, 700, INK)
-for q_, (fn, ini, nm) in enumerate([('karl-deisseroth.jpg', 'KD', 'Deisseroth'), ('peter-hegemann.jpg', 'PH', 'Hegemann'), ('georg-nagel.jpg', 'GN', 'Nagel')]):
-    x = 360 + q_ * 72
-    oc += photo(x, 74, 17, fn, ini, AC2) + T(x, 104, nm, 10.5, 600, INK, 'middle')
+BLUE = '#2F7FD0'; NEU = '#6E6A60'
 def mini_neuron(cx, cy, dots=0, lit=False):
     o = P(f'M{cx-16},{cy-6} C{cx-30},{cy-18} {cx-36},{cy-24} {cx-46},{cy-26}', NEU, 3.2, extra='stroke-linecap="round"') + P(f'M{cx-16},{cy+6} C{cx-30},{cy+16} {cx-36},{cy+24} {cx-46},{cy+28}', NEU, 3.2, extra='stroke-linecap="round"')
     o += P(f'M{cx+18},{cy} L{cx+48},{cy}', NEU, 2.6, extra='stroke-linecap="round"')
@@ -1726,57 +1722,45 @@ def mini_neuron(cx, cy, dots=0, lit=False):
         t = -2.6 + k * 0.62
         o += C(round(cx + 19 * _om.cos(t), 1), round(cy + 16 * _om.sin(t), 1), 3, BLUE)
     return o
-COLS = [(120, '1  Deliver a gene'), (300, '2  The cell builds a switch'), (480, '3  Shine light')]
-s1 = T(COLS[0][0], 140, COLS[0][1], 14, 700, INK, 'middle')
-s1 += f'<g transform="translate(70,186)"><polygon points="0,-12 10,-6 10,6 0,12 -10,6 -10,-6" fill="#fff" stroke="{AC2}" stroke-width="1.6"/><path d="M-4,-3 Q0,-8 4,-3 Q0,2 -4,-3" fill="none" stroke="{BLUE}" stroke-width="1.6"/></g>'
-s1 += P('M84,190 L104,200', AC2, 1.4, extra='marker-end="url(#opa)"') + mini_neuron(140, 210)
-s1 += T(COLS[0][0], 262, 'a harmless virus carries', 12.5, 400, MUT, 'middle') + T(COLS[0][0], 278, 'an algae gene into one', 12.5, 400, MUT, 'middle') + T(COLS[0][0], 294, 'chosen type of neuron', 12.5, 400, MUT, 'middle')
-s2 = T(COLS[1][0], 140, COLS[1][1], 14, 700, INK, 'middle') + mini_neuron(310, 210, dots=7)
-s2 += T(COLS[1][0], 262, 'the neuron makes a light', 12.5, 400, MUT, 'middle') + T(COLS[1][0], 278, 'gated channel in its skin', 12.5, 400, MUT, 'middle') + T(COLS[1][0], 294, '(the blue dots)', 12.5, 400, MUT, 'middle')
-s3 = T(COLS[2][0], 140, COLS[2][1], 14, 700, INK, 'middle')
-s3 += R(484, 152, 10, 30, '#E4DFD8', '#ACA39A', 1, 4)
-s3 += f'<path d="M485,182 L493,182 L506,204 L472,204 Z" fill="{BLUE}" opacity="0"><animate attributeName="opacity" values="0;.45;.45;0;0" keyTimes="0;.04;.2;.26;1" dur="1.2s" repeatCount="indefinite"/></path>'
-s3 += mini_neuron(488, 222, dots=7, lit=True)
-TX = 430; tr = f'M{TX},282'
-for k in range(4):
+# left, small: light
+oc = R(30, 50, 380, 360, '#F4F1EC', 'none', 0, 8) + T(50, 82, 'Light', 22, 400, INK, extra='font-family="et-book,Georgia,serif" style="font-size-adjust:none"') + T(50, 104, 'optogenetics, Nobel Prize 2026', 14, 400, MUT)
+for q_, (fn, ini, nm) in enumerate([('karl-deisseroth.jpg', 'KD', 'Deisseroth'), ('peter-hegemann.jpg', 'PH', 'Hegemann'), ('georg-nagel.jpg', 'GN', 'Nagel')]):
+    x = 100 + q_ * 110
+    oc += photo(x, 146, 22, fn, ini, AC2) + T(x, 184, nm, 12, 600, INK, 'middle')
+oc += R(124, 212, 10, 26, '#E4DFD8', '#ACA39A', 1, 4)
+oc += f'<path d="M125,238 L133,238 L146,258 L112,258 Z" fill="{BLUE}" opacity="0"><animate attributeName="opacity" values="0;.45;.45;0;0" keyTimes="0;.04;.2;.26;1" dur="1.2s" repeatCount="indefinite"/></path>'
+oc += mini_neuron(128, 278, dots=7, lit=True)
+TX = 230; tr = f'M{TX},290'
+for k in range(5):
     x0 = TX + k * 30
-    tr += f' L{x0+5},282 L{x0+7},262 L{x0+10},286 L{x0+13},282 L{x0+30},282'
-s3 += P(tr, INK, 1.3, extra='stroke-linejoin="round"') + ''.join(R(TX + 4 + k * 30, 254, 3, 5, BLUE, 'none', 0, 1) for k in range(4))
-s3 += T(COLS[2][0], 304, 'channels open, ions rush', 12.5, 400, MUT, 'middle') + T(COLS[2][0], 320, 'in, the neuron fires', 12.5, 400, MUT, 'middle')
-oc += s1 + s2 + s3
-oc += L(52, 338, 553, 338, '#D7D2CB', 1)
-oc += T(52, 362, 'Blue light turns chosen neurons on, yellow light (another', 14.5, 400, INK) + T(52, 382, 'protein) turns them off. Precise, but it needs surgery.', 14.5, 400, INK)
+    tr += f' L{x0+5},290 L{x0+7},266 L{x0+10},294 L{x0+13},290 L{x0+30},290'
+oc += P(tr, INK, 1.3, extra='stroke-linejoin="round"') + ''.join(R(TX + 4 + k * 30, 258, 3, 5, BLUE, 'none', 0, 1) for k in range(5))
+oc += T(50, 344, 'Add a gene that makes neurons', 15, 400, INK) + T(50, 366, 'sense light, and a flash makes', 15, 400, INK) + T(50, 388, 'them fire. Needs surgery.', 15, 400, INK)
 g += oc
-# right card: the same idea through the ear, no surgery
-nc = R(605, 50, 545, 360, MUL, 'none', 0, 14) + T(627, 80, 'Through the ear, no surgery?', 17, 700, MU)
-# a head in profile, facing left, with the ear and the auditory cortex
-HXc, HYc = 960, 205
-head = (f'M{HXc+70},{HYc+86} C{HXc+80},{HYc+40} {HXc+96},{HYc+6} {HXc+90},{HYc-40} C{HXc+82},{HYc-102} {HXc+10},{HYc-126} {HXc-48},{HYc-104} '
-        f'C{HXc-96},{HYc-86} {HXc-110},{HYc-40} {HXc-104},{HYc-14} L{HXc-120},{HYc+16} C{HXc-124},{HYc+22} {HXc-118},{HYc+26} {HXc-108},{HYc+26} '
-        f'L{HXc-108},{HYc+44} C{HXc-110},{HYc+54} {HXc-104},{HYc+62} {HXc-92},{HYc+62} L{HXc-74},{HYc+62} L{HXc-70},{HYc+86}')
-nc += f'<path d="{head}" fill="#fff" stroke="#8C8577" stroke-width="2" stroke-linejoin="round"/>'
-nc += f'<path d="M{HXc-30},{HYc-70} C{HXc-60},{HYc-60} {HXc-74},{HYc-10} {HXc-50},{HYc+14} C{HXc-20},{HYc+40} {HXc+50},{HYc+30} {HXc+60},{HYc-10} C{HXc+70},{HYc-60} {HXc+30},{HYc-92} {HXc-30},{HYc-70} Z" fill="#EFEBE5" stroke="#C9C4BD" stroke-width="1.4"/>'
-nc += f'<ellipse cx="{HXc+30}" cy="{HYc+10}" rx="12" ry="18" fill="#fff" stroke="#8C8577" stroke-width="2"/>'
-AC = (HXc + 6, HYc - 8)
-nc += (f'<ellipse cx="{AC[0]}" cy="{AC[1]}" rx="24" ry="13" fill="{PURP}" opacity=".2"><animate attributeName="opacity" values=".15;.75;.15" dur="0.5s" repeatCount="indefinite"/></ellipse>')
-nc += T(AC[0], AC[1] - 22, 'hearing cortex', 11.5, 600, MU, 'middle')
-# sound arriving from the left, a speaker and moving wave fronts
-SPx = 680
-nc += f'<path d="M{SPx},{HYc} l12,-10 l0,30 l-12,-10 Z" fill="{MU}"/>'
+# right, large: music
+SER_ = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
+nc = R(440, 50, 710, 360, '#fff', LINE, 1.2, 8) + T(462, 82, 'Sound', 22, 400, INK, extra=SER_) + T(462, 104, 'music, through the ear, no surgery', 14, 400, MUT)
+BR = re.sub(r'(<path[^>]*id="brain-temporal"[^>]*?)/>', lambda m: m.group(1) + '><animate attributeName="fill" values="#FAD6BA;#F6A46A;#FAD6BA" dur="0.6s" repeatCount="indefinite"/></path>', open('figs/brain-lateral-inner.svgfrag').read(), count=1)
+nc += f'<g transform="translate(800,92) scale(0.33)">{BR}</g>'
+nc += T(1000, 246, 'hearing cortex', 12.5, 600, '#C45200', 'middle')
+SPx, SPy = 470, 300
+nc += f'<path d="M{SPx},{SPy} l12,-10 l0,30 l-12,-10 Z" fill="{AC2}"/>'
 for k in range(3):
-    nc += (f'<path d="M{SPx+20},{HYc-14} Q{SPx+30},{HYc+5} {SPx+20},{HYc+24}" fill="none" stroke="{MU}" stroke-width="2" opacity="0">'
-           f'<animateTransform attributeName="transform" type="translate" values="0 0;{HXc - SPx - 70} 0" dur="1.5s" begin="{k * 0.5}s" repeatCount="indefinite"/>'
-           f'<animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.8;1" dur="1.5s" begin="{k * 0.5}s" repeatCount="indefinite"/></path>')
-nc += T(SPx + 6, HYc + 46, '40 clicks a second', 12, 400, MU, 'middle')
-# EEG below the head, locked to the beat
-ex0 = 660; wv = f'M{ex0},336' + ''.join(f' Q{ex0 + k*28 + 7},{318} {ex0 + k*28 + 14},336 T{ex0 + (k+1)*28},336' for k in range(16))
-nc += T(ex0, 312, 'brain rhythm follows the beat (EEG)', 12.5, 600, INK) + P(wv, INK, 1.3)
-nc += T(627, 372, 'Tsai lab: 40 Hz light and sound. Mice: less amyloid, better memory.', 13.5, 400, INK) + T(627, 392, 'People: safe in small trials, a larger trial is under way. A question, not a result.', 13.5, 400, MUT)
+    nc += (f'<path d="M{SPx+22},{SPy-14} Q{SPx+32},{SPy+5} {SPx+22},{SPy+24}" fill="none" stroke="{AC2}" stroke-width="2" opacity="0">'
+           f'<animateTransform attributeName="transform" type="translate" values="0 0;350 -10" dur="1.8s" begin="{k * 0.6}s" repeatCount="indefinite"/>'
+           f'<animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.75;1" dur="1.8s" begin="{k * 0.6}s" repeatCount="indefinite"/></path>')
+facts = [('The brain rhythm locks to the beat', 'EEG, Nozaradan et al. 2011'),
+         ('Dopamine is released at the peak of pleasure', 'PET, Salimpoor et al. 2011'),
+         ('40 Hz sound changes mouse brains', 'less amyloid, Tsai lab, 2016 to 2019')]
+for k, (a_, b_) in enumerate(facts):
+    y = 140 + k * 44
+    nc += C(470, y - 5, 4, ACC) + T(484, y, a_, 15.5, 600, INK) + T(484, y + 18, b_, 12.5, 400, MUT)
+nc += T(462, 388, 'Measured in people and in mice. Which part of the music does it is the open question.', 13.5, 400, MUT)
 g += F(1, nc)
-g += F(2, T(590, 446, 'A click is the simplest sound. Music is the richest one we can design. Could it be the switch?', 19, 400, '#C45200', 'middle', extra='font-family="et-book,Georgia,serif" style="font-size-adjust:none"'))
-OPTO = sec('This year\'s Nobel: a switch for neurons, made of light', SVG(g), ch='0',
-           ref='Nobel Prize 2026, Physiology or Medicine, Deisseroth, Hegemann, Nagel, announced Oct 5 2026. Sahel et al., Nature Medicine 2021. Tsai lab, MIT Picower Institute: 40 Hz sensory stimulation, mouse studies 2016 to 2019, PLOS ONE 2022. Cognito Therapeutics HOPE trial, enrollment completed Feb 2026',
-           notes='Portraits: Ill. Niklas Elmehed, Nobel Prize Outreach, from nobelprize.org. Left, three steps, say them in one breath each. One: a harmless virus carries a gene from green algae into one chosen type of neuron, for example only the neurons that make dopamine. Two: the neuron reads the gene and builds a light gated channel, channelrhodopsin, into its membrane, the blue dots. Three: an optical fiber shines blue light, the channels open, positive ions rush in, and the neuron fires, every flash one spike. A different protein with yellow light does the opposite and silences the neuron. So the light alone does nothing, the gene makes the cell listen to light. That is why it is so precise, and why it needs surgery. A two minute explainer video from BrainFacts.org is under the down arrow if you want to show it. Click, right: can a signal from outside, with no gene and no fiber, do something similar? 40 clicks a second through the ear, and the brain rhythm follows the beat. Step 3 of 4. One minute. The 2026 Nobel went to optogenetics: a light gated channel from an alga, put into chosen neurons, so light switches them on or off. It changed neuroscience, but it is invasive: a gene has to be delivered and light has to reach the cells, so in people it is limited, the first case was partial vision in one blind patient. The non invasive cousin is 40 Hz flicker of light and sound from Li-Huei Tsai\'s lab: in mice it drives gamma rhythms and reduces amyloid and tau, small human trials found it safe, and a phase 3 trial finished enrolling in February. If a plain 40 Hz click can do that, music, the richest sound we can design, might be a finer switch. Say clearly that this is the question, not a result.')
+g += F(2, T(590, 446, 'Light switches neurons with a gene. Music already changes the brain through the ear.', 19, 400, '#C45200', 'middle', extra=SER_ + ' data-keep="1"'))
+OPTO = sec('Two signals that change the brain: light, and music', SVG(g), ch='0',
+           ref='Nobel Prize 2026. Nozaradan et al., J Neurosci 2011. Salimpoor et al., Nature Neuroscience 2011. Iaccarino et al., Nature 2016',
+           notes='An analogy, about one minute, do not dwell on optogenetics. Left, light: this year\'s Nobel went to optogenetics. Add a gene that makes chosen neurons sense light, then a flash makes them fire. Precise, but it needs a gene and a fiber in the brain. Click, right, sound: music is also a signal that changes the brain, and it needs no surgery. Three measured examples: the brain rhythm locks to the beat in EEG (Nozaradan 2011), dopamine is released at the peak of musical pleasure in PET (Salimpoor 2011), and 40 Hz sound, a very simple signal, changed mouse brains in the Tsai lab, with less amyloid. Which part of the music does the work is the open question, and that is where a model of music comes in. If someone asks how optogenetics works: a two minute BrainFacts.org video is linked in the reference line, youtube.com/watch?v=azp-if02m8U. Portraits: Ill. Niklas Elmehed, Nobel Prize Outreach. Brain drawing: Gray, Anatomy of the Human Body, Figure 728, public domain, recolored.')
 
 g = adefs('md')
 g += steps(2).replace('url(#pea)', 'url(#mda)')
@@ -2348,7 +2332,7 @@ def assemble(cover, old):
     copy_b = bridge(COPY, 'Before we go inside a generator, one honest line from the literature: in music, graphs win only when the edges carry something the sequence throws away, and often they do not (survey under the down arrow). The one place nobody has looked for such edges is inside the generator itself.')
     corpus_b = bridge(corpus, 'How much memory should the graph have? One note gives the right vocabulary with the wrong syntax, three notes memorize the piece (the picture is under the down arrow on the next slide).')
     beyond5 = bridge(BEYOND5, 'Emotion is one way music acts on the brain. Before we model music, one detour through this year\'s Nobel Prize, because it shows what a designed signal can do to brain circuits. The history of music models is under the down arrow.')
-    mus = [beyond5, backup(hist), toch(OPTO, '2'), OPTO_VIDEO, toch(MEDIC, '2'), toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), copy_b, backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
+    mus = [beyond5, backup(hist), toch(OPTO, '2'), toch(MEDIC, '2'), toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), copy_b, backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
     beyond = []
     close = [TAKEAWAY.replace('</section>', CLIP_JSON + '</section>')]
     # one bridge per main slide, so each slide leads into the next one (order of Nov 16 2026)
@@ -2363,7 +2347,7 @@ def assemble(cover, old):
             ('Steering: right on average', None, 'Bridge: unlearning tries the opposite, to take something out.'),
             ('What is a delta graph?', None, 'Bridge: does it catch more bad edits? Results next.'),
             ('Results: same checking budget', None, 'Bridge: that was level 1, inside the model. Our second paper is level 2, the knowledge graph itself.'),
-            ("This year's Nobel", None, 'Bridge: and music already acts on the brain, as medicine.'),
+            ('Two signals that change the brain', None, 'Bridge: and music already acts on the brain, as medicine.'),
             ('Music already acts on the brain, as medicine', 'Bridge: music and the brain are this closely tied, so let us model music from the beginning, starting with the simplest graph, and end where music meets the brain.', 'Bridge: before we model music, how does anything new come about, in ideas and in music?'),
             ("Occam's razor", '(the picture is under the down arrow on the next slide)', '(the picture is under the down arrow here)'),
             ('The longest memory sounds most like the style', None, 'Bridge: at the start we saw a helix and a circle inside MusicGen. A probe tells us what is stored, not how the states move. Next, what happens when we push those states with a vector.'),
