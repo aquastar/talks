@@ -42,6 +42,7 @@ Read this before doing anything in this repo. When Zhiqian gives a new rule abou
 - The full rules are in his knowledge base: aquastar/zhiqian-knowledge-base, `claude/skills/presentation-craft/` (SKILL.md, visual-style.md, reference.md). Those win over this list.
 - Never use em dashes, en dashes or semicolons, in slides, notes or messages. Ranges use "to". American spelling.
 - Talk with him in short Chinese. Slides in English.
+- Complex pictures are found, not drawn (his rule 2026-11-18): a brain, a neuron, an experiment setup or anything a little complex comes from a paper figure, an official illustration or a public domain image, recolored to the palette, never drawn by Claude. Claude draws only simple diagrams.
 - Real images next to our drawings: paper figures, book covers, photos of the people quoted. Find and download them yourself when the host is reachable, put the credit in the speaker notes, and ask him only when a site blocks scripted access. Never invent a quote.
 - Numbers come only from the published version of a paper, read from the PDF. Unfinished work is labeled In progress and never counted as a result.
 - Time: about 2 minutes per slide with content. A one hour slot means about 50 minutes of talking and about 30 main slides. The rest goes to backup slides under the down arrow, with one line or one number left on the main slide.
