@@ -47,6 +47,8 @@ Read this before doing anything in this repo. When Zhiqian gives a new rule abou
 - Time: about 2 minutes per slide with content. A one hour slot means about 50 minutes of talking and about 30 main slides. The rest goes to backup slides under the down arrow, with one line or one number left on the main slide.
 - Before pushing, screenshot every changed slide and look at it: no overlap, no clipped text, no empty boxes, no 404 in the browser console.
 
+- Colors (his rule 2026-11-18): one palette for the whole deck. Warm neutrals, RIT orange as the only accent (the one thing to look at), RIT slate #4C5B66 as the only second hue, red only for a wrong answer. No per domain colors (no teal for language, no purple for music), label the domain in words instead.
+
 ## Log
 - 2026-11-16: music-to-brain moved in from aquastar/music-to-brain (subtree, full history), deck at music-to-brain/2026-12-01-bibm-dallas/ (day TBD, rename before the link goes out), shared/, eeg-demo/ and stimuli/ at topic level. Old repo to be deleted by a local agent after he confirms.
 - 2026-11-16: repo created with graph-inside (Oct 2, Nov 19) and ai-literacy (Nov 3).
