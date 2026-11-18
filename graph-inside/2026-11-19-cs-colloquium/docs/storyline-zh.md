@@ -46,7 +46,7 @@
 说："The answer is a distribution, yet much of what a model says is held in place by strong, stored structure, closer to a graph than to a coin."
 
 **3. Change one fact, and the next question goes wrong**（120，graph 2）左边 Space Needle 照片，中间两个小知识图（上：Seattle、Washington、United States、dollar。下：Paris、France、euro）。右边四个问题一开始就在，编辑前四个答案都对、彼此一致。点一下：箭头从 Seattle 摆到 Paris，同时右边更新，第一个问题变成 Paris，其他三个没变，于是互相矛盾，标红，上面的旧路径变红。再点："One answer fixed. Every other question still walks the old graph." 最后一下抛出研究问题："is there a link between the circuit graph of the model and this knowledge graph?"
-这是一个攻击的例子：知识编辑本来用来修正错误的事实，同一个工具也能把假事实写进模型，这里写的是 Space Needle 在巴黎。左边标签写 the attack: located in Paris，顶部一行写 An attack: knowledge editing writes one false fact into the model, and leaves the related facts untouched.
+顶部第一行（灰）：为什么需要知识编辑。事实经常变，每次都重新 fine-tune 大模型很贵，知识编辑只改少量权重，很便宜。第二行：同一个工具也能拿来攻击。这是一个攻击的例子：知识编辑本来用来修正错误的事实，同一个工具也能把假事实写进模型，这里写的是 Space Needle 在巴黎。左边标签写 the attack: located in Paris，顶部一行写 An attack: knowledge editing writes one false fact into the model, and leaves the related facts untouched.
 动画顺序：进来时只有图和第一个问题（城市，✓ Seattle）。点一下，Seattle 到 Washington 的边亮起来（橙色），出现第二个问题（州，✓ Washington）。再点，Washington 到 United States 亮，出现国家问题。再点，United States 到 dollar 亮，出现货币问题。再点：攻击，箭头摆到 Paris，城市变成 Paris，其他三个一起变成红叉，上面的路径变红。最后一下：Before the edit all four agreed. Now they contradict. 加结论框。
 说："Before the edit, all four agreed. After it, a Space Needle in Paris, in the United States, in Washington, paid in dollars. The edit changed one edge and never looked at the graph around it."
 
