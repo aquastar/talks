@@ -2394,7 +2394,7 @@ SER3 = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
 K3_CSS = ('<style>.reveal .k3d{stroke-dasharray:100;stroke-dashoffset:100}.reveal .fragment.visible .k3d{animation:k3draw 1.2s ease forwards .3s}'
           '@keyframes k3draw{to{stroke-dashoffset:0}}'
           '.reveal .k3old{animation:k3glow 1.4s ease-in-out infinite alternate}@keyframes k3glow{from{stroke-opacity:.35}to{stroke-opacity:1}}</style>')
-g += T(30, 30, 'Knowledge editing changes the one fact it targets, and leaves the related facts untouched.', 16.5, 400, INK, extra=SER3)
+g += T(30, 30, 'An attack: knowledge editing writes one false fact into the model, and leaves the related facts untouched.', 16.5, 400, INK, extra=SER3)
 # the Space Needle, as on slide 2
 g += img(40, 92, 126, 186, 'figs/space-needle-tall.jpg', 'preserveAspectRatio="xMidYMid slice"') + R(24, 284, 158, 40, '#EFEBE5', 'none', 0, 6) + T(103, 309, 'Space Needle', 16, 600, INK, 'middle')
 SN = (184, 200)
@@ -2431,7 +2431,7 @@ arrow = (f'<g class="k3sw"><line class="k3col" x1="{ax}" y1="{ay}" x2="{tx:.1f}"
          f'<path d="M{tx:.1f},{ty:.1f} l-11,-5 l0,10 Z" transform="rotate({A1:.1f} {tx:.1f} {ty:.1f})" fill="{ACC}"/></g>')
 g += f'<g class="fragment custom" data-fragment-index="1">{arrow}</g>'
 g += f'<g class="fragment fade-out" data-fragment-index="1">' + T(214, 158, 'located in', 13, 600, INK, extra='transform="rotate(-28 214 158)"') + '</g>'
-g += f'<g class="fragment k3late" data-fragment-index="1">' + T(103, 346, 'the edit:', 13.5, 600, '#C45200', 'middle') + T(103, 364, 'located in Paris', 13.5, 600, '#C45200', 'middle') + P(f'M{SN[0]+9},{SN[1]-6} C250,170 280,140 {SE[0]-10},{SE[1]+8}', '#ACA39A', 1.5, extra='stroke-dasharray="3 5"') + '</g>'
+g += f'<g class="fragment k3late" data-fragment-index="1">' + T(103, 346, 'the attack:', 13.5, 600, '#C45200', 'middle') + T(103, 364, 'located in Paris', 13.5, 600, '#C45200', 'middle') + P(f'M{SN[0]+9},{SN[1]-6} C250,170 280,140 {SE[0]-10},{SE[1]+8}', '#ACA39A', 1.5, extra='stroke-dasharray="3 5"') + '</g>'
 # right: the same four questions, always on screen
 QS = ['Which city is it in?', 'Which country is it in?', 'Which state is it in?', 'Which currency is used there?']
 BEFORE = ['Seattle', 'United States', 'Washington', 'dollar']
@@ -2455,7 +2455,7 @@ g = SW_CSS + g
 g = K3_CSS + g
 KGT3 = sec('Change one fact, and the next question goes wrong', SVG(g, 432), ch='0',
            ref='Cohen et al., Evaluating the Ripple Effects of Knowledge Editing in Language Models, TACL 2024. Zhong et al., MQuAKE, EMNLP 2023. The answers illustrate the failure type',
-           notes='Same photo as the slide before. Two small knowledge graphs: on top Seattle, Washington, the United States, the dollar, below Paris, France, the euro. The Space Needle points up: located in Seattle. On the right, four questions, and before any edit all four answers agree: Seattle, United States, Washington, dollar. Click: knowledge editing. Watch the arrow swing from Seattle down to Paris. Methods like ROME and MEMIT do this by adding a small change to some weights. And watch the answers: the first one changes to Paris, the other three do not. Now they contradict each other, a Space Needle in Paris, in the United States, in Washington, paid in dollars. The red path on top is what the model still walks. Click: the key statement. Break the knowledge graph of the real world, and a large language model starts to contradict itself. The edit changed one edge and never looked at the graph around it. The next slide asks our question. This is the ripple effect measured by RippleEdits and MQuAKE. Photo: Kerry Park panorama by SounderBruce, CC BY-SA 4.0.')
+           notes='Same photo as the slide before. Two small knowledge graphs: on top Seattle, Washington, the United States, the dollar, below Paris, France, the euro. The Space Needle points up: located in Seattle. On the right, four questions, and before any edit all four answers agree: Seattle, United States, Washington, dollar. Click: an attack. Knowledge editing is a tool to fix a wrong fact, but the same tool can write a false one in, here that the Space Needle is in Paris. Watch the arrow swing from Seattle down to Paris. Methods like ROME and MEMIT do this by adding a small change to some weights. And watch the answers: the first one changes to Paris, the other three do not. Now they contradict each other, a Space Needle in Paris, in the United States, in Washington, paid in dollars. The red path on top is what the model still walks. Click: the key statement. Break the knowledge graph of the real world, and a large language model starts to contradict itself. The edit changed one edge and never looked at the graph around it. The next slide asks our question. This is the ripple effect measured by RippleEdits and MQuAKE. Photo: Kerry Park panorama by SounderBruce, CC BY-SA 4.0.')
 
 # ---- the one style for a question or a key point (his rule Nov 18): an orange frame, plain text, keywords on a tint ----
 def kw(t):
