@@ -1999,8 +1999,8 @@ g = adefs('ng')
 NG_CSS = ('<style>.reveal .ngl{opacity:0}.reveal .fragment.visible .ngl{animation:ngon .35s ease forwards}'
           '.reveal .ngp{stroke-dasharray:100;stroke-dashoffset:100}.reveal .fragment.visible .ngp{animation:ngdraw 2.4s linear forwards}'
           '@keyframes ngon{to{opacity:1}}@keyframes ngdraw{to{stroke-dashoffset:0}}</style>')
-g += T(40, 30, 'Ask the room first: the Space Needle is in ...?', 16, 600, MUT)
-g += img(52, 66, 126, 192, 'figs/space-needle-tall.jpg', 'preserveAspectRatio="xMidYMid slice"') + R(40, 262, 150, 40, '#EFEBE5', 'none', 0, 6) + T(115, 288, 'Space Needle is in', 16, 600, INK, 'middle')
+g += T(40, 30, 'Ask the room first: the Space Needle is in the city of ...?', 16, 600, MUT)
+g += img(52, 60, 126, 186, 'figs/space-needle-tall.jpg', 'preserveAspectRatio="xMidYMid slice"') + R(36, 250, 158, 58, '#EFEBE5', 'none', 0, 6) + T(115, 274, 'The Space Needle', 15, 600, INK, 'middle') + T(115, 296, 'is in the city of', 15, 600, INK, 'middle')
 OUTX = 900
 g += R(OUTX, 80, 250, 210, '#F4F1EC', 'none', 0, 6) + T(OUTX + 125, 205, '?', 64, 400, '#C45200', 'middle', extra=SERIF_X)
 LX = [270, 400, 530, 660, 790]
@@ -2027,21 +2027,21 @@ lit += f'<g class="ngl" style="animation-delay:2.6s">' + T(mx, my + 52, 'looks u
 lit += T(40, 364, 'Structural: the wiring is fixed. Functional: what lights up depends on the question.', 14, 400, MUT)
 g += F(1, lit)
 # click 2: the answer is a distribution over next words
-dist = R(OUTX, 80, 250, 210, '#F4F1EC', 'none', 0, 6) + T(OUTX + 16, 104, 'next word, probability', 12.5, 400, MUT)
-for k, (w, pr) in enumerate([('Seattle', .91), ('Washington', .04), ('Tacoma', .02), ('Paris', .01), ('the', .01)]):
+dist = R(OUTX, 80, 250, 210, '#F4F1EC', 'none', 0, 6) + T(OUTX + 16, 104, 'next word: which city?', 12.5, 400, MUT)
+for k, (w, pr) in enumerate([('Seattle', .93), ('Tacoma', .03), ('Bellevue', .02), ('Portland', .01), ('Paris', .01)]):
     y = 118 + k * 29
     dist += T(OUTX + 92, y + 15, w, 14.5, 600 if k == 0 else 400, INK, 'end') + R(OUTX + 100, y, max(3, 130 * pr), 20, '#F76902' if k == 0 else '#ACA39A', 'none', 0, 2)
 dist += T(OUTX + 234, 284, 'schematic numbers', 11.5, 400, MUT, 'end')
 g += F(2, dist)
 # click 3: not as random as it looks
 nr = R(30, 384, 1120, 74, '#F4F1EC', 'none', 0, 6)
-nr += T(52, 414, 'A generator, yet not so random: ask a chatbot for a random number from 1 to 30, and it very often says 17.', 16, 400, INK)
+nr += T(52, 414, 'Like 1 + 1 = 2, a firm fact: nothing to invent. Even when asked to be random, a number from 1 to 30, chatbots very often say 17.', 15.5, 400, INK)
 nr += T(52, 440, 'Much of what it says is held in place by strong, stored structure, closer to a graph than to a coin.', 16, 600, '#C45200')
 g += F(3, nr)
 g = NG_CSS + g
 NETG = sec('Level 1: a language model is itself a graph', SVG(g), ch='0',
            ref='Elhage et al., A Mathematical Framework for Transformer Circuits, 2021. Meng et al., NeurIPS 2022. Coronado-Blázquez, Deterministic or probabilistic? The psychology of LLMs as random number generators, arXiv 2502.19965, 2025',
-           notes='Interactive start. Show the photo and ask the room: the Space Needle is in what? Let them answer. Click: inside the model, the layers light up one after another, attention and MLP blocks on one shared stream. The bright ones carry this answer: an MLP in layer 2 looks up the fact, an attention block in layer 4 moves it to the last word. Structural: the wiring is fixed. Functional: what lights up depends on the question. That is the graph of the model, level 1. Click: and the answer is not a single word, it is a distribution. Seattle is by far the most likely, other words get a little. The numbers here are a schematic. Click: so a generator, yet not so random. A widely shared example: ask a chatbot for a random number between 1 and 30 and it very often answers 17, and studies of LLMs as random number generators find their answers far from uniform (Coronado-Blazquez 2025). Much of what a model says is held in place by strong stored structure, closer to a graph than to a coin. The 3D animation of the same flow is under the down arrow.')
+           notes='Interactive start. Show the photo and ask the room: the Space Needle is in the city of what? Let them answer, Seattle. The prompt names a city so the answer is a single word. Click: inside the model, the layers light up one after another, attention and MLP blocks on one shared stream. The bright ones carry this answer: an MLP in layer 2 looks up the fact, an attention block in layer 4 moves it to the last word. Structural: the wiring is fixed. Functional: what lights up depends on the question. That is the graph of the model, level 1. Click: and the answer is not a single word, it is a distribution over cities. Seattle is by far the most likely, other cities get a little. The numbers here are a schematic. This is like 1 plus 1 equals 2, a firm fact, there is nothing for a generative model to invent. Click: and even when we ask it to be random it is not. A widely shared observation, on Reddit and elsewhere: ask a chatbot for a random number between 1 and 30 and it very often answers 17, and studies of LLMs as random number generators find their answers far from uniform (Coronado-Blazquez 2025). Much of what a model says is held in place by strong stored structure, closer to a graph than to a coin. The 3D animation of the same flow is under the down arrow.')
 
 # ---- knowledge inside the network is a graph, the Space Needle edit ----
 g = adefs('kg2')
@@ -2059,16 +2059,18 @@ def knode(k, col='#009CBD'):
 graph_ = kedge('SN', 'SE', 'located in') + kedge('SE', 'WA', 'city in') + kedge('WA', 'US', 'state of') + kedge('US', 'DO', 'currency', lx=-10, ly=4, anc='end')
 graph_ += kedge('ET', 'PA', 'located in', col='#ACA39A') + kedge('PA', 'FR', 'city in', col='#ACA39A') + kedge('FR', 'EU', '', col='#ACA39A')
 graph_ += ''.join(knode(k) for k in ('SN', 'SE', 'WA', 'US', 'DO')) + ''.join(knode(k, '#ACA39A') for k in ('ET', 'PA', 'FR', 'EU'))
+g += T(30, 150, 'Knowledge editing changes the one fact it targets, and leaves the related facts untouched.', 17, 400, INK, extra=SERIF_X)
 g += F(1, graph_ + T(30, 202, 'Level 2, the knowledge graph: what the model knows', 15, 600, MUT))
 edit_ = kedge('SN', 'PA', '', col=ACC, sw=3, mk='kg2o') + T(196, 356, 'the edit:', 14.5, 600, '#C45200', 'end') + T(196, 376, 'located in Paris', 14.5, 600, '#C45200', 'end')
 ke_ = R(30, 118, 740, 66, '#F4F1EC', 'none', 0, 6) + T(48, 144, 'Knowledge editing: add a small change to some weights,', 16, 600, INK) + T(512, 144, 'W ← W + ΔW', 17, 400, '#C45200', extra=SERIF_X + ' font-style="italic"')
 ke_ += T(48, 170, 'ROME: rank one, one layer.  MEMIT: many layers.  MEND: a small network writes ΔW.  LoRA: low rank.', 13.5, 400, MUT)
-g += F(2, edit_ + ke_)
+g += F(2, edit_)
 stale = P(f"M{NK['SN'][0]+10},{NK['SN'][1]} L{NK['US'][0]},{NK['US'][1]} L{NK['DO'][0]},{NK['DO'][1]-10}", '#DA291C', 4, extra='stroke-opacity=".35" stroke-linejoin="round"')
-pan = R(790, 182, 360, 268, ACL, 'none', 0, 6) + R(790, 182, 5, 268, ACC, 'none', 0, 2) + T(812, 214, 'Ask one step further', 22, 400, '#C45200', extra=SERIF_X)
+pan = T(790, 200, 'Ask one step further', 24, 400, '#C45200', extra=SERIF_X)
 for k, (q, said, should) in enumerate([('Which country is it in?', 'United States', 'France'), ('Which state is it in?', 'Washington', 'none, Paris has no state'), ('Which currency is used there?', 'dollar', 'euro')]):
-    y = 252 + k * 70
-    pan += T(812, y, q, 17, 600, INK) + T(812, y + 23, 'model: ' + said, 16, 700, '#DA291C') + T(812, y + 44, 'should be: ' + should, 14.5, 400, MUT)
+    y = 220 + k * 80
+    pan += f'<path d="M790,{y} h360 v68 h-360 Z" fill="#FDEBDD"/><path d="M790,{y} h5 v68 h-5 Z" fill="#F76902"/>'
+    pan += T(808, y + 26, q, 18, 600, INK) + T(808, y + 52, '✗ ' + said, 17, 700, '#DA291C') + T(1136, y + 52, 'should be ' + should.replace('none, Paris has no state', 'none'), 14, 400, MUT, 'end')
 g += F(3, stale + pan)
 g += F(4, T(590, 466, 'The edit changed one edge and never looked at the graph around it. The old paths are still there.', 19, 400, '#C45200', 'middle', extra=SERIF_X + ' data-keep="1"'))
 g = '<g transform="translate(0,-112)">' + g + '</g>'
@@ -2090,24 +2092,17 @@ hx += f'<line id="hx3d-axis" stroke="{ACC}" stroke-width="1.6" stroke-dasharray=
 hx += ''.join(f'<text id="hx3d-l{n}" font-size="14" font-weight="700" fill="#C45200">C{3 + n // 12}</text>' for n in (0, 12, 24)) + '</g>'
 hx += T(HX, 392, 'one turn per octave: C3, C4, C5 line up,', 15.5, 400, INK, 'middle') + T(HX, 414, 'the same note, higher', 15.5, 400, INK, 'middle')
 g += hx
-# circle of fifths, lit step by step
-FX, FY, FR = 850, 226, 112
-names = ['C', 'G', 'D', 'A', 'E', 'B', 'F#', 'C#', 'G#', 'D#', 'A#', 'F']
-STEP = 0.7
-fc = T(FX, 76, 'Keys sit on a circle', 17, 700, INK, 'middle', extra='data-keep="1"') + T(FX, 96, "each circle: the model's inside state for one key, in 2D", 13, 400, MUT, 'middle')
-pts5 = [(FX + FR * math.sin(2 * math.pi * q / 12), FY - FR * math.cos(2 * math.pi * q / 12) + 14) for q in range(12)]
-for q in range(12):
-    (x1, y1), (x2, y2) = pts5[q], pts5[(q + 1) % 12]
-    fc += L(round(x1), round(y1), round(x2), round(y2), '#D4CBE6', 1.6)
-for q, (x, y) in enumerate(pts5):
-    kt = f'0;{q / 12:.3f};{(q + 0.9) / 12:.3f};1'
-    fc += (f'<circle cx="{x:.0f}" cy="{y:.0f}" r="18" fill="#fff" stroke="{PURP_}" stroke-width="1.6">'
-           f'<animate attributeName="fill" values="#fff;#fff;{PURP_};#fff" keyTimes="{kt}" dur="{12 * STEP}s" repeatCount="indefinite" calcMode="discrete"/></circle>')
-    fc += (f'<text x="{x:.0f}" y="{y + 5:.0f}" font-size="13" font-weight="700" fill="{PURP_}" text-anchor="middle">{names[q]}'
-           f'<animate attributeName="fill" values="{PURP_};{PURP_};#fff;{PURP_}" keyTimes="{kt}" dur="{12 * STEP}s" repeatCount="indefinite" calcMode="discrete"/></text>')
-fc += T(FX, 392, 'neighbors share 6 of their 7 notes:', 15.5, 400, INK, 'middle') + T(FX, 414, 'C major and G major differ by one note', 15.5, 400, INK, 'middle')
-g += F(1, fc)
-g += F(2, T(590, 458, 'Nobody taught MusicGen music theory. It learned both shapes from sound alone.', 19, 400, INK, 'middle', extra=SERIF_X + ' data-keep="1"'))
+# right: probes read music theory out of the layers (Wei et al. 2024, real numbers, their Table 2, and their Figure 1)
+PX = 640
+pr = T(PX + 250, 76, 'Probes read music theory from its layers', 17, 700, INK, 'middle', extra='data-keep="1"') + T(PX + 250, 96, 'a tiny classifier on one frozen layer: interval, chord, scale, key ...', 13, 400, MUT, 'middle')
+pr += img(PX + 30, 108, 440, 105, 'figs/wei2024-fig1.png')
+WB = [('Jukebox', .984, '#4C5B66'), ('MusicGen small', .950, '#F76902'), ('MusicGen large', .929, '#F6A46A'), ('hand-made chroma features', .878, '#ACA39A'), ('raw audio tokens', .701, '#C9C4BD')]
+for k, (nm, v, col) in enumerate(WB):
+    y = 236 + k * 30
+    pr += T(PX + 200, y + 15, nm, 14, 600 if 'small' in nm else 400, INK, 'end') + R(PX + 210, y, (v - .6) * 640, 20, col, 'none', 0, 2) + T(PX + 216 + (v - .6) * 640, y + 15, f'{v:.2f}', 13, 600, INK)
+pr += T(PX + 210, 400, 'average probe accuracy, axis from 0.6', 12.5, 400, MUT)
+g += F(1, pr)
+g += F(2, T(590, 458, 'Nobody taught MusicGen music theory. It learned it from sound alone.', 19, 400, INK, 'middle', extra=SERIF_X + ' data-keep="1"'))
 HELIX_JS = """<script>(function(){var cx=300,cy=238,R=110,H=8.0,t0=null;
 function frame(ts){if(t0===null)t0=ts;var t=(ts-t0)/1000,ang=t*0.6,lit=Math.floor(t*4)%32;var g=document.getElementById('hx3d');if(!g){return;}
 var d='',pts=[];for(var q=0;q<=96;q++){var u=q/4,a=2*Math.PI*u/12+ang;var x=cx+R*Math.sin(a),y=cy+86-u*H+20*Math.cos(a);d+=(q?' L':'M')+x.toFixed(1)+','+y.toFixed(1);}
@@ -2119,7 +2114,7 @@ var ax=document.getElementById('hx3d-axis');ax.setAttribute('x1',pts[0][0]);ax.s
 requestAnimationFrame(frame);}
 requestAnimationFrame(frame);})();</script>"""
 MULTI = sec('Beyond text: inside a music model, music theory has a shape', SVG(g), ch='0',
-            ref='Do Music Foundation Models Embed Pitch in Helical Structure?, arXiv 2607.29086, 2026. Kanatas, Kong et al., What Makes a Good Layer?, ISMIR 2026. Wei, Freeman, Donahue, Sun, ISMIR 2024',
+            ref='Yagi, Takamichi, Sato, Tanaka, Morishima, Do Music Foundation Models Embed Pitch in Helical Structure?, arXiv 2607.29086, 2026. Wei, Freeman, Donahue, Sun, Do Music Generation Models Encode Music Theory?, ISMIR 2024, Figure 1 and Table 2',
             notes='The helix turns and lights up note by note, the circle lights up key by key, both loop on their own. The same move beyond text. MusicGen is a language model for sound: the same next token transformer as GPT, trained on audio tokens instead of words. Inside it, pitch sits on a helix, one turn per octave, so C3, C4 and C5 line up, and keys sit on the circle of fifths. In plain words: arrange the 12 keys so that neighbors share 6 of their 7 notes, C major next to G major, which differ only in F versus F sharp. Musicians use this circle to know which keys sound close. The model, never told any music theory, places close keys close together. Both are graphs we already know. Small probes also read tempo, intervals, chords and scales out of its layers (Wei et al. 2024). Click: the circle lights up key by key. Click: nobody taught MusicGen music theory, it learned both shapes from sound alone. The vision example, a curve detector circuit, and the full MusicGen probing slide are under the down arrow.')
 MULTI = MULTI.replace('</section>', HELIX_JS + '\n</section>', 1)
 

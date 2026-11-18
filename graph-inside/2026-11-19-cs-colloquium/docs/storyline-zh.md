@@ -42,15 +42,15 @@
 **1. 封面**（45）左边网络里亮起语言（蓝）和音乐（紫）两条路径，右边读成两张带标签的小图。
 说："Left, a network. Right, what it knows, read as graphs, in language and in music. Is there such a graph inside a generative model?"
 
-**2. Level 1: a language model is itself a graph**（120，graph 1）先互动：只给照片和问号，问大家"Space Needle 在哪"。点一下，各层从左到右依次点亮，一条橙色路径画过去（MLP 查到事实，注意力块搬到答案）。再点，问号变成概率分布，Seattle 最高，其他词很低（示意）。再点，"并没有那么随机"：让聊天机器人在 1 到 30 里随便挑一个数，它经常说 17。
+**2. Level 1: a language model is itself a graph**（120，graph 1）先互动：只给照片和问号，问大家"The Space Needle is in the city of ...?"，答案只能是一个城市名。点一下，各层从左到右依次点亮，一条橙色路径画过去（MLP 查到事实，注意力块搬到答案）。再点，问号变成城市的概率分布，Seattle 最高，其他城市很低（示意）。这就像 1 + 1 = 2，是很确定的知识，用不着"生成"。再点：就算让它随机，也不随机，网上（Reddit 等）广为流传，让聊天机器人在 1 到 30 里挑一个数，它经常说 17。
 说："The answer is a distribution, yet much of what a model says is held in place by strong, stored structure, closer to a graph than to a coin."
 
 **3. Change one fact, and the next question goes wrong**（120，graph 2）知识图。全景照，知识图，编辑改到 Paris，再问一步三个问题都答旧的。
 说："Change one edge, and every path through it must change. The model does not."
 
-**4. Beyond text: inside a music model, music theory has a shape**（105，graph 3）MusicGen 里音高沿螺旋上升（会转、逐个点亮），调性排在一个圆上（依次点亮）。视觉的例子放在备用页。
-说："Pitch climbs a spiral, one turn per octave. Keys sit on a circle where neighbors share 6 of 7 notes. Nobody taught MusicGen music theory."
-* 五度圈：把 12 个调排成一圈，相邻两个调的 7 个音里有 6 个相同，比如 C 大调和 G 大调只差一个音（F 和 F♯）。
+**4. Beyond text: inside a music model, music theory has a shape**（105，graph 3）左边：螺旋，是在激活空间里真的找到的（Yagi 2026，单个音符输入，对中间层表示做主成分分析，点自己排成螺旋，一圈一个八度）。点一下，右边：Wei 2024，冻结模型，在一层上训练很小的探针，能读出音程、和弦、调，平均准确率接近 1，高于手工乐理特征，远高于原始音频 token。
+说："Nobody taught MusicGen music theory. It learned it from sound alone."
+* 五度圈的结果没有放：那篇（Kanatas 2026）是把探针的输出强制投影到五度圈上，圆是预先设定的，不能算模型自己学出来的。有人问再说。
 
 **5. Two levels, two domains: the map of this talk**（60）2 乘 2 的地图，不写状态。语言：delta graph（第一层）和知识图（第二层）。音乐：MusicGen 里有没有图（第一层，开放问题）和音符图（第二层）。
 说："Language has answers. Music is where the open questions are."
