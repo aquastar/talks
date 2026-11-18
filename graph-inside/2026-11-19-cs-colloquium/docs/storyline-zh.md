@@ -57,8 +57,11 @@
 **6. A music generator is a language model, with a pitch graph inside**（105，graph 3）上方一行讲编码：音频经过 EnCodec 变成 token（每 20 毫秒 4 个整数，像词一样），交给和 GPT 一样的 transformer 预测下一个 token，再解码成音乐。点一下，左边：乐理的音高图，C D E F G A B 排成一行，每个音和高八度的同名音相连（C 那条边是橙色）。再点，右边：模型学出的螺旋（Yagi 2026）。要说清楚这是模型的向量空间：每个点是一个音输入后的激活向量，投影到三维。螺旋边转边长出来，一直慢慢转，白键音名跟着点走，C3、C4、C5 竖着对齐，就是左边那条橙色边。底部：模型学出的图和乐理的知识图一致。再点：右边三本书（Lewin 1987，Tymoczko 2011，Sulzer 2021），一句话带过：音乐背后的数学是一个完整的研究领域。
 说："A music generator is a language model over sound tokens. Music theory links every note to the same note an octave up. Inside the model, in its vector space, those notes line up on a helix: the learned graph matches the knowledge graph."
 
-**7. Do music generation models encode music theory?**（105）标题就是 Wei 2024 那篇论文的题目。左边：Tonnetz 网格（欧拉 1739），动画自己循环播放：从 C 大调出发，依次演示 P（到 C 小调）、R（到 A 小调）、L（到 E 小调），每次只有一个音变成橙色实心，就是动的那个音。最后连走 L、R 两步到 G 大调。可以说：我把它读作音乐的知识图谱。注意 Wei 测的是概念读得出来，不是这张网的边。乐理细节见 docs/tonnetz-primer-zh.md。点一下，右边：论文图 1 的实验流程，加上探针准确率：音乐模型 0.93 到 0.98，人工乐理特征 0.88，原始音频 token 0.70。橙色竖线标出"音乐模型"这一组，不再单独突出某一个模型。底部：乐理的概念就在模型里，一层就能读出来，从声音里自己学的。
-说："The input tokens give 70 percent, the model's layers give 93 to 98. The knowledge was built inside, from sound alone."
+**7. Do music generation models encode music theory?**（105，graph 3）左边：Tonnetz 网格（欧拉 1739），动画自己循环：从 C 大调出发，P 到 C 小调，R 到 A 小调，L 到 E 小调，最后连走 L、R 到 G 大调，每一步只有一个音变成橙色实心。下面两行图例：横向箭头是五度（+7），右上箭头是大三度（+4）。尖朝上的三角形是大调（根音、+4、+7），尖朝下是小调（根音、+3、+7）。
+说："Music theory already has a knowledge graph of chords: every triangle is a chord, and two chords that share an edge differ by one note."
+点一下，右边：Ebrahimzadeh, Bernardes, Stober，ISMIR 2026。用 word2vec 在贝多芬奏鸣曲和披头士的和弦序列上学 24 个和弦的向量，图是按他们 Figure 1a 重画的（点的位置从 PDF 数字化，B♭ 被 Fm 盖住，按目测）。和弦排成五度圈，就是左边网格横向那一行连成环。三个数字来自 Table 2（贝多芬语料，增强版）：环上顺序错误 0，和乐理距离的 Spearman 相关 0.96（小调，大调 0.87），每个和弦最近的两个邻居都是它的五度邻居（100%）。
+说："The graph was written by people. A model trained only on chord sequences found its geometry on its own."
+诚实的边界：这是一个在和弦符号上训练的小模型，不是从声音学的生成模型。右下角写着 Open question：像 MusicGen 这样从声音学的模型，有没有同样的和弦距离，据你所知还没人测过。被问到时可以补充 Wei 2024：从 MusicGen 一层能读出和弦、音程、调（93% 到 98%），但他们没有测距离。乐理细节见 docs/tonnetz-primer-zh.md。
 
 **8. Two levels, two domains: the map of this talk**（60）2 乘 2 的地图，不写状态。语言：delta graph（第一层）和知识图（第二层）。音乐：MusicGen 里有没有图（第一层，开放问题）和音符图（第二层）。
 说："Language has answers. Music is where the open questions are."

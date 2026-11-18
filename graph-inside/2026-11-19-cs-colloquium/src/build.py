@@ -436,7 +436,7 @@ allsecs = [re.sub(r'\s*<div class="lessontag">[^<]*</div>', '', x) for x in alls
 GTAGS = [('Level 1: a language model is itself a graph', 1, 'level 1, the model graph'),
          ('Change one fact, and the next question goes wrong', 2, 'level 2, the knowledge graph'),
          ('A music generator is a language model', 3, 'pitch graph, learned as a helix'),
-         ('Do music generation models encode music theory?', 3, 'chord graph, read from one layer'),
+         ('Do music generation models encode music theory?', 3, 'chord graph, learned distances'),
          ('A missing path in the record', 2, 'knowledge graph, a clinical record'),
          ('What is a delta graph?', 4, 'delta graph, how the inside rewired'),
          ('A tiny graph is enough to represent', 5, 'note transition graph, a Markov chain'),

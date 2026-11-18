@@ -2198,7 +2198,15 @@ cg += tri_svg + '<path id="tz-hl" d="" fill="#FBD3B4" fill-opacity=".9" stroke="
 for (i, j), (x, y) in NODES.items():
     cg += R(x - 13, y - 12, 26, 24, '#fff', '#8F887E', 1.1, 6, extra=f'id="tzn-{nkey(i, j)}"') + T(x, y + 5, PCN[pc(i, j)], 12, 700, '#5F5D50', 'middle', extra=f'id="tzt-{nkey(i, j)}"')
 cg += T(40, 368, '', 15, 700, '#C45200', extra='id="tz-mv"') + T(62, 368, '', 13.5, 400, INK, extra='id="tz-cap"')
-cg += T(40, 390, 'across: a fifth (C to G)', 12.5, 400, MUT) + T(215, 390, 'up right: a major third (C to E)', 12, 400, MUT)
+def _arr(x1, y1, x2, y2, col='#5F5D50'):
+    import math as _m
+    a = _m.atan2(y2 - y1, x2 - x1); hx, hy = x2 - 6 * _m.cos(a), y2 - 6 * _m.sin(a)
+    px, py = -_m.sin(a) * 3.5, _m.cos(a) * 3.5
+    return P(f'M{x1},{y1} L{hx:.1f},{hy:.1f}', col, 1.6) + P(f'M{x2},{y2} L{hx + px:.1f},{hy + py:.1f} L{hx - px:.1f},{hy - py:.1f} Z', 'none', 0, col)
+cg += _arr(40, 388, 58, 388) + T(64, 392, 'a fifth, +7 (C to G)', 12.5, 400, MUT)
+cg += _arr(244, 396, 253, 380) + T(262, 392, 'a major third, +4 (C to E)', 12.5, 400, MUT)
+cg += P('M40,418 L54,418 L47,406 Z', '#ACA39A', 1.2, '#F4F1EC') + T(60, 416, 'major: root, +4, +7 (C, E, G)', 12.5, 400, MUT)
+cg += P('M244,406 L258,406 L251,418 Z', '#ACA39A', 1.2, '#F4F1EC') + T(264, 416, 'minor: root, +3, +7 (C, E♭, G)', 12.5, 400, MUT)
 STEPS7 = [('u0_0', '', 'C major: the notes C, E, G', None), ('d0_m1', 'P', 'C major to C minor: E slides down to E♭', '1_m1'),
           ('u0_0', '', 'back to C major', '0_1'), ('dm1_0', 'R', 'C major to A minor: G slides up to A', 'm1_1'),
           ('u0_0', '', 'back to C major', '1_0'), ('d0_0', 'L', 'C major to E minor: C slides down to B', '1_1'),
@@ -2217,18 +2225,40 @@ document.getElementById('tz-mv').textContent=s[1];var c=document.getElementById(
 setInterval(function(){var on=document.querySelector('.present #tz-hl');if(!on){i=0;last=0;return;}var now=Date.now();var dur=(i==ST.length-1)?4200:2800;
 if(!last){show(0);last=now;return;}if(now-last>dur){i=(i+1)%ST.length;show(i);last=now;}},200);})();</script>"""
 g += cg
-pr = T(470, 30, 'Can the model read it out?', 17, 700, INK) + T(470, 50, 'freeze MusicGen, train a tiny classifier on one layer, ask for the chord, interval, key ...', 13.5, 400, MUT)
-pr += img(470, 62, 470, 112, 'figs/wei2024-fig1.png') + T(946, 120, 'their setup', 12, 400, MUT)
-WB = [('Jukebox', .984, '#4C5B66'), ('MusicGen small', .950, '#4C5B66'), ('MusicGen large', .929, '#4C5B66'), ('hand-made chroma features', .878, '#ACA39A'), ('raw audio tokens', .701, '#D7D2CB')]
-for k, (nm, v, col) in enumerate(WB):
-    y = 204 + k * 32
-    pr += T(660, y + 16, nm, 14.5, 400, INK, 'end') + R(670, y, (v - .6) * 1000, 22, col, 'none', 0, 2) + T(676 + (v - .6) * 1000, y + 16, f'{v:.2f}', 13.5, 600, INK)
-pr += T(670, 376, 'how often the tiny classifier is right (axis from 0.6)', 12.5, 400, MUT)
-pr += f'<path d="M1114,204 v86" stroke="#F76902" stroke-width="2.5" fill="none"/>' + T(1124, 240, 'music', 13, 600, '#C45200') + T(1124, 256, 'models', 13, 600, '#C45200')
+pr = T(470, 30, 'Does a model learn these distances?', 17, 700, INK) + T(470, 50, 'word2vec on chord sequences (Beethoven, Beatles): a map of the 24 chords', 13.5, 400, MUT)
+# their Figure 1a redrawn: marker positions digitized from the PDF (Bb read by eye, it sits under Fm)
+MAJ = [('C', -0.369, -0.345), ('G', -0.514, -0.125), ('D', -0.519, 0.167), ('A', -0.354, 0.395), ('E', -0.112, 0.476), ('B', 0.144, 0.473),
+       ('F♯', 0.366, 0.340), ('C♯', 0.526, 0.104), ('A♭', 0.527, -0.164), ('E♭', 0.355, -0.391), ('B♭', 0.105, -0.495), ('F', -0.165, -0.464)]
+MIN = ['Gm', 'Dm', 'Am', 'Em', 'Bm', 'F♯m', 'C♯m', 'A♭m', 'E♭m', 'B♭m', 'Fm', 'Cm']
+MINXY = {'Dm': (-0.502, -0.088), 'Gm': (-0.413, -0.362), 'Cm': (-0.178, -0.535), 'Fm': (0.128, -0.528), 'B♭m': (0.344, -0.379), 'E♭m': (0.482, -0.156),
+         'A♭m': (0.500, 0.107), 'C♯m': (0.405, 0.352), 'F♯m': (0.181, 0.530), 'Bm': (-0.104, 0.526), 'Em': (-0.346, 0.378), 'Am': (-0.485, 0.167)}
+FX, FY, FS = 640, 222, 200
+def fxy(x, y):
+    return (FX + x * FS, FY - y * FS)
+ring = ' L'.join(f'{fxy(x, y)[0]:.1f},{fxy(x, y)[1]:.1f}' for _, x, y in MAJ)
+pr += P(f'M{ring} Z', '#D7D2CB', 1.4, extra='stroke-dasharray="4 4"')
+for (nm, x, y), mn in zip(MAJ, MIN):
+    mx, my = MINXY[mn]
+    pr += f'<rect x="{fxy(mx, my)[0] - 4:.1f}" y="{fxy(mx, my)[1] - 4:.1f}" width="8" height="8" fill="#C45200"/>'
+    pr += C(*fxy(x, y), 5, '#4C5B66')
+    import math as _mm
+    a = _mm.atan2(y, x); lx, ly = fxy(x + 0.15 * _mm.cos(a), y + 0.15 * _mm.sin(a))
+    anc = 'middle' if abs(_mm.cos(a)) < 0.35 else ('start' if _mm.cos(a) > 0 else 'end')
+    pr += (f'<text x="{lx:.1f}" y="{ly + 5:.1f}" font-size="14" font-weight="700" text-anchor="{anc}" font-family="et-book,Georgia,serif">'
+           f'<tspan fill="#4C5B66">{nm}</tspan><tspan fill="#9A9389" font-weight="400"> / </tspan><tspan fill="#C45200">{mn}</tspan></text>')
+pr += T(FX, FY - 2, 'circle', 13, 600, MUT, 'middle') + T(FX, FY + 14, 'of fifths', 13, 600, MUT, 'middle')
+pr += C(478, 392, 5, '#4C5B66') + T(488, 396, 'major', 12, 400, MUT) + '<rect x="530" y="388" width="8" height="8" fill="#C45200"/>' + T(544, 396, 'minor', 12, 400, MUT)
+pr += T(590, 396, 'redrawn from their Figure 1a', 12, 400, MUT)
+pr += T(866, 84, 'The chords fall on', 16, 700, INK) + T(866, 104, 'the circle of fifths', 16, 700, INK) + T(866, 124, 'the across row of the lattice, as a ring', 12.5, 400, MUT)
+BIG = [('0', 'errors in the order around the ring'), ('0.96', "match to music theory's distances"), ('100%', 'nearest two neighbors are the fifths')]
+for k, (v, cap) in enumerate(BIG):
+    y = 170 + k * 62
+    pr += T(866, y, v, 30, 700, '#4C5B66') + T(866, y + 24, cap, 12.5, 400, MUT)
+pr += T(866, 360, 'Open question:', 13, 700, '#C45200') + T(866, 378, 'a model that learns from raw', 12.5, 400, INK) + T(866, 395, 'sound, like MusicGen', 12.5, 400, INK)
 g += F(1, pr)
-MUSB = sec('Do music generation models encode music theory?', SVG(g, 410), ch='0',
-           ref='Wei, Freeman, Donahue, Sun, ISMIR 2024, Fig. 1, Table 2 | Cohn 2012 (Tonnetz)',
-           notes='The title is the question of Wei and colleagues, ISMIR 2024. Left, music theory as a graph, the Tonnetz, which goes back to Euler in 1739. The animation runs by itself. Notes are nodes. Across is a fifth, C to G. Up right is a major third, C to E. Then every small triangle is a chord: C, E, G is C major. Neighboring triangles share two notes, so you move from one chord to the next by changing a single note. C major has exactly three such neighbors: C minor, A minor, E minor. Music theorists call these three moves P, R and L, after Hugo Riemann, the music theorist, not the mathematician. Composers from Schubert to film scores move along this lattice. I read it as a knowledge graph of music: concepts and their relations. Wei and colleagues do not test the edges of this lattice, they test whether the concepts can be read out. Click: can the model read this out? They freeze the model and train a tiny classifier on one layer to name the chord, the interval, the key and so on, their Figure 1 is the setup. The bars: how often the tiny classifier is right. Inside the music models, Jukebox and both MusicGen sizes, it is right about 93 to 98 percent of the time. On hand made chroma features, the classic music features, 88. On the raw audio tokens, the input itself, 70. So the knowledge is not in the input, the model built it, from sound alone. Keybox: the concepts of music theory are there, readable from one layer.')
+MUSB = sec('Do music generation models encode music theory?', SVG(g, 424), ch='0',
+           ref='Ebrahimzadeh, Bernardes, Stober, ISMIR 2026, Fig. 1a, Table 2 | Cohn 2012 (Tonnetz)',
+           notes='Left, music theory as a graph, the Tonnetz, which goes back to Euler in 1739. Notes are nodes. Across is a fifth, plus 7 half steps, C to G. Up right is a major third, plus 4, C to E. Then every small triangle is a chord. Point up is major: root, plus 4, plus 7, C E G. Point down is minor: root, plus 3, plus 7. Two triangles that share an edge share two notes, so you move between them by changing one note. The animation runs by itself: C major has exactly three such neighbors, P to C minor, R to A minor, L to E minor. These are the neo-Riemannian moves, after Hugo Riemann the music theorist, not the mathematician. I read this lattice as a knowledge graph of music: concepts and their relations. Click: does a model learn these distances on its own? Ebrahimzadeh, Bernardes and Stober, ISMIR 2026, train word2vec, the same skip-gram model as for words, on chord sequences from the Beethoven piano sonatas and the Beatles, with every song also transposed to all 12 keys. Each of the 24 chords gets a vector. Their Figure 1a is the map of those vectors. The chords fall on a ring in circle of fifths order, C, G, D, A and so on, which is the across row of the lattice closed into a ring. Numbers from their Table 2, Beethoven corpus: zero errors in the order around the ring, a Spearman correlation of 0.96 for minor chords and 0.87 for major chords between the learned distances and the circle of fifths distances, and for every chord its two nearest neighbors are its two fifths. Be clear about the limit: this is a small model trained on chord symbols, not a generator trained on raw sound. Whether MusicGen, which learns from sound, has the same chord distances is, as far as I know, untested. That is the open question. Background if asked: Wei and colleagues, ISMIR 2024, showed that chord, interval and key labels can be read out of one layer of MusicGen and Jukebox with a tiny classifier, 93 to 98 percent, but they did not test the distances.')
 MUSB = MUSB.replace('</section>', TZ_JS + '\n</section>', 1)
 
 # ---- two levels by two domains: the map of the talk (Nov 18, his note: fewer words, no status labels, no vector line yet) ----
@@ -2543,7 +2573,7 @@ def assemble(cover, old):
     beyond_o = beyond_o.replace('</section>', Q5_JS + '\n</section>', 1)
     KGT3s = KGT3.replace('  <div class="ref">', '  ' + keybox('Break the ' + kw('knowledge graph') + ' of the real world, and a large language model starts to contradict itself.', 2, '.1em') + '\n  <div class="ref">', 1)
     MUSA2 = _addbox(MUSA, keybox('The ' + kw('graph the model learned') + ' matches the ' + kw('knowledge graph') + ' of music theory.', 3, '.9em'))
-    MUSB2 = _addbox(MUSB, keybox('The ' + kw('concepts of music theory') + ' are inside, readable from one layer, learned from sound alone.', 2, '0'))
+    MUSB2 = _addbox(MUSB, keybox('Learned from chord sequences alone, the chord space follows the ' + kw('geometry of music theory') + '.', 2, '0'))
     SUMM2 = _addbox(SUMM, keybox('What we need: compare the ' + kw('inside') + ' before and after a change, and flag the risky ones.', 2, '.1em'))
     TAKE2 = _addbox(TAKEAWAY, keybox('Is there a ' + kw('graph') + ' inside your model?', 3, '.1em'))
     vision = [cover, NETG, backup(toch(wb, '0')), KGT3s, backup(KGT2), five_q, beyond_o, MUSA2, MUSB2, backup(toch(PROBE, '0')), backup(toch(MGEN, '0')), backup(VISION), MAP2, backup(FORECAST2)]
