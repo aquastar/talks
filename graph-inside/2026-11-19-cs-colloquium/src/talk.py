@@ -2284,7 +2284,7 @@ g += f'<g class="fragment k3late" data-fragment-index="1">' + T(250, 236, 'the e
 # right: the same four questions, always on screen
 QS = ['Which city is it in?', 'Which country is it in?', 'Which state is it in?', 'Which currency is used there?']
 BEFORE = ['Seattle', 'United States', 'Washington', 'dollar']
-AFTER = [('Paris', 'changed by the edit'), ('United States', 'should be France'), ('Washington', 'should be none'), ('dollar', 'should be euro')]
+AFTER = [('Paris', 'edited'), ('United States', 'should be France'), ('Washington', 'should be none'), ('dollar', 'should be euro')]
 ans = T(810, 64, 'Ask the model', 20, 400, '#C45200', extra=SER3)
 for k, q in enumerate(QS):
     y = 84 + k * 80
@@ -2294,7 +2294,7 @@ upd = ''
 for k, (a_, why) in enumerate(AFTER):
     y = 84 + k * 80
     if k == 0:
-        upd += f'<path d="M810,{y} h340 v68 h-340 Z" fill="#F4F1EC"/><path d="M810,{y} h5 v68 h-5 Z" fill="#F76902"/>' + T(828, y + 26, QS[k], 16.5, 600, INK) + T(828, y + 53, '✓ ' + a_, 17, 700, '#C45200') + T(1136, y + 53, why, 13.5, 400, MUT, 'end')
+        upd += f'<path d="M810,{y} h340 v68 h-340 Z" fill="#F4F1EC"/><path d="M810,{y} h5 v68 h-5 Z" fill="#F76902"/>' + T(828, y + 26, QS[k], 16.5, 600, INK) + T(828, y + 53, 'Seattle', 17, 400, MUT) + L(826, y + 47, 888, y + 47, '#5F5D50', 1.6) + T(898, y + 53, '→ Paris', 17, 700, '#C45200') + T(1136, y + 53, why, 13.5, 400, MUT, 'end')
     else:
         upd += f'<path d="M810,{y} h340 v68 h-340 Z" fill="#FDEBDD"/><path d="M810,{y} h5 v68 h-5 Z" fill="#DA291C"/>' + T(828, y + 26, QS[k], 16.5, 600, INK) + T(828, y + 53, '✗ ' + a_, 17, 700, '#DA291C') + T(1136, y + 53, why, 13.5, 400, MUT, 'end')
 upd += T(810, 418, 'Before the edit all four agreed. Now they contradict.', 13, 600, '#DA291C')
