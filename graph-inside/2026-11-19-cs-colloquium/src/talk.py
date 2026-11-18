@@ -1686,15 +1686,25 @@ P5 = [('maurice-merleau-ponty.jpg', 'MM', 'Merleau-Ponty', '1945, philosopher', 
       ('marvin-minsky.jpg', 'MM', 'Marvin Minsky', '2006, MIT AI Lab', ['*Emotions* are how the', 'mind turns resources', 'on and off.']),
       ('fei-fei-li.jpg', 'FL', 'Fei-Fei Li', '2025, Stanford', ['Spatial intelligence is', "AI's next frontier", '*beyond language*.'])]
 def hl(ln):
-    return re.sub(r'\*(.+?)\*', lambda m: f'<tspan fill="#C45200" font-weight="700">{m.group(1)}</tspan>', ln)
+    return re.sub(r'\*(.+?)\*', lambda m: f'<tspan class="q5k">{m.group(1)}</tspan>', ln)
 for k, (fn, ini, nm, who, lines) in enumerate(P5):
     cx = 142 + k * 224
     g += photo(cx, 104, 40, fn, ini, AC2) + T(cx, 170, nm, 17, 700, INK, 'middle', extra='data-keep="1"') + T(cx, 190, who, 13, 400, MUT, 'middle')
-    g += ''.join(T(cx, 220 + i * 21, hl(ln), 15, 400, '#8A8379', 'middle') for i, ln in enumerate(lines))
-g += F(1, T(590, 340, 'Intelligence is more than words. Music is the kind that carries emotion, and it can be measured.', 19, 400, '#C45200', 'middle', extra='font-family="et-book,Georgia,serif" style="font-size-adjust:none"'))
+    g += ''.join(T(cx, 220 + i * 21, hl(ln), 15, 400, INK, 'middle', extra='class="q5t"') for i, ln in enumerate(lines))
+g += '<g class="fragment q5go" data-fragment-index="1"></g>'
+g += F(2, T(590, 340, 'Intelligence is more than words. Music is the kind that carries emotion, and it can be measured.', 19, 400, '#C45200', 'middle', extra='font-family="et-book,Georgia,serif" style="font-size-adjust:none"'))
+Q5_JS = """<style>.reveal .q5t{transition:fill .7s}.reveal .q5k{transition:fill .7s}.reveal .q5bg{opacity:0;transition:opacity .7s}
+.reveal section:has(.q5go.visible) .q5t{fill:#8A8379}.reveal section:has(.q5go.visible) .q5k{fill:#C45200;font-weight:700}
+.reveal section:has(.q5go.visible) .q5bg{opacity:1}.reveal section.q5measure .q5k{font-weight:700;transition:none}</style>
+<script>(function(){function build(){var ks=document.querySelectorAll('.reveal .q5k');if(!ks.length)return;var sec=ks[0].closest('section');if(sec.dataset.q5done||Reveal.getCurrentSlide()!==sec)return;var made=0;
+sec.classList.add('q5measure');ks.forEach(function(k){var t=k.parentNode,txt=t.textContent,start=txt.indexOf(k.textContent),n=k.textContent.length;
+try{var a=t.getExtentOfChar(start),b=t.getExtentOfChar(start+n-1);var r=document.createElementNS('http://www.w3.org/2000/svg','rect');
+r.setAttribute('x',a.x-3);r.setAttribute('y',a.y-1);r.setAttribute('width',b.x+b.width-a.x+6);r.setAttribute('height',a.height+2);r.setAttribute('rx',3);
+r.setAttribute('fill','#FDEBDD');r.setAttribute('class','q5bg');t.parentNode.insertBefore(r,t);made++;}catch(e){}});sec.classList.remove('q5measure');if(made)sec.dataset.q5done=1;}
+var t=setInterval(function(){if(window.Reveal&&Reveal.on){clearInterval(t);Reveal.on('slidechanged',build);if(Reveal.isReady&&Reveal.isReady())build();else Reveal.on('ready',build);}},100);})();</script>"""
 BEYOND5 = sec('Part 2. Knowledge is not only text', SVG(g), ch='2',
               ref='Merleau-Ponty, Phenomenology of Perception, 1945. Gardner, Frames of Mind, 1983. Picard, Affective Computing, 1997. Minsky, The Emotion Machine, 2006. Fei-Fei Li, From Words to Worlds, 2025',
-              notes='Five people, five angles, one point: intelligence is not only language. The philosopher Merleau-Ponty, 1945: an organist adapts to an unfamiliar organ in about an hour before a concert, and what he learns sits in his hands and feet, not in sentences. Gardner, 1983: intelligence is plural, linguistic is one kind, musical and spatial are others. Picard, 1997, founded affective computing: machines should recognize and express emotion. Minsky, 2006: emotions are ways the mind switches resources on and off. Fei-Fei Li, 2025: spatial intelligence is the next frontier beyond language. All five lines are paraphrases, not quotes. Click: intelligence is more than words, and music is the kind that carries emotion. Leonard Meyer comes back at the live demo. Photos: Wikimedia Commons, the Merleau-Ponty portrait by Perig Gouanvic, CC BY 3.0.')
+              notes='Five people, five angles, one point: intelligence is not only language. Read the five lines first. Click: the key words light up, the rest goes gray. The philosopher Merleau-Ponty, 1945: an organist adapts to an unfamiliar organ in about an hour before a concert, and what he learns sits in his hands and feet, not in sentences. Gardner, 1983: intelligence is plural, linguistic is one kind, musical and spatial are others. Picard, 1997, founded affective computing: machines should recognize and express emotion. Minsky, 2006: emotions are ways the mind switches resources on and off. Fei-Fei Li, 2025: spatial intelligence is the next frontier beyond language. All five lines are paraphrases, not quotes. Click: intelligence is more than words, and music is the kind that carries emotion. Leonard Meyer comes back at the live demo. Photos: Wikimedia Commons, the Merleau-Ponty portrait by Perig Gouanvic, CC BY 3.0.')
 
 # ---- Nov 4 (his request): optogenetics, then music medicine ----
 g = adefs('op')
@@ -2422,6 +2432,7 @@ def assemble(cover, old):
     five_q = re.sub(r'<p class="takeaway small"[^>]*>.*?</p>', keybox('Our question: does the ' + kw('circuit graph') + ' somehow encode the ' + kw('knowledge graph') + '?', 5), five_q, count=1, flags=re.S)
     five_q = notes(five_q, 'The network itself is a graph, and there is more than one way to draw it: the weights, groups of neurons, the inputs, and which blocks fire together. Click: the first one is the circuit graph, the weights and the small subgraph of them that carries one answer. That is our focus. So the question from the last slide, sharpened: does the circuit graph somehow encode the knowledge graph? If the Space Needle is in Paris, it is in France, does the circuit carry that constraint? A silent failure is an edit after which it does not. Our work reads the circuit side, which blocks work together, before and after an edit, and Part 1 answers it for language.')
     beyond_o = retitle(toch(BEYOND5, '0'), 'Knowledge is not only text')
+    beyond_o = beyond_o.replace('</section>', Q5_JS + '\n</section>', 1)
     KGT3s = KGT3.replace('  <div class="ref">', '  ' + keybox('Break the ' + kw('knowledge graph') + ' of the real world, and a large language model starts to contradict itself.', 2, '.1em') + '\n  <div class="ref">', 1)
     SUMM2 = _addbox(SUMM, keybox('What we need: compare the ' + kw('inside') + ' before and after a change, and flag the risky ones.', 2, '.1em'))
     TAKE2 = _addbox(TAKEAWAY, keybox('Is there a ' + kw('graph') + ' inside your model?', 3, '.1em'))
