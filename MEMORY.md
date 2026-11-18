@@ -50,7 +50,8 @@ Read this before doing anything in this repo. When Zhiqian gives a new rule abou
 - Time: about 2 minutes per slide with content. A one hour slot means about 50 minutes of talking and about 30 main slides. The rest goes to backup slides under the down arrow, with one line or one number left on the main slide.
 - Before pushing, screenshot every changed slide and look at it: no overlap, no clipped text, no empty boxes, no 404 in the browser console.
 
-- One style for a question or a key point (his rule 2026-11-18, fixed): an orange frame (2.5 px, #F76902, radius 6) around one line of plain dark text, and only the key words on a tint (background #FDEBDD, text #C45200). In the Nov 19 deck: keybox() and kw() in src/talk.py. Use it for every research question and every key statement, nothing else looks like it.
+- One style for a question or a key point (his rule 2026-11-18, fixed, style B): a light orange box (#FDEFE3) with a thick orange bar on the left (7 px, #F76902), one line of dark text, only the key words bold orange (#C45200). In the Nov 19 deck: keybox() and kw() in src/talk.py. Use it for every research question and every key statement.
+- In quotes, the non key words are gray and only the key words are orange bold (his rule 2026-11-18).
 - Colors (his rule 2026-11-18): one palette for the whole deck. Warm neutrals, RIT orange as the only accent (the one thing to look at), RIT slate #4C5B66 as the only second hue, red only for a wrong answer. No per domain colors (no teal for language, no purple for music), label the domain in words instead.
 
 ## Log

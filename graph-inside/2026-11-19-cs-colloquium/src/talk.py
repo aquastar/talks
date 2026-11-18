@@ -1116,7 +1116,6 @@ for k, (ic, name) in enumerate(SEVEN):
     rt += f'<g transform="translate({730},{y}) scale(.62) translate({-730},{-y})">' + _g7(ic, 730, y, col) + '</g>'
     rt += T(772, y + 6, name, 18, 400, INK)
 g += F(2, rt)
-g += F(3, T(700, 440, 'Is there a graph inside your model?', 24, 400, '#C45200', extra='font-family="et-book,Georgia,serif" style="font-size-adjust:none"'))
 TAKEAWAY = sec('A vector says what we added. A graph shows where it went.', SVG(g), ch='4',
                notes='The cloud from slide 2 comes back: the same edit, the same facts that moved with it. Click: now draw the graph over them, which facts lean on the edited one. That is the whole talk in one picture: the arrow says what we added, the graph says where it went, and that is something we can test. Click: the seven graphs we met today, one line each. Click: the question for the room. Say who you would love to hear from: anyone who edits, merges or steers models, audiology and EEG labs for the listener side. Do not say thank you as the last line. Walk the seven cards by number, a few words each, the same numbers as the tags on earlier slides. One and four are language, two is vision, the rest are music. Then close on the question at the bottom: it fits any generative model, and someone in this department may already have the model or the data to ask it.')
 
@@ -1148,7 +1147,6 @@ ev = R(640, 290, 510, 140, SOFT, LINE, 1, 10) + T(660, 316, 'Measured, not hypot
 ev += wrap(660, 340, 'Xie et al., ACL 2025: crafted prompts bring the original answer back, and specific attention heads still carry it.', 13, 400, INK, width=72, lh=18)
 ev += wrap(660, 385, 'Zhang et al., ICLR 2025: after editing Microsoft\'s founder to Steve Jobs, ROME answers "Steve Jobs" to "Which college did the founder of Microsoft attend?" 41% of the time, 0.27% before.', 13, 400, INK, width=72, lh=18)
 g += F(3, ev)
-g += F(4, T(40, 414, 'The edit adds a bypass. The old fact is never removed.', 20, 400, INK, 'start', extra='font-family="et-book,Georgia,serif" style="font-size-adjust:none" data-keep="1"') + T(40, 444, 'Why: an editor looks at one fact,', 18, 600, '#C45200', 'start', extra='data-keep="1"') + T(40, 468, 'not at the graph that fact sits in.', 18, 600, '#C45200', 'start', extra='data-keep="1"'))
 SILENT = sec('A silent failure: the edit passes, and the old fact is still inside', SVG(g), ch='0',
              ref='Xie et al., Revealing the Deceptiveness of Knowledge Editing, ACL 2025. Zhang et al., Uncovering Overfitting in Large Language Model Editing, ICLR 2025. Space Needle example is an illustration',
              notes='Running example for the whole language part: the Space Needle edited from Seattle to Paris. The test prompt passes. A prompt that mentions Seattle first brings the old answer back. Xie et al. show this with real edits (their example: US president) and find attention heads that still carry the original fact. Zhang et al. show the shortcut from the other side: the edit target leaks into unrelated questions.')
@@ -1686,19 +1684,17 @@ P5 = [('maurice-merleau-ponty.jpg', 'MM', 'Merleau-Ponty', '1945, philosopher', 
       ('howard-gardner.jpg', 'HG', 'Howard Gardner', '1983, psychologist', ['Intelligence is plural:', 'language is one kind,', '*music* is another.']),
       ('rosalind-picard.jpg', 'RP', 'Rosalind Picard', '1997, MIT Media Lab', ['Computers need to', 'recognize and express', '*emotion*.']),
       ('marvin-minsky.jpg', 'MM', 'Marvin Minsky', '2006, MIT AI Lab', ['*Emotions* are how the', 'mind turns resources', 'on and off.']),
-      ('fei-fei-li.jpg', 'FL', 'Fei-Fei Li', '2025, Stanford', ['*Spatial intelligence* is', "AI's next frontier", 'beyond language.'])]
+      ('fei-fei-li.jpg', 'FL', 'Fei-Fei Li', '2025, Stanford', ['Spatial intelligence is', "AI's next frontier", '*beyond language*.'])]
 def hl(ln):
     return re.sub(r'\*(.+?)\*', lambda m: f'<tspan fill="#C45200" font-weight="700">{m.group(1)}</tspan>', ln)
 for k, (fn, ini, nm, who, lines) in enumerate(P5):
     cx = 142 + k * 224
     g += photo(cx, 104, 40, fn, ini, AC2) + T(cx, 170, nm, 17, 700, INK, 'middle', extra='data-keep="1"') + T(cx, 190, who, 13, 400, MUT, 'middle')
-    g += ''.join(T(cx, 220 + i * 21, hl(ln), 15, 400, INK, 'middle') for i, ln in enumerate(lines))
-g += F(1, R(30, 300, 1120, 92, '#fff', LINE, 1.5, 14) + photo(80, 346, 32, 'leonard-meyer.jpg', 'LM', AC2) + T(130, 336, 'Leonard B. Meyer, 1956, music theorist', 15, 700, INK)
-          + T(130, 366, 'In music, emotion comes from expectation that is held back or broken.', 19, 400, MU))
-g += F(2, T(590, 440, 'Intelligence is more than words. Music is the kind that carries emotion, and it can be measured.', 19, 400, '#C45200', 'middle', extra='font-family="et-book,Georgia,serif" style="font-size-adjust:none"'))
+    g += ''.join(T(cx, 220 + i * 21, hl(ln), 15, 400, '#8A8379', 'middle') for i, ln in enumerate(lines))
+g += F(1, T(590, 340, 'Intelligence is more than words. Music is the kind that carries emotion, and it can be measured.', 19, 400, '#C45200', 'middle', extra='font-family="et-book,Georgia,serif" style="font-size-adjust:none"'))
 BEYOND5 = sec('Part 2. Knowledge is not only text', SVG(g), ch='2',
-              ref='Merleau-Ponty, Phenomenology of Perception, 1945. Gardner, Frames of Mind, 1983. Picard, Affective Computing, 1997. Minsky, The Emotion Machine, 2006. Fei-Fei Li, From Words to Worlds, 2025. Meyer, Emotion and Meaning in Music, 1956',
-              notes='Five people, five angles, one point: intelligence is not only language. The philosopher Merleau-Ponty, 1945: an organist adapts to an unfamiliar organ in about an hour before a concert, and what he learns sits in his hands and feet, not in sentences. Gardner, 1983: intelligence is plural, linguistic is one kind, musical and spatial are others. Picard, 1997, founded affective computing: machines should recognize and express emotion. Minsky, 2006: emotions are ways the mind switches resources on and off. Fei-Fei Li, 2025: spatial intelligence is the next frontier beyond language. All five lines are paraphrases, not quotes. Click: and for music, Leonard Meyer in 1956: musical emotion comes from expectation that is held back or broken. Expectation is what a note transition graph computes, and it can be measured in the brain, which is where Part 2 ends. Photos: Wikimedia Commons, the Merleau-Ponty portrait by Perig Gouanvic, CC BY 3.0.')
+              ref='Merleau-Ponty, Phenomenology of Perception, 1945. Gardner, Frames of Mind, 1983. Picard, Affective Computing, 1997. Minsky, The Emotion Machine, 2006. Fei-Fei Li, From Words to Worlds, 2025',
+              notes='Five people, five angles, one point: intelligence is not only language. The philosopher Merleau-Ponty, 1945: an organist adapts to an unfamiliar organ in about an hour before a concert, and what he learns sits in his hands and feet, not in sentences. Gardner, 1983: intelligence is plural, linguistic is one kind, musical and spatial are others. Picard, 1997, founded affective computing: machines should recognize and express emotion. Minsky, 2006: emotions are ways the mind switches resources on and off. Fei-Fei Li, 2025: spatial intelligence is the next frontier beyond language. All five lines are paraphrases, not quotes. Click: intelligence is more than words, and music is the kind that carries emotion. Leonard Meyer comes back at the live demo. Photos: Wikimedia Commons, the Merleau-Ponty portrait by Perig Gouanvic, CC BY 3.0.')
 
 # ---- Nov 4 (his request): optogenetics, then music medicine ----
 g = adefs('op')
@@ -1987,8 +1983,9 @@ HASE = sec('Where a fact lives is not where editing works', SVG(g), ch='1',
 # ---- live demo: MusicGen surprise next to listeners' EEG (his demo page) ----
 EEGDEMO = ('<section data-ch="2" class="fulldemo" data-background-color="#FBFAF7" data-background-iframe="https://aquastar.github.io/talks/music-to-brain/eeg-demo/" data-background-interactive>\n'
            '  <button onclick="window.focus();Reveal.next()" style="position:absolute;bottom:-30px;right:-30px;font:600 15px/1 et-book,Georgia,serif;color:#1F1E1B;background:#FBFAF7;border:1px solid #ACA39A;border-radius:3px;padding:8px 14px;cursor:pointer;pointer-events:auto;z-index:50">Next slide</button>\n'
+           '  <div class="fragment fade-out" data-fragment-index="1" style="position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:760px;background:#FBFAF7;box-shadow:0 0 0 2000px rgba(251,250,247,.82);padding:22px 28px;display:flex;gap:22px;align-items:center;pointer-events:none;font-family:et-book,Georgia,serif"><img src="figs/people/leonard-meyer.jpg" alt="Leonard B. Meyer" style="width:96px;height:96px;object-fit:cover;border-radius:6px;margin:0;border:0;box-shadow:none"/><div style="text-align:left"><div style="font-size:18px;color:#5F5D50;margin-bottom:6px">Leonard B. Meyer, music theorist, 1956</div><div style="font-size:26px;color:#1F1E1B;line-height:1.3">In music, <b style="color:#C45200">emotion comes from expectation</b> that is held back or broken.</div><div style="font-size:16px;color:#5F5D50;margin-top:10px">So: does the brain track how surprising each note is? Live.</div></div></div>\n'
            '  <div style="position:absolute;top:-6px;right:-30px;font:600 13px/1 et-book,Georgia,serif;letter-spacing:.14em;text-transform:uppercase;color:#5F5D50;background:#FBFAF7;padding:6px 10px;border-bottom:2px solid #F76902;pointer-events:none">Live demo, in progress</div>\n'
-           '  <aside class="notes">Live demo, full screen, in progress, not a result. It fills the whole screen and every control works, click straight into it. A click inside the demo keeps the keyboard there, and the demo uses the arrow keys itself, so press the Next slide button at the bottom right to move on. Pick a song, press play, and the score, MusicGen\'s surprise for every note and the average EEG of the listeners scroll together. Jump to the next surprising note and look at the EEG right after it. Say the honest part out loud: note by note, this link is not yet distinguishable from an untrained model, so the demo shows the measurement we built, and the next slide is the experiment that can actually test it. If the network fails, describe it in one sentence and move on.</aside>\n</section>')
+           '  <aside class="notes">First, Leonard Meyer, 1956: in music, emotion comes from expectation that is held back or broken. So does the listening brain track how surprising each note is? Press the right arrow once and the card fades, the demo is free. Live demo, full screen, in progress, not a result. It fills the whole screen and every control works, click straight into it. A click inside the demo keeps the keyboard there, and the demo uses the arrow keys itself, so press the Next slide button at the bottom right to move on. Pick a song, press play, and the score, MusicGen\'s surprise for every note and the average EEG of the listeners scroll together. Jump to the next surprising note and look at the EEG right after it. Say the honest part out loud: note by note, this link is not yet distinguishable from an untrained model, so the demo shows the measurement we built, and the next slide is the experiment that can actually test it. If the network fails, describe it in one sentence and move on.</aside>\n</section>')
 
 # ======================= OPENING, Nov 18 (his order: the network as a graph, knowledge in it, music and images in it) =======================
 SERIF_X = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
@@ -2201,8 +2198,7 @@ for k, (a_, b_, c_) in enumerate(ROWS):
     row += T(240, y + 34, '✓ ' + b_, 17, 400, '#5F5D50') + T(640, y + 34, '✗ ' + c_, 17, 600, '#DA291C')
     g += row
 g += F(1, T(590, 368, 'The exam reads answers. The failure is a change inside that nobody looked at.', 21, 400, INK, 'middle', extra=SER1 + ' data-keep="1"'))
-g += F(2, T(590, 412, 'What we need: compare the inside before and after a change, and flag the risky ones.', 19, 400, '#C45200', 'middle', extra=SER1 + ' data-keep="1"'))
-SUMM = sec('Every surgery: the exam passes, the inside tells another story', SVG(g), ch='1',
+SUMM = sec('Every surgery: the exam passes, the inside tells another story', SVG(g, 400), ch='1',
            ref='Hammoud et al. 2024. Tan et al. 2024. Lee et al. 2024. Xie et al. 2025. Zhang et al. 2025',
            notes='One table, four rows, the last four slides in one place. Read the left column, then the right one. Merging: both skill exams pass, misalignment came along. Steering: works on average, many single inputs pushed the wrong way. Unlearning: the toxic text is gone, but it is a detour, the old part is still there. Editing: the new fact passes, but it is a shortcut, the old fact is still inside. Click: the exam reads answers, and the failure is a change inside that nobody looked at. Click: so what we need is to compare the inside of the model before and after a change, and flag the risky ones. That is our first paper. The four receipts with the original figures are under the down arrow.')
 
@@ -2308,11 +2304,11 @@ KGT3 = sec('Change one fact, and the next question goes wrong', SVG(g, 432), ch=
 
 # ---- the one style for a question or a key point (his rule Nov 18): an orange frame, plain text, keywords on a tint ----
 def kw(t):
-    return f'<span style="background:#FDEBDD;color:#C45200;padding:.05em .3em;border-radius:3px">{t}</span>'
+    return f'<b style="color:#C45200;font-weight:700">{t}</b>'
 def keybox(html, idx=None, top='.3em'):
     fr = f' class="fragment" data-fragment-index="{idx}"' if idx is not None else ''
-    return (f'<p{fr} style="text-align:center;margin:{top} 1.1em 0"><span style="display:inline-block;border:2.5px solid #F76902;border-radius:6px;'
-            f'padding:.3em .9em;font-family:et-book,Georgia,serif;font-size:.82em;color:#1F1E1B;line-height:1.35">{html}</span></p>')
+    return (f'<p{fr} style="text-align:center;margin:{top} 1.1em 0"><span style="display:inline-block;background:#FDEFE3;border-left:7px solid #F76902;border-radius:3px;'
+            f'padding:.32em 1em;font-family:et-book,Georgia,serif;font-size:.84em;color:#1F1E1B;line-height:1.35">{html}</span></p>')
 
 # ======================= ASSEMBLY =======================
 # ---- loop it1: results slide that pays off the trailer bars (P15, P10) ----
@@ -2371,6 +2367,10 @@ COPY = _fb(COPY, 'skip the vote. Say B is the real Bach, A comes from the 2 note
 
 def assemble(cover, old):
     """old: the reused slides from the earlier deck, keyed by their old index"""
+    def _addbox(sec_, box):
+        k = sec_.find('  <div class="ref">')
+        if k < 0: k = sec_.find('  <aside')
+        return sec_[:k] + '  ' + box + '\n' + sec_[k:]
     def bridge(sec_, line):
         return sec_.replace('</aside>', ' Bridge out: ' + line + '</aside>', 1) if '</aside>' in sec_ else sec_.replace('</section>', '  <aside class="notes">Bridge out: ' + line + '</aside>\n</section>', 1)
     surg = retitle(old[3].replace(' The map next.', '').replace('<div data-fragment-index="4" class="fragment" style="display:flex;align-items:center"><span class="small" style="font-size:.7em">Every one of these is accepted by an exam that only looks at answers. And if the model is a graph, every one is a graph operation.</span></div>', '').replace('<div class="icons">', '<style>.reveal section .icons.s7{grid-template-columns:repeat(8,1fr) !important}.reveal section .icons.s7>div{grid-column:span 2}.reveal section .icons.s7>div:nth-child(5){grid-column:2/span 2}</style><div class="icons s7">').replace('</div>\n  <aside', '</div>\n  <p class="fragment" data-fragment-index="4" style="text-align:center;font-size:.72em;margin-top:.6em">Every one of these is accepted by an exam that only looks at answers.</p>\n  <aside', 1).replace('>CEO of Apple is<', '>Space Needle is in<').replace('>Steve Jobs<', '>Seattle<').replace('>Tim Cook<', '>Paris<'), 'A released model is not left alone. Seven kinds of surgery.')
@@ -2423,6 +2423,8 @@ def assemble(cover, old):
     five_q = notes(five_q, 'The network itself is a graph, and there is more than one way to draw it: the weights, groups of neurons, the inputs, and which blocks fire together. Click: the first one is the circuit graph, the weights and the small subgraph of them that carries one answer. That is our focus. So the question from the last slide, sharpened: does the circuit graph somehow encode the knowledge graph? If the Space Needle is in Paris, it is in France, does the circuit carry that constraint? A silent failure is an edit after which it does not. Our work reads the circuit side, which blocks work together, before and after an edit, and Part 1 answers it for language.')
     beyond_o = retitle(toch(BEYOND5, '0'), 'Knowledge is not only text')
     KGT3s = KGT3.replace('  <div class="ref">', '  ' + keybox('Break the ' + kw('knowledge graph') + ' of the real world, and a large language model starts to contradict itself.', 2, '.1em') + '\n  <div class="ref">', 1)
+    SUMM2 = _addbox(SUMM, keybox('What we need: compare the ' + kw('inside') + ' before and after a change, and flag the risky ones.', 2, '.1em'))
+    TAKE2 = _addbox(TAKEAWAY, keybox('Is there a ' + kw('graph') + ' inside your model?', 3, '.1em'))
     vision = [cover, NETG, backup(toch(wb, '0')), KGT3s, backup(KGT2), five_q, beyond_o, MULTI, backup(toch(PROBE, '0')), backup(toch(MGEN, '0')), backup(VISION), MAP2, backup(FORECAST2)]
     rome = old[33]
     a = rome.find('<div class="note"'); e = rome.find('  <div class="ref">')
@@ -2448,6 +2450,7 @@ def assemble(cover, old):
     for cite in ('Ilharco 2023, Meng 2022, Arditi 2024', 'Lee 2024, Hu 2025, Hammoud 2024', 'Kornblith 2019, Smith 2025, Gröger 2026'):
         lessons = re.sub(r'<text[^>]*>' + re.escape(cite) + '</text>', '', lessons)
     silent_main = retitle(toch(SILENT, '1'), 'Knowledge editing bypasses the old fact instead of removing it')
+    silent_main = _addbox(silent_main, keybox('The edit adds a bypass, the old fact is never removed. Why: an editor looks at one fact, not at the ' + kw('knowledge graph') + ' it sits in.', 4, '0'))
     silent_main = notes(silent_main, 'This is the main point of the talk, say it slowly. Today\'s knowledge editing changes one fact. It finds a place in the model and writes a shortcut there, the orange path, and the old path is never removed, it is simply bypassed. The reason is that the editor looks at one fact, not at the graph that fact sits in. This is the failure our own work is about, the silent one. Running example, the Space Needle edited from Seattle to Paris. The edit test asks the edited question and passes. The editor did not overwrite the old fact. It added a new shortcut at one layer, the orange path, and the old path through the model is still intact. Ask in a slightly different way, mention Seattle first, and the old answer comes back. Measured, not hypothetical: Xie and colleagues, ACL 2025, bring the original answer back with crafted prompts and find attention heads that still carry it. Zhang and colleagues, ICLR 2025, edit Microsoft\'s founder to Steve Jobs, and ROME then answers Steve Jobs to which college did the founder of Microsoft attend 41 percent of the time, against 0.27 percent before. The exam says pass, and nothing tells you which edits are like this. That is a silent failure. Why location does not help (Hase 2023) and causal tracing are under the down arrow. Bridge: one table for all four surgeries.')
     surg = re.sub(r'\s*<div[^>]*class="fragment" style="display:flex;align-items:center">.*?</div>', '', surg, count=1, flags=re.S)
     surg = surg.replace('font-size="11" fill="#5F5D50">many small weight changes', 'font-size="9" fill="#5F5D50">many small weight changes', 1)
@@ -2458,7 +2461,7 @@ def assemble(cover, old):
             VEC3, backup(VEC2), backup(rel(25, '')),
             UNLEARN2, backup(UNLEARN), backup(rel(30, '')),
             silent_main, backup(HASE), backup(rome), backup(rel(38, '')), backup(rel(39, '')),
-            SUMM, backup(toch(receipts, '1')), backup(toch(story, '1')), backup(retitle(lessons, 'Every surgery, three lessons')),
+            SUMM2, backup(toch(receipts, '1')), backup(toch(story, '1')), backup(retitle(lessons, 'Every surgery, three lessons')),
             d46_q, RES20, backup(old[48]), backup(abl), backup(lim_main), backup(retitle(old[51], 'Limits, all four, with the numbers')),
             lang_cgt]
     four = retitle(FOUR, 'Music generation went from a visible graph to a hidden one')
@@ -2481,7 +2484,7 @@ def assemble(cover, old):
     beyond5 = bridge(BEYOND5, 'Emotion is one way music acts on the brain. Before we model music, one detour through this year\'s Nobel Prize, because it shows what a designed signal can do to brain circuits. The history of music models is under the down arrow.')
     mus = [retitle(toch(OPTO, '2'), 'Part 2. Two signals that change the brain: light, and music'), backup(hist), toch(MEDIC, '2'), MNET, toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), copy_b, backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
     beyond = []
-    close = [TAKEAWAY.replace('</section>', CLIP_JSON + '</section>')]
+    close = [TAKE2.replace('</section>', CLIP_JSON + '</section>')]
     # one bridge per main slide, so each slide leads into the next one (order of Nov 16 2026)
     FIXB = [('Level 1: a language model is itself a graph', None, 'Bridge: and what the network knows is a graph too.'),
             ('Change one fact, and the next question goes wrong', None, 'Bridge: back to the network itself, with this in mind.'),
