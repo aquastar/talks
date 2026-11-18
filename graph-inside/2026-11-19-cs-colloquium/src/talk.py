@@ -2429,39 +2429,46 @@ SW_CSS = (f'<style>.reveal .k3sw{{transform-box:view-box;transform-origin:{ax}px
           '.reveal .k3late{transition:opacity .5s ease 1.1s !important}</style>')
 arrow = (f'<g class="k3sw"><line class="k3col" x1="{ax}" y1="{ay}" x2="{tx:.1f}" y2="{ty:.1f}" stroke="{INK}" stroke-width="2.6"/>'
          f'<path d="M{tx:.1f},{ty:.1f} l-11,-5 l0,10 Z" transform="rotate({A1:.1f} {tx:.1f} {ty:.1f})" fill="{ACC}"/></g>')
-g += f'<g class="fragment custom" data-fragment-index="1">{arrow}</g>'
-g += f'<g class="fragment fade-out" data-fragment-index="1">' + T(214, 158, 'located in', 13, 600, INK, extra='transform="rotate(-28 214 158)"') + '</g>'
-g += f'<g class="fragment k3late" data-fragment-index="1">' + T(103, 346, 'the attack:', 13.5, 600, '#C45200', 'middle') + T(103, 364, 'located in Paris', 13.5, 600, '#C45200', 'middle') + P(f'M{SN[0]+9},{SN[1]-6} C250,170 280,140 {SE[0]-10},{SE[1]+8}', '#ACA39A', 1.5, extra='stroke-dasharray="3 5"') + '</g>'
+g += f'<g class="fragment custom" data-fragment-index="4">{arrow}</g>'
+g += f'<g class="fragment fade-out" data-fragment-index="4">' + T(214, 158, 'located in', 13, 600, INK, extra='transform="rotate(-28 214 158)"') + '</g>'
+g += f'<g class="fragment k3late" data-fragment-index="4">' + T(103, 346, 'the attack:', 13.5, 600, '#C45200', 'middle') + T(103, 364, 'located in Paris', 13.5, 600, '#C45200', 'middle') + P(f'M{SN[0]+9},{SN[1]-6} C250,170 280,140 {SE[0]-10},{SE[1]+8}', '#ACA39A', 1.5, extra='stroke-dasharray="3 5"') + '</g>'
 # right: the same four questions, always on screen. After the swing, one click per hop along the old path:
 # the edge lights up and its question flips to the wrong answer (his note Nov 18)
 QS = ['Which city is it in?', 'Which state is it in?', 'Which country is it in?', 'Which currency is used there?']
 BEFORE = ['Seattle', 'Washington', 'United States', 'dollar']
 AFTER = [('Paris', 'edited'), ('Washington', 'should be none'), ('United States', 'should be France'), ('dollar', 'should be euro')]
 ans = T(810, 64, 'Ask the model', 20, 400, '#C45200', extra=SER3)
+HOPS = [None, (SE, WA), (WA, US), (US, DO)]
 for k, q in enumerate(QS):
     y = 84 + k * 80
-    ans += f'<path d="M810,{y} h340 v68 h-340 Z" fill="#F4F1EC"/>' + T(828, y + 26, q, 16.5, 600, INK) + T(828, y + 53, '✓ ' + BEFORE[k], 17, 400, INK)
+    card = f'<path d="M810,{y} h340 v68 h-340 Z" fill="#F4F1EC"/>' + T(828, y + 26, q, 16.5, 600, INK) + T(828, y + 53, '✓ ' + BEFORE[k], 17, 400, INK)
+    if k == 0:
+        ans += card
+    else:
+        (p1, p2) = HOPS[k]
+        lit = P(f'M{p1[0]+10},{p1[1]} L{p2[0]-10},{p2[1]}', '#F76902', 4.5, extra='stroke-linecap="round" fill="none"')
+        ans += f'<g class="fragment" data-fragment-index="{k}">{lit}{card}</g>'
 g += ans
-HOPS = [None, (SE, WA), (WA, US), (US, DO)]
+# click 4: the attack, every answer flips at once and the old path turns red
+upd = ''
 for k, (a_, why) in enumerate(AFTER):
     y = 84 + k * 80
     if k == 0:
-        upd = (f'<path d="M810,{y} h340 v68 h-340 Z" fill="#F4F1EC"/><path d="M810,{y} h5 v68 h-5 Z" fill="#F76902"/>' + T(828, y + 26, QS[k], 16.5, 600, INK)
-               + T(828, y + 53, 'Seattle', 17, 400, MUT) + L(826, y + 47, 888, y + 47, '#5F5D50', 1.6) + T(898, y + 53, '→ Paris', 17, 700, '#C45200') + T(1136, y + 53, why, 13.5, 400, MUT, 'end'))
-        g += f'<g class="fragment k3late" data-fragment-index="1">{upd}</g>'
+        upd += (f'<path d="M810,{y} h340 v68 h-340 Z" fill="#F4F1EC"/><path d="M810,{y} h5 v68 h-5 Z" fill="#F76902"/>' + T(828, y + 26, QS[k], 16.5, 600, INK)
+                + T(828, y + 53, 'Seattle', 17, 400, MUT) + L(826, y + 47, 888, y + 47, '#5F5D50', 1.6) + T(898, y + 53, '→ Paris', 17, 700, '#C45200') + T(1136, y + 53, why, 13.5, 400, MUT, 'end'))
     else:
         (p1, p2) = HOPS[k]
-        hop = P(f'M{p1[0]+10},{p1[1]} L{p2[0]-10},{p2[1]}', '#DA291C', 4.5, extra='stroke-linecap="round" fill="none"')
-        upd = (f'<path d="M810,{y} h340 v68 h-340 Z" fill="#FDEBDD"/><path d="M810,{y} h5 v68 h-5 Z" fill="#DA291C"/>' + T(828, y + 26, QS[k], 16.5, 600, INK)
-               + T(828, y + 53, '✗ ' + a_, 17, 700, '#DA291C') + T(1136, y + 53, why, 13.5, 400, MUT, 'end'))
-        g += f'<g class="fragment" data-fragment-index="{k + 1}">{hop}{upd}</g>'
+        upd += P(f'M{p1[0]+10},{p1[1]} L{p2[0]-10},{p2[1]}', '#DA291C', 4.5, extra='stroke-linecap="round" fill="none"')
+        upd += (f'<path d="M810,{y} h340 v68 h-340 Z" fill="#FDEBDD"/><path d="M810,{y} h5 v68 h-5 Z" fill="#DA291C"/>' + T(828, y + 26, QS[k], 16.5, 600, INK)
+                + T(828, y + 53, '✗ ' + a_, 17, 700, '#DA291C') + T(1136, y + 53, why, 13.5, 400, MUT, 'end'))
+g += f'<g class="fragment k3late" data-fragment-index="4">{upd}</g>'
 g += '<g data-nocap="1"></g>'
 g += '<g class="fragment" data-fragment-index="5">' + T(810, 418, 'Before the edit all four agreed. Now they contradict.', 13, 600, '#DA291C') + '</g>'
 g = SW_CSS + g
 g = K3_CSS + g
 KGT3 = sec('Change one fact, and the next question goes wrong', SVG(g, 432), ch='0',
            ref='Cohen et al., Evaluating the Ripple Effects of Knowledge Editing in Language Models, TACL 2024. Zhong et al., MQuAKE, EMNLP 2023. The answers illustrate the failure type',
-           notes='Same photo as the slide before. Two small knowledge graphs: on top Seattle, Washington, the United States, the dollar, below Paris, France, the euro. The Space Needle points up: located in Seattle. On the right, four questions, and before any edit all four answers agree: Seattle, Washington, United States, dollar. Click: an attack. Knowledge editing is a tool to fix a wrong fact, but the same tool can write a false one in, here that the Space Needle is in Paris. Watch the arrow swing from Seattle down to Paris. Methods like ROME and MEMIT do this by adding a small change to some weights. The first answer changes to Paris. Now walk one hop at a time. Click: city in, Seattle to Washington lights up, and asked for the state the model still says Washington. Click: state of, Washington to the United States, and asked for the country it still says United States. Click: currency, the United States to the dollar, and it still says dollar. The red path on top is what the model still walks. Click: the key statement. Break the knowledge graph of the real world, and a large language model starts to contradict itself. The edit changed one edge and never looked at the graph around it. The next slide asks our question. This is the ripple effect measured by RippleEdits and MQuAKE. Photo: Kerry Park panorama by SounderBruce, CC BY-SA 4.0.')
+           notes='Same photo as the slide before. Two small knowledge graphs: on top Seattle, Washington, the United States, the dollar, below Paris, France, the euro. The Space Needle points up: located in Seattle. On the right, ask the model: which city? Seattle. Click: city in, Seattle to Washington lights up, which state? Washington. Click: state of, which country? United States. Click: currency, which currency? dollar. Each question is one more hop on the graph. Click: an attack. Knowledge editing is a tool to fix a wrong fact, but the same tool can write a false one in, here that the Space Needle is in Paris. Watch the arrow swing from Seattle down to Paris. Methods like ROME and MEMIT do this by adding a small change to some weights. The first answer changes to Paris, and the other three do not: still Washington, still United States, still dollar. The red path on top is what the model still walks. Click: the key statement. Break the knowledge graph of the real world, and a large language model starts to contradict itself. The edit changed one edge and never looked at the graph around it. The next slide asks our question. This is the ripple effect measured by RippleEdits and MQuAKE. Photo: Kerry Park panorama by SounderBruce, CC BY-SA 4.0.')
 
 # ---- the one style for a question or a key point (his rule Nov 18): an orange frame, plain text, keywords on a tint ----
 def kw(t):
