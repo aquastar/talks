@@ -2641,7 +2641,7 @@ def assemble(cover, old):
     five_q = re.sub(r'>1\. weight graph<', '>1. circuit graph<', five_q, count=1)
     five_q = five_q.replace('One network, five graphs', 'One network, four graphs', 1)
     _veil = ''.join(f'<rect x="{x}" y="{y}" width="260" height="220" rx="4" fill="#FBFAF7" fill-opacity=".75"/>' for x, y in ((700, 0), (400, 240), (700, 240)))
-    _veil += '<rect x="0" y="40" width="330" height="330" fill="#FBFAF7" fill-opacity=".75"/>'
+    _veil += '<rect x="0" y="20" width="390" height="420" fill="#FBFAF7" fill-opacity=".75"/>'
     _veil += _c5 + '<rect x="401.5" y="1.5" width="257" height="217" rx="4" fill="none" stroke="#F76902" stroke-width="3"/>'
     _i = five_q.index('</svg>')
     five_q = five_q[:_i] + f'<g class="fragment" data-fragment-index="5">{_veil}</g>' + five_q[_i:]
