@@ -2171,7 +2171,7 @@ PCN = ['C', 'D♭', 'D', 'E♭', 'E', 'F', 'F♯', 'G', 'A♭', 'A', 'B♭', 'B'
 TW, TH = 92, 78
 def tz(i, j):
     return (206 + i * TW + j * TW / 2, 252 - j * TH)
-NODES = {(i, j): tz(i, j) for j in range(-1, 3) for i in range(-6, 6) if 44 <= tz(i, j)[0] <= 430}
+NODES = {(i, j): tz(i, j) for j in range(-1, 3) for i in range(-6, 6) if 44 <= tz(i, j)[0] <= 440}
 def pc(i, j):
     return (7 * i + 4 * j) % 12
 def tkey(i, j, kind):
@@ -2188,7 +2188,7 @@ for (i, j) in [(i_, j_) for j_ in range(-2, 3) for i_ in range(-7, 7)]:
         root = pc(i, j) if kind == 'u' else pc(i, j + 1)
         nm = PCN[root] + ('' if kind == 'u' else 'm')
         k = tkey(i, j, kind); TRIS[k] = (pts, vs)
-        tri_svg += f'<path d="M{pts[0][0]},{pts[0][1]} L{pts[1][0]},{pts[1][1]} L{pts[2][0]},{pts[2][1]} Z" fill="#F4F1EC" stroke="#D7D2CB" stroke-width="1.1"/>'
+        tri_svg += f'<path id="tzp-{k}" d="M{pts[0][0]},{pts[0][1]} L{pts[1][0]},{pts[1][1]} L{pts[2][0]},{pts[2][1]} Z" fill="#F4F1EC" stroke="#D7D2CB" stroke-width="1.1"/>'
         cx_ = sum(q[0] for q in pts) / 3; cy_ = sum(q[1] for q in pts) / 3
         tri_txt += T(cx_, cy_ + (6 if kind == 'u' else 1), nm, 12.5, 400, '#9A9389', 'middle', extra=f'id="tzl-{k}"')
 USED = {v for _, vs in TRIS.values() for v in vs}
@@ -2212,18 +2212,41 @@ STEPS7 = [('u0_0', '', 'C major: the notes C, E, G', None), ('d0_m1', 'P', 'C ma
           ('u0_0', '', 'back to C major', '1_0'), ('d0_0', 'L', 'C major to E minor: C slides down to B', '1_1'),
           ('u1_0', 'R', 'E minor to G major: E slides down to D', '2_0'), ('u1_0', '', 'two flips, one note each: now in G major', None)]
 import json as _json
-_tz = {k: {'d': 'M' + ' L'.join(f'{x},{y}' for x, y in pts) + ' Z', 'p': [[x, y] for x, y in pts], 'n': [nkey(*v) for v in vs]} for k, (pts, vs) in TRIS.items() if k in {s_[0] for s_ in STEPS7}}
-TZ_JS = """<script>(function(){var TZ=""" + _json.dumps(_tz) + """,ST=""" + _json.dumps(STEPS7, ensure_ascii=False) + """,i=0,last=0,prevK=null;
-function show(k){var s=ST[k],t=TZ[s[0]];var hl=document.getElementById('tz-hl');if(!hl)return;hl.setAttribute('d',t.d);
+FI7 = [['um2_1', 'D'], ['um1_1', 'A'], ['u0_1', 'E'], ['u1_1', 'B']]
+KEY7 = [['dm2_0', 'Dm'], ['um1_0', 'F'], ['dm1_0', 'Am'], ['u0_0', 'C'], ['d0_0', 'Em'], ['u1_0', 'G']]
+RMAP7 = {'u0_0': 'C', 'd0_m1': 'Cm', 'dm1_0': 'Am', 'd0_0': 'Em', 'u1_0': 'G'}
+_need = {s_[0] for s_ in STEPS7} | {k for k, _ in FI7} | {k for k, _ in KEY7}
+for k in _need:
+    assert k in TRIS, k
+_tz = {k: {'d': 'M' + ' L'.join(f'{x},{y}' for x, y in pts) + ' Z', 'p': [[x, y] for x, y in pts], 'n': [nkey(*v) for v in vs]} for k, (pts, vs) in TRIS.items() if k in _need}
+TZ_JS = """<script>(function(){var TZ=""" + _json.dumps(_tz) + """,ST=""" + _json.dumps(STEPS7, ensure_ascii=False) + """,FI=""" + _json.dumps(FI7) + """,KEY=""" + _json.dumps(KEY7) + """,RMAP=""" + _json.dumps(RMAP7) + """,mode=-1,i=0,last=0;
+function $(id){return document.getElementById(id);}
+function sid(n){return n.replace('\\u266f','s').replace('\\u266d','b');}
+function reset(){var hl=$('tz-hl');if(hl)hl.setAttribute('d','');
 document.querySelectorAll('[id^=tzn-]').forEach(function(r){r.setAttribute('stroke','#8F887E');r.setAttribute('fill','#fff');r.setAttribute('stroke-width','1.1');});
 document.querySelectorAll('[id^=tzt-]').forEach(function(r){r.setAttribute('fill','#5F5D50');});
 document.querySelectorAll('[id^=tzl-]').forEach(function(r){r.setAttribute('fill','#9A9389');r.setAttribute('font-weight','400');});
-t.n.forEach(function(n){var r=document.getElementById('tzn-'+n);r.setAttribute('stroke','#F76902');r.setAttribute('stroke-width','1.8');document.getElementById('tzt-'+n).setAttribute('fill','#C45200');});
-if(s[3]){var r=document.getElementById('tzn-'+s[3]);r.setAttribute('fill','#F76902');document.getElementById('tzt-'+s[3]).setAttribute('fill','#fff');}
-var P_=t.p,cx_=(P_[0][0]+P_[1][0]+P_[2][0])/3,cy_=(P_[0][1]+P_[1][1]+P_[2][1])/3,q=0;[[0,1],[1,2],[0,2]].forEach(function(e){var a=P_[e[0]],b=P_[e[1]];if(a[0]>b[0]){var tmp=a;a=b;b=tmp;}var lb=Math.abs(a[1]-b[1])<1?'+7':(b[1]<a[1]?'+4':'+3');var mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2,dx=cx_-mx,dy=cy_-my,dl=Math.sqrt(dx*dx+dy*dy);var el=document.getElementById('tz-e'+q);el.setAttribute('x',(mx-dx/dl*9.5).toFixed(1));el.setAttribute('y',(my-dy/dl*9.5+4.5).toFixed(1));el.textContent=lb;q++;});var RM=__RM__,h=document.getElementById('rm-hl');if(h&&RM[s[0]]){h.setAttribute('cx',RM[s[0]][0]);h.setAttribute('cy',RM[s[0]][1]);h.setAttribute('opacity',1);}var l=document.getElementById('tzl-'+s[0]);l.setAttribute('fill','#C45200');l.setAttribute('font-weight','700');
-document.getElementById('tz-mv').textContent=s[1];var c=document.getElementById('tz-cap');c.textContent=s[2];c.setAttribute('x',s[1]?62:40);}
-setInterval(function(){var on=document.querySelector('.present #tz-hl');if(!on){i=0;last=0;return;}var now=Date.now();var dur=(i==ST.length-1)?4200:2800;
-if(!last){show(0);last=now;return;}if(now-last>dur){i=(i+1)%ST.length;show(i);last=now;}},200);})();</script>"""
+document.querySelectorAll('[id^=tzp-]').forEach(function(r){r.setAttribute('fill','#F4F1EC');});
+document.querySelectorAll('[id^=rh-]').forEach(function(r){r.setAttribute('opacity',0);});
+for(var q=0;q<3;q++){var e=$('tz-e'+q);if(e)e.textContent='';}
+$('tz-mv').textContent='';$('tz-cap').textContent='';var rc=$('rm-cap');if(rc)rc.textContent='';}
+function halo(n,strong){var h=$('rh-'+sid(n));if(h){h.setAttribute('opacity',1);h.setAttribute('fill',strong?'#FBD3B4':'#FDEFE3');h.setAttribute('stroke',strong?'#F76902':'#F7A86A');}}
+function tri(k,strong){var p=$('tzp-'+k);if(p)p.setAttribute('fill',strong?'#FBD3B4':'#FDE6D3');var l=$('tzl-'+k);if(l){l.setAttribute('fill','#C45200');l.setAttribute('font-weight','700');}}
+function nodes(k){TZ[k].n.forEach(function(n){var r=$('tzn-'+n);r.setAttribute('stroke','#F76902');r.setAttribute('stroke-width','1.8');$('tzt-'+n).setAttribute('fill','#C45200');});}
+function edges(k){var P_=TZ[k].p,cx_=(P_[0][0]+P_[1][0]+P_[2][0])/3,cy_=(P_[0][1]+P_[1][1]+P_[2][1])/3,q=0;[[0,1],[1,2],[0,2]].forEach(function(e){var a=P_[e[0]],b=P_[e[1]];if(a[0]>b[0]){var tmp=a;a=b;b=tmp;}
+var lb=Math.abs(a[1]-b[1])<1?'+7':(b[1]<a[1]?'+4':'+3');var mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2,dx=cx_-mx,dy=cy_-my,dl=Math.sqrt(dx*dx+dy*dy);var el=$('tz-e'+q);
+el.setAttribute('x',(mx-dx/dl*9.5).toFixed(1));el.setAttribute('y',(my-dy/dl*9.5+4.5).toFixed(1));el.textContent=lb;q++;});}
+function lead(k){$('tz-hl').setAttribute('d',TZ[k].d);nodes(k);edges(k);var l=$('tzl-'+k);l.setAttribute('fill','#C45200');l.setAttribute('font-weight','700');}
+function cap(mv,t){$('tz-mv').textContent=mv;var c=$('tz-cap');c.textContent=t;c.setAttribute('x',mv?62:40);}
+function showPLR(k){reset();var s=ST[k];lead(s[0]);if(s[3]){var r=$('tzn-'+s[3]);r.setAttribute('fill','#F76902');$('tzt-'+s[3]).setAttribute('fill','#fff');}cap(s[1],s[2]);if(RMAP[s[0]])halo(RMAP[s[0]],true);}
+function showFifths(k){reset();for(var j=0;j<k;j++){tri(FI[j][0],false);halo(FI[j][1],false);}lead(FI[k][0]);halo(FI[k][1],true);
+cap('','a fifth at a time: '+FI.slice(0,k+1).map(function(x){return x[1];}).join(', '));$('rm-cap').textContent='the same walk, one step around the ring';}
+function showKey(){reset();KEY.forEach(function(x){tri(x[0],true);halo(x[1],true);});cap('','the key of C major: Dm, F, Am, C, Em, G, one strip');$('rm-cap').textContent='the same key: one arc of the ring';}
+setInterval(function(){if(!document.querySelector('.present #tz-hl')){mode=-1;return;}
+var m=document.querySelector('.present .tzm2.visible')?2:(document.querySelector('.present .tzm1.visible')?1:0);var now=Date.now();
+if(m!==mode){mode=m;i=0;last=now;if(m==0)showPLR(0);else if(m==1)showFifths(0);else showKey();return;}
+if(m==0){var dur=(i==ST.length-1)?4200:2800;if(now-last>dur){i=(i+1)%ST.length;showPLR(i);last=now;}}
+else if(m==1){var d1=(i==FI.length-1)?2600:1500;if(now-last>d1){i=(i+1)%FI.length;showFifths(i);last=now;}}},200);})();</script>"""
 g += cg
 pr = T(470, 30, 'Does a model learn these distances?', 17, 700, INK) + T(470, 50, 'word2vec on chord sequences (Beethoven, Beatles): a map of the 24 chords', 13.5, 400, MUT)
 # their Figure 1a redrawn: marker positions digitized from the PDF (Bb read by eye, it sits under Fm)
@@ -2232,13 +2255,14 @@ MAJ = [('C', -0.369, -0.345), ('G', -0.514, -0.125), ('D', -0.519, 0.167), ('A',
 MIN = ['Gm', 'Dm', 'Am', 'Em', 'Bm', 'F♯m', 'C♯m', 'A♭m', 'E♭m', 'B♭m', 'Fm', 'Cm']
 MINXY = {'Dm': (-0.502, -0.088), 'Gm': (-0.413, -0.362), 'Cm': (-0.178, -0.535), 'Fm': (0.128, -0.528), 'B♭m': (0.344, -0.379), 'E♭m': (0.482, -0.156),
          'A♭m': (0.500, 0.107), 'C♯m': (0.405, 0.352), 'F♯m': (0.181, 0.530), 'Bm': (-0.104, 0.526), 'Em': (-0.346, 0.378), 'Am': (-0.485, 0.167)}
-FX, FY, FS = 640, 222, 200
+FX, FY, FS = 800, 222, 226
 def fxy(x, y):
     return (FX + x * FS, FY - y * FS)
-RMNAME = {'u0_0': 'C', 'd0_m1': 'Cm', 'dm1_0': 'Am', 'd0_0': 'Em', 'u1_0': 'G'}
 ring = ' L'.join(f'{fxy(x, y)[0]:.1f},{fxy(x, y)[1]:.1f}' for _, x, y in MAJ)
 pr += P(f'M{ring} Z', '#D7D2CB', 1.4, extra='stroke-dasharray="4 4"')
-pr += '<circle id="rm-hl" cx="-50" cy="-50" r="13" fill="#FBD3B4" stroke="#F76902" stroke-width="2.6" opacity="0" style="transition:cx .6s,cy .6s"/>'
+_RMXY = {nm: fxy(x, y) for nm, x, y in MAJ}
+_RMXY.update({mn: fxy(*xy) for mn, xy in MINXY.items()})
+pr += ''.join(f'<circle id="rh-{nm.replace("♯", "s").replace("♭", "b")}" cx="{x:.1f}" cy="{y:.1f}" r="12" fill="#FBD3B4" stroke="#F76902" stroke-width="2.4" opacity="0" style="transition:opacity .4s"/>' for nm, (x, y) in _RMXY.items())
 for (nm, x, y), mn in zip(MAJ, MIN):
     mx, my = MINXY[mn]
     pr += f'<rect x="{fxy(mx, my)[0] - 4:.1f}" y="{fxy(mx, my)[1] - 4:.1f}" width="8" height="8" fill="#C45200"/>'
@@ -2248,23 +2272,14 @@ for (nm, x, y), mn in zip(MAJ, MIN):
     anc = 'middle' if abs(_mm.cos(a)) < 0.35 else ('start' if _mm.cos(a) > 0 else 'end')
     pr += (f'<text x="{lx:.1f}" y="{ly + 5:.1f}" font-size="14" font-weight="700" text-anchor="{anc}" font-family="et-book,Georgia,serif">'
            f'<tspan fill="#4C5B66">{nm}</tspan><tspan fill="#9A9389" font-weight="400"> / </tspan><tspan fill="#C45200">{mn}</tspan></text>')
-_RMXY = {nm: fxy(x, y) for nm, x, y in MAJ}
-_RMXY.update({mn: fxy(*xy) for mn, xy in MINXY.items()})
-_RM = {k: [round(_RMXY[v][0], 1), round(_RMXY[v][1], 1)] for k, v in RMNAME.items()}
-TZ_JS = TZ_JS.replace('__RM__', _json.dumps(_RM))
 pr += T(FX, FY - 2, 'circle', 13, 600, MUT, 'middle') + T(FX, FY + 14, 'of fifths', 13, 600, MUT, 'middle')
 pr += C(478, 392, 5, '#4C5B66') + T(488, 396, 'major', 12, 400, MUT) + '<rect x="530" y="388" width="8" height="8" fill="#C45200"/>' + T(544, 396, 'minor', 12, 400, MUT)
 pr += T(590, 396, 'redrawn from their Figure 1a', 12, 400, MUT)
-pr += T(866, 84, 'The chords fall on', 16, 700, INK) + T(866, 104, 'the circle of fifths', 16, 700, INK) + T(866, 124, 'the across row of the lattice, as a ring', 12.5, 400, MUT)
-BIG = [('0', 'errors in the order around the ring'), ('100%', 'nearest two neighbors are the fifths')]
-for k, (v, cap) in enumerate(BIG):
-    y = 190 + k * 80
-    pr += T(866, y, v, 30, 700, '#4C5B66') + T(866, y + 24, cap, 12.5, 400, MUT)
-pr += T(866, 360, 'Open question:', 13, 700, '#C45200') + T(866, 378, 'a model that learns from raw', 12.5, 400, INK) + T(866, 395, 'sound, like MusicGen', 12.5, 400, INK)
-g += F(1, pr)
+pr += T(1140, 396, '', 13, 600, '#C45200', 'end', extra='id="rm-cap"')
+g += F(1, pr) + '<g class="fragment tzm1" data-fragment-index="1"></g><g class="fragment tzm2" data-fragment-index="2"></g>'
 MUSB = sec('Do music generation models encode music theory?', SVG(g, 424), ch='0',
            ref='Ebrahimzadeh, Bernardes, Stober, ISMIR 2026, Fig. 1a, Table 2 | Cohn 2012 (Tonnetz)',
-           notes='Left, music theory as a graph, the Tonnetz, which goes back to Euler in 1739. Notes are nodes. Across is a fifth, plus 7 half steps, C to G. Up right is a major third, plus 4, C to E. Then every small triangle is a chord. Point up is major: root, plus 4, plus 7, C E G. Point down is minor: root, plus 3, plus 7. Two triangles that share an edge share two notes, so you move between them by changing one note. The animation runs by itself: C major has exactly three such neighbors, P to C minor, R to A minor, L to E minor. These are the neo-Riemannian moves, after Hugo Riemann the music theorist, not the mathematician. I read this lattice as a knowledge graph of music: concepts and their relations. Click: does a model learn these distances on its own? Ebrahimzadeh, Bernardes and Stober, ISMIR 2026, train word2vec, the same skip-gram model as for words, on chord sequences from the Beethoven piano sonatas and the Beatles, with every song also transposed to all 12 keys. Each of the 24 chords gets a vector. Their Figure 1a is the map of those vectors. The chords fall on a ring in circle of fifths order, C, G, D, A and so on, which is the across row of the lattice closed into a ring. Numbers from their Table 2, Beethoven corpus: zero errors in the order around the ring, and for every chord its two nearest neighbors are its two fifths. Watch the orange halo on the ring: it follows the chord of the animation on the left. C to G is one step on the ring, a fifth. But the P, R and L neighbors, C minor, A minor, E minor, sit far from C on the ring: this model learned which chords appear in the same key, the fifths, not which chords share two notes. One axis of the lattice, not all of it. Be clear about the limit: this is a small model trained on chord symbols, not a generator trained on raw sound. Whether MusicGen, which learns from sound, has the same chord distances is, as far as I know, untested. That is the open question. Background if asked: Wei and colleagues, ISMIR 2024, showed that chord, interval and key labels can be read out of one layer of MusicGen and Jukebox with a tiny classifier, 93 to 98 percent, but they did not test the distances.')
+           notes='Left, music theory as a graph, the Tonnetz, which goes back to Euler in 1739. Notes are nodes. Across is a fifth, plus 7 half steps, C to G. Up right is a major third, plus 4, C to E. Then every small triangle is a chord. Point up is major: root, plus 4, plus 7, C E G. Point down is minor: root, plus 3, plus 7. Two triangles that share an edge share two notes, so you move between them by changing one note. The animation runs by itself: C major has exactly three such neighbors, P to C minor, R to A minor, L to E minor. These are the neo-Riemannian moves, after Hugo Riemann the music theorist, not the mathematician. I read this lattice as a knowledge graph of music: concepts and their relations. Click: does a model learn these distances on its own? Ebrahimzadeh, Bernardes and Stober, ISMIR 2026, train word2vec, the same skip-gram model as for words, on chord sequences from the Beethoven piano sonatas and the Beatles, with every song also transposed to all 12 keys. Each of the 24 chords gets a vector. Their Figure 1a is the map of those vectors. Two links between the two pictures. First, the fifths are the shared backbone: the animation walks D, A, E, B across the lattice, one fifth per step, and the orange halo walks the same chords one step at a time around the ring. Click: second, a key is one connected region on both sides. The six chords of C major, D minor, F, A minor, C, E minor, G, form one strip of triangles on the lattice and one arc of the ring in the model. One difference worth saying if asked: on the lattice, neighbors share two notes. In the model, neighbors are used together, for example A minor and D are the two and the five of G major. Click: the key statement. The chords fall on a ring in circle of fifths order, C, G, D, A and so on, which is the across row of the lattice closed into a ring. Numbers from their Table 2, Beethoven corpus: zero errors in the order around the ring, and for every chord its two nearest neighbors are its two fifths. Watch the orange halo on the ring: it follows the chord of the animation on the left. C to G is one step on the ring, a fifth. But the P, R and L neighbors, C minor, A minor, E minor, sit far from C on the ring: this model learned which chords appear in the same key, the fifths, not which chords share two notes. One axis of the lattice, not all of it. Be clear about the limit: this is a small model trained on chord symbols, not a generator trained on raw sound. Whether MusicGen, which learns from sound, has the same chord distances is, as far as I know, untested. That is the open question. Background if asked: Wei and colleagues, ISMIR 2024, showed that chord, interval and key labels can be read out of one layer of MusicGen and Jukebox with a tiny classifier, 93 to 98 percent, but they did not test the distances.')
 MUSB = MUSB.replace('</section>', TZ_JS + '\n</section>', 1)
 
 # ---- two levels by two domains: the map of the talk (Nov 18, his note: fewer words, no status labels, no vector line yet) ----
@@ -2651,7 +2666,7 @@ def assemble(cover, old):
     beyond_o = beyond_o.replace('</section>', Q5_JS + '\n</section>', 1)
     KGT3s = KGT3.replace('  <div class="ref">', '  ' + keybox('A fact is a ' + kw('triple') + ' (subject, predicate, object), and no triple ' + kw('stands alone') + '.', 5, '.1em') + '\n  <div class="ref">', 1)
     MUSA2 = _addbox(MUSA, keybox('The ' + kw('graph the model learned') + ' matches the ' + kw('knowledge graph') + ' of music theory.', 3, '.9em'))
-    MUSB2 = _addbox(MUSB, keybox('Learned from chord sequences alone, the chord space follows the ' + kw('geometry of music theory') + '.', 2, '0'))
+    MUSB2 = _addbox(MUSB, keybox('Learned from chord sequences alone, the chord space follows the ' + kw('geometry of music theory') + '.', 3, '0'))
     SUMM2 = _addbox(SUMM, keybox('What we need: compare the ' + kw('inside') + ' before and after a change, and flag the risky ones.', 2, '.1em'))
     TAKE2 = _addbox(TAKEAWAY, keybox('Is there a ' + kw('graph') + ' inside your model?', 3, '.1em'))
     vision = [cover, NETG, backup(toch(wb, '0')), KGT3s, backup(KGT2), five_q, beyond_o, MUSA2, MUSB2, backup(toch(PROBE, '0')), backup(toch(MGEN, '0')), backup(VISION), MAP2, backup(FORECAST2)]

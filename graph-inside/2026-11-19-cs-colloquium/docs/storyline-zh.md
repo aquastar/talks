@@ -61,8 +61,10 @@
 
 **7. Do music generation models encode music theory?**（105，graph 3）左边：Tonnetz 网格（欧拉 1739），动画自己循环：从 C 大调出发，P 到 C 小调，R 到 A 小调，L 到 E 小调，最后连走 L、R 到 G 大调，每一步只有一个音变成橙色实心。亮着的三角形三条边上标着音程：横边 +7，右上斜边 +4，左上斜边 +3。下面两行图例：横向箭头是五度（+7），右上箭头是大三度（+4）。尖朝上的三角形是大调（根音、+4、+7），尖朝下是小调（根音、+3、+7）。
 说："Music theory already has a knowledge graph of chords: every triangle is a chord, and two chords that share an edge differ by one note."
-点一下，右边：Ebrahimzadeh, Bernardes, Stober，ISMIR 2026。用 word2vec 在贝多芬奏鸣曲和披头士的和弦序列上学 24 个和弦的向量，图是按他们 Figure 1a 重画的（点的位置从 PDF 数字化，B♭ 被 Fm 盖住，按目测）。和弦排成五度圈，就是左边网格横向那一行连成环。右边圆环上的橙色光圈跟着左边动画走：C 到 G 在环上只差一步（五度），但 P、R、L 的邻居 C 小调、A 小调、E 小调在环上离 C 很远。可以说：这个模型学到的是同一个调里常一起出现的和弦（五度关系），不是共用两个音的关系，只对上了网格的一个方向。两个数字来自 Table 2（贝多芬语料，增强版）：环上顺序错误 0，每个和弦最近的两个邻居都是它的五度邻居（100%）。
-说："The graph was written by people. A model trained only on chord sequences found its geometry on its own."
+点一下，右边：Ebrahimzadeh, Bernardes, Stober，ISMIR 2026，word2vec 在贝多芬和披头士的和弦序列上学出的 24 个和弦地图（按他们 Figure 1a 重画）。同时开始第一节动画：五度是共同的骨架，左边从左往右走 D、A、E、B，每步一个五度，右边光圈沿着圆环同步一格一格走同样的和弦。
+再点，第二节动画：一个调在两边都是一块连续区域。C 大调的六个和弦 Dm、F、Am、C、Em、G，在左边是一条连在一起的三角形带，在右边是圆环上的一段弧。
+再点：结论框。
+说："The fifths are the shared backbone. And a key is one strip on the lattice, one arc in the model."
 诚实的边界：这是一个在和弦符号上训练的小模型，不是从声音学的生成模型。右下角写着 Open question：像 MusicGen 这样从声音学的模型，有没有同样的和弦距离，据你所知还没人测过。被问到时可以补充 Wei 2024：从 MusicGen 一层能读出和弦、音程、调（93% 到 98%），但他们没有测距离。乐理细节见 docs/tonnetz-primer-zh.md。
 
 **8. Two levels, two domains: the map of this talk**（60）2 乘 2 的地图，不写状态。语言：delta graph（第一层）和知识图（第二层）。音乐：MusicGen 里有没有图（第一层，开放问题）和音符图（第二层）。
