@@ -2005,7 +2005,7 @@ SERIF_X = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
 TEAL_D = '#007A94'
 # ---- the network itself is a graph ----
 g = adefs('ng')
-g += T(40, 30, 'A language model, block by block: attention (A) and MLP (M) read and write one shared stream', 15, 600, MUT)
+g += T(40, 30, 'The model graph: blocks are nodes. Attention (A) and MLP (M) read and write one shared stream', 15, 600, MUT)
 IN_ = (40, 150, 150, 64); OUT_ = (990, 150, 150, 64)
 g += R(*IN_, '#EFEBE5', 'none', 0, 6) + T(115, 188, 'Space Needle is in', 16, 600, INK, 'middle')
 g += R(*OUT_, '#EFEBE5', 'none', 0, 6) + T(1065, 188, 'Seattle', 18, 600, INK, 'middle')
@@ -2034,14 +2034,14 @@ for (t_, k), (x, y) in NODE.items():
     nodes += L(x, y, x, 182, '#D7D2CB', 1) + C(x, y, 16, '#fff', '#5F5D50', 1.6) + T(x, y + 5, t_, 13, 600, AC2, 'middle')
 g += F(1, wires) + F(2, co) + F(3, circ) + nodes
 def cap(x, n_, a, b):
-    return T(x, 362, f'{n_}  {a}', 18, 600, INK) + T(x, 388, b, 15, 400, MUT)
-g += F(1, cap(40, '1', 'Wiring', 'every block writes for every later block'))
-g += F(2, cap(420, '2', 'Firing together', 'an edge where two blocks move together'))
-g += F(3, cap(800, '3', 'Circuit', 'the few blocks that carry this answer'))
-g += F(3, T(590, 452, 'Draw the parts as nodes and how they work together as edges: the network is a graph.', 19, 400, INK, 'middle', extra=SERIF_X))
-NETG = sec('A language model is itself a graph', SVG(g), ch='0',
+    return T(x, 374, f'{n_}  {a}', 18, 600, INK) + T(x, 400, b, 15, 400, MUT)
+g += F(1, T(40, 348, 'STRUCTURAL', 13, 600, MUT, extra='letter-spacing="2"') + cap(40, '1', 'Wiring', 'who can write to whom, fixed by the architecture'))
+g += F(2, T(420, 348, 'FUNCTIONAL', 13, 600, TEAL_D, extra='letter-spacing="2"') + cap(420, '2', 'Firing together', 'an edge where two blocks move together'))
+g += F(3, cap(800, '3', 'Circuit', 'the few blocks that carry this one answer'))
+g += F(3, T(590, 458, 'The network itself is a graph: its wiring is fixed, its circuits change with what it is asked.', 19, 400, INK, 'middle', extra=SERIF_X))
+NETG = sec('Level 1: a language model is itself a graph', SVG(g), ch='0',
            ref='Elhage et al., A Mathematical Framework for Transformer Circuits, 2021. Meng et al., Locating and Editing Factual Associations in GPT, NeurIPS 2022. Ameisen et al., Circuit Tracing, Transformer Circuits 2025',
-           notes='Start from the machine itself, the same one on the cover. A language model is a stack of blocks, attention and MLP, that all read and write one shared stream. Click: wiring, every block can write for every later block. Click: firing together, an edge where two blocks move together on this question, which is the graph our own delta graph uses later. Click: a circuit, the few blocks that carry this answer: an MLP in the middle looks up the fact about the Space Needle, a later attention block moves it to the last word, and out comes Seattle (Meng 2022, attribution graphs 2025). The picture is a schematic. Five ways to draw such graphs, from the October talk, are under the down arrow.')
+           notes='Two levels of graph, said once here and summed up on slide 5. Level 1 is the model graph, the network itself. Level 2, next slide, is the knowledge graph, what the network stores. Neuroscience has the same split for brains: structural connectivity, which neurons are wired, and functional connectivity, which ones fire together. Start from the machine itself, the same one on the cover. A language model is a stack of blocks, attention and MLP, that all read and write one shared stream. Click: wiring, every block can write for every later block. Click: firing together, an edge where two blocks move together on this question, which is the graph our own delta graph uses later. Click: a circuit, the few blocks that carry this answer: an MLP in the middle looks up the fact about the Space Needle, a later attention block moves it to the last word, and out comes Seattle (Meng 2022, attribution graphs 2025). The picture is a schematic. Five ways to draw such graphs, from the October talk, are under the down arrow.')
 
 # ---- knowledge inside the network is a graph, the Space Needle edit ----
 g = adefs('kg2')
@@ -2060,7 +2060,7 @@ def knode(k, col='#009CBD'):
 graph_ = kedge('SN', 'SE', 'located in') + kedge('SE', 'WA', 'city in') + kedge('WA', 'US', 'state of') + kedge('US', 'DO', 'currency', lx=-10, ly=4, anc='end')
 graph_ += kedge('ET', 'PA', 'located in', col='#ACA39A') + kedge('PA', 'FR', 'city in', col='#ACA39A') + kedge('FR', 'EU', '', col='#ACA39A')
 graph_ += ''.join(knode(k) for k in ('SN', 'SE', 'WA', 'US', 'DO')) + ''.join(knode(k, '#ACA39A') for k in ('ET', 'PA', 'FR', 'EU'))
-g += F(1, graph_ + T(30, 202, 'What the model knows, drawn as a knowledge graph', 15, 600, MUT))
+g += F(1, graph_ + T(30, 202, 'Level 2, the knowledge graph: what the model knows', 15, 600, MUT))
 edit_ = kedge('SN', 'PA', '', col=ACC, sw=3, mk='kg2o') + T(196, 356, 'the edit:', 14.5, 600, '#C45200', 'end') + T(196, 376, 'located in Paris', 14.5, 600, '#C45200', 'end')
 g += F(2, edit_)
 stale = P(f"M{NK['SN'][0]+10},{NK['SN'][1]} L{NK['US'][0]},{NK['US'][1]} L{NK['DO'][0]},{NK['DO'][1]-10}", '#DA291C', 4, extra='stroke-opacity=".35" stroke-linejoin="round"')
@@ -2074,19 +2074,77 @@ KGT2 = sec('Change one fact, and the next question goes wrong', SVG(g), ch='0',
            ref='Cohen et al., Evaluating the Ripple Effects of Knowledge Editing in Language Models, TACL 2024. Zhong et al., MQuAKE, EMNLP 2023. The answers illustrate the failure type',
            notes='Panorama: the Space Needle from Kerry Park, photo by SounderBruce, CC BY-SA 4.0, Wikimedia Commons. Open on the photo, a landmark everyone knows. Click: what the model knows about it, drawn as a knowledge graph. Facts link to facts: the Space Needle is in Seattle, Seattle is in Washington, Washington is in the United States, which uses the dollar. Click: an editor moves the Space Needle to Paris and changes only that one edge. Click: now ask one step further, this is the point of the slide. Which country? The edited model still says United States. Which state? Still Washington. Which currency? Still dollar. It answers the edited question and keeps walking the old path, the red one, for every question one step away. This is the ripple effect, measured by RippleEdits and MQuAKE. Click: change one edge, and every path through it must change.')
 
-# ---- music and images have graphs inside networks too ----
+# ---- music and images have graphs inside networks too (Nov 18: animated helix, plain words) ----
 g = adefs('mm')
+PURP_ = '#7D55C7'
 g += T(40, 22, 'Inside MusicGen, a language model for sound (the same transformer as GPT)', 15, 600, MUT)
-g += f'<g transform="translate(-330,8) scale(.86)">' + HELIX_C2 + '</g>'
-g += f'<g transform="translate(-383,8) scale(.86)">' + FIFTHS_C3 + '</g>'
-g += T(40, 372, 'Small probes also read tempo, intervals, chords and scales out of its layers.', 15, 400, INK)
-vis = T(700, 22, 'Inside a vision network', 15, 600, MUT) + img(700, 46, 450, 241, 'figs/olah2020-curve-circuit.png') + L(700, 290, 1150, 290, '#D7D2CB', 1)
-vis += T(700, 318, 'Curve detectors are wired from', 15, 400, INK) + T(700, 340, 'earlier curve and line detectors.', 15, 400, INK)
-g += F(1, vis)
-g += F(2, T(590, 440, 'Facts, music, images: what a network knows has a shape, and the shape is a graph.', 19, 400, INK, 'middle', extra=SERIF_X))
+g += T(40, 44, 'Level 2, knowledge: music theory the model learned on its own', 13.5, 400, MUT)
+# helix: 25 notes C3 to C5, rotated by a small script, lit one by one
+HX, HY = 175, 200
+hx = T(HX, 76, 'Pitch climbs a spiral', 17, 700, INK, 'middle', extra='data-keep="1"')
+hx += f'<g id="hx3d"><path id="hx3d-line" d="" fill="none" stroke="{PURP_}" stroke-width="2" stroke-opacity=".55"/>'
+hx += ''.join(f'<circle id="hx3d-{n}" r="{6.5 if n % 12 == 0 else 4}" fill="{ACC if n % 12 == 0 else PURP_}"/>' for n in range(25))
+hx += f'<line id="hx3d-axis" stroke="{ACC}" stroke-width="1.6" stroke-dasharray="4 4"/>'
+hx += ''.join(f'<text id="hx3d-l{n}" font-size="14" font-weight="700" fill="#C45200">C{3 + n // 12}</text>' for n in (0, 12, 24)) + '</g>'
+hx += T(HX, 340, 'one turn per octave: C3, C4, C5', 14.5, 400, INK, 'middle') + T(HX, 360, 'line up, the same note, higher', 14.5, 400, INK, 'middle')
+g += hx
+# circle of fifths, lit step by step
+FX, FY, FR = 470, 206, 92
+names = ['C', 'G', 'D', 'A', 'E', 'B', 'F#', 'C#', 'G#', 'D#', 'A#', 'F']
+STEP = 0.7
+fc = T(FX, 76, 'Keys sit on a circle', 17, 700, INK, 'middle', extra='data-keep="1"')
+pts5 = [(FX + FR * math.sin(2 * math.pi * q / 12), FY - FR * math.cos(2 * math.pi * q / 12) + 14) for q in range(12)]
+for q in range(12):
+    (x1, y1), (x2, y2) = pts5[q], pts5[(q + 1) % 12]
+    fc += L(round(x1), round(y1), round(x2), round(y2), '#D4CBE6', 1.6)
+for q, (x, y) in enumerate(pts5):
+    kt = f'0;{q / 12:.3f};{(q + 0.9) / 12:.3f};1'
+    fc += (f'<circle cx="{x:.0f}" cy="{y:.0f}" r="15" fill="#fff" stroke="{PURP_}" stroke-width="1.6">'
+           f'<animate attributeName="fill" values="#fff;#fff;{PURP_};#fff" keyTimes="{kt}" dur="{12 * STEP}s" repeatCount="indefinite" calcMode="discrete"/></circle>')
+    fc += (f'<text x="{x:.0f}" y="{y + 5:.0f}" font-size="13" font-weight="700" fill="{PURP_}" text-anchor="middle">{names[q]}'
+           f'<animate attributeName="fill" values="{PURP_};{PURP_};#fff;{PURP_}" keyTimes="{kt}" dur="{12 * STEP}s" repeatCount="indefinite" calcMode="discrete"/></text>')
+fc += T(FX, 340, 'neighbors share 6 of their 7 notes:', 14.5, 400, INK, 'middle') + T(FX, 360, 'C major and G major differ by one', 14.5, 400, INK, 'middle')
+g += F(1, fc)
+g += F(1, T(40, 404, 'The model places related keys next to each other, and probes also read tempo and chords.', 15, 400, MUT))
+vis = T(700, 22, 'Inside a vision network', 15, 600, MUT) + T(700, 44, 'Level 1, the model graph: a circuit', 13.5, 400, MUT)
+vis += img(700, 60, 450, 241, 'figs/olah2020-curve-circuit.png') + L(700, 304, 1150, 304, '#D7D2CB', 1)
+vis += T(700, 330, 'One neuron fires for curves. It is built by', 15, 400, INK) + T(700, 352, 'adding up earlier neurons that see small', 15, 400, INK) + T(700, 374, 'curve pieces and lines: a small circuit.', 15, 400, INK)
+g += F(2, vis)
+g += F(3, T(590, 452, 'Facts, music, images: inside a network, both levels are graphs.', 19, 400, INK, 'middle', extra=SERIF_X))
+HELIX_JS = """<script>(function(){var cx=175,cy=196,R=78,H=7.2,t0=null;
+function frame(ts){if(t0===null)t0=ts;var t=(ts-t0)/1000,ang=t*0.6,lit=Math.floor(t*4)%32;var g=document.getElementById('hx3d');if(!g){return;}
+var d='',pts=[];for(var q=0;q<=96;q++){var u=q/4,a=2*Math.PI*u/12+ang;var x=cx+R*Math.sin(a),y=cy+86-u*H+20*Math.cos(a);d+=(q?' L':'M')+x.toFixed(1)+','+y.toFixed(1);}
+document.getElementById('hx3d-line').setAttribute('d',d);
+for(var n=0;n<25;n++){var a=2*Math.PI*n/12+ang;var x=cx+R*Math.sin(a),y=cy+86-n*H+20*Math.cos(a),front=Math.cos(a)>-0.05;var c=document.getElementById('hx3d-'+n);
+c.setAttribute('cx',x.toFixed(1));c.setAttribute('cy',y.toFixed(1));c.setAttribute('opacity',(n<=lit?1:0.18)*(front?1:0.45));pts[n]=[x,y];}
+var ax=document.getElementById('hx3d-axis');ax.setAttribute('x1',pts[0][0]);ax.setAttribute('y1',pts[0][1]);ax.setAttribute('x2',pts[24][0]);ax.setAttribute('y2',pts[24][1]);ax.setAttribute('opacity',lit>=24?1:0);
+[0,12,24].forEach(function(n){var l=document.getElementById('hx3d-l'+n);l.setAttribute('x',pts[n][0]+10);l.setAttribute('y',pts[n][1]+5);l.setAttribute('opacity',n<=lit?1:0);});
+requestAnimationFrame(frame);}
+requestAnimationFrame(frame);})();</script>"""
 MULTI = sec('Beyond text: music and images have graphs inside networks too', SVG(g), ch='0',
             ref='Do Music Foundation Models Embed Pitch in Helical Structure?, arXiv 2607.29086, 2026. Kanatas, Kong et al., What Makes a Good Layer?, ISMIR 2026. Wei, Freeman, Donahue, Sun, ISMIR 2024. Olah et al., Zoom In, Distill 2020',
-            notes='The same move beyond text. MusicGen is a language model for sound: the same next token transformer as GPT, trained on audio tokens instead of words. Inside it, pitch sits on a helix, one turn per octave, so C3, C4 and C5 line up, and keys sit on the circle of fifths, the 12 node cycle every music student learns. Both are graphs we already know. Small probes also read tempo, intervals, chords and scales out of its layers (Wei et al. 2024). Click: images too. Olah and colleagues traced curve detectors in a vision network, wired from earlier curve and line detectors, a circuit. Their figure. Click: facts, music, images, what a network knows has a shape, and the shape is a graph. The full MusicGen probing slide and the vision slide with scene graphs are under the down arrow.')
+            notes='The helix turns and lights up note by note, the circle lights up key by key, both loop on their own. The same move beyond text. MusicGen is a language model for sound: the same next token transformer as GPT, trained on audio tokens instead of words. Inside it, pitch sits on a helix, one turn per octave, so C3, C4 and C5 line up, and keys sit on the circle of fifths. In plain words: arrange the 12 keys so that neighbors share 6 of their 7 notes, C major next to G major, which differ only in F versus F sharp. Musicians use this circle to know which keys sound close. The model, never told any music theory, places close keys close together. Both are graphs we already know. Small probes also read tempo, intervals, chords and scales out of its layers (Wei et al. 2024). Click: images too. Olah and colleagues looked at one neuron in a vision network that fires for curves, and traced how it is built: it adds up earlier neurons that fire for small curve pieces and for lines, through specific weights. That wiring is a small graph, a circuit, a level 1 graph, while the helix and the circle are level 2, knowledge. Their figure. Click: facts, music, images, what a network knows has a shape, and the shape is a graph. The full MusicGen probing slide and the vision slide with scene graphs are under the down arrow.')
+MULTI = MULTI.replace('</section>', HELIX_JS + '\n</section>', 1)
+
+# ---- two levels by two domains: the map of the talk (Nov 18, replaces the two claims slide) ----
+g = adefs('mp')
+g += T(590, 38, 'Vectors say what we changed. Only a graph can say where it went.', 24, 400, INK, 'middle', extra=SERIF_X + ' data-keep="1"')
+CX = [300, 760]; CW = 420
+g += T(CX[0], 92, 'Level 1. The model graph', 19, 700, INK) + T(CX[0], 114, 'the network itself: wiring, circuits', 14.5, 400, MUT)
+g += T(CX[1], 92, 'Level 2. The knowledge graph', 19, 700, INK) + T(CX[1], 114, 'what the network stores', 14.5, 400, MUT)
+def cell(x, y, col, tint, head, line2, status):
+    return (R(x, y, CW, 118, tint, 'none', 0, 6) + R(x, y, 5, 118, col, 'none', 0, 2) + T(x + 22, y + 36, head, 17, 600, INK)
+            + T(x + 22, y + 62, line2, 14.5, 400, INK) + T(x + 22, y + 96, status, 13, 600, col, extra='letter-spacing="1.5"'))
+rowL = T(60, 208, 'Language', 20, 700, '#007A94') + T(60, 230, 'Part 1', 14, 400, MUT)
+rowL += cell(CX[0], 140, '#C45200', '#FDF3EA', 'Delta graph: what an edit rewired', 'catches edits that pass every exam', 'OURS, PUBLISHED, SDM 2026')
+rowL += cell(CX[1], 140, '#C45200', '#FDF3EA', 'Facts as edges, Space Needle', 'a missing path predicts a worse answer', 'OURS, PUBLISHED, CIKM 2026')
+rowM = T(60, 340, 'Music', 20, 700, PURP_) + T(60, 362, 'Part 2', 14, 400, MUT)
+rowM += cell(CX[0], 272, PURP_, '#F4F0F9', 'A graph inside MusicGen', 'judged by the listening brain', 'OUR PLAN, NEXT EXPERIMENT')
+rowM += cell(CX[1], 272, PURP_, '#F4F0F9', 'Note graphs, helix, circle of fifths', 'a tiny graph already names a style', 'OURS, IN PROGRESS')
+g += F(1, rowL) + F(2, rowM)
+g += F(3, T(590, 440, 'Language has answers in both cells. Music is where the open questions are, and where a brain can judge.', 17, 400, MUT, 'middle', extra='data-keep="1"'))
+MAP2 = sec('The map of this talk: two levels, two domains', SVG(g), ch='0',
+           notes='The whole talk on one slide, say it slowly. Two levels of graph, from the last three slides: level 1, the model graph, the network itself, its wiring and circuits. Level 2, the knowledge graph, what the network stores. Two domains: language and music. Click, language, Part 1: at level 1 our delta graph reads what an edit rewired inside the model and catches edits that pass every exam, published at SDM. At level 2, facts are edges, and a missing path in the record predicts a worse answer, published at CIKM. Click, music, Part 2: at level 2, a tiny note graph already names a style, in progress. At level 1, the graph inside MusicGen, which we will judge with the listening brain, our plan. Click: language has answers in both cells, music is where the open questions are. Throughline at the top, said once here and once at the end.')
 
 # ======================= ASSEMBLY =======================
 # ---- loop it1: results slide that pays off the trailer bars (P15, P10) ----
@@ -2166,7 +2224,7 @@ def assemble(cover, old):
     kgt_o = retitle(KGT, 'Change one fact, and the next question goes wrong')
     wb = old[1]
     five = old[2]
-    vision = [cover, NETG, backup(five), KGT2, MULTI, backup(toch(PROBE, '0')), backup(toch(MGEN, '0')), backup(VISION), FORECAST2]
+    vision = [cover, NETG, backup(five), KGT2, MULTI, backup(toch(PROBE, '0')), backup(toch(MGEN, '0')), backup(VISION), MAP2, backup(FORECAST2)]
     rome = old[33]
     a = rome.find('<div class="note"'); e = rome.find('  <div class="ref">')
     rome = rome[:a] + '<div class="note" style="font-size:.62em"><div class="key">The finding</div><p class="one" style="font-size:1.25em">A fact sits in two places. Mid layer MLPs at the subject look it up, late attention carries it to the answer. Editing a fact means changing the first place.</p></div>\n  </div>\n' + rome[e:]
@@ -2222,14 +2280,14 @@ def assemble(cover, old):
     beyond = []
     close = [TAKEAWAY.replace('</section>', CLIP_JSON + '</section>')]
     # one bridge per main slide, so each slide leads into the next one (order of Nov 16 2026)
-    FIXB = [('A language model is itself a graph', None, 'Bridge: and what the network knows is a graph too.'),
+    FIXB = [('Level 1: a language model is itself a graph', None, 'Bridge: and what the network knows is a graph too.'),
             ('Change one fact, and the next question goes wrong', None, 'Bridge: and it is not only facts.'),
-            ('Beyond text: music and images', None, 'Bridge: so, two claims for the rest of the talk.'),
+            ('Beyond text: music and images', None, 'Bridge: so, the map of this talk.'),
             ('A tiny graph is enough to represent a piece of music', None, 'Bridge: to compare pieces, fold the keys.'),
             ('What is inside a language model?', None, 'Bridge: and every tool we use to change this machine, or to read it, adds or reads a vector.'),
             ('Today we change and explain models with vectors', 'Bridge: yet the knowledge these models hold has another shape, a graph, in text, in images and in music.', 'Bridge: and after release, a model is changed in many ways.'),
             ('One network, five graphs', None, 'Graphs found inside vision models, with the original figures, are under the down arrow. Bridge: and music has the simplest graph of all.'),
-            ('Two claims for the rest of this talk', None, 'Bridge: Part 1, language. First, one minute inside a language model.'),
+            ('The map of this talk', None, 'Bridge: Part 1, language, top row. First, one minute inside a language model.'),
             ('Steering: right on average', None, 'Bridge: unlearning tries the opposite, to take something out.'),
             ('What is a delta graph?', None, 'Bridge: does it catch more bad edits? Results next.'),
             ('Results: same checking budget', None, 'Bridge: that is language. Part 2: knowledge that is not text.'),

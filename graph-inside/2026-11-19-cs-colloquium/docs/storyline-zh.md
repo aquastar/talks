@@ -8,7 +8,7 @@
 
 | 段落 | 页 | 回答 |
 |---|---|---|
-| 开场 | 1 到 5 | 网络是图，网络里的知识是图，音乐和图像也是图 |
+| 开场 | 1 到 5 | 两层图：模型图和知识图，在语言、音乐、图像里都有 |
 | Part 1 语言 | 6 到 16 | 有，已发表：读出来的图能抓住考试发现不了的坏编辑 |
 | Part 2 音乐 | 17 到 28 | 在验证：一张很小的图就能装下风格，听众的大脑可以当裁判 |
 | 结尾 | 29 | 开场那张点云回来，画上图的边。"你的模型里有没有图？" |
@@ -21,7 +21,7 @@
 
 1. （第 2 页后）"And what the network knows is a graph too."
 2. （第 3 页后）"And it is not only facts."
-3. （第 5 页后）"Part 1, language. First, one minute inside a language model."
+3. （第 5 页后）"Part 1, language, the top row. First, one minute inside a language model."
 4. （第 13 页后）"So the exam reads answers only. Our work asks one thing: read the change as a graph."
 5. （第 16 页后）"That is language. Part 2: knowledge that is not text."
 6. （第 20 页后）"Is there a graph inside the generator that tells us which edges it can draw? Start with the simplest graph of music."
@@ -37,24 +37,24 @@
 
 括号里是建议时长（秒）。"说"后面是这页要说出口的一句话，可以直接用。
 
-### 开场（1 到 5 页，约 8 分钟）三步：网络是图，网络里的知识是图，音乐和图像也是图
+### 开场（1 到 5 页，约 9 分钟）两层图：模型图（网络本身）和知识图（网络存的东西）
 
-**1. 封面**（45）左边一张神经网络，里面亮起一条蓝色（语言）和一条紫色（音乐）的路径。右边读成两张带标签的小图：Space Needle 到 Seattle 到 Washington 到 USA，以及 Für Elise 开头的 E、D♯、B、A。
+**1. 封面**（45）左边网络里亮起语言（蓝）和音乐（紫）两条路径，右边读成两张带标签的小图。
 说："Left, a network. Right, what it knows, read as graphs, in language and in music. Is there such a graph inside a generative model?"
 
-**2. A language model is itself a graph**（120，graph 1）注意力块和 MLP 块是节点。点一下：连线（每块写给后面所有块）。再点：一起激活的边。再点：电路，一个 MLP 查到事实，一个注意力块把它搬到答案 Seattle。"五种图"在向下键里。
-说："Draw the parts as nodes and how they work together as edges: the network is a graph."
+**2. Level 1: a language model is itself a graph**（120，graph 1）模型图。点一下：结构连接（谁能写给谁，架构定死的）。再点：功能连接（哪些块一起激活）。再点：电路，一个 MLP 查事实，一个注意力块把它搬到 Seattle。
+说："The network itself is a graph: its wiring is fixed, its circuits change with what it is asked." 可以补一句：脑科学里也这样分，structural 和 functional connectivity。
 
-**3. Change one fact, and the next question goes wrong**（120，graph 2）西雅图全景。点一下：知识图。再点：编辑把 Space Needle 改到 Paris。再点：右边橙色框"再问一步"，三个问题模型都还答旧的，红线是它还在走的旧路径。这是这页的重点。
+**3. Change one fact, and the next question goes wrong**（120，graph 2）知识图。全景照，知识图，编辑改到 Paris，再问一步三个问题都答旧的。
 说："Change one edge, and every path through it must change. The model does not."
 
-**4. Beyond text: music and images have graphs inside networks too**（105，graph 3）MusicGen 是声音的语言模型，和 GPT 同一种 transformer。它里面音高是螺旋，调性在五度圈上，探针还能读出节奏、和弦。点一下：Olah 在视觉网络里找到的曲线检测器电路。
-说："Facts, music, images: what a network knows has a shape, and the shape is a graph."
+**4. Beyond text: music and images have graphs inside networks too**（120，graph 3）MusicGen 里音高沿螺旋上升（会转动、逐个点亮），调性排在一个圆上（依次点亮）。点一下：视觉网络里的一条电路。
+说："Pitch climbs a spiral, one turn per octave. Keys sit on a circle where neighbors share 6 of 7 notes. Nobody told the model either. And in vision, a curve detector is built from smaller detectors, a circuit."
+* 五度圈的意思：把 12 个调排成一圈，相邻两个调的 7 个音里有 6 个相同，比如 C 大调和 G 大调只差一个音（F 和 F♯）。音乐家用它判断哪些调听起来接近。模型自己学出了同样的排法。
+* 曲线检测器的意思：视觉网络里有一个神经元专门对曲线有反应。Olah 顺着权重往回追，发现它是把前面几层"看到一小段弧"和"看到直线"的神经元按特定权重加起来得到的。这个连接关系就是一张小图，属于第一层（模型图）。
 
-**5. Two claims for the rest of this talk**（45）
-说："Vectors say what we changed. Only a graph can say where it went. Two claims, one per part."
-
-### Part 1 语言（8 到 16 页，约 16 分钟）
+**5. The map of this talk: two levels, two domains**（90）2 乘 2 的表。上面一句主线。列是两层（模型图、知识图），行是两个领域（语言、音乐）。语言两格都是我们已发表的工作（SDM、CIKM），音乐的知识图在进行中，音乐的模型图是下一步的实验。
+说："Language has answers in both cells. Music is where the open questions are, and where a brain can judge."
 
 **6. What is inside a language model? One shared whiteboard**（90）从开场移过来，技术细节放在 Part 1 开头。
 说："A fact like this lives in fixed numbers, the weights, and every word reads and writes one shared whiteboard."
