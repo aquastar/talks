@@ -385,7 +385,7 @@ def _hero():
         mg += f'<path d="M{sx:.0f},{sy:.0f} Q{cx:.0f},{cy:.0f} {ex:.0f},{ey:.0f}" fill="none" stroke="{PUR}" stroke-width="2" marker-end="url(#hp)"/>'
     for nm, (x, y) in M.items():
         mg += f'<rect x="{x-15}" y="{y-15}" width="30" height="30" rx="7" fill="{PUR}"/>' + f'<text x="{x}" y="{y + 6}" text-anchor="middle" font-size="16" fill="#fff">{nm}</text>'
-    mg += f'<text x="430" y="330" font-size="14" fill="{PUR}" letter-spacing=".12em">MUSIC</text><text x="744" y="520" text-anchor="end" font-size="13" fill="#9aa6ae">Für Elise, the first notes</text>'
+    mg += f'<text x="430" y="330" font-size="14" fill="{PUR}" letter-spacing=".12em">MUSIC</text><text x="600" y="520" text-anchor="middle" font-size="13" fill="#9aa6ae">Für Elise, the first notes</text>'
     o += fade(lk, 1.6) + fade(kg, 1.8) + fade(mg, 2.1)
     o += '<text x="180" y="564" text-anchor="middle" font-size="15" fill="#9aa6ae" letter-spacing=".12em">A NEURAL NETWORK</text><text x="585" y="564" text-anchor="middle" font-size="15" fill="#9aa6ae" letter-spacing=".12em">READ AS A GRAPH</text></svg>'
     return o

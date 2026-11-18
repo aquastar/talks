@@ -21,6 +21,13 @@ for(let h=0;h<n;h++){if(only&&!only.includes(h+1))continue;
    const step=Math.max(2,len/300);for(const t of T){const r=t.r;let crossed=false;
     for(let s=0;s<=len;s+=step){const q=g.getPointAtLength(s);const x=m.a*q.x+m.c*q.y+m.e,y=m.b*q.x+m.d*q.y+m.f;if(x>r.l+1&&x<r.r-1&&y>r.t+2&&y<r.b-2){crossed=true;break;}}
     if(crossed)out.push('line/text: <'+g.tagName+'> crosses "'+t.s+'"');}}
+  // clipped: anything drawn past the edge of its own svg, or past the slide
+  const slideR=sec.getBoundingClientRect();
+  for(const svg of sec.querySelectorAll('svg')){if(!vis(svg)||svg.closest('foreignObject'))continue;const R=svg.getBoundingClientRect();
+   for(const e of svg.querySelectorAll('rect,line,path,circle,ellipse,text,image,polygon,polyline')){if(!vis(e)||e.closest('defs')||e.closest('marker'))continue;
+    const r=e.getBoundingClientRect();if(!r.width&&!r.height)continue;const sw=parseFloat(getComputedStyle(e).strokeWidth)||0;
+    if(r.left<R.left-1-sw/2||r.top<R.top-1-sw/2||r.right>R.right+1+sw/2||r.bottom>R.bottom+1+sw/2)out.push('clipped: <'+e.tagName+'> '+(e.textContent||'').trim().slice(0,30)+' runs past its svg');
+    if(r.right>slideR.right+1||r.bottom>slideR.bottom+1)out.push('clipped: <'+e.tagName+'> '+(e.textContent||'').trim().slice(0,30)+' runs past the slide');}}
   return [...new Set(out)];});
  if(issues.length){total+=issues.length;console.log('slide',h+1);issues.forEach(x=>console.log('  ',x));}}
 console.log('total',total);await b.close();})();
