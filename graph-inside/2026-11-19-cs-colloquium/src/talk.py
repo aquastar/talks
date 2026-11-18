@@ -1725,17 +1725,10 @@ def mini_neuron(cx, cy, dots=0, lit=False):
 # left, small: light
 oc = R(30, 50, 380, 360, '#F4F1EC', 'none', 0, 8) + T(50, 82, 'Light', 22, 400, INK, extra='font-family="et-book,Georgia,serif" style="font-size-adjust:none"') + T(50, 104, 'optogenetics, Nobel Prize 2026', 14, 400, MUT)
 for q_, (fn, ini, nm) in enumerate([('karl-deisseroth.jpg', 'KD', 'Deisseroth'), ('peter-hegemann.jpg', 'PH', 'Hegemann'), ('georg-nagel.jpg', 'GN', 'Nagel')]):
-    x = 100 + q_ * 110
-    oc += photo(x, 146, 22, fn, ini, AC2) + T(x, 184, nm, 12, 600, INK, 'middle')
-oc += R(124, 212, 10, 26, '#E4DFD8', '#ACA39A', 1, 4)
-oc += f'<path d="M125,238 L133,238 L146,258 L112,258 Z" fill="{BLUE}" opacity="0"><animate attributeName="opacity" values="0;.45;.45;0;0" keyTimes="0;.04;.2;.26;1" dur="1.2s" repeatCount="indefinite"/></path>'
-oc += mini_neuron(128, 278, dots=7, lit=True)
-TX = 230; tr = f'M{TX},290'
-for k in range(5):
-    x0 = TX + k * 30
-    tr += f' L{x0+5},290 L{x0+7},266 L{x0+10},294 L{x0+13},290 L{x0+30},290'
-oc += P(tr, INK, 1.3, extra='stroke-linejoin="round"') + ''.join(R(TX + 4 + k * 30, 258, 3, 5, BLUE, 'none', 0, 1) for k in range(5))
-oc += T(50, 344, 'Add a gene that makes neurons', 15, 400, INK) + T(50, 366, 'sense light, and a flash makes', 15, 400, INK) + T(50, 388, 'them fire. Needs surgery.', 15, 400, INK)
+    x = 64 + q_ * 120
+    oc += photo(x, 140, 15, fn, ini, AC2) + T(x + 22, 145, nm, 12.5, 600, INK)
+oc += img(50, 166, 340, 188, 'figs/nobel2026-optogenetics-mouse.jpg')
+oc += T(50, 378, 'A gene makes neurons sense light, then', 14.5, 400, INK) + T(50, 398, 'a flash makes them fire. Needs surgery.', 14.5, 400, INK)
 g += oc
 # right, large: music
 SER_ = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
@@ -1760,7 +1753,7 @@ g += F(1, nc)
 g += F(2, T(590, 446, 'Light switches neurons with a gene. Music already changes the brain through the ear.', 19, 400, '#C45200', 'middle', extra=SER_ + ' data-keep="1"'))
 OPTO = sec('Two signals that change the brain: light, and music', SVG(g), ch='0',
            ref='Nobel Prize 2026. Nozaradan et al., J Neurosci 2011. Salimpoor et al., Nature Neuroscience 2011. Iaccarino et al., Nature 2016',
-           notes='An analogy, about one minute, do not dwell on optogenetics. Left, light: this year\'s Nobel went to optogenetics. Add a gene that makes chosen neurons sense light, then a flash makes them fire. Precise, but it needs a gene and a fiber in the brain. Click, right, sound: music is also a signal that changes the brain, and it needs no surgery. Three measured examples: the brain rhythm locks to the beat in EEG (Nozaradan 2011), dopamine is released at the peak of musical pleasure in PET (Salimpoor 2011), and 40 Hz sound, a very simple signal, changed mouse brains in the Tsai lab, with less amyloid. Which part of the music does the work is the open question, and that is where a model of music comes in. If someone asks how optogenetics works: a two minute BrainFacts.org video is linked in the reference line, youtube.com/watch?v=azp-if02m8U. Portraits: Ill. Niklas Elmehed, Nobel Prize Outreach. Brain drawing: Gray, Anatomy of the Human Body, Figure 728, public domain, recolored.')
+           notes='An analogy, about one minute, do not dwell on optogenetics. Left, light: this year\'s Nobel went to optogenetics. Add a gene that makes chosen neurons sense light, then a flash makes them fire. Precise, but it needs a gene and a fiber in the brain. Click, right, sound: music is also a signal that changes the brain, and it needs no surgery. Three measured examples: the brain rhythm locks to the beat in EEG (Nozaradan 2011), dopamine is released at the peak of musical pleasure in PET (Salimpoor 2011), and 40 Hz sound, a very simple signal, changed mouse brains in the Tsai lab, with less amyloid. Which part of the music does the work is the open question, and that is where a model of music comes in. If someone asks how optogenetics works: a two minute BrainFacts.org video is linked in the reference line, youtube.com/watch?v=azp-if02m8U. Portraits: Ill. Niklas Elmehed, Nobel Prize Outreach. Brain drawing: Gray, Anatomy of the Human Body, Figure 728, public domain, recolored. Mouse illustration: The Nobel Committee for Physiology or Medicine, Ill. Mattias Karlén, popular information, Figure 5: the gene goes into the mouse brain, a thin optical fiber shines light, the neurons fire.')
 
 g = adefs('md')
 g += steps(2).replace('url(#pea)', 'url(#mda)')
