@@ -1699,18 +1699,18 @@ def hl(ln):
     return re.sub(r'\*(.+?)\*', lambda m: f'<tspan class="q5k">{m.group(1)}</tspan>', ln)
 for k, (fn, ini, nm, who, lines) in enumerate(P5):
     cx = 142 + k * 224
-    g += photo(cx, 104, 40, fn, ini, AC2) + T(cx, 170, nm, 17, 700, INK, 'middle', extra='data-keep="1"') + T(cx, 190, who, 13, 400, MUT, 'middle')
-    g += ''.join(T(cx, 220 + i * 21, hl(ln), 15, 400, INK, 'middle', extra='class="q5t"') for i, ln in enumerate(lines))
+    g += photo(cx, 100, 50, fn, ini, AC2) + T(cx, 178, nm, 19, 700, INK, 'middle', extra='data-keep="1"') + T(cx, 199, who, 14, 400, MUT, 'middle')
+    g += ''.join(T(cx, 234 + i * 26, hl(ln), 18, 400, INK, 'middle', extra='class="q5t"') for i, ln in enumerate(lines))
 g += '<g class="fragment q5go" data-fragment-index="1"></g>'
-g += F(2, T(590, 340, 'Intelligence is more than words. Music is the kind that carries emotion, and it can be measured.', 19, 400, '#C45200', 'middle', extra='font-family="et-book,Georgia,serif" style="font-size-adjust:none"'))
+g += F(2, T(590, 372, 'Intelligence is more than words. Music is the kind that carries emotion, and it can be measured.', 19, 400, '#C45200', 'middle', extra='font-family="et-book,Georgia,serif" style="font-size-adjust:none"'))
 Q5_JS = """<style>.reveal .q5t{transition:fill .7s}.reveal .q5k{transition:fill .7s}.reveal .q5bg{opacity:0;transition:opacity .7s}
-.reveal section:has(.q5go.visible) .q5t{fill:#8A8379}.reveal section:has(.q5go.visible) .q5k{fill:#C45200;font-weight:700}
+.reveal section:has(.q5go.visible) .q5t{fill:#B9B2A8}.reveal section:has(.q5go.visible) .q5k{fill:#C45200;font-weight:700}
 .reveal section:has(.q5go.visible) .q5bg{opacity:1}.reveal section.q5measure .q5k{font-weight:700;transition:none}</style>
 <script>(function(){function build(){var ks=document.querySelectorAll('.reveal .q5k');if(!ks.length)return;var sec=ks[0].closest('section');if(sec.dataset.q5done||Reveal.getCurrentSlide()!==sec)return;var made=0;
 sec.classList.add('q5measure');ks.forEach(function(k){var t=k.parentNode,txt=t.textContent,start=txt.indexOf(k.textContent),n=k.textContent.length;
 try{var a=t.getExtentOfChar(start),b=t.getExtentOfChar(start+n-1);var r=document.createElementNS('http://www.w3.org/2000/svg','rect');
 r.setAttribute('x',a.x-3);r.setAttribute('y',a.y-1);r.setAttribute('width',b.x+b.width-a.x+6);r.setAttribute('height',a.height+2);r.setAttribute('rx',3);
-r.setAttribute('fill','#FDEBDD');r.setAttribute('class','q5bg');t.parentNode.insertBefore(r,t);made++;}catch(e){}});sec.classList.remove('q5measure');if(made)sec.dataset.q5done=1;}
+r.setAttribute('fill','#FBD3B4');r.setAttribute('class','q5bg');t.parentNode.insertBefore(r,t);var u=document.createElementNS('http://www.w3.org/2000/svg','rect');u.setAttribute('x',a.x-3);u.setAttribute('y',a.y+a.height-0.5);u.setAttribute('width',b.x+b.width-a.x+6);u.setAttribute('height',2.6);u.setAttribute('fill','#F76902');u.setAttribute('class','q5bg');t.parentNode.insertBefore(u,t);made++;}catch(e){}});sec.classList.remove('q5measure');if(made)sec.dataset.q5done=1;}
 var t=setInterval(function(){if(window.Reveal&&Reveal.on){clearInterval(t);Reveal.on('slidechanged',build);if(Reveal.isReady&&Reveal.isReady())build();else Reveal.on('ready',build);}},100);})();</script>"""
 BEYOND5 = sec('Part 2. Knowledge is not only text', SVG(g), ch='2',
               ref='Merleau-Ponty, Phenomenology of Perception, 1945. Gardner, Frames of Mind, 1983. Picard, Affective Computing, 1997. Minsky, The Emotion Machine, 2006. Fei-Fei Li, From Words to Worlds, 2025',
