@@ -1736,12 +1736,32 @@ nc = R(440, 50, 710, 360, '#fff', LINE, 1.2, 8) + T(462, 82, 'Sound', 22, 400, I
 BR = re.sub(r'(<path[^>]*id="brain-temporal"[^>]*?)/>', lambda m: m.group(1) + '><animate attributeName="fill" values="#FAD6BA;#F6A46A;#FAD6BA" dur="0.6s" repeatCount="indefinite"/></path>', open('figs/brain-lateral-inner.svgfrag').read(), count=1)
 nc += f'<g transform="translate(800,92) scale(0.33)">{BR}</g>'
 nc += T(1000, 246, 'hearing cortex', 12.5, 600, '#C45200', 'middle')
-SPx, SPy = 470, 300
-nc += f'<path d="M{SPx},{SPy} l12,-10 l0,30 l-12,-10 Z" fill="{AC2}"/>'
-for k in range(3):
-    nc += (f'<path d="M{SPx+22},{SPy-14} Q{SPx+32},{SPy+5} {SPx+22},{SPy+24}" fill="none" stroke="{AC2}" stroke-width="2" opacity="0">'
-           f'<animateTransform attributeName="transform" type="translate" values="0 0;350 -10" dur="1.8s" begin="{k * 0.6}s" repeatCount="indefinite"/>'
-           f'<animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.75;1" dur="1.8s" begin="{k * 0.6}s" repeatCount="indefinite"/></path>')
+# speaker: the Lucide "volume-2" icon (MIT license), notes drifting to the ear along a wave (his note Nov 18)
+SPx, SPy = 478, 318
+nc += (f'<g transform="translate({SPx},{SPy - 36}) scale(3)" fill="none" stroke="{INK}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
+       '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="#EFEBE5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></g>')
+WX0, WX1 = 556, 960
+wave = 'M' + ' L'.join(f'{x},{SPy + 18 * _om.sin((x - WX0) / 38):.1f}' for x in range(WX0, WX1 + 1, 4))
+nc += P(wave, '#D7D2CB', 1.4, extra='stroke-dasharray="2 5" stroke-linecap="round"')
+def eighth(sz, col):
+    return (f'<ellipse cx="0" cy="0" rx="{5.2*sz}" ry="{3.8*sz}" transform="rotate(-22)" fill="{col}"/>'
+            f'<line x1="{4.6*sz}" y1="{-1*sz}" x2="{4.6*sz}" y2="{-26*sz}" stroke="{col}" stroke-width="{1.6*sz}"/>'
+            f'<path d="M{4.6*sz},{-26*sz} q{7*sz},{6*sz} {6*sz},{15*sz}" fill="none" stroke="{col}" stroke-width="{1.6*sz}" stroke-linecap="round"/>')
+def beamed(sz, col):
+    o = ''
+    for dx in (0, 14 * sz):
+        o += f'<ellipse cx="{dx}" cy="0" rx="{5.2*sz}" ry="{3.8*sz}" transform="rotate(-22 {dx} 0)" fill="{col}"/><line x1="{dx+4.6*sz}" y1="{-1*sz}" x2="{dx+4.6*sz}" y2="{-25*sz}" stroke="{col}" stroke-width="{1.6*sz}"/>'
+    return o + f'<path d="M{4.6*sz},{-25*sz} L{18.6*sz},{-28*sz}" stroke="{col}" stroke-width="{4*sz}"/>'
+DUR = 4.0
+import itertools as _it
+_kinds = _it.cycle([('e', INK), ('b', '#5F5D50'), ('e', ACC), ('b', INK), ('e', '#5F5D50')])
+NOTES = [(-DUR + k * DUR / 10, (1.0, 1.35, 1.15, 1.45, 1.2)[k % 5], *next(_kinds)) for k in range(10)]
+for t0, sz, kind, col in NOTES:
+    pts = [(x, SPy - 22 + 18 * _om.sin((x - WX0) / 38) - 10 * _om.sin(x / 23)) for x in range(WX0, WX1 + 1, 30)]
+    vals = ';'.join(f'{x:.0f} {y:.0f}' for x, y in pts)
+    body = eighth(sz, col) if kind == 'e' else beamed(sz * 0.9, col)
+    nc += (f'<g opacity="0"><g>{body}<animateTransform attributeName="transform" type="translate" values="{vals}" dur="{DUR}s" begin="{t0}s" repeatCount="indefinite"/></g>'
+           f'<animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="{DUR}s" begin="{t0}s" repeatCount="indefinite"/></g>')
 facts = [('The brain rhythm locks to the beat', 'EEG, Nozaradan et al. 2011'),
          ('Dopamine is released at the peak of pleasure', 'PET, Salimpoor et al. 2011'),
          ('40 Hz sound changes mouse brains', 'less amyloid, Tsai lab, 2016 to 2019')]
@@ -2192,6 +2212,32 @@ OPTO_VIDEO = ('<section data-ch="2">\n  <h2>Optogenetics in two minutes</h2>\n'
   '  <div class="ref">BrainFacts.org, Society for Neuroscience, Lighting Up The Brain With Optogenetics, 2017</div>\n'
   '  <aside class="notes">The BrainFacts.org explainer, about two minutes, from the Society for Neuroscience. Click play inside the frame. If time is short, play the first minute and stop. Needs the network. If it fails to load, skip it, the slide before already says the three steps. Press the right arrow outside the video, or click the slide area below it, to go on.</aside>\n</section>')
 
+# ---- Nov 18 (his request): the local and national music and medicine network, to share, not to dwell on ----
+g = adefs('mn')
+SERN = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
+COLSN = [(30, 'At RIT', [('Hwan Shim', 'Engineering Technology, Music and Audio', 'Cognition Lab: attention, hearing aids (NIH)'),
+                          ('Sungyoung Kim', 'Engineering Technology: spatial audio,', 'auditory training for hearing rehab'),
+                          ('Matt Dye', 'NTID: deaf cognition, director of the', 'Cognitive Science PhD program'),
+                          ('Amanda Picioli', 'NTID: audiology', '')]),
+         (410, 'At the University of Rochester', [('Eastman Performing Arts Medicine', 'Eastman and URMC, a center since 2024.', 'Director Gaelen McCormick'),
+                          ('David Greenberg', 'research director, Evans Lam Professor', 'of Music and Medicine'),
+                          ('Music and aging pilots', 'with the UR Aging Institute, up to $25K.', 'Funded: group singing for dementia'),
+                          ('Samuel Norman-Haignere, Zhiyao Duan', 'music in the brain (URMC), music AI (ECE)', '')]),
+         (790, 'Nationally', [('NIH Sound Health', 'with the Kennedy Center and the NEA,', 'since 2017'),
+                          ('NIH music research networks', 'NCCIH and NIA, 2023: four networks on', 'music for pain and dementia, with pilots'),
+                          ('Sound Health Network', 'NEA and UCSF, co-directed by Julene', 'Johnson and Charles Limb (hearing surgeon)')])]
+for x, head, rows in COLSN:
+    blk = T(x, 34, head, 21, 400, INK, extra=SERN) + L(x, 46, x + 360, 46, '#D7D2CB', 1)
+    y = 82
+    for nm, a_, b_ in rows:
+        blk += T(x, y, nm, 15.5, 600, INK) + T(x, y + 21, a_, 13.5, 400, MUT) + (T(x, y + 39, b_, 13.5, 400, MUT) if b_ else '')
+        y += 80 if b_ else 62
+    g += blk
+g += T(590, 432, 'Rochester already has the pieces: music, medicine, hearing and AI. Let us connect them.', 19, 400, '#C45200', 'middle', extra=SERN + ' data-keep="1"')
+MNET = sec('Music and medicine, near us and nationally', SVG(g), ch='2',
+           ref='rit.edu/macl. urmc.rochester.edu/eastman-performance-medicine, Pilot Award Program in Music and Aging 2026 to 2027. NIH RFA-AT-23-009, 2023. mdrn.ucsf.edu. Sound Health Network, NEA and UCSF, 2021',
+           notes='Thirty seconds, to share, not to teach. Read the bottom line and move on, people can look at the slide. RIT: Hwan Shim in Engineering Technology runs the Music and Audio Cognition Lab, auditory attention and smart hearing aids, NIH funded. Sungyoung Kim, spatial audio and auditory training for hearing rehabilitation. At NTID, Matt Dye, who directs the Cognitive Science PhD program, and Amanda Picioli in audiology. UR: Eastman Performing Arts Medicine, a joint center of Eastman and URMC since 2024, director Gaelen McCormick, research director David Greenberg, the Evans Lam Professor of Music and Medicine. With the UR Aging Institute it runs music and aging pilot awards, up to 25 thousand dollars, a UR PI is required. Also Samuel Norman-Haignere at URMC, who models how the brain responds to music, and Zhiyao Duan in ECE, music AI. Nationally: NIH Sound Health with the Kennedy Center and the NEA since 2017, four NIH music research networks funded in 2023 by NCCIH and NIA on music for pain and dementia, which fund pilot studies, for example the Music and Dementia Research Network at UCSF, and the NEA Sound Health Network at UCSF, co-directed by Julene Johnson and Charles Limb. Ask: if you work on hearing, health or music, talk to me.')
+
 # ======================= ASSEMBLY =======================
 # ---- loop it1: results slide that pays off the trailer bars (P15, P10) ----
 g = adefs('r20')
@@ -2325,7 +2371,7 @@ def assemble(cover, old):
     copy_b = bridge(COPY, 'Before we go inside a generator, one honest line from the literature: in music, graphs win only when the edges carry something the sequence throws away, and often they do not (survey under the down arrow). The one place nobody has looked for such edges is inside the generator itself.')
     corpus_b = bridge(corpus, 'How much memory should the graph have? One note gives the right vocabulary with the wrong syntax, three notes memorize the piece (the picture is under the down arrow on the next slide).')
     beyond5 = bridge(BEYOND5, 'Emotion is one way music acts on the brain. Before we model music, one detour through this year\'s Nobel Prize, because it shows what a designed signal can do to brain circuits. The history of music models is under the down arrow.')
-    mus = [beyond5, backup(hist), toch(OPTO, '2'), toch(MEDIC, '2'), toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), copy_b, backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
+    mus = [beyond5, backup(hist), toch(OPTO, '2'), toch(MEDIC, '2'), MNET, toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), copy_b, backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
     beyond = []
     close = [TAKEAWAY.replace('</section>', CLIP_JSON + '</section>')]
     # one bridge per main slide, so each slide leads into the next one (order of Nov 16 2026)
