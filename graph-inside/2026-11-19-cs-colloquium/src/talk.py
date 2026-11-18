@@ -2220,7 +2220,7 @@ document.querySelectorAll('[id^=tzt-]').forEach(function(r){r.setAttribute('fill
 document.querySelectorAll('[id^=tzl-]').forEach(function(r){r.setAttribute('fill','#9A9389');r.setAttribute('font-weight','400');});
 t.n.forEach(function(n){var r=document.getElementById('tzn-'+n);r.setAttribute('stroke','#F76902');r.setAttribute('stroke-width','1.8');document.getElementById('tzt-'+n).setAttribute('fill','#C45200');});
 if(s[3]){var r=document.getElementById('tzn-'+s[3]);r.setAttribute('fill','#F76902');document.getElementById('tzt-'+s[3]).setAttribute('fill','#fff');}
-var l=document.getElementById('tzl-'+s[0]);l.setAttribute('fill','#C45200');l.setAttribute('font-weight','700');
+var RM=__RM__,h=document.getElementById('rm-hl');if(h&&RM[s[0]]){h.setAttribute('cx',RM[s[0]][0]);h.setAttribute('cy',RM[s[0]][1]);h.setAttribute('opacity',1);}var l=document.getElementById('tzl-'+s[0]);l.setAttribute('fill','#C45200');l.setAttribute('font-weight','700');
 document.getElementById('tz-mv').textContent=s[1];var c=document.getElementById('tz-cap');c.textContent=s[2];c.setAttribute('x',s[1]?62:40);}
 setInterval(function(){var on=document.querySelector('.present #tz-hl');if(!on){i=0;last=0;return;}var now=Date.now();var dur=(i==ST.length-1)?4200:2800;
 if(!last){show(0);last=now;return;}if(now-last>dur){i=(i+1)%ST.length;show(i);last=now;}},200);})();</script>"""
@@ -2235,8 +2235,10 @@ MINXY = {'Dm': (-0.502, -0.088), 'Gm': (-0.413, -0.362), 'Cm': (-0.178, -0.535),
 FX, FY, FS = 640, 222, 200
 def fxy(x, y):
     return (FX + x * FS, FY - y * FS)
+RMNAME = {'u0_0': 'C', 'd0_m1': 'Cm', 'dm1_0': 'Am', 'd0_0': 'Em', 'u1_0': 'G'}
 ring = ' L'.join(f'{fxy(x, y)[0]:.1f},{fxy(x, y)[1]:.1f}' for _, x, y in MAJ)
 pr += P(f'M{ring} Z', '#D7D2CB', 1.4, extra='stroke-dasharray="4 4"')
+pr += '<circle id="rm-hl" cx="-50" cy="-50" r="13" fill="#FBD3B4" stroke="#F76902" stroke-width="2.6" opacity="0" style="transition:cx .6s,cy .6s"/>'
 for (nm, x, y), mn in zip(MAJ, MIN):
     mx, my = MINXY[mn]
     pr += f'<rect x="{fxy(mx, my)[0] - 4:.1f}" y="{fxy(mx, my)[1] - 4:.1f}" width="8" height="8" fill="#C45200"/>'
@@ -2246,6 +2248,10 @@ for (nm, x, y), mn in zip(MAJ, MIN):
     anc = 'middle' if abs(_mm.cos(a)) < 0.35 else ('start' if _mm.cos(a) > 0 else 'end')
     pr += (f'<text x="{lx:.1f}" y="{ly + 5:.1f}" font-size="14" font-weight="700" text-anchor="{anc}" font-family="et-book,Georgia,serif">'
            f'<tspan fill="#4C5B66">{nm}</tspan><tspan fill="#9A9389" font-weight="400"> / </tspan><tspan fill="#C45200">{mn}</tspan></text>')
+_RMXY = {nm: fxy(x, y) for nm, x, y in MAJ}
+_RMXY.update({mn: fxy(*xy) for mn, xy in MINXY.items()})
+_RM = {k: [round(_RMXY[v][0], 1), round(_RMXY[v][1], 1)] for k, v in RMNAME.items()}
+TZ_JS = TZ_JS.replace('__RM__', _json.dumps(_RM))
 pr += T(FX, FY - 2, 'circle', 13, 600, MUT, 'middle') + T(FX, FY + 14, 'of fifths', 13, 600, MUT, 'middle')
 pr += C(478, 392, 5, '#4C5B66') + T(488, 396, 'major', 12, 400, MUT) + '<rect x="530" y="388" width="8" height="8" fill="#C45200"/>' + T(544, 396, 'minor', 12, 400, MUT)
 pr += T(590, 396, 'redrawn from their Figure 1a', 12, 400, MUT)
@@ -2258,7 +2264,7 @@ pr += T(866, 360, 'Open question:', 13, 700, '#C45200') + T(866, 378, 'a model t
 g += F(1, pr)
 MUSB = sec('Do music generation models encode music theory?', SVG(g, 424), ch='0',
            ref='Ebrahimzadeh, Bernardes, Stober, ISMIR 2026, Fig. 1a, Table 2 | Cohn 2012 (Tonnetz)',
-           notes='Left, music theory as a graph, the Tonnetz, which goes back to Euler in 1739. Notes are nodes. Across is a fifth, plus 7 half steps, C to G. Up right is a major third, plus 4, C to E. Then every small triangle is a chord. Point up is major: root, plus 4, plus 7, C E G. Point down is minor: root, plus 3, plus 7. Two triangles that share an edge share two notes, so you move between them by changing one note. The animation runs by itself: C major has exactly three such neighbors, P to C minor, R to A minor, L to E minor. These are the neo-Riemannian moves, after Hugo Riemann the music theorist, not the mathematician. I read this lattice as a knowledge graph of music: concepts and their relations. Click: does a model learn these distances on its own? Ebrahimzadeh, Bernardes and Stober, ISMIR 2026, train word2vec, the same skip-gram model as for words, on chord sequences from the Beethoven piano sonatas and the Beatles, with every song also transposed to all 12 keys. Each of the 24 chords gets a vector. Their Figure 1a is the map of those vectors. The chords fall on a ring in circle of fifths order, C, G, D, A and so on, which is the across row of the lattice closed into a ring. Numbers from their Table 2, Beethoven corpus: zero errors in the order around the ring, a Spearman correlation of 0.96 for minor chords and 0.87 for major chords between the learned distances and the circle of fifths distances, and for every chord its two nearest neighbors are its two fifths. Be clear about the limit: this is a small model trained on chord symbols, not a generator trained on raw sound. Whether MusicGen, which learns from sound, has the same chord distances is, as far as I know, untested. That is the open question. Background if asked: Wei and colleagues, ISMIR 2024, showed that chord, interval and key labels can be read out of one layer of MusicGen and Jukebox with a tiny classifier, 93 to 98 percent, but they did not test the distances.')
+           notes='Left, music theory as a graph, the Tonnetz, which goes back to Euler in 1739. Notes are nodes. Across is a fifth, plus 7 half steps, C to G. Up right is a major third, plus 4, C to E. Then every small triangle is a chord. Point up is major: root, plus 4, plus 7, C E G. Point down is minor: root, plus 3, plus 7. Two triangles that share an edge share two notes, so you move between them by changing one note. The animation runs by itself: C major has exactly three such neighbors, P to C minor, R to A minor, L to E minor. These are the neo-Riemannian moves, after Hugo Riemann the music theorist, not the mathematician. I read this lattice as a knowledge graph of music: concepts and their relations. Click: does a model learn these distances on its own? Ebrahimzadeh, Bernardes and Stober, ISMIR 2026, train word2vec, the same skip-gram model as for words, on chord sequences from the Beethoven piano sonatas and the Beatles, with every song also transposed to all 12 keys. Each of the 24 chords gets a vector. Their Figure 1a is the map of those vectors. The chords fall on a ring in circle of fifths order, C, G, D, A and so on, which is the across row of the lattice closed into a ring. Numbers from their Table 2, Beethoven corpus: zero errors in the order around the ring, a Spearman correlation of 0.96 for minor chords and 0.87 for major chords between the learned distances and the circle of fifths distances, and for every chord its two nearest neighbors are its two fifths. Watch the orange halo on the ring: it follows the chord of the animation on the left. C to G is one step on the ring, a fifth. But the P, R and L neighbors, C minor, A minor, E minor, sit far from C on the ring: this model learned which chords appear in the same key, the fifths, not which chords share two notes. One axis of the lattice, not all of it. Be clear about the limit: this is a small model trained on chord symbols, not a generator trained on raw sound. Whether MusicGen, which learns from sound, has the same chord distances is, as far as I know, untested. That is the open question. Background if asked: Wei and colleagues, ISMIR 2024, showed that chord, interval and key labels can be read out of one layer of MusicGen and Jukebox with a tiny classifier, 93 to 98 percent, but they did not test the distances.')
 MUSB = MUSB.replace('</section>', TZ_JS + '\n</section>', 1)
 
 # ---- two levels by two domains: the map of the talk (Nov 18, his note: fewer words, no status labels, no vector line yet) ----
