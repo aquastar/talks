@@ -2397,18 +2397,24 @@ def assemble(cover, old):
         raise ValueError(head)
     _c5 = _grp(five_q, '<g class="fragment" data-fragment-index="5" transform="translate(770,240)">')
     five_q = five_q.replace(_c5, '', 1)
-    _c5 = _c5.replace('<g class="fragment" data-fragment-index="5" transform="translate(770,240)">', '<g transform="translate(350,0)">', 1)
-    _c5 = re.sub(r'>5\. circuit<', '>1. weight graph: its circuit<', _c5, count=1)
+    _c5 = _c5.replace('<g class="fragment" data-fragment-index="5" transform="translate(770,240)">', '<g transform="translate(400,0)">', 1)
+    _c5 = re.sub(r'>5\. circuit<', '>1. circuit graph<', _c5, count=1)
     _c4h = re.search(r'<g class="fragment" data-fragment-index="4" transform="translate\(490,240\)">', five_q).group(0)
-    five_q = five_q.replace(_c4h, _c4h.replace('translate(490,240)', 'translate(630,240)'), 1)
+    five_q = five_q.replace(_c4h, _c4h.replace('translate(490,240)', 'translate(700,240)'), 1)
+    for _a, _b in (('data-fragment-index="1" transform="translate(350,0)"', 'data-fragment-index="1" transform="translate(400,0)"'),
+                   ('data-fragment-index="2" transform="translate(630,0)"', 'data-fragment-index="2" transform="translate(700,0)"'),
+                   ('data-fragment-index="3" transform="translate(910,0)"', 'data-fragment-index="3" transform="translate(400,240)"')):
+        assert _a in five_q, _a
+        five_q = five_q.replace(_a, _b, 1)
+    five_q = re.sub(r'>1\. weight graph<', '>1. circuit graph<', five_q, count=1)
     five_q = five_q.replace('One network, five graphs', 'One network, four graphs', 1)
-    _veil = ''.join(f'<rect x="{x}" y="{y}" width="260" height="220" rx="4" fill="#FBFAF7" fill-opacity=".75"/>' for x, y in ((630, 0), (910, 0), (630, 240)))
+    _veil = ''.join(f'<rect x="{x}" y="{y}" width="260" height="220" rx="4" fill="#FBFAF7" fill-opacity=".75"/>' for x, y in ((700, 0), (400, 240), (700, 240)))
     _veil += '<rect x="0" y="40" width="330" height="330" fill="#FBFAF7" fill-opacity=".75"/>'
-    _veil += _c5 + '<rect x="346" y="-4" width="268" height="228" rx="6" fill="none" stroke="#F76902" stroke-width="3"/>'
+    _veil += _c5 + '<rect x="396" y="-4" width="268" height="228" rx="6" fill="none" stroke="#F76902" stroke-width="3"/>'
     _i = five_q.index('</svg>')
     five_q = five_q[:_i] + f'<g class="fragment" data-fragment-index="5">{_veil}</g>' + five_q[_i:]
-    five_q = re.sub(r'<p class="takeaway small"[^>]*>.*?</p>', '<p class="fragment" data-fragment-index="5" style="text-align:center;margin:.3em 1.1em 0"><span style="display:inline-block;background:#FDEBDD;color:#C45200;font-family:et-book,Georgia,serif;font-size:.85em;padding:.25em .7em;border-radius:4px">Our question: does the circuit graph somehow encode the knowledge graph?</span></p>', five_q, count=1, flags=re.S)
-    five_q = notes(five_q, 'The network itself is a graph, and there is more than one way to draw it: the weights, groups of neurons, the inputs, and which blocks fire together. Click: inside the weight graph, a small subgraph carries one answer, the circuit. That is our focus. So the question from the last slide, sharpened: does the circuit graph somehow encode the knowledge graph? If the Space Needle is in Paris, it is in France, does the circuit carry that constraint? A silent failure is an edit after which it does not. Our work reads the circuit side, which blocks work together, before and after an edit, and Part 1 answers it for language.')
+    five_q = re.sub(r'<p class="takeaway small"[^>]*>.*?</p>', '<p class="fragment" data-fragment-index="5" style="text-align:center;margin:.3em 1.1em 0"><span style="font-family:et-book,Georgia,serif;font-size:.85em;color:#1F1E1B">Our question: does the <span style="background:#FDEBDD;color:#C45200;padding:.05em .3em;border-radius:3px">circuit graph</span> somehow encode the <span style="background:#FDEBDD;color:#C45200;padding:.05em .3em;border-radius:3px">knowledge graph</span>?</span></p>', five_q, count=1, flags=re.S)
+    five_q = notes(five_q, 'The network itself is a graph, and there is more than one way to draw it: the weights, groups of neurons, the inputs, and which blocks fire together. Click: the first one is the circuit graph, the weights and the small subgraph of them that carries one answer. That is our focus. So the question from the last slide, sharpened: does the circuit graph somehow encode the knowledge graph? If the Space Needle is in Paris, it is in France, does the circuit carry that constraint? A silent failure is an edit after which it does not. Our work reads the circuit side, which blocks work together, before and after an edit, and Part 1 answers it for language.')
     beyond_o = retitle(toch(BEYOND5, '0'), 'Knowledge is not only text')
     vision = [cover, NETG, backup(toch(wb, '0')), KGT3, backup(KGT2), five_q, beyond_o, MULTI, backup(toch(PROBE, '0')), backup(toch(MGEN, '0')), backup(VISION), MAP2, backup(FORECAST2)]
     rome = old[33]
