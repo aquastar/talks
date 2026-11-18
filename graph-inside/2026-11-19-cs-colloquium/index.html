@@ -166,7 +166,7 @@ body.gridon #rail,body.gridon #footer{display:none}
 #grid .tile{cursor:pointer;background:#fff;border-radius:4px;overflow:hidden;border:3px solid transparent;transition:transform .12s}
 #grid .tile:hover{transform:scale(1.03)}
 #grid .tile.cur{border-color:#C45200}
-#grid .tile img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+#grid .tile img{display:block;width:100%;aspect-ratio:1280/660;object-fit:cover}
 #grid .tile div{font-size:11px;line-height:1.25;color:#1c2430;padding:4px 6px;height:2.6em;overflow:hidden}
 #grid .tile div b{color:#5b6b7c;margin-right:.4em}
 #grid .hint{position:sticky;top:0;font-size:12px;color:#cfd8e0;text-align:right}
@@ -1322,7 +1322,7 @@ Reveal.initialize({hash:true, center:false, progress:true, width:1280, height:66
   var grid=document.getElementById('grid'), body=document.getElementById('gridbody'), built=false;
   function build(){
     var secs=Array.from(document.querySelectorAll('.reveal .slides>section')); var html='', last=null;
-    secs.forEach(function(sec,i){ var ch=sec.getAttribute('data-ch')||'1'; var h=sec.querySelector('h1,h2'); var t=h?h.textContent.trim():'';
+    secs.forEach(function(sec,i){ var ch=sec.getAttribute('data-ch')||'1'; var h=sec.querySelector('h1,h2'); var t=h?h.innerText.replace(/\s+/g,' ').trim():'';
       if(ch!==last){ if(last!==null) html+='</div>'; html+='<h3>'+(CHN[ch]||ch)+'</h3><div class="tiles">'; last=ch; }
       html+='<div class="tile" data-i="'+i+'"><img src="thumbs/'+String(i).padStart(2,'0')+'.png" alt=""><div><b>'+(i+1)+'</b>'+t+'</div></div>'; });
     body.innerHTML=html+'</div>'; built=true;

@@ -48,6 +48,7 @@ Read this before doing anything in this repo. When Zhiqian gives a new rule abou
 - Real images next to our drawings: paper figures, book covers, photos of the people quoted. Find and download them yourself when the host is reachable, put the credit in the speaker notes, and ask him only when a site blocks scripted access. Never invent a quote.
 - Numbers come only from the published version of a paper, read from the PDF. Unfinished work is labeled In progress and never counted as a result.
 - Time: about 2 minutes per slide with content. A one hour slot means about 50 minutes of talking and about 30 main slides. The rest goes to backup slides under the down arrow, with one line or one number left on the main slide.
+- The Esc grid shows thumbs/NN.png. After any slide change, regenerate them: NODE_PATH=$(npm root -g) node tools/thumbs.js, then python3 tools/thumbs_resize.py (in the deck folder), and commit the thumbs with the change (his note 2026-11-18, they were stale).
 - Before pushing, screenshot every changed slide and look at it: no overlap, no clipped text, no empty boxes, no 404 in the browser console.
 
 - One style for a question or a key point (his rule 2026-11-18, fixed, style B): a light orange box (#FDEFE3) with a thick orange bar on the left (7 px, #F76902), one line of dark text, only the key words bold orange (#C45200). In the Nov 19 deck: keybox() and kw() in src/talk.py. Use it for every research question and every key statement.

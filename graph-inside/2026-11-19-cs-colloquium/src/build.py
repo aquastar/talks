@@ -566,6 +566,8 @@ def _recolor(h):
     h = re.sub(r'#[0-9a-fA-F]{6}\b', f, h)
     return h.replace('rgba(125,85,199', 'rgba(76,91,102').replace('rgb(125,85,199)', 'rgb(76,91,102)')
 html = _recolor(html)
+html = html.replace("var t=h?h.textContent.trim():'';", "var t=h?h.innerText.replace(/\\s+/g,' ').trim():'';", 1)  # the cover title has line breaks between words
+html = html.replace('#grid .tile img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}', '#grid .tile img{display:block;width:100%;aspect-ratio:1280/660;object-fit:cover}', 1)  # thumbs are taken at the slide size
 html = html.replace("transition:'none'", "transition:'slide', transitionSpeed:'fast', backgroundTransition:'fade'", 1)  # his request Nov 18: smoother than a cut
 # the optogenetics explainer video, linked from the reference line of the light and music slide (his request Nov 18)
 _vid = '<span class="rsep" aria-hidden="true"></span><a href="https://www.youtube.com/watch?v=azp-if02m8U" target="_blank" rel="noopener" title="BrainFacts.org, Lighting Up The Brain With Optogenetics, 2 minute video">Optogenetics video, BrainFacts.org</a>'
