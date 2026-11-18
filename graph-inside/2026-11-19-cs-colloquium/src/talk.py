@@ -2008,7 +2008,7 @@ net = L(190, YS, OUTX - 6, YS, '#D7D2CB', 3) + T(560, 340, 'attention (A) and ML
 NODE = {}
 for k, x in enumerate(LX):
     NODE[('A', k)] = (x - 22, YA); NODE[('M', k)] = (x + 22, YM)
-    net += T(x, 92, f'layer {k + 1}', 12.5, 400, MUT, 'middle')
+    net += T(x, 70, f'layer {k + 1}', 12.5, 400, MUT, 'middle')
 for (t_, k), (x, y) in NODE.items():
     net += L(x, y + (16 if y < YS else -16), x, YS, '#D7D2CB', 1) + C(x, y, 16, '#fff', '#ACA39A', 1.6) + T(x, y + 5, t_, 13, 600, '#5F5D50', 'middle')
 # click 1: the layers light up one after another, then the path that carries this answer
@@ -2022,7 +2022,7 @@ for (t_, k), (x, y) in NODE.items():
 (mx, my), (ax, ay) = NODE[('M', 1)], NODE[('A', 3)]
 pd = f'M190,{YS} C{mx - 70},{YS} {mx - 50},{my + 30} {mx},{my + 17} M{mx},{my - 17} C{mx + 40},{my - 90} {ax - 60},{ay + 80} {ax},{ay + 17} M{ax + 17},{ay} C{ax + 80},{ay} {OUTX - 60},{YS} {OUTX - 8},{YS}'
 lit += f'<path class="ngp" pathLength="100" d="{pd}" fill="none" stroke="#F76902" stroke-width="3" stroke-linecap="round" style="animation-delay:2.2s"/>'
-lit += f'<g class="ngl" style="animation-delay:2.6s">' + T(mx, my + 52, 'looks up the fact', 13.5, 600, '#C45200', 'middle') + T(ax, ay - 30, 'moves it to the answer', 13.5, 600, '#C45200', 'middle') + '</g>'
+lit += f'<g class="ngl" style="animation-delay:2.6s">' + T(mx, my + 52, 'looks up the fact', 13.5, 600, '#C45200', 'middle') + T(ax, ay - 23, 'moves it to the answer', 13.5, 600, '#C45200', 'middle') + '</g>'
 lit += T(40, 364, 'Structural: the wiring is fixed. Functional: what lights up depends on the question.', 14, 400, MUT)
 g += F(1, net + lit)
 # click 2: the answer is a distribution over next words
@@ -2280,7 +2280,7 @@ arrow = (f'<g class="k3sw"><line class="k3col" x1="{ax}" y1="{ay}" x2="{tx:.1f}"
          f'<path d="M{tx:.1f},{ty:.1f} l-11,-5 l0,10 Z" transform="rotate({A1:.1f} {tx:.1f} {ty:.1f})" fill="{ACC}"/></g>')
 g += f'<g class="fragment custom" data-fragment-index="1">{arrow}</g>'
 g += f'<g class="fragment fade-out" data-fragment-index="1">' + T(214, 158, 'located in', 13, 600, INK, extra='transform="rotate(-28 214 158)"') + '</g>'
-g += f'<g class="fragment k3late" data-fragment-index="1">' + T(196, 236, 'the edit: located in Paris', 13, 600, '#C45200') + P(f'M{SN[0]+9},{SN[1]-6} C250,170 280,140 {SE[0]-10},{SE[1]+8}', '#ACA39A', 1.5, extra='stroke-dasharray="3 5"') + '</g>'
+g += f'<g class="fragment k3late" data-fragment-index="1">' + T(250, 236, 'the edit: located in Paris', 13, 600, '#C45200') + P(f'M{SN[0]+9},{SN[1]-6} C250,170 280,140 {SE[0]-10},{SE[1]+8}', '#ACA39A', 1.5, extra='stroke-dasharray="3 5"') + '</g>'
 # right: the same four questions, always on screen
 QS = ['Which city is it in?', 'Which country is it in?', 'Which state is it in?', 'Which currency is used there?']
 BEFORE = ['Seattle', 'United States', 'Washington', 'dollar']
