@@ -2113,7 +2113,7 @@ g += pipe + L(40, 108, 1140, 108, '#D7D2CB', 1)
 gl = T(40, 140, 'Music theory: the pitch graph', 17, 700, INK) + T(40, 160, 'notes in a row, the same note an octave up linked', 13.5, 400, MUT)
 NN = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
 def pn(o, k):
-    return (70 + k * 52, 364 - (o - 3) * 74)
+    return (70 + k * 56, 364 - (o - 3) * 74)
 for o in (3, 4, 5):
     for k in range(6):
         (x1, y1), (x2, y2) = pn(o, k), pn(o, k + 1)
@@ -2132,7 +2132,7 @@ for o in (3, 4, 5):
 gl += T(40, 414, 'knowledge graph, from music theory', 13.5, 600, '#C45200')
 g += F(1, gl)
 # right: what MusicGen learned, the helix in its vector space, every note named
-HXc = 760
+HXc = 628
 hx = T(HXc, 140, 'What the model learned: a helix', 17, 700, INK, 'middle', extra='data-keep="1"') + T(HXc, 160, "in the model's vector space, one dot per note", 13.5, 400, MUT, 'middle')
 hx += f'<g id="hx3d"><path id="hx3d-line" d="" fill="none" stroke="{PURP_}" stroke-width="2" stroke-opacity=".5"/>'
 WHITE = {0: 'C', 2: 'D', 4: 'E', 5: 'F', 7: 'G', 9: 'A', 11: 'B'}
@@ -2142,14 +2142,14 @@ hx += ''.join(f'<text id="hx3d-l{n}" font-size="{13 if n % 12 == 0 else 11.5}" f
 hx += T(HXc, 414, 'learned graph: C3, C4, C5 line up, like the orange edges', 13.5, 600, '#C45200', 'middle')
 g += F(2, hx)
 # books: a whole field studies the math of music (his note 2026-11-18)
-bk = T(966, 140, 'A whole field:', 15, 700, INK) + T(966, 160, 'the math of music', 13.5, 400, MUT)
-BOOKS = [('book-lewin1987.jpg', 105 / 160, 'Lewin, 1987', 'P, R, L as math'), ('book-tymoczko2011.jpg', 63 / 90, 'Tymoczko, 2011', 'chords as points'),
-         ('book-sulzer2021.jpg', 106 / 160, 'Sulzer, 2021', 'physics and brain')]
+bk = T(856, 140, 'A whole field: the math of music', 15, 700, INK)
+BOOKS = [('book-lewin1987.jpg', 0.657, 'Lewin, 1987', 'P, R, L as math'), ('book-tymoczko2011.jpg', 0.7, 'Tymoczko, 2011', 'chords as points'),
+         ('book-sulzer2021.jpg', 0.667, 'Sulzer, 2021', 'physics and brain')]
 for k, (fn, ar, who, what) in enumerate(BOOKS):
-    by = 178 + k * 78
-    bk += img(966, by, round(64 * ar), 64, f'figs/{fn}') + T(1018, by + 28, who, 13, 700, INK) + T(1018, by + 46, what, 12, 400, MUT)
+    bx = 856 + sum(round(140 * a_) + 16 for _, a_, _, _ in BOOKS[:k])
+    bk += img(bx, 160, round(140 * ar), 140, f'figs/{fn}') + T(bx, 320, who, 12.5, 700, INK) + T(bx, 337, what, 11.5, 400, MUT)
 g += F(4, bk)
-HELIX_JS = """<script>(function(){var cx=760,y0=356,R=150,H=6.7,TL=22,t0=null;
+HELIX_JS = """<script>(function(){var cx=628,y0=356,R=140,H=6.7,TL=22,t0=null;
 function frame(ts){if(t0===null)t0=ts;var g=document.getElementById('hx3d');if(!g){return;}var fr=g.closest('.fragment');if(fr&&!fr.classList.contains('visible')){t0=ts;}var t=(ts-t0)/1000,ang=0.4*(t-6.5),lit=Math.min(24,Math.floor(t*4));
 var d='',pts=[];for(var q=0;q<=96;q++){var u=q/4,a=2*Math.PI*u/12+ang;var x=cx+R*Math.sin(a),y=y0-u*H+TL*Math.cos(a);d+=(q?' L':'M')+x.toFixed(1)+','+y.toFixed(1);}
 document.getElementById('hx3d-line').setAttribute('d',d);
@@ -2542,7 +2542,7 @@ def assemble(cover, old):
     beyond_o = retitle(toch(BEYOND5, '0'), 'Knowledge is not only text')
     beyond_o = beyond_o.replace('</section>', Q5_JS + '\n</section>', 1)
     KGT3s = KGT3.replace('  <div class="ref">', '  ' + keybox('Break the ' + kw('knowledge graph') + ' of the real world, and a large language model starts to contradict itself.', 2, '.1em') + '\n  <div class="ref">', 1)
-    MUSA2 = _addbox(MUSA, keybox('The ' + kw('graph the model learned') + ' matches the ' + kw('knowledge graph') + ' of music theory.', 3, '0'))
+    MUSA2 = _addbox(MUSA, keybox('The ' + kw('graph the model learned') + ' matches the ' + kw('knowledge graph') + ' of music theory.', 3, '.9em'))
     MUSB2 = _addbox(MUSB, keybox('The ' + kw('concepts of music theory') + ' are inside, readable from one layer, learned from sound alone.', 2, '0'))
     SUMM2 = _addbox(SUMM, keybox('What we need: compare the ' + kw('inside') + ' before and after a change, and flag the risky ones.', 2, '.1em'))
     TAKE2 = _addbox(TAKEAWAY, keybox('Is there a ' + kw('graph') + ' inside your model?', 3, '.1em'))
