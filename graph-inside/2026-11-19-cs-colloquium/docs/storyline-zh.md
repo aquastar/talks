@@ -1,4 +1,4 @@
-# 故事线：每页讲什么，怎么讲（11 月 19 日 CS Department Colloquium，主线 28 页）
+# 故事线：每页讲什么，怎么讲（11 月 19 日 CS Department Colloquium，主线 30 页）
 
 网址：https://aquastar.github.io/talks/graph-inside/2026-11-19-cs-colloquium/
 
@@ -8,8 +8,8 @@
 
 | 段落 | 页 | 回答 |
 |---|---|---|
-| 开场 | 1 到 5 | 两层图：模型图和知识图，在语言、音乐、图像里都有 |
-| Part 1 语言 | 6 到 15 | 有，已发表：读出来的图能抓住考试发现不了的坏编辑 |
+| 开场 | 1 到 7 | 两层图：模型图和知识图，在语言、音乐、图像里都有 |
+| Part 1 语言 | 8 到 17 | 有，已发表：读出来的图能抓住考试发现不了的坏编辑 |
 | Part 2 音乐 | 16 到 27 | 在验证：一张很小的图就能装下风格，听众的大脑可以当裁判 |
 | 结尾 | 28 | 开场那张点云回来，画上图的边。"你的模型里有没有图？" |
 
@@ -37,7 +37,7 @@
 
 括号里是建议时长（秒）。"说"后面是这页要说出口的一句话，可以直接用。
 
-### 开场（1 到 5 页，约 9 分钟）两层图：模型图（网络本身）和知识图（网络存的东西）
+### 开场（1 到 7 页，约 9 分钟）两层图：模型图（网络本身）和知识图（网络存的东西）
 
 **1. 封面**（45）左边网络里亮起语言（蓝）和音乐（紫）两条路径，右边读成两张带标签的小图。
 说："Left, a network. Right, what it knows, read as graphs, in language and in music. Is there such a graph inside a generative model?"
@@ -45,89 +45,92 @@
 **2. Level 1: a language model is itself a graph**（120，graph 1）先互动：只给照片和问号，问大家"The Space Needle is in the city of ...?"，答案只能是一个城市名。点一下，各层从左到右依次点亮，一条橙色路径画过去（MLP 查到事实，注意力块搬到答案）。再点，问号变成城市的概率分布，Seattle 最高，其他城市很低（示意）。这就像 1 + 1 = 2，是很确定的知识，用不着"生成"。再点：就算让它随机，也不随机，网上（Reddit 等）广为流传，让聊天机器人在 1 到 30 里挑一个数，它经常说 17。
 说："The answer is a distribution, yet much of what a model says is held in place by strong, stored structure, closer to a graph than to a coin."
 
-**3. Change one fact, and the next question goes wrong**（120，graph 2）知识图。全景照，知识图，编辑改到 Paris，再问一步三个问题都答旧的。
-说："Change one edge, and every path through it must change. The model does not."
+**3. Change one fact, and the next question goes wrong**（120，graph 2）左边是 Space Needle 照片（和第 2 页一样），中间两个小知识图：上面 Seattle、Washington、United States、dollar（加上 Olympia、Mount Rainier、English），下面 Paris、France、euro（加上 Eiffel Tower、Louvre、French）。开始时箭头指向上面的 Seattle。点一下，箭头甩到下面的 Paris，这就是知识编辑。再点，右边出答案：城市改对了（Paris），国家、州、货币都还是旧的，上面那条旧路径变红闪动。最后："One answer fixed. Every other question still walks the old graph."
+说："The edit changed one edge and never looked at the graph around it."
 
-**4. Beyond text: inside a music model, music theory has a shape**（105，graph 3）左边：螺旋，是在激活空间里真的找到的（Yagi 2026，单个音符输入，对中间层表示做主成分分析，点自己排成螺旋，一圈一个八度）。点一下，右边：Wei 2024，冻结模型，在一层上训练很小的探针，能读出音程、和弦、调，平均准确率接近 1，高于手工乐理特征，远高于原始音频 token。
+**4. One network, five graphs**（90，十月那次的页）网络本身就是图，有五种画法：权重、神经元群、输入、一起激活、电路。点一下，抛出我们的研究问题："can the circuit graph tell when an edit breaks the knowledge graph? A silent failure is exactly that."
+说："Our question: read the circuit graph before and after an edit, and tell whether the knowledge graph's constraints still hold."
+
+**5. Knowledge is not only text**（120，从 Part 2 挪到开场，做文字到音乐的过渡）五个人，五个角度，一个结论：智能不只在语言里。梅洛-庞蒂 1945（管风琴手一小时适应一台新琴，靠手不靠句子），Gardner 1983，Picard 1997，Minsky 2006，李飞飞 2025。点一下：Meyer 1956，音乐的情感来自被延迟或打破的期待。
+说："Five people, five angles, one point: intelligence is more than words. And in music, emotion lives in expectation."
+
+**6. Beyond text: inside a music model, music theory has a shape**（105，graph 3）左边：螺旋，是在激活空间里真的找到的（Yagi 2026，单个音符输入，对中间层表示做主成分分析，点自己排成螺旋，一圈一个八度）。点一下，右边：Wei 2024，冻结模型，在一层上训练很小的探针，能读出音程、和弦、调，平均准确率接近 1，高于手工乐理特征，远高于原始音频 token。
 说："Nobody taught MusicGen music theory. It learned it from sound alone."
 * 五度圈的结果没有放：那篇（Kanatas 2026）是把探针的输出强制投影到五度圈上，圆是预先设定的，不能算模型自己学出来的。有人问再说。
 
-**5. Two levels, two domains: the map of this talk**（60）2 乘 2 的地图，不写状态。语言：delta graph（第一层）和知识图（第二层）。音乐：MusicGen 里有没有图（第一层，开放问题）和音符图（第二层）。
+**7. Two levels, two domains: the map of this talk**（60）2 乘 2 的地图，不写状态。语言：delta graph（第一层）和知识图（第二层）。音乐：MusicGen 里有没有图（第一层，开放问题）和音符图（第二层）。
 说："Language has answers. Music is where the open questions are."
 
-### Part 1 语言（6 到 15 页，约 17 分钟）主线：考试都过了，里面却绕了道，编辑的静默失败，一张表总结，我们的两篇工作
+### Part 1 语言（8 到 17 页，约 17 分钟）主线：考试都过了，里面却绕了道，编辑的静默失败，一张表总结，我们的两篇工作
 
-**6. Seven kinds of surgery**（60）七张卡片排成 4 加 3。
+**8. Seven kinds of surgery**（60）七张卡片排成 4 加 3。
 说："Every one of these is accepted by an exam that only looks at answers."
 
-**7. Today we change and explain models with vectors**（90）放回主线：这七种手术写下来，都是往模型上加一个向量或矩阵。第一次说出主线。
+**9. Today we change and explain models with vectors**（90）放回主线：这七种手术写下来，都是往模型上加一个向量或矩阵。第一次说出主线。
 说："Vectors say what we changed. Only a graph can say where it went."
 
-**8. Merging**（105）先说限制：只能合并同一个底座模型微调出来的版本。两个箭头相加，两种技能都有。点一下：混进一个没对齐的专家，所有考试都过，却会回答有害问题。
+**10. Merging**（105）先说限制：只能合并同一个底座模型微调出来的版本。两个箭头相加，两种技能都有。点一下：混进一个没对齐的专家，所有考试都过，却会回答有害问题。
 说："Every skill exam passes, and the merge now answers harmful requests."
 
-**9. Steering**（105）上面一行说明 steering 是什么：模型运行时在某一层加一个方向 r。点一下：平均有效，去掉拒答方向，模型几乎不再拒答（Arditi）。再点：逐个输入看，很多点被推反（Tan）。
+**11. Steering**（105）上面一行说明 steering 是什么：模型运行时在某一层加一个方向 r。点一下：平均有效，去掉拒答方向，模型几乎不再拒答（Arditi）。再点：逐个输入看，很多点被推反（Tan）。
 说："Right on average, wrong on many single inputs."
 
-**10. Unlearning**（120）三步：找到有毒的 MLP 向量，DPO 没删它们，只学了一个小偏移绕开（紫色箭头），把偏移撤掉，毒性就回来。
+**12. Unlearning**（120）三步：找到有毒的 MLP 向量，DPO 没删它们，只学了一个小偏移绕开（紫色箭头），把偏移撤掉，毒性就回来。
 说："Unlearning hides, it does not delete."
 
-**11. Knowledge editing bypasses the old fact instead of removing it**（整场主打的一点）（150）这是我们工作针对的失败。编辑没覆盖旧事实，只是加了一条近路。换一种问法旧答案回来（Xie 2025）。改了微软创始人，问"他上的哪所大学"，41% 答 Steve Jobs，编辑前 0.27%（Zhang 2025）。
+**13. Knowledge editing bypasses the old fact instead of removing it**（整场主打的一点）（150）这是我们工作针对的失败。编辑没覆盖旧事实，只是加了一条近路。换一种问法旧答案回来（Xie 2025）。改了微软创始人，问"他上的哪所大学"，41% 答 Steve Jobs，编辑前 0.27%（Zhang 2025）。
 说："The edit adds a bypass, the old fact is never removed. Why: an editor looks at one fact, not at the graph that fact sits in."
 
-**12. Every surgery: the exam passes, the inside tells another story**（75）一张表：合并、steering、unlearning、编辑，左边"考试说什么"，右边"模型里面其实是什么"。
+**14. Every surgery: the exam passes, the inside tells another story**（75）一张表：合并、steering、unlearning、编辑，左边"考试说什么"，右边"模型里面其实是什么"。
 说："The exam reads answers. What we need is to compare the inside before and after a change, and flag the risky ones."
 
-**13. What is a delta graph?**（150，第一层模型图，SDM 2026）
+**15. What is a delta graph?**（150，第一层模型图，SDM 2026）
 说："Same questions, same parts. The delta graph is the edit's fingerprint inside the model."
 
-**14. Results**（120）只查 20 个：随机 11 个，按编辑器和模型 14 个，按 delta graph 17 个。
+**16. Results**（120）只查 20 个：随机 11 个，按编辑器和模型 14 个，按 delta graph 17 个。
 说："Same budget, 17 instead of 11."
 
-**15. A missing path in the record means a worse answer, for every model**（150，第二层知识图，CIKM 2026）
+**17. A missing path in the record means a worse answer, for every model**（150，第二层知识图，CIKM 2026）
 说："A graph tells which questions cannot be answered faithfully, before any model tries. That is language."
 
 ### Part 2 音乐（16 到 27 页，约 22 分钟）
 
-**16. Part 2. Knowledge is not only text**（120）五个人，五个角度，一个结论：智能不只在语言里。梅洛-庞蒂 1945（管风琴手一小时适应一台新琴，靠手不靠句子），Gardner 1983，Picard 1997，Minsky 2006，李飞飞 2025。点一下：Meyer 1956，音乐的情感来自被延迟或打破的期待。
-说："Five people, five angles, one point: intelligence is more than words. And in music, emotion lives in expectation."
-
-**17. Two signals that change the brain: light, and music**（75）类比，约一分钟，别在光遗传学上停留。左边（小）：光，今年诺奖的光遗传学，加一个基因让神经元能感光，一闪就放电，但要开刀。点一下，右边（大）：声音，音乐不用开刀，从耳朵进去也确实改变大脑。三个有测量的例子：脑电节律跟着节拍走（Nozaradan 2011），快感高峰时释放多巴胺（Salimpoor 2011），40 Hz 声音改变了小鼠大脑（Tsai 实验室）。大脑图是 Gray 解剖学第 728 图，公有领域，颞叶（听觉皮层）标橙并跟着节拍闪。光遗传学科普视频的链接在本页参考行最后。
+**18. Two signals that change the brain: light, and music**（75）类比，约一分钟，别在光遗传学上停留。左边（小）：光，今年诺奖的光遗传学，加一个基因让神经元能感光，一闪就放电，但要开刀。点一下，右边（大）：声音，音乐不用开刀，从耳朵进去也确实改变大脑。三个有测量的例子：脑电节律跟着节拍走（Nozaradan 2011），快感高峰时释放多巴胺（Salimpoor 2011），40 Hz 声音改变了小鼠大脑（Tsai 实验室）。大脑图是 Gray 解剖学第 728 图，公有领域，颞叶（听觉皮层）标橙并跟着节拍闪。光遗传学科普视频的链接在本页参考行最后。
 说："Light switches neurons, but it needs a gene and surgery. Music already changes the brain, through the ear. Which part of the music does it is the open question."
 
-**18. Music already acts on the brain, as medicine**（90）动画：帕金森病人跟着节拍器走路。右边四种用途各一行。
+**19. Music already acts on the brain, as medicine**（90）动画：帕金森病人跟着节拍器走路。右边四种用途各一行。
 说："Nobody knows which part of the music does the work. That is a modeling question."
 
-**19. A new idea is a new edge, and so is a new style of music**（120）四本讲创造力的书和 Uzzi 2013：新想法就是旧想法之间的一条新边。下面是音乐流派家族树和我们 2017 年的 FusionGAN。
+**20. A new idea is a new edge, and so is a new style of music**（120）四本讲创造力的书和 Uzzi 2013：新想法就是旧想法之间的一条新边。下面是音乐流派家族树和我们 2017 年的 FusionGAN。
 说："A new idea is a new edge. In 2017 we asked whether a model can draw one."
 
-**20. A tiny graph is enough to represent a piece of music**（90）Für Elise 动画，小球沿着音符图走，点一下有声音。从开场移到这里。
+**21. A tiny graph is enough to represent a piece of music**（90）Für Elise 动画，小球沿着音符图走，点一下有声音。从开场移到这里。
 说："Nine notes, a few arrows. The whole model is the graph."
 
-**21. Fold 88 keys into 12 scale degrees**（105，graph 3）手画的 Für Elise 开头九个音，折成 12 个音级，变成 12 乘 12 的表。两个播放键：原曲和从表里生成的曲子。
+**22. Fold 88 keys into 12 scale degrees**（105，graph 3）手画的 Für Elise 开头九个音，折成 12 个音级，变成 12 乘 12 的表。两个播放键：原曲和从表里生成的曲子。
 说："The right notes with the wrong sentences. That is a graph with one note of memory."
 
-**22. Occam's razor: the simplest graph already names the tradition**（105，进行中）六个曲库，一阶图分类准确率 70.2%，随机是 17%。
+**23. Occam's razor: the simplest graph already names the tradition**（105，进行中）六个曲库，一阶图分类准确率 70.2%，随机是 17%。
 说："144 numbers name the corpus."
 
-**23. The longest memory sounds most like the style, because it copies**（150，进行中）现场投票：A 和 B 哪个是真巴赫？
+**24. The longest memory sounds most like the style, because it copies**（150，进行中）现场投票：A 和 B 哪个是真巴赫？
 说："The useful graph remembers a little and copies nothing long."
 
-**24. Steering leaves a style easily but rarely enters one**（105，graph 6，合作工作投稿中）去掉一个风格很容易，加进去却很难。
+**25. Steering leaves a style easily but rarely enters one**（105，graph 6，合作工作投稿中）去掉一个风格很容易，加进去却很难。
 说："A vector cannot explain that. Reachability on a graph could."
 
-**25. A note transition graph predicts the listening brain**（105，graph 7）Di Liberto 2020 原图：IDyOM 给每个音一个意外值，听众的脑电在 350 毫秒内跟着它走。
+**26. A note transition graph predicts the listening brain**（105，graph 7）Di Liberto 2020 原图：IDyOM 给每个音一个意外值，听众的脑电在 350 毫秒内跟着它走。
 说："The listening brain tracks a graph of note transitions. So the brain can judge a graph."
 
-**26. Live: what MusicGen expects, next to what listeners' brains do**（135，进行中）现场 demo，全屏，可以直接点：选一首歌播放，乐谱、MusicGen 的意外值、脑电一起滚动。点过 demo 后方向键留在 demo 里，用右下角的 Next slide 按钮翻页。
+**27. Live: what MusicGen expects, next to what listeners' brains do**（135，进行中）现场 demo，全屏，可以直接点：选一首歌播放，乐谱、MusicGen 的意外值、脑电一起滚动。点过 demo 后方向键留在 demo 里，用右下角的 Next slide 按钮翻页。
 说："This is the measurement we built. Note by note, it does not yet beat an untrained model, and the next slide is how we test it properly."
 
-**27. Our plan: a graph from inside MusicGen, judged by the brain**（75，计划）从 MusicGen 内部读出图，和 IDyOM、MusicGen 输出一起比谁更能解释大脑。
+**28. Our plan: a graph from inside MusicGen, judged by the brain**（75，计划）从 MusicGen 内部读出图，和 IDyOM、MusicGen 输出一起比谁更能解释大脑。
 说："If the graph inside the generator explains the listener, the graph is real."
 
 ### 结尾（28 页，约 1.5 分钟）
 
-**28. A vector says what we added. A graph shows where it went.**（90）第 4 页的点云回来，同一支箭头。点一下画出图的边。再点：今天的七张图。最后："Is there a graph inside your model?"
+**29. A vector says what we added. A graph shows where it went.**（90）第 4 页的点云回来，同一支箭头。点一下画出图的边。再点：今天的七张图。最后："Is there a graph inside your model?"
 说："Language, published. Music, being tested. If you edit, merge or steer models, or run an EEG or hearing lab, I would love to talk." 不说 thank you。
 
 ## 四、这次相对上一版改了什么

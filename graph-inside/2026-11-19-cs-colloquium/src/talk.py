@@ -1616,13 +1616,13 @@ PURP = '#5a4fcf'
 
 def steps(active):
     out = ''
-    for k, lab in enumerate(['Beyond text: body, space, emotion', 'Signals that change the brain', 'Music as medicine']):
-        x = 30 + k * 380
+    for k, lab in enumerate(['Signals that change the brain', 'Music as medicine']):
+        x = 30 + k * 570
         on = (k == active)
-        out += R(x, 6, 360, 30, ACC if on else '#fff', ACC if on else LINE, 1.5, 15) + C(x + 18, 21, 10, '#fff' if on else SOFT) + T(x + 18, 25.5, str(k + 1), 12, 700, ACC if on else MUT, 'middle')
+        out += R(x, 6, 550, 30, ACC if on else '#fff', ACC if on else LINE, 1.5, 15) + C(x + 18, 21, 10, '#fff' if on else SOFT) + T(x + 18, 25.5, str(k + 1), 12, 700, ACC if on else MUT, 'middle')
         out += T(x + 36, 26, lab, 14, 700, '#fff' if on else MUT)
-        if k < 2:
-            out += P(f'M{x+363},21 L{x+376},21', LINE, 2, extra='marker-end="url(#pea)"')
+        if k < 1:
+            out += P(f'M{x+553},21 L{x+566},21', LINE, 2, extra='marker-end="url(#pea)"')
     return out
 
 def person(x, y, w, h, fname, ini, name, title_lines, col):
@@ -1682,7 +1682,6 @@ EMOTION2 = sec('Music is where emotion can be measured', SVG(g), ch='0',
 
 # ---- Nov 17 (his request): five people, one point, beyond text. Meyer turns it toward music ----
 g = adefs('b5')
-g += steps(0).replace('url(#pea)', 'url(#b5a)')
 P5 = [('maurice-merleau-ponty.jpg', 'MM', 'Merleau-Ponty', '1945, philosopher', ['An organist learns a new', 'organ in an hour, with the', 'hands, *not with words*.']),
       ('howard-gardner.jpg', 'HG', 'Howard Gardner', '1983, psychologist', ['Intelligence is plural:', 'language is one kind,', '*music* is another.']),
       ('rosalind-picard.jpg', 'RP', 'Rosalind Picard', '1997, MIT Media Lab', ['Computers need to', 'recognize and express', '*emotion*.']),
@@ -1703,7 +1702,7 @@ BEYOND5 = sec('Part 2. Knowledge is not only text', SVG(g), ch='2',
 
 # ---- Nov 4 (his request): optogenetics, then music medicine ----
 g = adefs('op')
-g += steps(1).replace('url(#pea)', 'url(#opa)')
+g += steps(0).replace('url(#pea)', 'url(#opa)')
 BLUE = '#2F7FD0'
 def blink(vals, dur, kt, attr='opacity'):
     return f'<animate attributeName="{attr}" values="{vals}" keyTimes="{kt}" dur="{dur}s" repeatCount="indefinite"/>'
@@ -1776,7 +1775,7 @@ OPTO = sec('Two signals that change the brain: light, and music', SVG(g), ch='0'
            notes='An analogy, about one minute, do not dwell on optogenetics. Left, light: this year\'s Nobel went to optogenetics. Add a gene that makes chosen neurons sense light, then a flash makes them fire. Precise, but it needs a gene and a fiber in the brain. Click, right, sound: music is also a signal that changes the brain, and it needs no surgery. Three measured examples: the brain rhythm locks to the beat in EEG (Nozaradan 2011), dopamine is released at the peak of musical pleasure in PET (Salimpoor 2011), and 40 Hz sound, a very simple signal, changed mouse brains in the Tsai lab, with less amyloid. Which part of the music does the work is the open question, and that is where a model of music comes in. If someone asks how optogenetics works: a two minute BrainFacts.org video is linked in the reference line, youtube.com/watch?v=azp-if02m8U. Portraits: Ill. Niklas Elmehed, Nobel Prize Outreach. Brain drawing: Gray, Anatomy of the Human Body, Figure 728, public domain, recolored. Mouse illustration: The Nobel Committee for Physiology or Medicine, Ill. Mattias Karlén, popular information, Figure 5: the gene goes into the mouse brain, a thin optical fiber shines light, the neurons fire.')
 
 g = adefs('md')
-g += steps(2).replace('url(#pea)', 'url(#mda)')
+g += steps(1).replace('url(#pea)', 'url(#mda)')
 # left: rhythmic cueing, footsteps land on the beat
 BEAT, NB_ = 0.6, 8
 CYC = BEAT * NB_
@@ -2005,13 +2004,13 @@ OUTX = 900
 g += R(OUTX, 80, 250, 210, '#F4F1EC', 'none', 0, 6) + T(OUTX + 125, 205, '?', 64, 400, '#C45200', 'middle', extra=SERIF_X)
 LX = [270, 400, 530, 660, 790]
 YA, YM, YS = 112, 252, 182
-g += L(190, YS, OUTX - 6, YS, '#D7D2CB', 3) + T(560, 340, 'attention (A) and MLP (M) blocks, layer by layer, on one shared stream', 13.5, 400, MUT, 'middle')
+net = L(190, YS, OUTX - 6, YS, '#D7D2CB', 3) + T(560, 340, 'attention (A) and MLP (M) blocks, layer by layer, on one shared stream', 13.5, 400, MUT, 'middle')
 NODE = {}
 for k, x in enumerate(LX):
     NODE[('A', k)] = (x - 22, YA); NODE[('M', k)] = (x + 22, YM)
-    g += T(x, 92, f'layer {k + 1}', 12.5, 400, MUT, 'middle')
+    net += T(x, 92, f'layer {k + 1}', 12.5, 400, MUT, 'middle')
 for (t_, k), (x, y) in NODE.items():
-    g += L(x, y + (16 if y < YS else -16), x, YS, '#D7D2CB', 1) + C(x, y, 16, '#fff', '#ACA39A', 1.6) + T(x, y + 5, t_, 13, 600, '#5F5D50', 'middle')
+    net += L(x, y + (16 if y < YS else -16), x, YS, '#D7D2CB', 1) + C(x, y, 16, '#fff', '#ACA39A', 1.6) + T(x, y + 5, t_, 13, 600, '#5F5D50', 'middle')
 # click 1: the layers light up one after another, then the path that carries this answer
 HOT = {('M', 1): 1.0, ('A', 3): 1.0, ('M', 0): .45, ('A', 1): .45, ('M', 2): .45, ('A', 2): .3, ('M', 3): .3, ('A', 4): .45, ('M', 4): .3, ('A', 0): .3}
 lit = ''
@@ -2025,7 +2024,7 @@ pd = f'M190,{YS} C{mx - 70},{YS} {mx - 50},{my + 30} {mx},{my + 17} M{mx},{my - 
 lit += f'<path class="ngp" pathLength="100" d="{pd}" fill="none" stroke="#F76902" stroke-width="3" stroke-linecap="round" style="animation-delay:2.2s"/>'
 lit += f'<g class="ngl" style="animation-delay:2.6s">' + T(mx, my + 52, 'looks up the fact', 13.5, 600, '#C45200', 'middle') + T(ax, ay - 30, 'moves it to the answer', 13.5, 600, '#C45200', 'middle') + '</g>'
 lit += T(40, 364, 'Structural: the wiring is fixed. Functional: what lights up depends on the question.', 14, 400, MUT)
-g += F(1, lit)
+g += F(1, net + lit)
 # click 2: the answer is a distribution over next words
 dist = R(OUTX, 80, 250, 210, '#F4F1EC', 'none', 0, 6) + T(OUTX + 16, 104, 'next word: which city?', 12.5, 400, MUT)
 for k, (w, pr) in enumerate([('Seattle', .93), ('Tacoma', .03), ('Bellevue', .02), ('Portland', .01), ('Paris', .01)]):
@@ -2034,9 +2033,8 @@ for k, (w, pr) in enumerate([('Seattle', .93), ('Tacoma', .03), ('Bellevue', .02
 dist += T(OUTX + 234, 284, 'schematic numbers', 11.5, 400, MUT, 'end')
 g += F(2, dist)
 # click 3: not as random as it looks
-nr = R(30, 384, 1120, 74, '#F4F1EC', 'none', 0, 6)
-nr += T(52, 414, 'Like 1 + 1 = 2, a firm fact: nothing to invent. Even when asked to be random, a number from 1 to 30, chatbots very often say 17.', 15.5, 400, INK)
-nr += T(52, 440, 'Much of what it says is held in place by strong, stored structure, closer to a graph than to a coin.', 16, 600, '#C45200')
+nr = C(48, 404, 3.5, '#ACA39A') + T(60, 409, 'Like 1 + 1 = 2: a firm fact, nothing to invent.', 15, 400, MUT)
+nr += C(48, 434, 3.5, '#ACA39A') + T(60, 439, 'Even asked for a random number from 1 to 30, chatbots very often say 17.', 15, 400, MUT)
 g += F(3, nr)
 g = NG_CSS + g
 NETG = sec('Level 1: a language model is itself a graph', SVG(g), ch='0',
@@ -2239,6 +2237,60 @@ MNET = sec('Music and medicine, near us and nationally', SVG(g), ch='2',
            ref='rit.edu/macl. urmc.rochester.edu/eastman-performance-medicine, Pilot Award Program in Music and Aging 2026 to 2027. NIH RFA-AT-23-009, 2023. mdrn.ucsf.edu. Sound Health Network, NEA and UCSF, 2021',
            notes='Thirty seconds, to share, not to teach. Read the bottom line and move on, people can look at the slide. RIT: Hwan Shim in Engineering Technology runs the Music and Audio Cognition Lab, auditory attention and smart hearing aids, NIH funded. Sungyoung Kim, spatial audio and auditory training for hearing rehabilitation. At NTID, Matt Dye, who directs the Cognitive Science PhD program, and Amanda Picioli in audiology. UR: Eastman Performing Arts Medicine, a joint center of Eastman and URMC since 2024, director Gaelen McCormick, research director David Greenberg, the Evans Lam Professor of Music and Medicine. With the UR Aging Institute it runs music and aging pilot awards, up to 25 thousand dollars, a UR PI is required. Also Samuel Norman-Haignere at URMC, who models how the brain responds to music, and Zhiyao Duan in ECE, music AI. Nationally: NIH Sound Health with the Kennedy Center and the NEA since 2017, four NIH music research networks funded in 2023 by NCCIH and NIA on music for pain and dementia, which fund pilot studies, for example the Music and Dementia Research Network at UCSF, and the NEA Sound Health Network at UCSF, co-directed by Julene Johnson and Charles Limb. Ask: if you work on hearing, health or music, talk to me.')
 
+# ---- slide 3, Nov 18 (his design): the Space Needle on the left, two small knowledge graphs, the edit arrow swings from one to the other ----
+g = adefs('k3')
+SER3 = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
+K3_CSS = ('<style>.reveal .k3d{stroke-dasharray:100;stroke-dashoffset:100}.reveal .fragment.visible .k3d{animation:k3draw 1.2s ease forwards .3s}'
+          '@keyframes k3draw{to{stroke-dashoffset:0}}'
+          '.reveal .k3old{animation:k3glow 1.4s ease-in-out infinite alternate}@keyframes k3glow{from{stroke-opacity:.35}to{stroke-opacity:1}}</style>')
+g += T(30, 30, 'Knowledge editing changes the one fact it targets, and leaves the related facts untouched.', 16.5, 400, INK, extra=SER3)
+# the Space Needle, as on slide 2
+g += img(40, 92, 126, 186, 'figs/space-needle-tall.jpg', 'preserveAspectRatio="xMidYMid slice"') + R(24, 284, 158, 40, '#EFEBE5', 'none', 0, 6) + T(103, 309, 'Space Needle', 16, 600, INK, 'middle')
+SN = (184, 200)
+g += C(*SN, 7, INK)
+def kn(x, y, lab, pos='up', col='#4C5B66', size=15):
+    t = {'up': T(x, y - 14, lab, size, 600, INK, 'middle'), 'down': T(x, y + 26, lab, size, 600, INK, 'middle'), 'right': T(x + 13, y + 5, lab, size, 600, INK)}[pos]
+    return C(x, y, 7.5, col) + t
+def ke(p1, p2, lab='', col='#7C878E', sw=1.5, extra=''):
+    (x1, y1), (x2, y2) = p1, p2
+    d = math.hypot(x2 - x1, y2 - y1); ux, uy = (x2 - x1) / d, (y2 - y1) / d
+    return P(f'M{x1+ux*10:.1f},{y1+uy*10:.1f} L{x2-ux*12:.1f},{y2-uy*12:.1f}', col, sw, extra='marker-end="url(#k3a)" ' + extra) + (T((x1 + x2) / 2, (y1 + y2) / 2 - 7, lab, 12, 400, MUT, 'middle') if lab else '')
+# top graph: the truth about Seattle
+SE, WA, US, DO, OL, RA, EN = (330, 120), (480, 120), (630, 120), (740, 120), (480, 64), (330, 64), (630, 64)
+top = R(232, 40, 548, 124, '#F4F1EC', 'none', 0, 6)
+top += ke(SE, WA, 'city in') + ke(WA, US, 'state of') + ke(US, DO, 'currency') + ke(WA, OL) + ke(SE, RA) + ke(US, EN)
+top += kn(*SE, 'Seattle', 'down') + kn(*WA, 'Washington', 'down') + kn(*US, 'United States', 'down') + kn(*DO, 'dollar', 'down') + kn(*OL, 'Olympia', 'right') + kn(*RA, 'Mount Rainier', 'right') + kn(*EN, 'English', 'right')
+# bottom graph: Paris
+PA, FR, EU, ET, LO, FRL = (330, 330), (480, 330), (630, 330), (330, 392), (480, 392), (630, 392)
+bot = R(232, 270, 548, 150, '#F4F1EC', 'none', 0, 6)
+bot += ke(PA, FR, 'city in') + ke(FR, EU, 'currency') + ke(ET, PA, '') + ke(LO, PA, '') + ke(FR, FRL, '')
+bot += kn(*PA, 'Paris', 'up') + kn(*FR, 'France', 'up') + kn(*EU, 'euro', 'up') + kn(*ET, 'Eiffel Tower', 'right') + kn(*LO, 'Louvre', 'right') + kn(*FRL, 'French', 'right')
+g += top + bot
+# the fact before the edit: located in Seattle (fades out on the edit click)
+before = P(f'M{SN[0]+9},{SN[1]-6} C250,170 280,140 {SE[0]-10},{SE[1]+8}', INK, 2.2, extra='marker-end="url(#k3k)"') + T(226, 196, 'located in', 13, 600, INK)
+g += f'<g class="fragment fade-out" data-fragment-index="1">{before}</g>'
+# the edit: the arrow swings down to Paris, and the old path stays faint
+after = f'<path class="k3d" pathLength="100" d="M{SN[0]+9},{SN[1]+6} C250,240 280,300 {PA[0]-11},{PA[1]-6}" fill="none" stroke="{ACC}" stroke-width="3" marker-end="url(#k3o)"/>'
+after += P(f'M{SN[0]+9},{SN[1]-6} C250,170 280,140 {SE[0]-10},{SE[1]+8}', '#ACA39A', 1.5, extra='stroke-dasharray="3 5"')
+after += T(258, 262, 'the edit: located in Paris', 13.5, 600, '#C45200')
+g += F(1, after)
+# the answers: one fixed, the rest still walk the old graph
+oldp = P(f'M{SN[0]+9},{SN[1]-6} C250,170 280,140 {SE[0]-10},{SE[1]+8} M{SE[0]+10},{SE[1]} L{WA[0]-10},{WA[1]} M{WA[0]+10},{WA[1]} L{US[0]-10},{US[1]} M{US[0]+10},{US[1]} L{DO[0]-10},{DO[1]}', '#DA291C', 4, extra='class="k3old" stroke-linecap="round" fill="none"')
+ans = T(810, 64, 'Ask the edited model', 20, 400, '#C45200', extra=SER3)
+QA = [('Which city is it in?', '✓ Paris', 'the edited fact', True), ('Which country is it in?', '✗ United States', 'should be France', False),
+      ('Which state is it in?', '✗ Washington', 'should be none', False), ('Which currency is used there?', '✗ dollar', 'should be euro', False)]
+for k, (q, a_, why, ok) in enumerate(QA):
+    y = 88 + k * 78
+    fill = '#F4F1EC' if ok else '#FDEBDD'
+    ans += f'<path d="M810,{y} h340 v66 h-340 Z" fill="{fill}"/>' + ('' if ok else f'<path d="M810,{y} h5 v66 h-5 Z" fill="#DA291C"/>')
+    ans += T(828, y + 25, q, 16.5, 600, INK) + T(828, y + 52, a_, 17, 700, INK if ok else '#DA291C') + T(1136, y + 52, why, 13.5, 400, MUT, 'end')
+g += F(2, oldp + ans)
+g += F(3, T(590, 462, 'One answer fixed. Every other question still walks the old graph.', 20, 400, '#C45200', 'middle', extra=SER3 + ' data-keep="1"'))
+g = K3_CSS + g
+KGT3 = sec('Change one fact, and the next question goes wrong', SVG(g), ch='0',
+           ref='Cohen et al., Evaluating the Ripple Effects of Knowledge Editing in Language Models, TACL 2024. Zhong et al., MQuAKE, EMNLP 2023. The answers illustrate the failure type',
+           notes='Same photo as the slide before. What the model knows about it, drawn as two small knowledge graphs: on top, Seattle, in Washington, in the United States, which uses the dollar, with Olympia, Mount Rainier and English around them. Below, Paris, France, the euro, the Eiffel Tower and the Louvre. Right now the Space Needle points up: located in Seattle. Click: knowledge editing moves that one arrow, the Space Needle is now located in Paris. Methods like ROME and MEMIT do this by adding a small change to some weights, one line is enough. Click: ask the edited model. Which city? Paris, the edit worked. Which country? Still the United States. Which state? Still Washington. Which currency? Still the dollar. The red path on top is what it still walks. Click: one answer fixed, every other question still walks the old graph. The edit changed one edge and never looked at the graph around it. This is the ripple effect measured by RippleEdits and MQuAKE. Photo: Kerry Park panorama by SounderBruce, CC BY-SA 4.0.')
+
 # ======================= ASSEMBLY =======================
 # ---- loop it1: results slide that pays off the trailer bars (P15, P10) ----
 g = adefs('r20')
@@ -2317,7 +2369,10 @@ def assemble(cover, old):
     kgt_o = retitle(KGT, 'Change one fact, and the next question goes wrong')
     wb = old[1]
     five = old[2]
-    vision = [cover, NETG, backup(toch(wb, '0')), backup(five), KGT2, MULTI, backup(toch(PROBE, '0')), backup(toch(MGEN, '0')), backup(VISION), MAP2, backup(FORECAST2)]
+    five_q = five.replace('</section>', '  <p class="fragment" style="text-align:center;font-size:.66em;margin-top:.3em;color:#C45200;font-family:et-book,Georgia,serif">Our question: can the circuit graph tell when an edit breaks the knowledge graph? A silent failure is exactly that.</p>\n</section>', 1) if '<aside' not in five else five.replace('  <aside', '  <p class="fragment" style="text-align:center;font-size:.66em;margin-top:.3em;color:#C45200;font-family:et-book,Georgia,serif">Our question: can the circuit graph tell when an edit breaks the knowledge graph? A silent failure is exactly that.</p>\n  <aside', 1)
+    five_q = notes(five_q, 'Back to level 1, now with the knowledge graph in mind. The network itself is a graph, and there is more than one way to draw it: the weights, groups of neurons, the inputs, which blocks fire together, and the circuit that carries one answer. Click: here is the question of our work. The knowledge graph on the last slide has constraints: if the Space Needle is in Paris, it is in France. A silent failure is an edit that breaks them. Can the circuit graph, read before and after the edit, tell us when that happened? Part 1 answers it for language.')
+    beyond_o = retitle(toch(BEYOND5, '0'), 'Knowledge is not only text')
+    vision = [cover, NETG, backup(toch(wb, '0')), KGT3, backup(KGT2), five_q, beyond_o, MULTI, backup(toch(PROBE, '0')), backup(toch(MGEN, '0')), backup(VISION), MAP2, backup(FORECAST2)]
     rome = old[33]
     a = rome.find('<div class="note"'); e = rome.find('  <div class="ref">')
     rome = rome[:a] + '<div class="note" style="font-size:.62em"><div class="key">The finding</div><p class="one" style="font-size:1.25em">A fact sits in two places. Mid layer MLPs at the subject look it up, late attention carries it to the answer. Editing a fact means changing the first place.</p></div>\n  </div>\n' + rome[e:]
@@ -2372,17 +2427,18 @@ def assemble(cover, old):
     copy_b = bridge(COPY, 'Before we go inside a generator, one honest line from the literature: in music, graphs win only when the edges carry something the sequence throws away, and often they do not (survey under the down arrow). The one place nobody has looked for such edges is inside the generator itself.')
     corpus_b = bridge(corpus, 'How much memory should the graph have? One note gives the right vocabulary with the wrong syntax, three notes memorize the piece (the picture is under the down arrow on the next slide).')
     beyond5 = bridge(BEYOND5, 'Emotion is one way music acts on the brain. Before we model music, one detour through this year\'s Nobel Prize, because it shows what a designed signal can do to brain circuits. The history of music models is under the down arrow.')
-    mus = [beyond5, backup(hist), toch(OPTO, '2'), toch(MEDIC, '2'), MNET, toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), copy_b, backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
+    mus = [retitle(toch(OPTO, '2'), 'Part 2. Two signals that change the brain: light, and music'), backup(hist), toch(MEDIC, '2'), MNET, toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), copy_b, backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
     beyond = []
     close = [TAKEAWAY.replace('</section>', CLIP_JSON + '</section>')]
     # one bridge per main slide, so each slide leads into the next one (order of Nov 16 2026)
     FIXB = [('Level 1: a language model is itself a graph', None, 'Bridge: and what the network knows is a graph too.'),
-            ('Change one fact, and the next question goes wrong', None, 'Bridge: and it is not only facts.'),
+            ('Change one fact, and the next question goes wrong', None, 'Bridge: back to the network itself, with this in mind.'),
+            ('Knowledge is not only text', None, 'Bridge: and inside a music model, music knowledge has a shape too.'),
             ('Beyond text: inside a music model', None, 'Bridge: so, the map of this talk.'),
             ('A tiny graph is enough to represent a piece of music', None, 'Bridge: to compare pieces, fold the keys.'),
             ('What is inside a language model?', None, 'Bridge: and every tool we use to change this machine, or to read it, adds or reads a vector.'),
             ('Today we change and explain models with vectors', 'Bridge: yet the knowledge these models hold has another shape, a graph, in text, in images and in music.', 'Bridge: Vectors say what we changed. Only a graph can say where it went. Take the surgeries one at a time, each with its best known result and the catch.'),
-            ('One network, five graphs', None, 'Graphs found inside vision models, with the original figures, are under the down arrow. Bridge: and music has the simplest graph of all.'),
+            ('One network, five graphs', None, 'Bridge: and knowledge is not only facts in text.'),
             ('Two levels, two domains', None, 'Bridge: Part 1, language, top row. First, one minute inside a language model.'),
             ('Steering: right on average', None, 'Bridge: unlearning tries the opposite, to take something out.'),
             ('What is a delta graph?', None, 'Bridge: does it catch more bad edits? Results next.'),
