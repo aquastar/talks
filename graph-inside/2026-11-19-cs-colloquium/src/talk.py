@@ -1101,13 +1101,13 @@ for q in mvd:
         if key not in seen:
             seen.add(key); ed += L(*q, *r, '#007A94', 1.1, 'stroke-opacity=".75"')
 ed += ''.join(C(*q, 4, '#007A94') for q in mvd)
-top = C(*S0_, 7, INK) + R(S0_[0] - 112, S0_[1] + 13, 200, 22, '#FBFAF7', 'none', 0, 3) + T(S0_[0] - 12, S0_[1] + 29, 'Space Needle is in Seattle', 16, 400, INK, 'middle')
+top = C(*S0_, 7, INK) + P(f'M{S0_[0] - 114},{S0_[1] + 12} h204 v24 h-204 Z', 'none', 0, '#FBFAF7') + T(S0_[0] - 12, S0_[1] + 29, 'Space Needle is in Seattle', 16, 400, INK, 'middle')
 top += P(f"M{S0_[0]+8},{S0_[1]-5} L{S1_[0]-10},{S1_[1]+5}", ACC, 3, extra='marker-end="url(#tk2o)"') + C(*S1_, 7, ACC)
 g += f'<g transform="{TR}">' + VC['cloud'] + VC['mv'] + '</g>'
 g += F(1, f'<g transform="{TR}">' + ed + '</g>' + T(40, 420, 'Draw the graph, and the ripple has a shape you can test.', 18, 600, '#007A94'))
 g += f'<g transform="{TR}">' + top + '</g>'
 # right: the seven graphs, one line each
-SEVEN = [(8, 'The network as a graph'), (1, 'Knowledge graph'), (5, 'Pitch helix, circle of fifths'), (2, 'Delta graph'),
+SEVEN = [(8, 'The network as a graph'), (1, 'Knowledge graph'), (5, 'Pitch graph, learned as a helix'), (2, 'Delta graph'),
          (3, 'Note transition graph'), (4, 'Style reachability graph'), (6, "Listener's expectation graph")]
 rt = T(700, 34, 'Seven graphs today', 16, 600, MUT)
 for k, (ic, name) in enumerate(SEVEN):
@@ -2088,65 +2088,62 @@ KGT2 = sec('Change one fact, and the next question goes wrong', SVG(g, 380), ch=
 PURP_ = '#4C5B66'
 SERM = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
 g = adefs('ma')
-# the encoding, one row
-pipe = T(40, 26, 'MusicGen is a language model for sound', 16, 600, INK)
-xs = 40
-pipe += P('M' + ' L'.join(f'{xs + i * 2.2:.0f},{58 + 12 * math.sin(i * .9) * math.sin(i * .13):.0f}' for i in range(55)), '#5F5D50', 1.4)
-pipe += T(100, 100, 'audio', 12.5, 400, MUT, 'middle')
-pipe += P('M168,58 L204,58', '#ACA39A', 1.5, extra='marker-end="url(#maa)"') + T(186, 82, 'EnCodec', 12, 600, MUT, 'middle')
-TK = [[17, 902, 5, 311, 77, 640], [208, 13, 1990, 64, 450, 9], [731, 88, 1201, 5, 36, 712], [4, 560, 81, 1700, 9, 333]]
-for r_, row in enumerate(TK):
-    for c_, v in enumerate(row):
-        pipe += R(216 + c_ * 38, 34 + r_ * 12, 35, 10.5, '#EFEBE5', 'none', 0, 1.5) + T(233.5 + c_ * 38, 42.5 + r_ * 12, str(v), 8.5, 400, '#5F5D50', 'middle')
-pipe += T(330, 100, 'tokens: 4 integers every 20 ms, like words', 12.5, 400, MUT, 'middle')
-pipe += P('M450,58 L486,58', '#ACA39A', 1.5, extra='marker-end="url(#maa)"')
-pipe += R(492, 38, 190, 40, '#4C5B66', 'none', 0, 4) + T(587, 63, 'transformer, as in GPT', 13.5, 600, '#fff', 'middle')
-pipe += T(587, 100, 'predicts the next token', 12.5, 400, MUT, 'middle')
-pipe += P('M686,58 L722,58', '#ACA39A', 1.5, extra='marker-end="url(#maa)"') + T(704, 82, 'decode', 12, 600, MUT, 'middle') + T(760, 63, 'music', 13.5, 400, INK, 'middle')
-g += pipe + L(40, 118, 1140, 118, '#D7D2CB', 1)
+# the encoding, one simple row across the slide
+pipe = ''
+STEPS = [('audio', 'a song'), ('EnCodec', 'audio to tokens'), ('tokens', '4 integers per 20 ms'), ('transformer', 'as in GPT'), ('music', 'tokens back to audio')]
+BW, GAP, X0 = 176, 58, 40
+for k, (h_, sub) in enumerate(STEPS):
+    x = X0 + k * (BW + GAP)
+    dark = h_ == 'transformer'
+    pipe += R(x, 24, BW, 44, '#4C5B66' if dark else '#F1EDE7', 'none', 0, 5) + T(x + BW / 2, 51, h_, 16, 600, '#fff' if dark else INK, 'middle') + T(x + BW / 2, 88, sub, 13, 400, MUT, 'middle')
+    if k < 4:
+        pipe += P(f'M{x + BW + 6},46 L{x + BW + GAP - 6},46', '#ACA39A', 1.6, extra='marker-end="url(#maa)"')
+g += pipe + L(40, 108, 1140, 108, '#D7D2CB', 1)
 # left: the pitch graph of music theory
-gl = T(40, 142, 'Music theory: the pitch graph', 17, 700, INK) + T(40, 162, 'notes in a row, the same note an octave up linked', 13.5, 400, MUT)
+gl = T(40, 140, 'Music theory: the pitch graph', 17, 700, INK) + T(40, 160, 'notes in a row, the same note an octave up linked', 13.5, 400, MUT)
 NN = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
 def pn(o, k):
-    return (78 + k * 54, 380 - (o - 3) * 82)
+    return (70 + k * 52, 384 - (o - 3) * 84)
 for o in (3, 4, 5):
-    for k in range(7):
-        if k < 6:
-            gl += L(*pn(o, k), *pn(o, k + 1), '#ACA39A', 1.4)
+    for k in range(6):
+        (x1, y1), (x2, y2) = pn(o, k), pn(o, k + 1)
+        gl += L(x1 + 14, y1, x2 - 14, y2, '#ACA39A', 1.4)
     if o < 5:
         (x1, y1), (x2, y2) = pn(o, 6), pn(o + 1, 0)
-        gl += P(f'M{x1},{y1} C{x1 + 40},{y1 - 30} {x2 - 40},{y2 + 30} {x2},{y2}', '#ACA39A', 1.2, extra='stroke-dasharray="3 4"')
+        gl += L(x1, y1 - 13, x2, y2 + 13, '#ACA39A', 1.2, extra='stroke-dasharray="3 4"')
 for k in range(7):
     for o in (3, 4):
-        gl += L(*pn(o, k), *pn(o + 1, k), '#F76902' if k == 0 else '#D7D2CB', 2.6 if k == 0 else 1.2)
+        (x1, y1), (x2, y2) = pn(o, k), pn(o + 1, k)
+        gl += L(x1, y1 - 13, x2, y2 + 13, '#F76902' if k == 0 else '#C9C4BD', 2.6 if k == 0 else 1.6)
 for o in (3, 4, 5):
     for k in range(7):
         x, y = pn(o, k); c0 = k == 0
-        gl += R(x - 13, y - 13, 26, 26, '#F76902' if c0 else '#fff', '#F76902' if c0 else '#5F5D50', 1.5, 6) + T(x, y + 5, f'{NN[k]}{o}' if c0 else NN[k], 11.5 if c0 else 12.5, 700 if c0 else 600, '#fff' if c0 else '#5F5D50', 'middle')
-gl += T(40, 424, 'knowledge graph', 13.5, 600, '#C45200')
+        gl += R(x - 14, y - 13, 28, 26, '#F76902' if c0 else '#fff', '#F76902' if c0 else '#5F5D50', 1.5, 6) + T(x, y + 5, f'{NN[k]}{o}', 11.5, 700, '#fff' if c0 else '#5F5D50', 'middle')
+gl += T(40, 430, 'knowledge graph, from music theory', 13.5, 600, '#C45200')
 g += F(1, gl)
-# right: what MusicGen learned, the helix
-HXc = 880
-hx = T(HXc, 142, 'What the model learned: a helix', 17, 700, INK, 'middle', extra='data-keep="1"') + T(HXc, 162, "each dot: the model's inside state for one note", 13.5, 400, MUT, 'middle')
-hx += f'<g id="hx3d"><path id="hx3d-line" d="" fill="none" stroke="{PURP_}" stroke-width="2" stroke-opacity=".55"/>'
-hx += ''.join(f'<circle id="hx3d-{n}" r="{6.5 if n % 12 == 0 else 4}" fill="{ACC if n % 12 == 0 else PURP_}"/>' for n in range(25))
+# right: what MusicGen learned, the helix in its vector space, every note named
+HXc = 760
+hx = T(HXc, 140, 'What the model learned: a helix', 17, 700, INK, 'middle', extra='data-keep="1"') + T(HXc, 160, "in the model's vector space: each dot is the activation for one note", 13.5, 400, MUT, 'middle')
+hx += f'<g id="hx3d"><path id="hx3d-line" d="" fill="none" stroke="{PURP_}" stroke-width="2" stroke-opacity=".5"/>'
+WHITE = {0: 'C', 2: 'D', 4: 'E', 5: 'F', 7: 'G', 9: 'A', 11: 'B'}
+hx += ''.join(f'<circle id="hx3d-{n}" r="{6.5 if n % 12 == 0 else (4.5 if n % 12 in WHITE else 2.6)}" fill="{ACC if n % 12 == 0 else PURP_}"/>' for n in range(25))
 hx += f'<line id="hx3d-axis" stroke="{ACC}" stroke-width="2.6" stroke-dasharray="5 4"/>'
-hx += ''.join(f'<text id="hx3d-l{n}" font-size="14" font-weight="700" fill="#C45200">C{3 + n // 12}</text>' for n in (0, 12, 24)) + '</g>'
-hx += T(HXc, 424, 'learned graph: C3, C4, C5 line up, like the orange edges', 13.5, 600, '#C45200', 'middle')
+hx += ''.join(f'<text id="hx3d-l{n}" font-size="{13 if n % 12 == 0 else 11.5}" font-weight="700" fill="{"#C45200" if n % 12 == 0 else "#4C5B66"}">{WHITE[n % 12]}{3 + n // 12}</text>' for n in range(25) if n % 12 in WHITE) + '</g>'
+hx += T(HXc, 430, 'learned graph: C3, C4, C5 line up, like the orange edges', 13.5, 600, '#C45200', 'middle')
 g += F(2, hx)
-HELIX_JS = """<script>(function(){var cx=880,cy=262,R=118,H=6.6,t0=null;
-function frame(ts){if(t0===null)t0=ts;var t=(ts-t0)/1000,ang=t*0.6,lit=Math.floor(t*4)%32;var g=document.getElementById('hx3d');if(!g){return;}
-var d='',pts=[];for(var q=0;q<=96;q++){var u=q/4,a=2*Math.PI*u/12+ang;var x=cx+R*Math.sin(a),y=cy+86-u*H+18*Math.cos(a);d+=(q?' L':'M')+x.toFixed(1)+','+y.toFixed(1);}
+HELIX_JS = """<script>(function(){var cx=760,y0=374,R=150,H=7.3,TL=24,t0=null;
+function frame(ts){if(t0===null)t0=ts;var g=document.getElementById('hx3d');if(!g){return;}var fr=g.closest('.fragment');if(fr&&!fr.classList.contains('visible')){t0=ts;}var t=(ts-t0)/1000,ang=0-0.5*Math.max(0,6.5-t),lit=Math.min(24,Math.floor(t*4));
+var d='',pts=[];for(var q=0;q<=96;q++){var u=q/4,a=2*Math.PI*u/12+ang;var x=cx+R*Math.sin(a),y=y0-u*H+TL*Math.cos(a);d+=(q?' L':'M')+x.toFixed(1)+','+y.toFixed(1);}
 document.getElementById('hx3d-line').setAttribute('d',d);
-for(var n=0;n<25;n++){var a=2*Math.PI*n/12+ang;var x=cx+R*Math.sin(a),y=cy+86-n*H+18*Math.cos(a),front=Math.cos(a)>-0.05;var c=document.getElementById('hx3d-'+n);
-c.setAttribute('cx',x.toFixed(1));c.setAttribute('cy',y.toFixed(1));c.setAttribute('opacity',(n<=lit?1:0.18)*(front?1:0.45));pts[n]=[x,y];}
+for(var n=0;n<25;n++){var a=2*Math.PI*n/12+ang;var x=cx+R*Math.sin(a),y=y0-n*H+TL*Math.cos(a),front=Math.cos(a)>-0.05;var c=document.getElementById('hx3d-'+n);
+var op=(n<=lit?1:0.18)*(front?1:0.4);c.setAttribute('cx',x.toFixed(1));c.setAttribute('cy',y.toFixed(1));c.setAttribute('opacity',op);pts[n]=[x,y];
+var l=document.getElementById('hx3d-l'+n);if(l){var sa=Math.sin(a),ca=Math.cos(a),axx=cx+R*Math.sin(ang),lx,ly,an;if(Math.abs(sa)>0.6){lx=x+(sa>0?9:-9);ly=y+4;an=sa>0?'start':'end';}else{lx=x+11*sa;ly=y+4+((ca>0||n%12==5)?13:-12);an='middle';if(Math.abs(lx-axx)<16){lx=axx+6;an='start';}}l.setAttribute('x',lx.toFixed(1));l.setAttribute('y',ly.toFixed(1));l.setAttribute('text-anchor',an);l.setAttribute('opacity',n<=lit?(front?1:0.5):0);}}
 var ax=document.getElementById('hx3d-axis');ax.setAttribute('x1',pts[0][0]);ax.setAttribute('y1',pts[0][1]);ax.setAttribute('x2',pts[24][0]);ax.setAttribute('y2',pts[24][1]);ax.setAttribute('opacity',lit>=24?1:0);
-[0,12,24].forEach(function(n){var l=document.getElementById('hx3d-l'+n);l.setAttribute('x',pts[n][0]+10);l.setAttribute('y',pts[n][1]+5);l.setAttribute('opacity',n<=lit?1:0);});
 requestAnimationFrame(frame);}
 requestAnimationFrame(frame);})();</script>"""
 MUSA = sec('A music generator is a language model, with a pitch graph inside', SVG(g, 440), ch='0',
            ref='Copet et al., Simple and Controllable Music Generation (MusicGen), NeurIPS 2023. Défossez et al., EnCodec, 2022. Yagi, Takamichi, Sato, Tanaka, Morishima, Do Music Foundation Models Embed Pitch in Helical Structure?, arXiv 2607.29086, 2026',
-           notes='For a CS audience, the one idea: a music generator like MusicGen is a language model. EnCodec, a neural audio codec, turns every 20 milliseconds of sound into 4 integers from a vocabulary of 2048, so a song becomes a sequence of tokens, like words. A transformer, the same kind as GPT, predicts the next token, and the codec turns tokens back into sound. Click: music theory has a graph for pitch. The notes C D E F G A B in a row, and every note linked to the same note one octave up, the orange edges for C. That is a small knowledge graph. Click: what the model learned. Yagi and colleagues feed single notes into music models and look at the internal states: they form a helix, one turn per octave, so C3, C4 and C5 line up. That is the orange edge of the pitch graph, found inside the model, which was never told about octaves. The learned graph and the knowledge graph agree.')
+           notes='For a CS audience, the one idea: a music generator like MusicGen is a language model. EnCodec, a neural audio codec, turns every 20 milliseconds of sound into 4 integers from a vocabulary of 2048, so a song becomes a sequence of tokens, like words. A transformer, the same kind as GPT, predicts the next token, and the codec turns tokens back into sound. Click: music theory has a graph for pitch. The notes C D E F G A B in a row, and every note linked to the same note one octave up, the orange edges for C. That is a small knowledge graph. Click: what the model learned. Yagi and colleagues feed single notes into music models and look at the internal states, the activation vectors, projected to three dimensions: they form a helix, one turn per octave, so C3, C4 and C5 line up. That is the orange edge of the pitch graph, found inside the model, which was never told about octaves. The learned graph and the knowledge graph agree.')
 MUSA = MUSA.replace('</section>', HELIX_JS + '\n</section>', 1)
 
 # ---- B: Wei et al. 2024 ----
@@ -2174,7 +2171,7 @@ pr += T(670, 376, 'how often the tiny classifier is right (axis from 0.6)', 12.5
 pr += f'<path d="M1114,204 v86" stroke="#F76902" stroke-width="2.5" fill="none"/>' + T(1124, 240, 'music', 13, 600, '#C45200') + T(1124, 256, 'models', 13, 600, '#C45200')
 g += F(1, pr)
 MUSB = sec('Do music generation models encode music theory?', SVG(g, 410), ch='0',
-           ref='Wei, Freeman, Donahue, Sun, Do Music Generation Models Encode Music Theory?, ISMIR 2024, Figure 1 and Table 2. Cohn, Audacious Euphony, 2012 (the Tonnetz)',
+           ref='Wei, Freeman, Donahue, Sun, ISMIR 2024, Fig. 1, Table 2 | Cohn 2012 (Tonnetz)',
            notes='The title is the question of Wei and colleagues, ISMIR 2024. Left, music theory again as a graph: notes are nodes, a chord is a triangle of notes, and neighboring chords share two notes, C major and A minor share C and E. Musicians call it the Tonnetz, it goes back to Euler. Click: can the model read this out? They freeze the model and train a tiny classifier on one layer to name the chord, the interval, the key and so on, their Figure 1 is the setup. The bars: how often the tiny classifier is right. Inside the music models, Jukebox and both MusicGen sizes, it is right about 93 to 98 percent of the time. On hand made chroma features, the classic music features, 88. On the raw audio tokens, the input itself, 70. So the knowledge is not in the input, the model built it, from sound alone. Keybox: the graph of music theory is there, readable from one layer.')
 
 # ---- two levels by two domains: the map of the talk (Nov 18, his note: fewer words, no status labels, no vector line yet) ----
