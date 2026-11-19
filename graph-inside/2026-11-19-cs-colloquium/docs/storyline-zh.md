@@ -116,8 +116,10 @@
 ### Part 2 音乐（16 到 27 页，约 22 分钟）
 
 **20. Part 2. Hearing loss: a quiet epidemic**（90）第二部分的动机，数字慢慢说。四张卡片一张一张出：全球超过 15 亿人有听力损失，2050 年约 25 亿，每 4 人 1 个（WHO 2021）。听力损失轻度、中度、重度，痴呆风险约 2 倍、3 倍、5 倍（Lin 2011，639 人追踪约 12 年，重度组人很少）。听力损失约占全部痴呆病例的 7%，14 个可改变因素里并列最大（柳叶刀委员会 2024）。听力损失者抑郁几率高 47%（35 项研究，14.7 万老人，Lawrence 2020）。这些都是相关，不是因果。再点：希望，如实说，ACHIEVE（Lancet 2023）助听器让高风险老人 3 年认知下降慢 48%，但全体样本没有显著效果。最后：结论框。再点：NIH 的投入。NIA 资助了 ACHIEVE。Sound Health 是 NIH、肯尼迪中心和美国国家艺术基金会 2017 年起的合作。2023 年 NCCIH 和 NIA 资助了四个音乐干预研究网络，方向是疼痛和痴呆。
-**21. Sound acts on the brain**（60）大脑和音符动画。三条测量：脑电跟拍（Nozaradan 2011），快感高峰多巴胺释放（Salimpoor 2011），40 Hz 声音减少小鼠淀粉样蛋白（Martorell, Cell 2019，2016 那篇是闪光）。点一下：音乐对大脑的作用可以测量，但哪部分起作用还不知道，这就是需要模型的地方。光遗传学类比已移除。
-**22. Music already acts on the brain, as medicine**（75）五张卡片，和听力损失那页同一个样式：帕金森（跟着稳定节拍走路，步子更快更长，Burrai 2021 荟萃分析），手术（术前焦虑更少，Cochrane, Bradt 2013），抑郁（加在常规治疗上症状更少，Cochrane, Aalbers 2017），痴呆（抑郁症状更少，Cochrane, van der Steen 2018），疼痛（疼痛和止痛药都更少，Lee 2016）。如实说：大多数试验规模小，证据质量常常偏低。点一下：结论框，没人知道是音乐里的哪部分起作用，这是一个建模问题。
+**21. Music acts on the brain, and works as medicine**（90）原第 21、22 页合并，进度条第 2 步改名 Music on brain and body。上面一行：大脑里能测到的三件事（脑电跟拍 Nozaradan 2011，快感高峰多巴胺 Salimpoor 2011，40 Hz 声音减少小鼠淀粉样蛋白 Martorell 2019）。点一下：五张医学卡片（帕金森、手术、抑郁、痴呆、疼痛），如实说大多数试验规模小。再点：结论框，没人知道是音乐里的哪部分起作用，这是一个建模问题。原来两页在备用页。
+
+**22. How NIH came to fund music and health**（60）新页，进度条第 3 步 NIH builds the field。时间线四个点一个个出：1950 美国音乐治疗师成立全国协会（NAMT，现 AMTA），音乐治疗成为一门职业。2017 Sound Health 启动，NIH、肯尼迪中心和 NEA，起因是歌唱家 Renée Fleming 和 NIH 院长 Francis Collins（会弹吉他）相识，2017 年 1 月 NIH 研讨会开始（Fleming and Collins, JAMA 2017）。2019 第一批资助，5 年 2,000 万美元，10 个 NIH 研究所和中心出钱。2023 NCCIH 和 NIA 资助疼痛和痴呆方向的音乐干预研究网络，任务是统一测量、培养人、做小型预试验。再点：结论框，音乐很老，资助很新，这个领域缺方法，这正是计算能帮忙的地方。第 20 页底部 NIH 那条保持不变。
+
 **23. Music, hearing and health, a few miles from here**（30）不点名，只说哪里有什么、在做什么，不提全国。左边是示意地图：安大略湖在上，Genesee 河从南往北，市中心是 Eastman 音乐学院，沿河是 UR 和医学中心（URMC），城南是 RIT。右边：UR 有 Eastman Performing Arts Medicine（Eastman 和 URMC 合办的音乐与医学中心，2024 年起），音乐与老龄化的小额种子基金（和 UR Aging Institute），医学中心研究大脑如何响应音乐，电子与计算机工程系做音乐 AI。点一下：RIT 有工程技术学院（音乐和音频认知、助听器、空间音频），心理学系的认知科学（有博士项目），NTID（聋人认知和听力学）。再点：结论框，罗切斯特已经有了音乐、医学、听力和 AI，我们把它们连起来。说一句"如果你在做相关的事，来找我"就走。
 **24. A new idea is a new edge, and so is a new style of music**（120）四本讲创造力的书和 Uzzi 2013：新想法就是旧想法之间的一条新边。下面是音乐流派家族树和我们 2017 年的 FusionGAN。
 说："A new idea is a new edge. In 2017 we asked whether a model can draw one."
