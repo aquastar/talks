@@ -1174,8 +1174,7 @@ FIN_FOOT = ('<div style="display:flex;justify-content:center;align-items:flex-st
             '<div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px;text-align:left">'
             '<a href="https://zhiqian.ai/talks" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;color:#1F1E1B;text-decoration:none;font:700 34px/1 et-book,Georgia,serif;margin-top:2px">'
             + _ico2 + 'zhiqian.ai/talks</a>'
-            '<div style="font:400 19px/1.35 et-book,Georgia,serif;color:#1F1E1B;max-width:560px"><span style="color:#C45200;font-weight:700">Coming next:</span> my keynote at the IEEE BIBM workshop on AI for Bio Signals, <i>The Music That Plays the Brain</i>.</div>'
-            '<div style="font:400 16px/1.3 et-book,Georgia,serif;color:#6B665E">Want more? Slides and demos at the link above.</div>'
+            '<div style="font:400 19px/1.35 et-book,Georgia,serif;color:#1F1E1B;max-width:560px"><span style="color:#C45200;font-weight:700">Coming next:</span> my keynote at AI4BioSig, IEEE BIBM 2026: <i>The Music That Plays the Brain</i>. More at the link above.</div>'
             '</div></div>')
 
 # ======================= ROUND 4 (Nov 2 2026): Space Needle anchor =======================
@@ -2676,9 +2675,14 @@ uf += _use(620, 258, 'Tell people apart, like a fingerprint', ['117 of 126 peopl
 uf += _use(620, 322, 'Find where disease hits', ['across 26 brain disorders, damage falls more often on hubs'], 'Crossley et al., Brain 2014')
 uf += _use(620, 386, 'Music', ['a favorite song makes the default mode network most connected'], 'Wilkins et al., Scientific Reports 2014')
 g += fg + F(1, uf)
-BRAINGRAPH = sec('The brain is read as a graph, too', SVG(g, 436), ch='2',
+_ts = R(30, 0, 1120, 82, '#F4F1EC', 'none', 0, 8)
+_ts += T(48, 26, 'Why two tools?', 16, 700, '#4C5B66') + T(48, 50, 'A note lasts', 14.5, 400, INK) + T(48, 70, '0.2 to 0.4 s.', 14.5, 700, INK)
+_ts += T(330, 26, 'EEG: when', 17, 700, '#C45200', extra='data-keep="1"') + T(330, 50, 'Hundreds of samples a second,', 14.5, 400, INK) + T(330, 70, 'so it sees every note. Where: blurry.', 14.5, 400, INK)
+_ts += T(760, 26, 'fMRI: where', 17, 700, '#4C5B66', extra='data-keep="1"') + T(760, 50, 'Millimeters, but one image every 1 to 2 s,', 14.5, 400, INK) + T(760, 70, 'and blood lags ~5 s, so notes blur.', 14.5, 400, INK)
+g = _ts + '<g transform="translate(0,96)">' + g + '</g>'
+BRAINGRAPH = sec('The brain is read as a graph, too', SVG(g, 532), ch='2',
                  ref='EEG picture computed by us from PhysioNet EEG Motor Movement/Imagery (MNE). fMRI picture: Hong et al., PLoS ONE 2013, via Wikimedia Commons, CC BY-SA 3.0. Tang et al. ICLR 2022. Song et al. IEEE TAC 2020. Finn et al. Nat Neurosci 2015. Crossley et al. Brain 2014. Wilkins et al. Sci Rep 2014',
-                 notes=('Not our result, a look at the field. Graphs are already how people read brain data. '
+                 notes=('Not our result, a look at the field. First, why two tools. A note lasts about 0.2 to 0.4 seconds. EEG records electrical activity hundreds of times a second, so it sees every note, but it cannot say well where in the brain. fMRI sees where to a few millimeters, but it takes one image every 1 to 2 seconds and the blood signal lags about 5 seconds behind, so many notes blur together. That is why music studies of single notes prefer EEG, and fMRI is used for longer stretches, like a whole song. Graphs are already how people read both. '
                         'Left, EEG: one node per electrode. This picture is real data: ten people resting with eyes open, from a public PhysioNet set, 62 electrodes. An edge joins two electrodes whose alpha waves keep a steady phase lag, the strongest 4 percent of pairs. You can see the alpha network over the back of the head. '
                         'Edges can also be the nearest electrodes, or learned by the network. Right, fMRI: one node per brain region. This picture is from a 2013 study of 23 teenagers at rest: the blue links are connections that were weaker in teens with internet gaming addiction. Edges are regions whose signals rise and fall together, or white matter fibers. '
                         'Click: what people use them for. EEG graphs: finding seizures in hospital recordings, a graph network gets AUROC 0.875 on the Temple University seizure corpus. Reading emotion, DGCNN learns the edges and gets 90.4 percent on SEED. Also sleep staging and brain computer interfaces. '
@@ -3061,7 +3065,7 @@ def assemble(cover, old):
     MUSA2 = _addbox(MUSA, keybox('The ' + kw('graph the model learned') + ' matches the ' + kw('knowledge graph') + ' of music theory.', 3, '.9em'))
     MUSB2 = _addbox(MUSB, keybox('Learned from chord sequences alone, the chord space follows the ' + kw('geometry of music theory') + '.', 3, '0'))
     SUMM2 = _addbox(SUMM, keybox('What we need: compare the ' + kw('inside') + ' before and after a change, and flag the risky ones.', 2, '.1em'))
-    TAKE2 = _addbox(FINAL, keybox('Is there a ' + kw('graph') + ' inside your model?', 2, '.3em') + FIN_FOOT)
+    TAKE2 = _addbox(FINAL, FIN_FOOT)
     vision = [cover, NETG, backup(toch(wb, '0')), KGT3s, backup(KGT2), five_q, beyond_o, MUSA2, MUSB2, backup(toch(PROBE, '0')), backup(toch(MGEN, '0')), backup(VISION), MAP2, backup(FORECAST2)]
     rome = old[33]
     a = rome.find('<div class="note"'); e = rome.find('  <div class="ref">')
