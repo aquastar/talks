@@ -1500,14 +1500,17 @@ BRL = sec('Predict the next word well, and you predict the brain', SVG(g), ch='2
 # ---- B2: a graph predicts the listening brain (IDyOM), with their Figure 1 ----
 g = adefs('id')
 g += img(30, 14, 470, 397, 'figs/diliberto2020-fig1.png') + L(30, 414, 500, 414, '#D7D2CB', 1)
-g += T(560, 50, 'Every note gets a surprise value', 16, 600, MUT)
-g += wrap(560, 84, 'IDyOM, a note transition graph with several memory lengths, scores how unexpected each note is (rows S and H in A).', 20, 400, INK, width=50, lh=27)
-g += F(1, T(560, 196, 'Listeners wear EEG', 16, 600, MUT) + wrap(560, 230, '20 people listen to Bach (B). The sound alone predicts part of the brain response.', 20, 400, INK, width=50, lh=27))
-g += F(2, T(560, 314, 'Surprise adds to it', 16, 600, MUT) + wrap(560, 348, 'Adding the surprise predicts more, within 350 ms of each note, in 16 of 20 listeners (C).', 20, 400, INK, width=50, lh=27))
-g += F(3, T(30, 452, 'The listening brain tracks a graph of note transitions.', 21, 400, INK, extra='font-family="et-book,Georgia,serif" style="font-size-adjust:none"') + T(560, 452, 'So the brain can judge a graph.', 21, 400, '#C45200', extra='font-family="et-book,Georgia,serif" style="font-size-adjust:none"'))
+g += T(560, 40, 'Every note gets a surprise value', 15, 600, MUT)
+g += wrap(560, 68, 'IDyOM, a note transition graph with several memory lengths, scores how unexpected each note is (rows S and H in A).', 17.5, 400, INK, width=58, lh=23)
+g += F(1, T(560, 150, 'Listeners wear EEG', 15, 600, MUT) + wrap(560, 178, '20 people listen to Bach (B). The sound alone predicts part of the brain response.', 17.5, 400, INK, width=58, lh=23))
+g += F(2, T(560, 238, 'Surprise adds to it', 15, 600, MUT) + wrap(560, 266, 'Adding the surprise predicts more, within 350 ms of each note, in 16 of 20 listeners (C).', 17.5, 400, INK, width=58, lh=23))
+cb = R(548, 306, 602, 158, '#F4F1EC', 'none', 0, 8) + img(556, 314, 360, 135, 'figs/fe-markov-static.png')
+cb += T(930, 342, 'Remember this graph?', 17, 700, '#C45200', extra='font-family="et-book,Georgia,serif" style="font-size-adjust:none" data-keep="1"')
+cb += T(930, 366, 'Für Elise, earlier. IDyOM is', 14.5, 400, INK) + T(930, 385, 'the same kind of graph, with', 14.5, 400, INK) + T(930, 404, 'a longer memory and more', 14.5, 400, INK) + T(930, 423, 'music behind it.', 14.5, 400, INK)
+g += F(3, cb + T(30, 452, 'The listening brain tracks a graph of note transitions.', 21, 400, INK, extra='font-family="et-book,Georgia,serif" style="font-size-adjust:none"'))
 BRI = sec('A note transition graph predicts the listening brain', SVG(g), ch='2',
           ref='Pearce, IDyOM, 2005 and 2018. Di Liberto et al., Cortical encoding of melodic expectations in human temporal cortex, eLife 2020, Figure 1',
-          notes='The figure is theirs, Figure 1 of the eLife paper. This is where graphs and brains meet. IDyOM is a variable order Markov model, the grown up version of our 12 node graph. It assigns every note a surprise value. Di Liberto and colleagues show that this surprise explains EEG responses beyond acoustic features, strongest within the first 350 ms, in 16 of 20 participants, with a large effect (d about 1.6). ECoG locates it near auditory cortex.')
+          notes='The figure is theirs, Figure 1 of the eLife paper. Last click shows the Für Elise graph from earlier as a callback: IDyOM is the same kind of graph with a longer memory. This is where graphs and brains meet. IDyOM is a variable order Markov model, the grown up version of our 12 node graph. It assigns every note a surprise value. Di Liberto and colleagues show that this surprise explains EEG responses beyond acoustic features, strongest within the first 350 ms, in 16 of 20 participants, with a large effect (d about 1.6). ECoG locates it near auditory cortex.')
 
 # ---- B3: rebuild ----
 g = adefs('rb')
@@ -1983,10 +1986,20 @@ for k, (x, w) in enumerate(XS):
     elif k == 1:
         g_ += T(x + 16, 162, 'Sound Health starts', 19, 700, INK, extra=SERMB + ' data-keep="1"') + pills(x + 196, 148, ['NIH', 'Kennedy Center', 'NEA'])
         g_ += T(x + 16, 184, 'It began when a singer met a scientist.', 14, 400, MUT)
-        g_ += photo(x + 46, 226, 30, 'renee-fleming.jpg', 'RF', AC2) + T(x + 88, 214, 'Renée Fleming', 16, 700, INK) + T(x + 88, 232, 'American soprano, Grammy winner,', 13, 400, INK) + T(x + 88, 248, 'Kennedy Center Honors 2023', 13, 400, INK)
-        g_ += photo(x + 46, 296, 30, 'francis-collins.jpg', 'FC', AC2) + T(x + 88, 284, 'Francis Collins', 16, 700, INK) + T(x + 88, 302, 'NIH director 2009 to 2021, led the', 13, 400, INK) + T(x + 88, 318, 'Human Genome Project', 13, 400, INK)
-        g_ += L(x + 16, 340, x + w - 16, 340, '#D7D2CB', 1)
-        g_ += _ls(x + 16, 362, [('2015', '#4C5B66'), 'They met at a dinner party. He had brought his guitar.', ('January 2017', '#C45200'), 'First NIH workshop, Sound Health: Music and the Mind.'])
+        g_ += photo(x + 40, 232, 24, 'renee-fleming.jpg', 'RF', AC2) + T(x + 72, 220, 'Renée Fleming', 15, 700, INK) + T(x + 72, 237, 'soprano,', 12.5, 400, INK) + T(x + 72, 252, 'Grammy winner', 12.5, 400, INK)
+        g_ += photo(x + 224, 232, 24, 'francis-collins.jpg', 'FC', AC2) + T(x + 256, 220, 'Francis Collins', 15, 700, INK) + T(x + 256, 237, 'NIH director,', 12.5, 400, INK) + T(x + 256, 252, 'led the genome project', 12.5, 400, INK)
+        g_ += L(x + 16, 272, x + w - 16, 272, '#D7D2CB', 1)
+        for q_, (dt, tx_) in enumerate((('2015', 'They meet at a dinner party. He brings his guitar.'),
+                                        ('Jan 2017', 'NIH workshop: music therapists and brain'),
+                                        ('', 'scientists compare what is known.'),
+                                        ('Jun 2017', 'Public launch at the Kennedy Center, with a'),
+                                        ('', 'National Symphony Orchestra concert.'),
+                                        ('Jun 2017', 'In JAMA: few large trials so far. Needed:'),
+                                        ('', 'standard methods and biological markers.'))):
+            yy = 296 + q_ * 18 + (q_ > 0) * 8 + (q_ > 2) * 8 + (q_ > 4) * 8
+            if dt:
+                g_ += T(x + 16, yy, dt, 13, 700, '#C45200', extra='data-keep="1"')
+            g_ += T(x + 84, yy, tx_, 13, 400, INK)
         g_ += T(x + 16, 455, 'Fleming and Collins, JAMA 2017. NIH Record 2017', 11.5, 400, MUT)
     elif k == 2:
         g_ += T(x + 16, 164, '$20 million', 26, 700, '#C45200', extra=SERMB + ' data-keep="1"') + T(x + 16, 187, 'over 5 years', 14.5, 600, INK)
@@ -2007,7 +2020,7 @@ for k, (x, w) in enumerate(XS):
 NIHHIST = sec('How NIH came to fund music and health', SVG(g, 466), ch='2',
               ref='AMTA history. CBMT certificant data, 2026. Fleming and Collins, JAMA 2017. NIH news release, Sept 19 2019. NIH RFA-AT-23-009. Edwards et al., Neurology 2023',
               notes=('A short history, four dates. 1950: music therapy becomes a profession in the US. Music had been used in veterans hospitals after the war, and that year music therapists formed a national association, today the American Music Therapy Association. It started with 85 members. Today there are 10,699 board certified music therapists. '
-                     'Click: 2017, Sound Health. It started when the soprano Renée Fleming met NIH director Francis Collins, who plays guitar. NIH and the Kennedy Center, with the National Endowment for the Arts, began with an NIH workshop in January 2017. '
+                     'Click: 2017, Sound Health. It started when the soprano Renée Fleming met NIH director Francis Collins at a dinner party in 2015, he had brought his guitar. NIH already ran a small Sound Health program with the National Symphony Orchestra, and in 2017 it grew into a partnership with the Kennedy Center and the National Endowment for the Arts. January 2017: an NIH workshop brought music therapists and neuroscientists together. June 2017: a public launch at the Kennedy Center with a National Symphony Orchestra concert. The same month Collins and Fleming wrote in JAMA what was missing: few large trials, and the largest mostly inconclusive. They asked for standard methods and biological markers. '
                      'Click: 2019, the first research awards, 20 million dollars over five years, from 10 NIH institutes and centers, for example music and motor skills in Parkinson disease. '
                      'Click: 2023, NCCIH and the National Institute on Aging funded research networks on music based interventions for pain and for dementia, about 1.5 million dollars a year for three networks in the call. Their job is infrastructure: shared measures and theory, and one third to one half of each budget must go to small pilot studies before large trials. '
                      'Click: so the music is old, the funding is new, and the methods are still being built. Which is where computing can help.'))
