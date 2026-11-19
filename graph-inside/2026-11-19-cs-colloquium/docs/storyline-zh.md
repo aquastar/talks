@@ -144,9 +144,8 @@ demo 用 view=talk 布局：上面是随时间变化的乐谱、模型意外程�
 
 **31. The brain is read as a graph, too**（75，领域现状，不是我们的结果）两张图都是我们用公开数据和标准工具算出来的，不是手画：左边 EEG，PhysioNet 10 人静息，62 电极，alpha 波相位滞后指数最强的 4% 连边。右边 fMRI，nilearn 公开数据 10 人，MSDL 图谱 39 个脑区，偏相关最强的 8%。做法见 docs/brain-graphs.md。点一下，大家拿它做什么。EEG：医院脑电里找癫痫发作（图神经网络，AUROC 0.875，Tang ICLR 2022），读情绪（DGCNN 自己学边，SEED 上 90.4%），还有睡眠分期、脑机接口。fMRI：像指纹一样认人（126 人里认出 117 个，92.9%，同样的边还能预测流体智力 r = 0.50，Finn 2015），找疾病打在哪里（26 种脑疾病的损伤更常落在枢纽上，Crossley 2014），音乐（听最喜欢的歌时默认模式网络连接最强，Wilkins 2014）。再点：结论框，我们的 delta graph 用的是同一个配方，偏相关。
 
-**32. Our plan: a graph from inside MusicGen, judged by the brain**（75，计划）从 MusicGen 内部读出图，和 IDyOM、MusicGen 输出一起比谁更能解释大脑。
-说："If the graph inside the generator explains the listener, the graph is real."
+（原第 32 页 Our plan 已移到备用页，11 月 19 日，内容太少。）
 
 ### 结尾（28 页，约 1.5 分钟）
 
-**33. Look for the graph, in language and in music**（90）结尾，两栏各一句。语言：事实是三元组，互相支撑。编辑加了一条绕行，旧路径还在。我们的结果（橙色）：delta graph 查 20 个找到 17 个坏编辑（SDM 2026），QGC：缺一条路径，每个模型都更差（CIKM 2026）。点一下，音乐：乐理是一张图，模型学到了它的几何。我们的结果：144 个数的音符图认出风格，约 70%，听众的意外程度可以计算，大脑在跟踪它（live demo）。下一步：读出 MusicGen 内部的图。再点：结论框 Is there a graph inside your model?。底部是二维码和 zhiqian.ai/talks，讲完停在这一页答问。原来的点云版结尾在下箭头备用页。
+**32. Look for the graph, in language and in music**（90）结尾，两栏各一句。语言：事实是三元组，互相支撑。编辑加了一条绕行，旧路径还在。我们的结果（橙色）：delta graph 查 20 个找到 17 个坏编辑（SDM 2026），QGC：缺一条路径，每个模型都更差（CIKM 2026）。点一下，音乐：乐理是一张图，模型学到了它的几何。我们的结果：144 个数的音符图认出风格，约 70%，听众的意外程度可以计算，大脑在跟踪它（live demo）。下一步：读出 MusicGen 内部的图。再点：结论框 Is there a graph inside your model?。底部是二维码和 zhiqian.ai/talks，讲完停在这一页答问。原来的点云版结尾在下箭头备用页。
