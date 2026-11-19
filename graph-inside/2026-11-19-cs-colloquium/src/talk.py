@@ -2633,6 +2633,78 @@ DG16 = sec('What is a delta graph?', SVG(g, 424), ch='1', status='pub',
                   'If it is in the fast waves, connected blocks disagree, a sharp local patch. We keep the share of energy in low, middle and high bands, plus the spectral entropy and the Dirichlet energy. '
                   'All these numbers go into a small logistic model that gives a risk score. The paper is careful: this is not a claim about a causal mechanism, '
                   'it is a summary of how broadly or sharply the edit perturbs the model.'))
+# ---- slide 17 (his note Nov 19): the spectral reading of the delta graph, listed step by step, Benbrahim et al. SDM 2026 Section 4 and Table 5.2 ----
+g = adefs('sp').replace('<defs>', '<defs><marker id="spa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#8F887E"/></marker>', 1)
+SUP = lambda t_: f'<tspan baseline-shift="super" font-size="70%">{t_}</tspan>'
+SUB = lambda t_: f'<tspan baseline-shift="sub" font-size="70%">{t_}</tspan>'
+FX_ = 'font-family="et-book,Georgia,serif" font-style="italic" style="font-size-adjust:none"'
+g += T(590, 22, 'We read the change against the graph before the edit.', 17, 400, MUT, 'middle', extra='data-keep="1"')
+CARDS = [('The shape', [f'L = I − D{SUP("−½")} |A{SUB("before")}| D{SUP("−½")}'], ['the Laplacian of the graph', 'before the edit']),
+         ('The signal', [f'c{SUB("i")} = Σ{SUB("j")} |ΔA{SUB("ij")}|'], ['how much the connections', 'of block i changed']),
+         ('Graph Fourier transform', ['L = U Λ U' + SUP('T'), 'ĉ = U' + SUP('T') + ' c'], ['eigenvectors of L are waves,', 'eigenvalues λ their frequency']),
+         ('The numbers', [], [])]
+for k, (h_, fx, ex) in enumerate(CARDS):
+    x = 40 + k * 280
+    c_ = R(x, 44, 250, 200, '#F4F1EC', 'none', 0, 8) + C(x + 22, 72, 12, '#4C5B66') + T(x + 22, 77, str(k + 1), 13, 700, '#fff', 'middle') + T(x + 42, 78, h_, 17, 700, INK)
+    for q, f_ in enumerate(fx):
+        c_ += T(x + 22, 122 + q * 30, f_, 19, 400, INK, extra=FX_)
+    for q, e_ in enumerate(ex):
+        c_ += T(x + 22, 208 + q * 19, e_, 13.5, 400, MUT)
+    if k == 3:
+        for q, (a_, b_) in enumerate([('energy in low, mid, high bands', 'share of Σ ĉ² in each band'), ('spectral entropy', 'how spread over frequencies'),
+                                      ('spectral centroid', 'average frequency: Σ λ ĉ² / Σ ĉ²'), ('Dirichlet energy', 'cᵀ L c: how much neighbors differ')]):
+            c_ += T(x + 22, 110 + q * 38, a_, 14, 600, INK) + T(x + 22, 128 + q * 38, b_, 12.5, 400, MUT)
+    if k < 3:
+        c_ += P(f'M{x + 254},132 L{x + 276},132', '#8F887E', 1.8, extra='marker-end="url(#spa)"')
+    g += F(1 if k < 2 else 2, c_)
+def _chain2(x0, y0, vals):
+    o = P(f'M{x0},{y0} h{4 * 34}', '#8F887E', 1.6)
+    for k, v in enumerate(vals):
+        o += C(x0 + k * 34, y0, 10, f'rgba(196,82,0,{v})', extra='stroke="#8F887E" stroke-width="1"')
+    return o
+sm = _chain2(60, 284, [.15, .35, .55, .75, .95]) + T(230, 280, 'low frequency', 15, 700, INK) + T(230, 299, 'the change spreads along the original wiring', 13.5, 400, MUT)
+sm += _chain2(620, 284, [.95, .1, .95, .1, .95]) + T(790, 280, 'high frequency', 15, 700, INK) + T(790, 299, 'connected blocks disagree: a sharp local patch', 13.5, 400, MUT)
+g += F(3, sm)
+res = T(40, 352, 'Does the spectrum help? Ranking risky edits on facts never seen in training (AUC, Table 5.2):', 15, 600, INK)
+for k, (lab, v, col) in enumerate([('editor and model only', 0.840, '#ACA39A'), ('+ delta graph numbers', 0.862, '#8F887E'), ('+ spectral numbers', 0.878, '#F76902')]):
+    y = 366 + k * 26
+    res += T(250, y + 15, lab, 14, 600 if k == 2 else 400, '#C45200' if k == 2 else INK, 'end') + R(262, y, (v - 0.8) * 4000, 18, col, 'none', 0, 2) + T(268 + (v - 0.8) * 4000, y + 14, f'{v:.3f}', 13.5, 700, '#C45200' if k == 2 else INK)
+res += T(262, 456, 'bars start at 0.80', 12, 400, MUT)
+g += F(4, res)
+SPEC16 = sec('Reading the delta graph: smooth or sharp', SVG(g, 464), ch='1', status='pub',
+             ref='Benbrahim et al., Delta-Graph Signatures for Post-Edit Risk Screening, SDM 2026, Section 4 and Table 5.2',
+             notes=('The one implementation detail worth showing, because it is the graph part. We read the change against the graph before the edit. '
+                    'Click. Step one, the shape: take the adjacency before the edit, absolute values, and its normalized Laplacian, L equals I minus D to the minus one half, A, D to the minus one half. '
+                    'Step two, the signal: for each block, add up how much its connections changed in the delta graph, c i equals the sum over j of the absolute delta A i j. '
+                    'Click. Step three, the graph Fourier transform: decompose L into its eigenvectors, which are like waves on the graph, slow ones and fast ones, the eigenvalue is the frequency, '
+                    'and project c onto them. Step four, the numbers we keep: the share of energy in low, middle and high frequency bands, the spectral entropy, the spectral centroid, '
+                    'the energy weighted average frequency, and the Dirichlet energy, c transpose L c, how much connected blocks differ. '
+                    'Click: low frequency means the change spreads along the original wiring, high frequency means connected blocks disagree, a sharp local patch. '
+                    'Click: does it help? On facts never used for fitting, ranking risky edits with only the editor and the model gives AUC 0.840, adding the delta graph numbers 0.862, '
+                    'adding the spectral numbers 0.878. Note that the basis is the graph before the edit, and the signal comes from the delta. We do not take the spectrum of the delta itself.'))
+# ---- results as devils (his note Nov 19): all 56 bad edits drawn, the ones caught light up. Rates 56%, 70%, 86% of 20 checks, Benbrahim et al. SDM 2026 ----
+g = adefs('dv')
+def devil(cx, cy, lit, col):
+    f_ = col if lit else '#D7D2CB'
+    return (f'<path d="M{cx - 6},{cy - 3} L{cx - 9},{cy - 13} L{cx - 2},{cy - 6} Z M{cx + 6},{cy - 3} L{cx + 9},{cy - 13} L{cx + 2},{cy - 6} Z" fill="{f_}"/>'
+            + f'<circle cx="{cx}" cy="{cy + 1}" r="8" fill="{f_}"/>'
+            + (f'<circle cx="{cx - 3}" cy="{cy}" r="1.5" fill="#FBFAF7"/><circle cx="{cx + 3}" cy="{cy}" r="1.5" fill="#FBFAF7"/>' if lit else ''))
+g += T(590, 26, '100 edits, all with perfect exam scores. 56 are secretly bad, one devil each. You may check only 20.', 17, 400, INK, 'middle', extra='data-keep="1"')
+ROWS_D = [('Pick at random', 11, '#DA291C', INK), ('Pick by editor and model', 14, '#DA291C', INK), ('Pick by the delta graph (ours)', 17, '#F76902', '#C45200')]
+for k, (lab, n, col, lc) in enumerate(ROWS_D):
+    y = 92 + k * 100
+    row = T(40, y - 10, lab, 16, 600, lc) + T(40, y + 30, str(n), 30, 700, lc) + T(82, y + 30, 'of 56 caught', 15, 400, MUT)
+    for q in range(56):
+        cx = 334 + (q % 28) * 29; cy = y - 12 + (q // 28) * 34
+        row += devil(cx, cy, q < n, col)
+    g += F(k + 1, row) if k else row
+RES_DEV = sec('Results: same checking budget, more bad edits caught', SVG(g, 340), ch='1', status='pub',
+              ref='Benbrahim et al., SDM 2026, Tables 5.1 to 5.5: 56%, 70%, 86% of 20 checks',
+              notes=('Every devil is a bad edit, an edit that passed every exam but fails on new wordings. There are 56 of them among 100 edits, and we can afford to check only 20. '
+                     'Lit devils are the ones we catch. Picking at random, about 11 of the 56. Click: picking by which editor and which model, about 14. '
+                     'Click: picking by the delta graph, about 17. Click: same 20 checks, 11, 14, 17, and the extra catches come only from how the inside changed. '
+                     'The counts come from the paper rates, 56, 70 and 86 percent of the checked edits are bad, times 20. '
+                     'If asked for the ranking quality: AUC rises from 0.703 with the editor and model alone to 0.797 with the delta graph, and on a second dataset, 500 real Wikipedia facts, from 0.853 to 0.904.'))
 RES20 = sec('Results: same checking budget, more bad edits caught', SVG(g), ch='1', status='pub',
             ref='Benbrahim et al., SDM 2026, Tables 5.1 to 5.5. Counts are the expected bad edits among 20 checks at the reported rates',
             notes='Three bars, one click each. Same budget, check only 20 of 100 edits that all passed the benchmark: at random you catch 11 bad ones, by editor and model 14, by the delta graph 17. Click to 17 last. The rates are what the paper reports: 56 percent at random, 70 by editor and model, 86 with the delta graph. Ranking quality goes from 0.703 to 0.797, and on a second dataset of real Wikipedia facts from 0.853 to 0.904.')
@@ -2776,7 +2848,7 @@ def assemble(cover, old):
             UNLEARN3, backup(UNLEARN2), backup(rel(30, '')),
             silent_main, backup(HASE), backup(rome), backup(rel(38, '')), backup(rel(39, '')),
             SUMM2, backup(toch(receipts, '1')), backup(toch(story, '1')), backup(retitle(lessons, 'Every surgery, three lessons')),
-            d46_q, backup(retitle(d46, 'What is a delta graph? The full picture')), RES_OLD, backup(old[48]), backup(abl), backup(lim_main), backup(retitle(old[51], 'Limits, all four, with the numbers')),
+            d46_q, backup(retitle(d46, 'What is a delta graph? The full picture')), SPEC16, _addbox(RES_DEV, keybox('Same 20 checks: 11, 14, 17. The extra catches come only from ' + kw('how the inside changed') + '.', 3, '.4em')), backup(RES_OLD), backup(old[48]), backup(abl), backup(lim_main), backup(retitle(old[51], 'Limits, all four, with the numbers')),
             lang_cgt]
     four = retitle(FOUR, 'Music generation went from a visible graph to a hidden one')
     four = re.sub(r'\s*<p class="q">.*?</p>', '', four, count=1, flags=re.S)

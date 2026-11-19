@@ -441,6 +441,7 @@ GTAGS = [('Level 1: a language model is itself a graph', 1, 'level 1, the model 
          ('Do music generation models encode music theory?', 3, 'chord graph, learned distances'),
          ('A missing path in the record', 2, 'knowledge graph, a clinical record'),
          ('What is a delta graph?', 4, 'delta graph, how the inside rewired'),
+         ('Reading the delta graph', 4, 'delta graph, its spectrum'),
          ('A tiny graph is enough to represent', 5, 'note transition graph, a Markov chain'),
          ('Fold 88 keys', 5, 'note transition graph'),
          ('the simplest graph already names the tradition', 5, 'note transition graph'),

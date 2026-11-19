@@ -99,52 +99,60 @@
 点一下：delta graph 出现。再点：一行流程，delta graph → 几个数 → 风险分 → 先查最可疑的（结果见下一页）。再点：结论框，delta graph 是这次编辑的指纹。
 被问到"几个数"是什么：拓扑（总变化量、哪几层、集中程度）和谱（以编辑前的图为形状，把每个块的变化量做图傅里叶变换，看低频平滑还是高频尖锐）。论文 Table 5.2，新事实上 AUC：只用编辑器和模型 0.840，加拓扑 0.862，加谱 0.878，完整行为评测 0.984 但贵得多。
 说："After minus before. What is left is the edit's fingerprint inside the model."
-**17. Results: same checking budget, more bad edits caught**（120）用十月 PhD talk 的版本：100 个满分编辑，其中 56 个其实是坏的，只能查 20 个。三排小卡片，红叉是查到的坏编辑，灰勾是白查了。随机挑查到约 11 个，按编辑器和模型挑约 14 个，按 delta graph 挑约 17 个。下面两个 AUC：0.703 到 0.797，第二个数据集 0.853 到 0.904。
-说："Same 20 checks: 11, 14, 17. The extra catches come only from how the inside changed."
-**18. A missing path in the record means a worse answer, for every model**（150，第二层知识图，CIKM 2026）
+**17. Reading the delta graph: smooth or sharp**（90，graph 4）这一页讲谱分解，实现细节里唯一值得上台的一步，因为它是"图"的部分。四张卡片，点一下出前两张，再点出后两张：
+1. 形状：编辑前的图（邻接取绝对值）的归一化 Laplacian，L = I − D^(−½)|A_before|D^(−½)。
+2. 信号：每个块的变化量，c_i = Σ_j |ΔA_ij|（来自 delta graph）。
+3. 图傅里叶变换：L = UΛUᵀ，ĉ = Uᵀc。特征向量是图上的"波"，特征值是频率。
+4. 抽出的数：低、中、高频能量占比，谱熵，谱重心，Dirichlet 能量 cᵀLc。
+再点：低频是变化沿原有连线平滑散开，高频是相连的块一个变一个不变，局部尖锐补丁。再点：论文 Table 5.2，在没用于拟合的新事实上，AUC 只用编辑器和模型 0.840，加 delta graph 数 0.862，加谱特征 0.878。
+注意：基是编辑前的图，信号来自 delta。不是对 delta 本身做谱分解。
+说："We read the change against the wiring before the edit. Smooth along the wiring, or a sharp local patch."
+**18. Results: same checking budget, more bad edits caught**（120）小恶魔版。100 个考试满分的编辑里有 56 个其实是坏的，一个坏编辑画成一个小恶魔，一共 56 个。只能查 20 个，抓到的点亮，没抓到的灰色。随机挑约 11 个，点一下，按编辑器和模型挑约 14 个，再点，按 delta graph 挑约 17 个（橙色）。再点：结论框 "Same 20 checks: 11, 14, 17. The extra catches come only from how the inside changed."
+数字来自论文比率（被查的 20 个里坏的分别占 56%、70%、86%）。被问到排序质量：AUC 0.703 到 0.797，第二个数据集 0.853 到 0.904。十月版的卡片图在下箭头备用页。
+**19. A missing path in the record means a worse answer, for every model**（150，第二层知识图，CIKM 2026）
 说："A graph tells which questions cannot be answered faithfully, before any model tries. That is language."
 
 ### Part 2 音乐（16 到 27 页，约 22 分钟）
 
-**19. Two signals that change the brain: light, and music**（75）类比，约一分钟，别在光遗传学上停留。左边（小）：光，今年诺奖的光遗传学，加一个基因让神经元能感光，一闪就放电，但要开刀。点一下，右边（大）：声音，音乐不用开刀，从耳朵进去也确实改变大脑。三个有测量的例子：脑电节律跟着节拍走（Nozaradan 2011），快感高峰时释放多巴胺（Salimpoor 2011），40 Hz 声音改变了小鼠大脑（Tsai 实验室）。大脑图是 Gray 解剖学第 728 图，公有领域，颞叶（听觉皮层）标橙并跟着节拍闪。光遗传学科普视频的链接在本页参考行最后。
+**20. Two signals that change the brain: light, and music**（75）类比，约一分钟，别在光遗传学上停留。左边（小）：光，今年诺奖的光遗传学，加一个基因让神经元能感光，一闪就放电，但要开刀。点一下，右边（大）：声音，音乐不用开刀，从耳朵进去也确实改变大脑。三个有测量的例子：脑电节律跟着节拍走（Nozaradan 2011），快感高峰时释放多巴胺（Salimpoor 2011），40 Hz 声音改变了小鼠大脑（Tsai 实验室）。大脑图是 Gray 解剖学第 728 图，公有领域，颞叶（听觉皮层）标橙并跟着节拍闪。光遗传学科普视频的链接在本页参考行最后。
 说："Light switches neurons, but it needs a gene and surgery. Music already changes the brain, through the ear. Which part of the music does it is the open question."
 
-**20. Music already acts on the brain, as medicine**（90）动画：帕金森病人跟着节拍器走路。右边四种用途各一行。
+**21. Music already acts on the brain, as medicine**（90）动画：帕金森病人跟着节拍器走路。右边四种用途各一行。
 说："Nobody knows which part of the music does the work. That is a modeling question."
 
-**21. Music and medicine, near us and nationally**（30，只分享，不展开）RIT：Hwan Shim、Sungyoung Kim、Matt Dye、Amanda Picioli。UR：Eastman Performing Arts Medicine，David Greenberg，音乐与老龄化试点基金，Norman-Haignere，Zhiyao Duan。全国：NIH Sound Health，NIH 音乐研究网络，NEA Sound Health Network。
+**22. Music and medicine, near us and nationally**（30，只分享，不展开）RIT：Hwan Shim、Sungyoung Kim、Matt Dye、Amanda Picioli。UR：Eastman Performing Arts Medicine，David Greenberg，音乐与老龄化试点基金，Norman-Haignere，Zhiyao Duan。全国：NIH Sound Health，NIH 音乐研究网络，NEA Sound Health Network。
 说："Rochester already has the pieces: music, medicine, hearing and AI. If you work on any of them, talk to me."
 
-**22. A new idea is a new edge, and so is a new style of music**（120）四本讲创造力的书和 Uzzi 2013：新想法就是旧想法之间的一条新边。下面是音乐流派家族树和我们 2017 年的 FusionGAN。
+**23. A new idea is a new edge, and so is a new style of music**（120）四本讲创造力的书和 Uzzi 2013：新想法就是旧想法之间的一条新边。下面是音乐流派家族树和我们 2017 年的 FusionGAN。
 说："A new idea is a new edge. In 2017 we asked whether a model can draw one."
 
-**23. A tiny graph is enough to represent a piece of music**（90）Für Elise 动画，小球沿着音符图走，点一下有声音。从开场移到这里。
+**24. A tiny graph is enough to represent a piece of music**（90）Für Elise 动画，小球沿着音符图走，点一下有声音。从开场移到这里。
 说："Nine notes, a few arrows. The whole model is the graph."
 
-**24. Fold 88 keys into 12 scale degrees**（105，graph 3）手画的 Für Elise 开头九个音，折成 12 个音级，变成 12 乘 12 的表。两个播放键：原曲和从表里生成的曲子。
+**25. Fold 88 keys into 12 scale degrees**（105，graph 3）手画的 Für Elise 开头九个音，折成 12 个音级，变成 12 乘 12 的表。两个播放键：原曲和从表里生成的曲子。
 说："The right notes with the wrong sentences. That is a graph with one note of memory."
 
-**25. Occam's razor: the simplest graph already names the tradition**（105，进行中）六个曲库，一阶图分类准确率 70.2%，随机是 17%。
+**26. Occam's razor: the simplest graph already names the tradition**（105，进行中）六个曲库，一阶图分类准确率 70.2%，随机是 17%。
 说："144 numbers name the corpus."
 
-**26. The longest memory sounds most like the style, because it copies**（150，进行中）现场投票：A 和 B 哪个是真巴赫？
+**27. The longest memory sounds most like the style, because it copies**（150，进行中）现场投票：A 和 B 哪个是真巴赫？
 说："The useful graph remembers a little and copies nothing long."
 
-**27. Steering leaves a style easily but rarely enters one**（105，graph 6，合作工作投稿中）去掉一个风格很容易，加进去却很难。
+**28. Steering leaves a style easily but rarely enters one**（105，graph 6，合作工作投稿中）去掉一个风格很容易，加进去却很难。
 说："A vector cannot explain that. Reachability on a graph could."
 
-**28. A note transition graph predicts the listening brain**（105，graph 7）Di Liberto 2020 原图：IDyOM 给每个音一个意外值，听众的脑电在 350 毫秒内跟着它走。
+**29. A note transition graph predicts the listening brain**（105，graph 7）Di Liberto 2020 原图：IDyOM 给每个音一个意外值，听众的脑电在 350 毫秒内跟着它走。
 说："The listening brain tracks a graph of note transitions. So the brain can judge a graph."
 
-**29. Live: what MusicGen expects, next to what listeners' brains do**（135，进行中）现场 demo，全屏，可以直接点：选一首歌播放，乐谱、MusicGen 的意外值、脑电一起滚动。点过 demo 后方向键留在 demo 里，用右下角的 Next slide 按钮翻页。
+**30. Live: what MusicGen expects, next to what listeners' brains do**（135，进行中）现场 demo，全屏，可以直接点：选一首歌播放，乐谱、MusicGen 的意外值、脑电一起滚动。点过 demo 后方向键留在 demo 里，用右下角的 Next slide 按钮翻页。
 说："This is the measurement we built. Note by note, it does not yet beat an untrained model, and the next slide is how we test it properly."
 
-**30. Our plan: a graph from inside MusicGen, judged by the brain**（75，计划）从 MusicGen 内部读出图，和 IDyOM、MusicGen 输出一起比谁更能解释大脑。
+**31. Our plan: a graph from inside MusicGen, judged by the brain**（75，计划）从 MusicGen 内部读出图，和 IDyOM、MusicGen 输出一起比谁更能解释大脑。
 说："If the graph inside the generator explains the listener, the graph is real."
 
 ### 结尾（28 页，约 1.5 分钟）
 
-**31. A vector says what we added. A graph shows where it went.**（90）第 4 页的点云回来，同一支箭头。点一下画出图的边。再点：今天的七张图。最后："Is there a graph inside your model?" 右边有本幻灯片的二维码，下面是外链图标加 zhiqian.ai/talks。讲完就停在这一页，留给大家扫。
+**32. A vector says what we added. A graph shows where it went.**（90）第 4 页的点云回来，同一支箭头。点一下画出图的边。再点：今天的七张图。最后："Is there a graph inside your model?" 右边有本幻灯片的二维码，下面是外链图标加 zhiqian.ai/talks。讲完就停在这一页，留给大家扫。
 说："Language, published. Music, being tested. If you edit, merge or steer models, or run an EEG or hearing lab, I would love to talk." 不说 thank you。
 
 ## 四、这次相对上一版改了什么
