@@ -110,6 +110,7 @@
 **18. Results: same checking budget, more bad edits caught**（120）小恶魔版。先讲清什么是坏编辑：考试全部满分，但换一批没用过的问法，成功率不到一半。页面第二行有例子（示意）：The Space Needle is in ___ 答 Paris ✓，但 Where would you go to see the Space Needle? 答 Seattle ✗。论文里 1,761 个满分编辑中 987 个是坏的（56%）。100 个考试满分的编辑里有 56 个其实是坏的，一个坏编辑画成一个小恶魔，一共 56 个。只能查 20 个，抓到的点亮，没抓到的灰色。随机挑约 11 个，点一下，按编辑器和模型挑约 14 个，再点，按 delta graph 挑约 17 个（橙色）。再点：结论框 "Same 20 checks: 11, 14, 17. The extra catches come only from how the inside changed."
 数字来自论文比率（被查的 20 个里坏的分别占 56%、70%、86%）。被问到排序质量：AUC 0.703 到 0.797，第二个数据集 0.853 到 0.904。十月版的卡片图在下箭头备用页。
 **19. A missing path in the record means a worse answer, for every model**（150，第二层知识图，CIKM 2026）
+右上角（替换了论文标题截图）是 QGC 的三步原理：问题 → 一个带类型的小图（最后一个节点是要找的答案）→ 能不能映射进病历（每个节点对应同类型的节点，每条边对应一条边，叫 typed homomorphism）。能，QGC = 1，可以基于证据回答。不能，QGC = 0，任何模型都给不出忠于病历的答案，只能靠记忆猜。生成之前就能检查，每个问题不到 0.1 毫秒。
 说："A graph tells which questions cannot be answered faithfully, before any model tries. That is language."
 
 ### Part 2 音乐（16 到 27 页，约 22 分钟）
