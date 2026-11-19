@@ -122,9 +122,7 @@
 **24. A new idea is a new edge, and so is a new style of music**（120）四本讲创造力的书和 Uzzi 2013：新想法就是旧想法之间的一条新边。下面是音乐流派家族树和我们 2017 年的 FusionGAN。
 说："A new idea is a new edge. In 2017 we asked whether a model can draw one."
 
-**25. A tiny graph is enough to represent a piece of music**（90）Für Elise 动画，小球沿着音符图走，点一下有声音。从开场移到这里。
-说："Nine notes, a few arrows. The whole model is the graph."
-
+**25. A tiny graph is enough to represent a piece of music**（60）只放 demo，放大居中，没有别的。动画先边听 Für Elise 边画箭头（学习：数哪个音后面跟哪个音），再沿着箭头随机走（作曲）。点一下动画开声音，再点一下静音。这就是一阶 Markov 链，下一页用同一个模型做分类。
 **26. Fold 88 keys into 12 scale degrees**（105，graph 3）手画的 Für Elise 开头九个音，折成 12 个音级，变成 12 乘 12 的表。两个播放键：原曲和从表里生成的曲子。
 新动画（第 3 下）：12 × 12 矩阵的 12 行依次滑下去、首尾相接排成一条长条，就是 144 个数的向量，下面写 → logistic regression → which of 6 traditions?。第 4 下出现两个播放按钮。和第 25 页的区别：第 25 页的图用的是具体音高（带八度），每首曲子节点不同。这里折叠成 12 个音级，每首曲子都是同样的 144 个格子，才能放进同一个分类器。
 说："The right notes with the wrong sentences. That is a graph with one note of memory."

@@ -733,22 +733,10 @@ VECTOR = sec('Every surgery is stored as a vector', SVG(g), ch='0',
              ref='Arditi et al., NeurIPS 2024. Meng et al., NeurIPS 2022. Hu et al., LoRA, ICLR 2022. Ilharco et al., ICLR 2023',
              notes='Top row: four ways we change a model today, each drawn as what it adds. Light cells are the model, dark cells are the change: a vector added to the activations, a rank one matrix u times v transposed, LoRA as a tall thin B times a short wide A, and fine tuning as a full matrix of small changes. All the same kind of object, something added. Below, a schematic: every dot is something the model knows or does. Click: an edit moves one fact, Space Needle from Seattle to Paris, that arrow is the vector we added. Click: the ripple effect. Facts that depend on this one should move with it: which country, now France, which currency, now euro. The dashed arrows show where they should go. They do not move. RippleEdits and MQuAKE measure exactly this. Click: locality, the other failure. Facts that have nothing to do with the edit should stay put, and some drift a little anyway. The arrow tells you neither. The dots are an illustration, not data. If asked whether this is solved: no. The 2026 methods that do better, circuit-aware editing and joint neighborhood optimization, all stop editing one point and start editing along the structure. Click: the takeaway. Four surgeries, four one line formulas a CS audience can read. ROME is a rank one LoRA on one layer, which links knowledge editing to something most of the room has used. The point is not the math, it is that each operation is a single added object, and that object carries no information about its side effects. The tools we use to understand models read them the same way: a linear probe, a sparse autoencoder feature, a steering direction, all vectors. Bridge: yet the knowledge these models hold has another shape, a graph, in text, in images and in music.')
 
-# ---- demo: a tiny graph is enough to represent a piece ----
+# ---- demo: a tiny graph is enough to represent a piece (his note Nov 19: the demo alone, nothing else) ----
 g = adefs('dm2')
-g += f'<foreignObject x="20" y="10" width="740" height="410"><div xmlns="http://www.w3.org/1999/xhtml" style="width:740px;height:410px;border-radius:12px;overflow:hidden;box-shadow:0 0 0 1.5px #d3d7da,0 10px 30px rgba(17,17,17,.10)"><iframe class="fe-frame" data-src="figs/fe-chain.html?autoplay=1" title="Für Elise Markov chain" style="width:740px;height:410px;border:0;background:#fff"></iframe></div></foreignObject>'
-g += T(790, 34, 'Coming up in Part 2', 15, 600, MUT)
-MENU = [('1', 'This graph names the style', 'which of 6 traditions: about 70% right', 'chance 17%', False),
-        ('2', 'Richer nodes do better', 'a node is a note plus its length', '', False),
-        ('3', "The listener's graph", 'its surprise matches brain signals', '', False),
-        ('4', 'A graph inside MusicGen', 'our next step', '', True)]
-for k, (num, name, line, val, plan) in enumerate(MENU):
-    y = 50 + k * 92
-    row = R(790, y, 370, 80, SOFT, 'none', 0, 3)
-    row += (C(818, y + 40, 13, '#fff', MU, 1.5, 'stroke-dasharray="4 3"') + T(818, y + 45, num, 14, 600, MU, 'middle')) if plan else (C(818, y + 40, 13, MU) + T(818, y + 45, num, 14, 600, '#fff', 'middle'))
-    row += T(846, y + 34, name, 18, 600, INK) + T(846, y + 58, line, 14, 400, MUT) + T(1148, y + 34, val, 15, 600, MU if not plan else MUT, 'end')
-    g += F(k + 1, row) if k else row
-g += T(590, 466, 'A tiny graph already captures a style.', 20, 700, INK, 'middle')
-DEMO2 = sec('A tiny graph is enough to represent a piece of music', SVG(g), ch='0', status='prog',
+g += f'<foreignObject x="190" y="6" width="800" height="444"><div xmlns="http://www.w3.org/1999/xhtml" style="width:800px;height:444px;border-radius:12px;overflow:hidden;box-shadow:0 0 0 1.5px #d3d7da,0 10px 30px rgba(17,17,17,.10)"><iframe class="fe-frame" data-src="figs/fe-chain.html?autoplay=1" title="Für Elise Markov chain" style="width:800px;height:444px;border:0;background:#fff"></iframe></div></foreignObject>'
+DEMO2 = sec('A tiny graph is enough to represent a piece of music', SVG(g, 456), ch='0', status='prog',
             ref='Für Elise opening, animation from zhiqian.ai. Style results: zhiqian.ai/music-markov',
             notes='Sound: click the animation once for sound, click again to mute, the animation keeps going. Let the ball learn the opening, then compose. Then the point: this little graph is not a toy. The same 144 numbers per piece, fed to a plain classifier, name the tradition of a piece it has never seen 70.2% of the time across 992 melodies in six corpora, against 41.9% for note counts without order.')
 
