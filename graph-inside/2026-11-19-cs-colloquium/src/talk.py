@@ -1137,6 +1137,41 @@ g += F(2, rt)
 TAKEAWAY = sec('A vector says what we added. A graph shows where it went.', SVG(g), ch='4',
                notes='The cloud from slide 2 comes back: the same edit, the same facts that moved with it. Click: now draw the graph over them, which facts lean on the edited one. That is the whole talk in one picture: the arrow says what we added, the graph says where it went, and that is something we can test. Click: the seven graphs we met today, one line each. Click: the question for the room. Say who you would love to hear from: anyone who edits, merges or steers models, audiology and EEG labs for the listener side. Do not say thank you as the last line. Walk the seven cards by number, a few words each, the same numbers as the tags on earlier slides. One and four are language, two is vision, the rest are music. Then close on the question at the bottom: it fits any generative model, and someone in this department may already have the model or the data to ask it.')
 
+# ---- the close (his note Nov 19): one line per part, language and music, our results marked, the QR code at the bottom ----
+g = adefs('fin')
+SERF = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
+def fincard(x, head, rows):
+    o = R(x, 6, 550, 320, '#F4F1EC', 'none', 0, 10) + R(x, 6, 550, 6, '#F76902', 'none', 0, 3) + T(x + 26, 52, head, 28, 400, INK, extra=SERF)
+    y = 102
+    for txt, ours in rows:
+        o += C(x + 32, y - 6, 4.5, '#F76902' if ours else '#8F887E')
+        lines = txt.split('|')
+        for q, ln in enumerate(lines):
+            o += T(x + 48, y + q * 24, ln, 18, 700 if ours else 400, '#C45200' if ours else INK)
+        y += 24 * len(lines) + 20
+    return o
+g += fincard(30, 'Language', [('Facts are triples, and they hold each other up.', False), ('An edit adds a bypass, the old path stays.', False),
+                              ('Our delta graph: 17 of 20 checks find a bad edit.|SDM 2026', True), ('Our QGC: a missing path means a worse answer,|for every model. CIKM 2026', True)])
+g += F(1, fincard(600, 'Music', [('Music theory is a graph, and models learn|its geometry.', False), ('Our note graph: 144 numbers name the style,|about 70% right.', True),
+                                 ("The listener's surprise is computable,|and the brain tracks it. Live demo", True), ('Next: read the graph inside MusicGen.', False)]))
+FINAL = sec('Look for the graph, in language and in music', SVG(g, 334), ch='4',
+            notes=('The close, both parts in one picture. Language: facts are triples that hold each other up, and an edit adds a bypass while the old path stays. '
+                   'Our two results: the delta graph finds 17 bad edits in 20 checks, SDM 2026, and QGC shows a missing path means a worse answer for every model, CIKM 2026. '
+                   'Click, music: music theory is a graph and models learn its geometry. Ours: 144 numbers of a note graph name the style about 70 percent of the time, '
+                   'and the surprise a model computes is tracked by the listening brain, the live demo. Next: read the graph inside MusicGen itself. '
+                   'Click: so, is there a graph inside your model? Stay on this slide for questions, the QR code opens these slides.'))
+import segno as _sg2
+_qr2 = _sg2.make('https://aquastar.github.io/talks/graph-inside/2026-11-19-cs-colloquium/', error='m', boost_error=False)
+_m2 = [list(r_) for r_ in _qr2.matrix]
+_n2 = len(_m2)
+_qd2 = ''.join(f'M{c_ + 2},{r_ + 2}h1v1h-1z' for r_, row in enumerate(_m2) for c_, v in enumerate(row) if v)
+QR_HTML = (f'<svg viewBox="0 0 {_n2 + 4} {_n2 + 4}" width="118" height="118" style="background:#fff;border-radius:4px" shape-rendering="crispEdges"><path d="{_qd2}" fill="#1F1E1B"/></svg>')
+_ico2 = ('<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#1F1E1B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+         '<path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>')
+FIN_FOOT = ('<div style="display:flex;justify-content:center;align-items:center;gap:22px;margin-top:.45em">' + QR_HTML +
+            '<a href="https://zhiqian.ai/talks" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;color:#1F1E1B;text-decoration:none;font:700 34px/1 et-book,Georgia,serif">'
+            + _ico2 + 'zhiqian.ai/talks</a></div>')
+
 # ======================= ROUND 4 (Nov 2 2026): Space Needle anchor =======================
 RED = '#c0392b'
 
@@ -2840,7 +2875,7 @@ def assemble(cover, old):
     MUSA2 = _addbox(MUSA, keybox('The ' + kw('graph the model learned') + ' matches the ' + kw('knowledge graph') + ' of music theory.', 3, '.9em'))
     MUSB2 = _addbox(MUSB, keybox('Learned from chord sequences alone, the chord space follows the ' + kw('geometry of music theory') + '.', 3, '0'))
     SUMM2 = _addbox(SUMM, keybox('What we need: compare the ' + kw('inside') + ' before and after a change, and flag the risky ones.', 2, '.1em'))
-    TAKE2 = _addbox(TAKEAWAY, keybox('Is there a ' + kw('graph') + ' inside your model?', 3, '.1em'))
+    TAKE2 = _addbox(FINAL, keybox('Is there a ' + kw('graph') + ' inside your model?', 2, '.3em') + FIN_FOOT)
     vision = [cover, NETG, backup(toch(wb, '0')), KGT3s, backup(KGT2), five_q, beyond_o, MUSA2, MUSB2, backup(toch(PROBE, '0')), backup(toch(MGEN, '0')), backup(VISION), MAP2, backup(FORECAST2)]
     rome = old[33]
     a = rome.find('<div class="note"'); e = rome.find('  <div class="ref">')
@@ -2903,7 +2938,7 @@ def assemble(cover, old):
     beyond5 = bridge(BEYOND5, 'Emotion is one way music acts on the brain. Before we model music, one detour through this year\'s Nobel Prize, because it shows what a designed signal can do to brain circuits. The history of music models is under the down arrow.')
     mus = [_addbox(retitle(HEAR, 'Part 2. Hearing loss: a quiet epidemic'), keybox('Losing hearing is tied to ' + kw('dementia') + ' and ' + kw('depression') + ', for 1.5 billion people.', 6, '.3em')), toch(OPTO, '2'), backup(hist), _addbox(toch(MEDIC, '2'), keybox('Nobody knows ' + kw('which part of the music') + ' does the work. That is a modeling question.', 1, '.4em')), _addbox(MNET, keybox('Rochester already has the pieces: music, medicine, ' + kw('hearing') + ' and AI. Let us connect them.', 2, '.3em')), toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), backup(copy_b), backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
     beyond = []
-    close = [TAKE2.replace('</section>', CLIP_JSON + '</section>')]
+    close = [TAKE2.replace('</section>', CLIP_JSON + '</section>'), backup(TAKEAWAY)]
     # one bridge per main slide, so each slide leads into the next one (order of Nov 16 2026)
     FIXB = [('Level 1: a language model is itself a graph', None, 'Bridge: and what the network knows is a graph too.'),
             ('Change one fact, and the next question goes wrong', None, 'Bridge: back to the network itself, with this in mind.'),

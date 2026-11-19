@@ -146,21 +146,4 @@ Meyer 卡片多了一行：意外程度 = 一个音在前文之后出现的不�
 
 ### 结尾（28 页，约 1.5 分钟）
 
-**32. A vector says what we added. A graph shows where it went.**（90）第 4 页的点云回来，同一支箭头。点一下画出图的边。再点：今天的七张图。最后："Is there a graph inside your model?" 右边有本幻灯片的二维码，下面是外链图标加 zhiqian.ai/talks。讲完就停在这一页，留给大家扫。
-说："Language, published. Music, being tested. If you edit, merge or steer models, or run an EEG or hearing lab, I would love to talk." 不说 thank you。
-
-## 四、这次相对上一版改了什么
-
-* 封面换回 10 月那次的画面（左边网络，右边读成图），标题用这次的。
-* 第 3 页 3D 白板、第 5 页 One network, five graphs 从 10 月那次搬回主线。观众先知道模型里面长什么样，再听"模型里的图"。
-* 视觉模型那页（Olah 和场景图原图）移到第 5 页下面的备用页。
-
-## 五、超时怎么压
-
-按顺序：
-1. 第 17 页五个人只点名，不逐个讲（省 1 分钟）
-2. 第 23 页不投票，直接放 B（省 45 秒）
-3. 第 27 页只演示一个意外的音（省 45 秒）
-4. 第 9 到 11 页每页只说结果和代价各一句（省 1 分钟）
-
-每页的备用页在向下键里，有人问到再翻。
+**32. Look for the graph, in language and in music**（90）结尾，两栏各一句。语言：事实是三元组，互相支撑。编辑加了一条绕行，旧路径还在。我们的结果（橙色）：delta graph 查 20 个找到 17 个坏编辑（SDM 2026），QGC：缺一条路径，每个模型都更差（CIKM 2026）。点一下，音乐：乐理是一张图，模型学到了它的几何。我们的结果：144 个数的音符图认出风格，约 70%，听众的意外程度可以计算，大脑在跟踪它（live demo）。下一步：读出 MusicGen 内部的图。再点：结论框 Is there a graph inside your model?。底部是二维码和 zhiqian.ai/talks，讲完停在这一页答问。原来的点云版结尾在下箭头备用页。
