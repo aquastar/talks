@@ -737,7 +737,7 @@ VECTOR = sec('Every surgery is stored as a vector', SVG(g), ch='0',
 g = adefs('dm2')
 g += f'<foreignObject x="20" y="10" width="740" height="410"><div xmlns="http://www.w3.org/1999/xhtml" style="width:740px;height:410px;border-radius:12px;overflow:hidden;box-shadow:0 0 0 1.5px #d3d7da,0 10px 30px rgba(17,17,17,.10)"><iframe class="fe-frame" data-src="figs/fe-chain.html?autoplay=1" title="Für Elise Markov chain" style="width:740px;height:410px;border:0;background:#fff"></iframe></div></foreignObject>'
 g += T(790, 34, 'Coming up in Part 2', 15, 600, MUT)
-MENU = [('1', 'This graph names the style', 'which tradition a melody comes from', '', False),
+MENU = [('1', 'This graph names the style', 'which of 6 traditions: about 70% right', 'chance 17%', False),
         ('2', 'Richer nodes do better', 'a node is a note plus its length', '', False),
         ('3', "The listener's graph", 'its surprise matches brain signals', '', False),
         ('4', 'A graph inside MusicGen', 'our next step', '', True)]
@@ -1821,8 +1821,11 @@ for k, (big, col, l1, l2, src) in enumerate(HC):
 g += F(4, R(30, 288, 1120, 58, '#FBFAF7', LINE, 1.2, 8) + T(50, 314, 'And it can be treated:', 16, 700, '#4C5B66')
        + T(232, 314, 'hearing aids slowed 3 year cognitive decline by 48% in older adults at higher risk,', 15.5, 400, INK)
        + T(232, 334, 'though not in the full trial. ACHIEVE, Lancet 2023.', 14, 400, MUT))
-HEAR = sec('Hearing loss: a quiet epidemic', SVG(g, 360), ch='2',
-           ref='WHO World Report on Hearing 2021. Lin et al., Arch Neurol 2011. Livingston et al., Lancet 2024. Lawrence et al., Gerontologist 2020. Lin et al., ACHIEVE, Lancet 2023',
+g += F(5, R(30, 358, 1120, 58, '#FBFAF7', LINE, 1.2, 8) + T(50, 384, 'NIH is investing:', 16, 700, '#4C5B66')
+       + T(232, 384, 'NIA funded the ACHIEVE trial. Sound Health, NIH with the Kennedy Center and NEA, since 2017.', 15.5, 400, INK)
+       + T(232, 404, 'In 2023, NCCIH and NIA funded four research networks on music for pain and dementia.', 15.5, 400, INK))
+HEAR = sec('Hearing loss: a quiet epidemic', SVG(g, 424), ch='2',
+           ref='WHO World Report on Hearing 2021. Lin et al., Arch Neurol 2011. Livingston et al., Lancet 2024. Lawrence et al., Gerontologist 2020. ACHIEVE, Lancet 2023. NIH RFA-AT-23-009',
            notes=('The motivation for Part 2, say the numbers slowly. Hearing loss is not a small problem. More than 1.5 billion people live with it today, '
                   'and WHO projects 2.5 billion by 2050, one person in four. Click: it is tied to dementia. Lin and colleagues followed 639 adults for about 12 years: '
                   'mild hearing loss came with about twice the risk of dementia, moderate three times, severe five times, the severe group was small. '
@@ -1830,7 +1833,7 @@ HEAR = sec('Hearing loss: a quiet epidemic', SVG(g, 360), ch='2',
                   'Hearing loss alone is about 7 percent, tied for the largest with high LDL cholesterol. Click: and depression, across 35 studies and 147 thousand older adults, '
                   'hearing loss came with 47 percent higher odds of depression. These are associations, not proof of cause. '
                   'Click: the hopeful part, said honestly. In the ACHIEVE trial, Lancet 2023, hearing aids slowed cognitive decline over 3 years by 48 percent '
-                  'in the older adults at higher risk, but not in the full trial. What we hear matters for the brain. Next: sound, and music, act on it directly.'))
+                  'in the older adults at higher risk, but not in the full trial. Click: and NIH is investing. The National Institute on Aging funded ACHIEVE. Sound Health, a partnership of NIH, the Kennedy Center and the National Endowment for the Arts, runs since 2017. In 2023 NCCIH and NIA funded four research networks on music based interventions for pain and dementia. What we hear matters for the brain. Next: sound, and music, act on it directly.'))
 
 g = adefs('md')
 g += steps(2).replace('url(#pea)', 'url(#mda)')
@@ -2879,7 +2882,7 @@ def assemble(cover, old):
     copy_b = bridge(COPY, 'Before we go inside a generator, one honest line from the literature: in music, graphs win only when the edges carry something the sequence throws away, and often they do not (survey under the down arrow). The one place nobody has looked for such edges is inside the generator itself.')
     corpus_b = bridge(corpus, 'How much memory should the graph have? One note gives the right vocabulary with the wrong syntax, three notes memorize the piece (the picture is under the down arrow on the next slide).')
     beyond5 = bridge(BEYOND5, 'Emotion is one way music acts on the brain. Before we model music, one detour through this year\'s Nobel Prize, because it shows what a designed signal can do to brain circuits. The history of music models is under the down arrow.')
-    mus = [_addbox(retitle(HEAR, 'Part 2. Hearing loss: a quiet epidemic'), keybox('Losing hearing is tied to ' + kw('dementia') + ' and ' + kw('depression') + ', for 1.5 billion people.', 5, '.4em')), toch(OPTO, '2'), backup(hist), _addbox(toch(MEDIC, '2'), keybox('Nobody knows ' + kw('which part of the music') + ' does the work. That is a modeling question.', 1, '.4em')), MNET, toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), copy_b, backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
+    mus = [_addbox(retitle(HEAR, 'Part 2. Hearing loss: a quiet epidemic'), keybox('Losing hearing is tied to ' + kw('dementia') + ' and ' + kw('depression') + ', for 1.5 billion people.', 6, '.3em')), toch(OPTO, '2'), backup(hist), _addbox(toch(MEDIC, '2'), keybox('Nobody knows ' + kw('which part of the music') + ' does the work. That is a modeling question.', 1, '.4em')), MNET, toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), copy_b, backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
     beyond = []
     close = [TAKE2.replace('</section>', CLIP_JSON + '</section>')]
     # one bridge per main slide, so each slide leads into the next one (order of Nov 16 2026)

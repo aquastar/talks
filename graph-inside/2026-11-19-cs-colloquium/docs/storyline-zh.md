@@ -115,7 +115,7 @@
 
 ### Part 2 音乐（16 到 27 页，约 22 分钟）
 
-**20. Part 2. Hearing loss: a quiet epidemic**（90）第二部分的动机，数字慢慢说。四张卡片一张一张出：全球超过 15 亿人有听力损失，2050 年约 25 亿，每 4 人 1 个（WHO 2021）。听力损失轻度、中度、重度，痴呆风险约 2 倍、3 倍、5 倍（Lin 2011，639 人追踪约 12 年，重度组人很少）。听力损失约占全部痴呆病例的 7%，14 个可改变因素里并列最大（柳叶刀委员会 2024）。听力损失者抑郁几率高 47%（35 项研究，14.7 万老人，Lawrence 2020）。这些都是相关，不是因果。再点：希望，如实说，ACHIEVE（Lancet 2023）助听器让高风险老人 3 年认知下降慢 48%，但全体样本没有显著效果。最后：结论框。
+**20. Part 2. Hearing loss: a quiet epidemic**（90）第二部分的动机，数字慢慢说。四张卡片一张一张出：全球超过 15 亿人有听力损失，2050 年约 25 亿，每 4 人 1 个（WHO 2021）。听力损失轻度、中度、重度，痴呆风险约 2 倍、3 倍、5 倍（Lin 2011，639 人追踪约 12 年，重度组人很少）。听力损失约占全部痴呆病例的 7%，14 个可改变因素里并列最大（柳叶刀委员会 2024）。听力损失者抑郁几率高 47%（35 项研究，14.7 万老人，Lawrence 2020）。这些都是相关，不是因果。再点：希望，如实说，ACHIEVE（Lancet 2023）助听器让高风险老人 3 年认知下降慢 48%，但全体样本没有显著效果。最后：结论框。再点：NIH 的投入。NIA 资助了 ACHIEVE。Sound Health 是 NIH、肯尼迪中心和美国国家艺术基金会 2017 年起的合作。2023 年 NCCIH 和 NIA 资助了四个音乐干预研究网络，方向是疼痛和痴呆。
 **21. Sound acts on the brain**（60）大脑和音符动画。三条测量：脑电跟拍（Nozaradan 2011），快感高峰多巴胺释放（Salimpoor 2011），40 Hz 声音减少小鼠淀粉样蛋白（Martorell, Cell 2019，2016 那篇是闪光）。点一下：音乐对大脑的作用可以测量，但哪部分起作用还不知道，这就是需要模型的地方。光遗传学类比已移除。
 **22. Music already acts on the brain, as medicine**（75）五张卡片，和听力损失那页同一个样式：帕金森（跟着稳定节拍走路，步子更快更长，Burrai 2021 荟萃分析），手术（术前焦虑更少，Cochrane, Bradt 2013），抑郁（加在常规治疗上症状更少，Cochrane, Aalbers 2017），痴呆（抑郁症状更少，Cochrane, van der Steen 2018），疼痛（疼痛和止痛药都更少，Lee 2016）。如实说：大多数试验规模小，证据质量常常偏低。点一下：结论框，没人知道是音乐里的哪部分起作用，这是一个建模问题。
 **23. Music and medicine, near us and nationally**（30，只分享，不展开）RIT：Hwan Shim、Sungyoung Kim、Matt Dye、Amanda Picioli。UR：Eastman Performing Arts Medicine，David Greenberg，音乐与老龄化试点基金，Norman-Haignere，Zhiyao Duan。全国：NIH Sound Health，NIH 音乐研究网络，NEA Sound Health Network。
