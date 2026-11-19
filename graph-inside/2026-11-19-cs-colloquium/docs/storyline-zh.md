@@ -107,7 +107,7 @@
 再点：低频是变化沿原有连线平滑散开，高频是相连的块一个变一个不变，局部尖锐补丁。再点：论文 Table 5.2，在没用于拟合的新事实上，AUC 只用编辑器和模型 0.840，加 delta graph 数 0.862，加谱特征 0.878。
 注意：基是编辑前的图，信号来自 delta。不是对 delta 本身做谱分解。
 说："We read the change against the wiring before the edit. Smooth along the wiring, or a sharp local patch."
-**18. Results: same checking budget, more bad edits caught**（120）小恶魔版。100 个考试满分的编辑里有 56 个其实是坏的，一个坏编辑画成一个小恶魔，一共 56 个。只能查 20 个，抓到的点亮，没抓到的灰色。随机挑约 11 个，点一下，按编辑器和模型挑约 14 个，再点，按 delta graph 挑约 17 个（橙色）。再点：结论框 "Same 20 checks: 11, 14, 17. The extra catches come only from how the inside changed."
+**18. Results: same checking budget, more bad edits caught**（120）小恶魔版。先讲清什么是坏编辑：考试全部满分，但换一批没用过的问法，成功率不到一半。页面第二行有例子（示意）：The Space Needle is in ___ 答 Paris ✓，但 Where would you go to see the Space Needle? 答 Seattle ✗。论文里 1,761 个满分编辑中 987 个是坏的（56%）。100 个考试满分的编辑里有 56 个其实是坏的，一个坏编辑画成一个小恶魔，一共 56 个。只能查 20 个，抓到的点亮，没抓到的灰色。随机挑约 11 个，点一下，按编辑器和模型挑约 14 个，再点，按 delta graph 挑约 17 个（橙色）。再点：结论框 "Same 20 checks: 11, 14, 17. The extra catches come only from how the inside changed."
 数字来自论文比率（被查的 20 个里坏的分别占 56%、70%、86%）。被问到排序质量：AUC 0.703 到 0.797，第二个数据集 0.853 到 0.904。十月版的卡片图在下箭头备用页。
 **19. A missing path in the record means a worse answer, for every model**（150，第二层知识图，CIKM 2026）
 说："A graph tells which questions cannot be answered faithfully, before any model tries. That is language."
