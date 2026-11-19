@@ -130,24 +130,22 @@
 **27. Occam's razor: the simplest graph already names the tradition**（105，进行中）六个曲库，一阶图分类准确率 70.2%，随机是 17%。
 说："144 numbers name the corpus."
 
-**28. The longest memory sounds most like the style, because it copies**（150，进行中）现场投票：A 和 B 哪个是真巴赫？
-说："The useful graph remembers a little and copies nothing long."
-
-**29. Steering leaves a style easily but rarely enters one**（105，graph 6，合作工作投稿中）去掉一个风格很容易，加进去却很难。
+（原第 28 页生成实验已移到第 27 页下面的备用页。被问到生成效果时再按 ↓ 打开。）
+**28. Steering leaves a style easily but rarely enters one**（105，graph 6，合作工作投稿中）去掉一个风格很容易，加进去却很难。
 说："A vector cannot explain that. Reachability on a graph could."
 
-**30. A note transition graph predicts the listening brain**（105，graph 7）Di Liberto 2020 原图：IDyOM 给每个音一个意外值，听众的脑电在 350 毫秒内跟着它走。
+**29. A note transition graph predicts the listening brain**（105，graph 7）Di Liberto 2020 原图：IDyOM 给每个音一个意外值，听众的脑电在 350 毫秒内跟着它走。
 说："The listening brain tracks a graph of note transitions. So the brain can judge a graph."
 
-**31. Live: what MusicGen expects, next to what listeners' brains do**（135，进行中）现场 demo，全屏，可以直接点：选一首歌播放，乐谱、MusicGen 的意外值、脑电一起滚动。点过 demo 后方向键留在 demo 里，用右下角的 Next slide 按钮翻页。
+**30. Live: what MusicGen expects, next to what listeners' brains do**（135，进行中）现场 demo，全屏，可以直接点：选一首歌播放，乐谱、MusicGen 的意外值、脑电一起滚动。点过 demo 后方向键留在 demo 里，用右下角的 Next slide 按钮翻页。
 说："This is the measurement we built. Note by note, it does not yet beat an untrained model, and the next slide is how we test it properly."
 
-**32. Our plan: a graph from inside MusicGen, judged by the brain**（75，计划）从 MusicGen 内部读出图，和 IDyOM、MusicGen 输出一起比谁更能解释大脑。
+**31. Our plan: a graph from inside MusicGen, judged by the brain**（75，计划）从 MusicGen 内部读出图，和 IDyOM、MusicGen 输出一起比谁更能解释大脑。
 说："If the graph inside the generator explains the listener, the graph is real."
 
 ### 结尾（28 页，约 1.5 分钟）
 
-**33. A vector says what we added. A graph shows where it went.**（90）第 4 页的点云回来，同一支箭头。点一下画出图的边。再点：今天的七张图。最后："Is there a graph inside your model?" 右边有本幻灯片的二维码，下面是外链图标加 zhiqian.ai/talks。讲完就停在这一页，留给大家扫。
+**32. A vector says what we added. A graph shows where it went.**（90）第 4 页的点云回来，同一支箭头。点一下画出图的边。再点：今天的七张图。最后："Is there a graph inside your model?" 右边有本幻灯片的二维码，下面是外链图标加 zhiqian.ai/talks。讲完就停在这一页，留给大家扫。
 说："Language, published. Music, being tested. If you edit, merge or steer models, or run an EEG or hearing lab, I would love to talk." 不说 thank you。
 
 ## 四、这次相对上一版改了什么
