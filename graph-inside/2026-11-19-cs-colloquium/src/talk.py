@@ -2457,31 +2457,43 @@ OPTO_VIDEO = ('<section data-ch="2">\n  <h2>Optogenetics in two minutes</h2>\n'
   '  <div class="ref">BrainFacts.org, Society for Neuroscience, Lighting Up The Brain With Optogenetics, 2017</div>\n'
   '  <aside class="notes">The BrainFacts.org explainer, about two minutes, from the Society for Neuroscience. Click play inside the frame. If time is short, play the first minute and stop. Needs the network. If it fails to load, skip it, the slide before already says the three steps. Press the right arrow outside the video, or click the slide area below it, to go on.</aside>\n</section>')
 
-# ---- Nov 18 (his request): the local and national music and medicine network, to share, not to dwell on ----
+# ---- Nov 19 (his request): a map of who does what near us, no names, nothing national ----
 g = adefs('mn')
 SERN = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
-COLSN = [(30, 'At RIT', [('Hwan Shim', 'Engineering Technology, Music and Audio', 'Cognition Lab: attention, hearing aids (NIH)'),
-                          ('Sungyoung Kim', 'Engineering Technology: spatial audio,', 'auditory training for hearing rehab'),
-                          ('Matt Dye', 'NTID: deaf cognition, director of the', 'Cognitive Science PhD program'),
-                          ('Amanda Picioli', 'NTID: audiology', '')]),
-         (410, 'At the University of Rochester', [('Eastman Performing Arts Medicine', 'Eastman and URMC, a center since 2024.', 'Director Gaelen McCormick'),
-                          ('David Greenberg', 'research director, Evans Lam Professor', 'of Music and Medicine'),
-                          ('Music and aging pilots', 'with the UR Aging Institute, up to $25K.', 'Funded: group singing for dementia'),
-                          ('Samuel Norman-Haignere, Zhiyao Duan', 'music in the brain (URMC), music AI (ECE)', '')]),
-         (790, 'Nationally', [('NIH Sound Health', 'with the Kennedy Center and the NEA,', 'since 2017'),
-                          ('NIH music research networks', 'NCCIH and NIA, 2023: four networks on', 'music for pain and dementia, with pilots'),
-                          ('Sound Health Network', 'NEA and UCSF, co-directed by Julene', 'Johnson and Charles Limb (hearing surgeon)')])]
-for x, head, rows in COLSN:
-    blk = T(x, 34, head, 21, 400, INK, extra=SERN) + L(x, 46, x + 360, 46, '#D7D2CB', 1)
-    y = 82
-    for nm, a_, b_ in rows:
-        blk += T(x, y, nm, 15.5, 600, INK) + T(x, y + 21, a_, 13.5, 400, MUT) + (T(x, y + 39, b_, 13.5, 400, MUT) if b_ else '')
-        y += 80 if b_ else 62
-    g += blk
-g += T(590, 432, 'Rochester already has the pieces: music, medicine, hearing and AI. Let us connect them.', 19, 400, '#C45200', 'middle', extra=SERN + ' data-keep="1"')
-MNET = sec('Music and medicine, near us and nationally', SVG(g), ch='2',
-           ref='rit.edu/macl. urmc.rochester.edu/eastman-performance-medicine, Pilot Award Program in Music and Aging 2026 to 2027. NIH RFA-AT-23-009, 2023. mdrn.ucsf.edu. Sound Health Network, NEA and UCSF, 2021',
-           notes='Thirty seconds, to share, not to teach. Read the bottom line and move on, people can look at the slide. RIT: Hwan Shim in Engineering Technology runs the Music and Audio Cognition Lab, auditory attention and smart hearing aids, NIH funded. Sungyoung Kim, spatial audio and auditory training for hearing rehabilitation. At NTID, Matt Dye, who directs the Cognitive Science PhD program, and Amanda Picioli in audiology. UR: Eastman Performing Arts Medicine, a joint center of Eastman and URMC since 2024, director Gaelen McCormick, research director David Greenberg, the Evans Lam Professor of Music and Medicine. With the UR Aging Institute it runs music and aging pilot awards, up to 25 thousand dollars, a UR PI is required. Also Samuel Norman-Haignere at URMC, who models how the brain responds to music, and Zhiyao Duan in ECE, music AI. Nationally: NIH Sound Health with the Kennedy Center and the NEA since 2017, four NIH music research networks funded in 2023 by NCCIH and NIA on music for pain and dementia, which fund pilot studies, for example the Music and Dementia Research Network at UCSF, and the NEA Sound Health Network at UCSF, co-directed by Julene Johnson and Charles Limb. Ask: if you work on hearing, health or music, talk to me.')
+mp = R(30, 20, 440, 420, '#F4F1EC', 'none', 0, 10)
+mp += P('M30,30 Q30,20 40,20 L460,20 Q470,20 470,30 L470,74 Q350,92 250,80 Q140,68 30,86 Z', 'none', 0, '#DDE3E6') + T(250, 52, 'Lake Ontario', 15, 400, '#4C5B66', 'middle', extra='font-style="italic" ' + SERN)
+river = 'M232,80 C226,120 246,150 238,190 C230,230 214,250 222,290 C230,330 206,370 214,440'
+mp += P(river, '#9FB1BB', 5, extra='fill="none" stroke-linecap="round"') + T(196, 330, 'Genesee River', 12.5, 400, '#4C5B66', 'middle', extra='font-style="italic" transform="rotate(-82 196 330)"')
+def pin(x, y, lab, sub, anchor='start'):
+    o = P(f'M{x},{y} C{x - 10},{y - 14} {x - 10},{y - 26} {x},{y - 30} C{x + 10},{y - 26} {x + 10},{y - 14} {x},{y} Z', 'none', 0, '#F76902') + C(x, y - 20, 3.6, '#fff')
+    dx = 16 if anchor == 'start' else -16
+    return o + T(x + dx, y - 20, lab, 15, 700, INK, anchor) + T(x + dx, y - 3, sub, 12.5, 400, MUT, anchor)
+mp += pin(262, 150, 'Eastman School', 'downtown Rochester')
+mp += pin(254, 262, 'UR and URMC', 'River Campus, Medical Center')
+mp += pin(320, 410, 'RIT', 'Henrietta, south')
+mp += T(450, 432, 'schematic, not to scale', 11.5, 400, MUT, 'end')
+g += mp
+def block(y0, head, rows):
+    o = T(540, y0, head, 21, 400, INK, extra=SERN) + L(540, y0 + 12, 1150, y0 + 12, '#D7D2CB', 1)
+    y = y0 + 42
+    for a_, b_ in rows:
+        o += C(548, y - 5, 4, '#F76902') + T(562, y, a_, 15.5, 600, INK) + T(562, y + 20, b_, 13.5, 400, MUT)
+        y += 50
+    return o
+g += block(40, 'University of Rochester', [('Eastman Performing Arts Medicine', 'music and medicine: a center of the Eastman School and URMC, since 2024'),
+                                           ('Music and aging pilot awards', 'small grants with the UR Aging Institute'),
+                                           ('Medical Center', 'how the brain responds to music'),
+                                           ('Electrical and Computer Engineering', 'music and AI')])
+g += F(1, block(282, 'RIT', [('College of Engineering Technology', 'music and audio cognition, hearing aids, spatial audio'),
+                             ('Cognitive Science, in Psychology', 'how we perceive and think, a PhD program'),
+                             ('NTID', 'deaf cognition and audiology')]))
+MNET = sec('Music, hearing and health, a few miles from here', SVG(g, 450), ch='2',
+           ref='urmc.rochester.edu/eastman-performance-medicine. UR Aging Institute pilot awards. rit.edu',
+           notes=('Thirty seconds, to share, not to teach. Left, a rough map: downtown, the Eastman School. Along the river, the University of Rochester and its Medical Center. South of the city, RIT. '
+                  'At UR: Eastman Performing Arts Medicine, a center for music and medicine run by the Eastman School and URMC since 2024. Pilot awards for music and aging research with the UR Aging Institute. '
+                  'At the Medical Center, work on how the brain responds to music, and in Electrical and Computer Engineering, music and AI. '
+                  'Click: at RIT, in the College of Engineering Technology, music and audio cognition, hearing aids and spatial audio. Cognitive Science, in Psychology, with a PhD program. '
+                  'And NTID, deaf cognition and audiology. The pieces are all here: music, medicine, hearing and AI. If you work on any of this, talk to me.'))
 
 # ---- slide 3, Nov 18 (his design): the Space Needle on the left, two small knowledge graphs, the edit arrow swings from one to the other ----
 g = adefs('k3')
@@ -2882,7 +2894,7 @@ def assemble(cover, old):
     copy_b = bridge(COPY, 'Before we go inside a generator, one honest line from the literature: in music, graphs win only when the edges carry something the sequence throws away, and often they do not (survey under the down arrow). The one place nobody has looked for such edges is inside the generator itself.')
     corpus_b = bridge(corpus, 'How much memory should the graph have? One note gives the right vocabulary with the wrong syntax, three notes memorize the piece (the picture is under the down arrow on the next slide).')
     beyond5 = bridge(BEYOND5, 'Emotion is one way music acts on the brain. Before we model music, one detour through this year\'s Nobel Prize, because it shows what a designed signal can do to brain circuits. The history of music models is under the down arrow.')
-    mus = [_addbox(retitle(HEAR, 'Part 2. Hearing loss: a quiet epidemic'), keybox('Losing hearing is tied to ' + kw('dementia') + ' and ' + kw('depression') + ', for 1.5 billion people.', 6, '.3em')), toch(OPTO, '2'), backup(hist), _addbox(toch(MEDIC, '2'), keybox('Nobody knows ' + kw('which part of the music') + ' does the work. That is a modeling question.', 1, '.4em')), MNET, toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), copy_b, backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
+    mus = [_addbox(retitle(HEAR, 'Part 2. Hearing loss: a quiet epidemic'), keybox('Losing hearing is tied to ' + kw('dementia') + ' and ' + kw('depression') + ', for 1.5 billion people.', 6, '.3em')), toch(OPTO, '2'), backup(hist), _addbox(toch(MEDIC, '2'), keybox('Nobody knows ' + kw('which part of the music') + ' does the work. That is a modeling question.', 1, '.4em')), _addbox(MNET, keybox('Rochester already has the pieces: music, medicine, ' + kw('hearing') + ' and AI. Let us connect them.', 2, '.3em')), toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), copy_b, backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
     beyond = []
     close = [TAKE2.replace('</section>', CLIP_JSON + '</section>')]
     # one bridge per main slide, so each slide leads into the next one (order of Nov 16 2026)
