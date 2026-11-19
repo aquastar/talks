@@ -1989,18 +1989,18 @@ for k, (x, w) in enumerate(XS):
         g_ += photo(x + 40, 232, 24, 'renee-fleming.jpg', 'RF', AC2) + T(x + 72, 220, 'Renée Fleming', 15, 700, INK) + T(x + 72, 237, 'soprano,', 12.5, 400, INK) + T(x + 72, 252, 'Grammy winner', 12.5, 400, INK)
         g_ += photo(x + 224, 232, 24, 'francis-collins.jpg', 'FC', AC2) + T(x + 256, 220, 'Francis Collins', 15, 700, INK) + T(x + 256, 237, 'NIH director,', 12.5, 400, INK) + T(x + 256, 252, 'led the genome project', 12.5, 400, INK)
         g_ += L(x + 16, 272, x + w - 16, 272, '#D7D2CB', 1)
-        for q_, (dt, tx_) in enumerate((('2015', 'They meet at a dinner party. He brings his guitar.'),
-                                        ('Jan 2017', 'NIH workshop: music therapists and brain'),
-                                        ('', 'scientists compare what is known.'),
-                                        ('Jun 2017', 'Public launch at the Kennedy Center, with a'),
-                                        ('', 'National Symphony Orchestra concert.'),
-                                        ('Jun 2017', 'In JAMA: few large trials so far. Needed:'),
-                                        ('', 'standard methods and biological markers.'))):
-            yy = 296 + q_ * 18 + (q_ > 0) * 8 + (q_ > 2) * 8 + (q_ > 4) * 8
+        TL17 = [('2015', 'Summer, a dinner party in Washington. Three'), ('', 'Supreme Court justices are there. He brings his'), ('', 'guitar, and they sing The Water Is Wide.'),
+                ('Jan 2017', 'Together they start Sound Health with an NIH'), ('', 'workshop of music therapists and brain scientists.'),
+                ('Jun 2017', 'Two day launch at the Kennedy Center, with the'), ('', 'National Symphony Orchestra. In JAMA they write:'), ('', 'few large trials so far, standard methods and'), ('', 'biological markers are needed.')]
+        yy = 292
+        for q_, (dt, tx_) in enumerate(TL17):
+            if dt and q_:
+                yy += 7
             if dt:
                 g_ += T(x + 16, yy, dt, 13, 700, '#C45200', extra='data-keep="1"')
             g_ += T(x + 84, yy, tx_, 13, 400, INK)
-        g_ += T(x + 16, 455, 'Fleming and Collins, JAMA 2017. NIH Record 2017', 11.5, 400, MUT)
+            yy += 16.5
+        g_ += T(x + 16, 458, 'Fleming and Collins, JAMA 2017. NPR 2017. Chautauquan Daily 2024', 11, 400, MUT)
     elif k == 2:
         g_ += T(x + 16, 164, '$20 million', 26, 700, '#C45200', extra=SERMB + ' data-keep="1"') + T(x + 16, 187, 'over 5 years', 14.5, 600, INK)
         g_ += pills(x + 16, 199, ['NIH', '10 institutes'])
@@ -2020,7 +2020,7 @@ for k, (x, w) in enumerate(XS):
 NIHHIST = sec('How NIH came to fund music and health', SVG(g, 466), ch='2',
               ref='AMTA history. CBMT certificant data, 2026. Fleming and Collins, JAMA 2017. NIH news release, Sept 19 2019. NIH RFA-AT-23-009. Edwards et al., Neurology 2023',
               notes=('A short history, four dates. 1950: music therapy becomes a profession in the US. Music had been used in veterans hospitals after the war, and that year music therapists formed a national association, today the American Music Therapy Association. It started with 85 members. Today there are 10,699 board certified music therapists. '
-                     'Click: 2017, Sound Health. It started when the soprano Renée Fleming met NIH director Francis Collins at a dinner party in 2015, he had brought his guitar. NIH already ran a small Sound Health program with the National Symphony Orchestra, and in 2017 it grew into a partnership with the Kennedy Center and the National Endowment for the Arts. January 2017: an NIH workshop brought music therapists and neuroscientists together. June 2017: a public launch at the Kennedy Center with a National Symphony Orchestra concert. The same month Collins and Fleming wrote in JAMA what was missing: few large trials, and the largest mostly inconclusive. They asked for standard methods and biological markers. '
+                     'Click: 2017, Sound Health. It started at a dinner party in Washington in the summer of 2015, soon after the Supreme Court decision on same sex marriage, with three justices at the table, Scalia, Ginsburg and Kennedy. When the talk got tense, Fleming suggested they sing, Collins had brought his guitar, and they sang the folk song The Water Is Wide. Fleming had just been named artistic advisor at large of the Kennedy Center, and she asked him what science knows about music. NIH already ran a small Sound Health program with the National Symphony Orchestra, and in 2017 it grew into a partnership with the Kennedy Center and the National Endowment for the Arts. January 2017: an NIH workshop brought music therapists and neuroscientists together. June 2017: a public launch at the Kennedy Center with a National Symphony Orchestra concert. The same month Collins and Fleming wrote in JAMA what was missing: few large trials, and the largest mostly inconclusive. They asked for standard methods and biological markers. '
                      'Click: 2019, the first research awards, 20 million dollars over five years, from 10 NIH institutes and centers, for example music and motor skills in Parkinson disease. '
                      'Click: 2023, NCCIH and the National Institute on Aging funded research networks on music based interventions for pain and for dementia, about 1.5 million dollars a year for three networks in the call. Their job is infrastructure: shared measures and theory, and one third to one half of each budget must go to small pilot studies before large trials. '
                      'Click: so the music is old, the funding is new, and the methods are still being built. Which is where computing can help.'))
