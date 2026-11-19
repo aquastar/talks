@@ -90,9 +90,9 @@
 再点：底部，unlearning 也一样（Hu 2025），少量无害微调就能让"遗忘"的事实回来。
 注意：Lee 这篇是对齐（去毒），不是 unlearning。key 和 value 指 MLP 的，不是 attention 的。
 说："The swear neurons were never removed. Training just learned a detour around them. Turn their keys up and the swearing is back."
-**14. Knowledge editing bypasses the old fact instead of removing it**（整场主打的一点）（150）这是我们工作针对的失败。编辑没覆盖旧事实，只是加了一条近路。换一种问法旧答案回来（Xie 2025）。改了微软创始人，问"他上的哪所大学"，41% 答 Steve Jobs，编辑前 0.27%（Zhang 2025）。
-说："The edit adds a bypass, the old fact is never removed. Why: an editor looks at one fact, not at the graph that fact sits in."
-
+**14. Knowledge editing bypasses the old fact instead of removing it**（150，全场重点，慢慢说）和第 13 页同一个机制，换成知识编辑。灰线是训练时学到的旧路径（Space Needle 到 Seattle）。编辑没碰它，只在第 2 层加了一条橙色捷径到 Paris。
+点一下：考试题走捷径，答 Paris，pass。再点：换个问法（先提 Seattle），旧路径变红亮起，Seattle 回来了，"still there"。再点：实测。Xie 2025：精心设计的提示能找回旧答案（旧路径还在）。Zhang 2025：把微软创始人编辑成 Steve Jobs，再问"微软创始人上的哪所大学"，模型答 Steve Jobs 的比例从 0.27% 升到 41%（编辑是一条捷径，见到主语就触发）。最后：结论框 "The edit adds a bypass. The old path is still there."
+口头补一句原因："An editor looks at one fact, not at the knowledge graph that fact sits in." 这句引出 delta graph。
 **15. Every surgery: the exam passes, the inside tells another story**（75）一张表：合并、steering、unlearning、编辑，左边"考试说什么"，右边"模型里面其实是什么"。
 说："The exam reads answers. What we need is to compare the inside before and after a change, and flag the risky ones."
 
