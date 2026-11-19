@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>(function(){var t=new URLSearchParams(location.search).get('theme')||new URLSearchParams(location.hash.slice(1)).get('theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);var v=new URLSearchParams(location.search).get('view');if(v==='talk')document.documentElement.classList.add('talk');})();</script>
-<style>.talk .bottomrow{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;align-items:start}.talk .bottomrow>.card{margin-top:0 !important}.talk p.sub,.talk p.note,.talk p.src{display:none !important}.talk .ihide{display:none !important}.talk .keycard{outline:3px solid #F76902;outline-offset:2px}.talk .ibtn{position:absolute;top:10px;right:10px;width:22px;height:22px;border-radius:50%;border:1.5px solid #8F887E;background:#fff;color:#4C5B66;font:italic 600 13px Georgia,serif;cursor:pointer;padding:0;line-height:19px}.talk .ibtn:hover{border-color:#F76902;color:#F76902}.talk .ipop{display:none;position:absolute;top:38px;right:10px;max-width:440px;z-index:20;background:#fff;border:1px solid #D9D3CA;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.12);padding:10px 14px;font-size:13px;line-height:1.45;color:#3a3a3a}.talk .ion .ipop{display:block}.talk .ipop .legend{flex-wrap:wrap;gap:6px 14px}.talk .ipop p{margin:6px 0}.talk .ipop .legend>span{display:block;margin:3px 0}</style>
+<style>.talk .bottomrow{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;align-items:stretch}.talk .bottomrow>.card{margin-top:0 !important}.talk p.sub,.talk p.note,.talk p.src{display:none !important}.talk .ihide{display:none !important}.talk .grid{align-items:stretch !important}.talk .grid>div{display:flex;flex-direction:column}.talk .grid>div>.card{flex:1}.talk .keybox3{position:absolute;border:3px solid #F76902;border-radius:10px;pointer-events:none;z-index:5}.talk .ibtn{position:absolute;top:10px;right:10px;width:22px;height:22px;border-radius:50%;border:1.5px solid #8F887E;background:#fff;color:#4C5B66;font:italic 600 13px Georgia,serif;cursor:pointer;padding:0;line-height:19px}.talk .ibtn:hover{border-color:#F76902;color:#F76902}.talk .ipop{display:none;position:absolute;top:38px;right:10px;max-width:440px;z-index:20;background:#fff;border:1px solid #D9D3CA;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.12);padding:10px 14px;font-size:13px;line-height:1.45;color:#3a3a3a}.talk .ion .ipop{display:block}.talk .ipop .legend{flex-wrap:wrap;gap:6px 14px}.talk .ipop p{margin:6px 0}.talk .ipop .legend>span{display:block;margin:3px 0}</style>
 <title>Music Surprise and EEG</title>
 <style>
 :root{
@@ -635,7 +635,12 @@ requestAnimationFrame(frame);
   var avg=byText('Average evidence'), st=document.getElementById('striptitle'), after=st&&st.closest('.card'), grid=document.querySelector('.grid');
   if(avg&&after&&grid){ var row=document.createElement('div'); row.className='bottomrow'; row.appendChild(avg); row.appendChild(after); grid.parentNode.insertBefore(row, grid.nextSibling); }
   /* the key card (both rows of "After this note") gets an orange frame */
-  if(after) after.classList.add('keycard');
+  /* orange frame around the third map (+0.2 s) in each row */
+  if(after){ var kbs=[0,1].map(function(){ var d=document.createElement('div'); d.className='keybox3'; after.appendChild(d); return d; });
+    var place=function(){ var r0=after.getBoundingClientRect(), pad=5;
+      ['strip1','strip2'].forEach(function(id,k){ var m=document.getElementById(id); if(!m||!m.children[2]) return; var t=m.children[2].getBoundingClientRect();
+        kbs[k].style.left=(t.left-r0.left-pad)+'px'; kbs[k].style.top=(t.top-r0.top-pad)+'px'; kbs[k].style.width=(t.width+2*pad)+'px'; kbs[k].style.height=(t.height+2*pad)+'px'; }); };
+    window.addEventListener('resize', function(){ setTimeout(place, 30); }); setTimeout(place, 120); setTimeout(place, 800); }
   /* small print goes behind an info icon per card: legends, notes, captions */
   cards.forEach(function(c){
     if(c.style.display==='none') return;
