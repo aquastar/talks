@@ -684,7 +684,7 @@ g += L(40, 176, 1140, 176, '#D7D2CB', 1)
 top_g = g; g = ''
 # a quiet cloud of facts and behaviors
 _rv.seed(11)
-KEEP = [(200, 460, 296, 348), (548, 770, 172, 236), (60, 300, 368, 420), (390, 640, 368, 420)]
+KEEP = [(200, 460, 296, 348), (548, 770, 172, 236), (60, 300, 368, 420), (390, 640, 368, 420), (60, 250, 245, 300), (100, 280, 352, 382), (410, 590, 354, 384), (510, 570, 262, 292), (630, 710, 278, 304)]
 cl = [(170, 250, 60), (330, 340, 55), (470, 230, 60), (620, 330, 55), (300, 180, 40), (560, 410, 40)]
 pts = []
 for cx, cy, sd in cl:
@@ -709,16 +709,29 @@ for x, y in pts:
         mv += L(round(x), round(y), round(nx), round(ny), FAILC, 1, 'stroke-opacity=".45"') + C(round(nx), round(ny), 3, FAILC, extra='opacity=".7"')
 for (x, y), (nx, ny), (lx, ly), lab, anc in (((268, 352), (288, 344), (284, 398), '... which country?', 'end'), ((392, 350), (414, 340), (402, 398), '... which currency?', 'start')):
     mv += L(x, y, nx, ny, FAILC, 1.4) + C(nx, ny, 5, FAILC) + L(nx, ny + 7, lx + (-4 if anc == 'end' else 4), ly - 16, FAILC, .8, 'stroke-opacity=".6"') + T(lx, ly, lab, 15, 400, FAILC, anc)
-g += F(2, mv)
-r = T(820, 200, 'The arrow says what', 26, 400, INK, extra=SER) + T(820, 234, 'we added.', 26, 400, INK, extra=SER)
-r += T(820, 298, 'Nothing says what else', 26, 400, '#C45200', extra=SER) + T(820, 332, 'moved, or should have.', 26, 400, '#C45200', extra=SER)
-r += T(820, 400, 'Probes and features are vectors too.', 15, 400, MUT)
-g += F(3, r)
+# slide 10 (his note Nov 19): name the two failures. Ripple effect: related facts should move and do not. Locality: unrelated facts should stay and some drift.
+DASH = 'stroke-dasharray="6 5"'
+rp = ''
+for (fx, fy, lab, lx, anc), (tx2, ty2, tname, tlx, tanc) in (((262, 368, '… which country?', 254, 'end'), (640, 292, 'France', 652, 'start')),
+                                                          ((420, 370, '… which currency?', 430, 'start'), (520, 278, 'euro', 532, 'start'))):
+    rp += C(fx, fy, 6, '#C45200') + T(lx, fy + 5, lab, 15, 400, '#C45200', anc)
+    _d = _mv.hypot(tx2 - fx, ty2 - fy); ex, ey = tx2 - (tx2 - fx) / _d * 11, ty2 - (ty2 - fy) / _d * 11
+    rp += P(f'M{fx},{fy} L{ex:.1f},{ey:.1f}', '#F76902', 2, extra=DASH + ' marker-end="url(#vco)"')
+    rp += f'<circle cx="{tx2}" cy="{ty2}" r="6.5" fill="#FBFAF7" stroke="#F76902" stroke-width="2"/>' + T(tlx, ty2 + 5, tname, 14, 600, '#C45200', tanc)
+loc = (C(238, 292, 5, '#8F887E') + P('M232,288 L216,279', '#DA291C', 2, extra='marker-end="url(#vco)"') + C(212, 277, 5, '#DA291C')
+       + T(204, 262, 'an unrelated fact drifted', 13.5, 400, '#DA291C', 'end'))
+g += F(2, rp) + F(3, loc)
+def _hl(x, y, w, word):
+    return f'<path d="M{x - 6},{y - 26} h{w} v34 h-{w} Z" fill="#FBD3B4"/><path d="M{x - 6},{y + 8} h{w} v3 h-{w} Z" fill="#F76902"/>' + T(x, y, word, 26, 700, '#C45200', extra=SER)
+r1 = T(820, 190, 'The arrow says what', 24, 400, INK, extra=SER) + T(820, 220, 'we added.', 24, 400, INK, extra=SER)
+r2 = _hl(820, 282, 176, 'Ripple effect') + T(820, 314, 'related facts should move', 19, 400, INK, extra=SER) + T(820, 340, 'with it, and do not.', 19, 400, INK, extra=SER)
+r3 = _hl(820, 396, 112, 'Locality') + T(820, 428, 'unrelated facts should stay,', 19, 400, INK, extra=SER) + T(820, 454, 'and some drift.', 19, 400, INK, extra=SER)
+g += F(1, r1) + F(2, r2) + F(3, r3)
 VC = dict(cloud=cloud, mv=mv, S0=S0, S1=S1, moved=list(MOVED))
 g = top_g + '<g transform="translate(70,82) scale(.86)">' + g + '</g>'
 VECTOR = sec('Every surgery is stored as a vector', SVG(g), ch='0',
              ref='Arditi et al., NeurIPS 2024. Meng et al., NeurIPS 2022. Hu et al., LoRA, ICLR 2022. Ilharco et al., ICLR 2023',
-             notes='Top row: four ways we change a model today, each drawn as what it adds. Light cells are the model, dark cells are the change: a vector added to the activations, a rank one matrix u times v transposed, LoRA as a tall thin B times a short wide A, and fine tuning as a full matrix of small changes. All the same kind of object, something added. Below, a schematic: every dot is something the model knows or does. Click: an edit moves one fact, Space Needle from Seattle to Paris, that arrow is the vector we added. Click: the facts nearby moved too, Seattle is in Washington, the Needle was built in 1962, and nothing in the arrow says so. The dots are an illustration, not data. Click: the takeaway. Four surgeries, four one line formulas a CS audience can read. ROME is a rank one LoRA on one layer, which links knowledge editing to something most of the room has used. The point is not the math, it is that each operation is a single added object, and that object carries no information about its side effects. The tools we use to understand models read them the same way: a linear probe, a sparse autoencoder feature, a steering direction, all vectors. Bridge: yet the knowledge these models hold has another shape, a graph, in text, in images and in music.')
+             notes='Top row: four ways we change a model today, each drawn as what it adds. Light cells are the model, dark cells are the change: a vector added to the activations, a rank one matrix u times v transposed, LoRA as a tall thin B times a short wide A, and fine tuning as a full matrix of small changes. All the same kind of object, something added. Below, a schematic: every dot is something the model knows or does. Click: an edit moves one fact, Space Needle from Seattle to Paris, that arrow is the vector we added. Click: the ripple effect. Facts that depend on this one should move with it: which country, now France, which currency, now euro. The dashed arrows show where they should go. They do not move. RippleEdits and MQuAKE measure exactly this. Click: locality, the other failure. Facts that have nothing to do with the edit should stay put, and some drift a little anyway. The arrow tells you neither. The dots are an illustration, not data. If asked whether this is solved: no. The 2026 methods that do better, circuit-aware editing and joint neighborhood optimization, all stop editing one point and start editing along the structure. Click: the takeaway. Four surgeries, four one line formulas a CS audience can read. ROME is a rank one LoRA on one layer, which links knowledge editing to something most of the room has used. The point is not the math, it is that each operation is a single added object, and that object carries no information about its side effects. The tools we use to understand models read them the same way: a linear probe, a sparse autoencoder feature, a steering direction, all vectors. Bridge: yet the knowledge these models hold has another shape, a graph, in text, in images and in music.')
 
 # ---- demo: a tiny graph is enough to represent a piece ----
 g = adefs('dm2')

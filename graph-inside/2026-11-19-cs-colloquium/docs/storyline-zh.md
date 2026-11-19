@@ -75,9 +75,9 @@
 **9. Seven kinds of surgery**（60）七张卡片排成 4 加 3。
 说："Every one of these is accepted by an exam that only looks at answers."
 
-**10. Today we change and explain models with vectors**（90）放回主线：这七种手术写下来，都是往模型上加一个向量或矩阵。第一次说出主线。
-说："Vectors say what we changed. Only a graph can say where it went."
-
+**10. Today we change and explain models with vectors**（120）上面四种改模型的方式都是"加一个东西"（steer、edit、LoRA、fine-tune）。下面是示意点云（不是真数据）。点一下：橙色箭头把 Space Needle 推到 Paris，右边 "The arrow says what we added."。再点：Ripple effect（高亮）：相关事实（国家、货币）本该跟着动到 France、euro（虚线），但没动。再点：Locality（高亮）：一个无关的事实被顺带推偏了。
+说："The arrow says what we added. It says nothing about the ripple effect, the facts that should move, or about locality, the facts that should stay."
+被问到是否已解决：没有。2026 年做得更好的方法（circuit-aware editing、joint neighborhood optimization）都是从改一个点转向沿着结构改。
 **11. Merging**（105）先说限制：只能合并同一个底座模型微调出来的版本。两个箭头相加，两种技能都有。点一下：混进一个没对齐的专家，所有考试都过，却会回答有害问题。
 说："Every skill exam passes, and the merge now answers harmful requests."
 
