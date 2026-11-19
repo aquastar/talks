@@ -2507,49 +2507,38 @@ _eegsrc = _osb.path.join(_osb.path.dirname(_osb.path.dirname(_osb.path.abspath(_
 _eegd = _jb.loads(re.search(r'<script id="data" type="application/json">(.*?)</script>', open(_eegsrc).read(), re.S).group(1))
 g = adefs('bg')
 SERB = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
-# left: EEG, the 32 real electrode positions of the demo, each joined to its 3 nearest neighbors
-ECX, ECY, ESC = 290, 212, 128
-EP = {nm: (ECX + x * ESC, ECY - y * ESC) for nm, (x, y) in zip(_eegd['ch'], _eegd['pos'])}
-HI = set(_eegd['highlight'])
-eg = T(40, 26, 'EEG', 24, 400, INK, extra=SERB) + T(40, 48, 'a node per electrode', 14, 400, MUT)
-eg += f'<ellipse cx="{ECX}" cy="{ECY + 4}" rx="{ESC * 1.08}" ry="{ESC * 1.16}" fill="#FBFAF7" stroke="#8F887E" stroke-width="1.6"/>'
-eg += P(f'M{ECX - 12},{ECY - ESC * 1.14} L{ECX},{ECY - ESC * 1.30} L{ECX + 12},{ECY - ESC * 1.14}', '#8F887E', 1.6)
-edges = set()
-for a_, (x1, y1) in EP.items():
-    nn = sorted(((x2 - x1) ** 2 + (y2 - y1) ** 2, b_) for b_, (x2, y2) in EP.items() if b_ != a_)[:3]
-    for _, b_ in nn:
-        edges.add(tuple(sorted((a_, b_))))
-for a_, b_ in edges:
-    (x1, y1), (x2, y2) = EP[a_], EP[b_]
-    both = a_ in HI and b_ in HI
-    eg += L(round(x1, 1), round(y1, 1), round(x2, 1), round(y2, 1), '#F76902' if both else '#C9C4BD', 2 if both else 1.2)
-for nm, (x, y) in EP.items():
-    eg += C(round(x, 1), round(y, 1), 5.5 if nm in HI else 4, '#F76902' if nm in HI else '#4C5B66')
-eg += T(40, 382, 'edges: nearest electrodes (here, 3 each), or signals', 13.5, 400, INK) + T(40, 400, 'that move together: correlation, phase locking', 13.5, 400, INK)
-eg += T(40, 424, 'orange: the 11 electrodes that track surprise in the demo', 13, 600, '#C45200')
-g += eg
-# right: fMRI, regions from an atlas, joined by correlated activity (illustration over a public domain brain)
-BRF = open('figs/brain-lateral-inner.svgfrag').read()
-fg = T(620, 26, 'fMRI', 24, 400, INK, extra=SERB) + T(620, 48, 'a node per brain region (an atlas, for example 116 regions)', 14, 400, MUT)
-fg += f'<g transform="translate(640,70) scale(0.30)" opacity=".55">{BRF}</g>'
-RN = [(730, 150), (790, 112), (860, 108), (930, 130), (720, 220), (800, 190), (880, 182), (940, 220), (830, 250), (760, 280), (900, 270)]
-RE = [(0, 1), (1, 2), (2, 3), (0, 4), (4, 5), (5, 6), (6, 7), (5, 8), (8, 10), (4, 9), (9, 8), (1, 5), (2, 6), (3, 7), (7, 10), (0, 5), (6, 10)]
-for a_, b_ in RE:
-    fg += L(*RN[a_], *RN[b_], '#4C5B66', 1.4, 'stroke-opacity=".75"')
-fg += ''.join(C(x, y, 6.5, '#4C5B66', extra='stroke="#fff" stroke-width="1.5"') for x, y in RN)
-fg += T(1140, 322, 'illustration', 12, 400, MUT, 'end')
-fg += T(620, 382, 'edges: regions whose signals rise and fall together', 13.5, 400, INK) + T(620, 400, '(correlation, partial correlation), or white matter fibers', 13.5, 400, INK)
-fg += T(620, 424, 'read as a network: hubs, modules, small world', 13, 600, '#4C5B66')
-g += F(1, fg)
+# both pictures are computed from public data with standard tools (MNE, nilearn), scripts in docs/brain-graphs.md
+def _use(x, y, head, lines, cite):
+    o = T(x, y, head, 15, 700, INK)
+    for k, ln in enumerate(lines):
+        o += T(x, y + 19 + 18 * k, ln, 14, 400, INK)
+    return o + T(x, y + 19 + 18 * len(lines), cite, 12, 400, MUT)
+eg = T(30, 24, 'EEG', 24, 400, INK, extra=SERB) + T(96, 24, 'a node per electrode', 14, 400, MUT)
+eg += img(20, 34, 190, 186, 'figs/eeg-graph-pli-physionet.png')
+eg += T(228, 70, 'Built from 10 people at rest:', 13.5, 600, '#4C5B66') + T(228, 90, '62 electrodes, an edge where', 13.5, 400, INK) + T(228, 108, 'alpha waves (8 to 13 Hz) keep', 13.5, 400, INK) + T(228, 126, 'a steady phase lag (top 4%)', 13.5, 400, INK)
+eg += T(228, 150, 'Edges can also be nearest', 13, 400, MUT) + T(228, 167, 'neighbors, or learned', 13, 400, MUT)
+ue = T(30, 236, 'What people use it for', 13, 700, '#C45200', extra='letter-spacing=".06em"')
+ue += _use(30, 258, 'Find seizures in hospital EEG', ['a graph network detects them, AUROC 0.875'], 'Tang et al., ICLR 2022')
+ue += _use(30, 322, 'Read emotion', ['the network learns the edges itself, 90.4% on SEED'], 'Song et al., DGCNN, IEEE TAC 2020')
+ue += T(30, 400, 'Also: sleep stages, brain computer interfaces', 13.5, 400, INK)
+g += eg + F(1, ue)
+fg = T(620, 24, 'fMRI', 24, 400, INK, extra=SERB) + T(692, 24, 'a node per brain region', 14, 400, MUT)
+fg += img(610, 36, 222, 184, 'figs/fmri-graph-msdl-partial.png')
+fg += T(852, 70, 'Built from 10 people:', 13.5, 600, '#4C5B66') + T(852, 90, '39 regions of an atlas, an edge', 13.5, 400, INK) + T(852, 108, 'where two regions rise and fall', 13.5, 400, INK) + T(852, 126, 'together (partial correlation,', 13.5, 400, INK) + T(852, 144, 'top 8%)', 13.5, 400, INK)
+fg += T(852, 168, 'Or white matter fibers', 13, 400, MUT) + T(852, 185, 'traced by diffusion MRI', 13, 400, MUT)
+uf = T(620, 236, 'What people use it for', 13, 700, '#C45200', extra='letter-spacing=".06em"')
+uf += _use(620, 258, 'Tell people apart, like a fingerprint', ['117 of 126 people identified from their graph alone (92.9%)'], 'Finn et al., Nature Neuroscience 2015')
+uf += _use(620, 322, 'Find where disease hits', ['across 26 brain disorders, damage falls more often on hubs'], 'Crossley et al., Brain 2014')
+uf += _use(620, 386, 'Music', ['a favorite song makes the default mode network most connected'], 'Wilkins et al., Scientific Reports 2014')
+g += fg + F(1, uf)
 BRAINGRAPH = sec('The brain is read as a graph, too', SVG(g, 436), ch='2',
-                 ref='Bullmore and Sporns, Nature Reviews Neuroscience 2009. Smith et al., NeuroImage 2011. Song et al., DGCNN, IEEE Trans Affective Computing 2020. Li et al., BrainGNN, Medical Image Analysis 2021. Electrode positions: OpenNeuro ds005876',
-                 notes=('Not a result, a pointer: graphs are already how the field reads brain data. Left, EEG: one node per electrode, here the 32 real electrode positions from the demo. '
-                        'Edges can be spatial, each electrode joined to its nearest neighbors, here three, which is how graph neural networks for EEG often start. '
-                        'Or functional: two electrodes whose signals move together, by correlation, coherence or phase locking. Or learned by the network itself, as in DGCNN for emotion recognition. '
-                        'The orange electrodes are the 11 front central ones that tracked surprise in the demo. Click, right, fMRI: one node per brain region from an atlas, for example 116 regions. '
-                        'Edges are regions whose signals rise and fall together, correlation or partial correlation, or white matter fibers traced by diffusion MRI. '
-                        'Read as a network, the brain shows hubs, modules and small world structure, Bullmore and Sporns 2009. Smith and colleagues 2011 found partial correlation among the better ways to estimate these edges. '
-                        'Click: the same recipe as our delta graph, partial correlation between parts that rise and fall together. The fMRI drawing is an illustration on a public domain brain, Gray figure 728.'))
+                 ref='Pictures computed by us from public data: PhysioNet EEG Motor Movement/Imagery (MNE), nilearn development fMRI with the MSDL atlas. Tang et al. ICLR 2022. Song et al. IEEE TAC 2020. Finn et al. Nat Neurosci 2015. Crossley et al. Brain 2014. Wilkins et al. Sci Rep 2014',
+                 notes=('Not our result, a look at the field. Graphs are already how people read brain data. '
+                        'Left, EEG: one node per electrode. This picture is real data: ten people resting with eyes open, from a public PhysioNet set, 62 electrodes. An edge joins two electrodes whose alpha waves keep a steady phase lag, the strongest 4 percent of pairs. You can see the alpha network over the back of the head. '
+                        'Edges can also be the nearest electrodes, or learned by the network. Right, fMRI: one node per brain region from an atlas, 39 regions here, ten people, edges by partial correlation, the strongest 8 percent. '
+                        'Click: what people use them for. EEG graphs: finding seizures in hospital recordings, a graph network gets AUROC 0.875 on the Temple University seizure corpus. Reading emotion, DGCNN learns the edges and gets 90.4 percent on SEED. Also sleep staging and brain computer interfaces. '
+                        'fMRI graphs: a fingerprint, Finn and colleagues identified 117 of 126 people from their connectivity graph alone, and the same edges predicted fluid intelligence. Disease: across 26 brain disorders, damage falls more often on the hubs of the graph, Crossley 2014. And music: when people heard their favorite song, the default mode network was most connected, Wilkins 2014. '
+                        'Click: the same recipe as our delta graph, partial correlation between parts that rise and fall together.'))
 
 # ---- Nov 19 (his request): a map of who does what near us, no names, nothing national ----
 g = adefs('mn')
