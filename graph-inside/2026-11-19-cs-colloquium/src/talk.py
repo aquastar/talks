@@ -2598,7 +2598,8 @@ def _dgdraw(cx, edges, label, lc, extra=''):
     out += T(cx, 286, label, 16, 700, lc, 'middle')
     return out
 bef = [(a, b, '#8F887E', 1.8, '') for a, b in E_BEFORE]
-aft = [(a, b, '#8F887E', 1.8, '') for a, b in E_BEFORE if (a, b) not in E_DOWN] + [(a, b, '#8F887E', 1.8, '') for a, b in E_UP]
+aft = ([(a, b, '#8F887E', 1.8, '') for a, b in E_BEFORE if (a, b) not in E_DOWN] + [(a, b, '#4C5B66', 2.2, '5 4') for a, b in E_DOWN]
+       + [(a, b, '#F76902', 3.4, '') for a, b in E_UP])
 dlt = [(a, b, '#F76902', 3.2, '') for a, b in E_UP] + [(a, b, '#4C5B66', 2.2, '5 4') for a, b in E_DOWN]
 for r in range(6):
     g += T(128, 254 - r * 36 + 5, f'layer {r + 1}', 13, 400, MUT, 'end')
