@@ -2652,24 +2652,18 @@ g = adefs('bg')
 SERB = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
 # both pictures are computed from public data with standard tools (MNE, nilearn), scripts in docs/brain-graphs.md
 SERB2 = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
-g += T(590, 22, 'A note lasts 0.2 to 0.4 s. Which tool can keep up?', 21, 400, INK, 'middle', extra=SERB2 + ' data-keep="1"')
-g += T(40, 72, 'EEG: when', 24, 400, '#C45200', extra=SERB2 + ' data-keep="1"')
-g += T(40, 100, 'Hundreds of samples a second, so it sees every note.', 15.5, 400, INK)
-g += T(40, 122, 'Quiet, cheap and portable, so people listen normally.', 15.5, 400, INK)
-g += img(36, 136, 176, 172, 'figs/eeg-graph-pli-physionet.png')
-g += T(232, 196, 'A node per electrode, an edge', 15, 400, INK) + T(232, 216, 'where two signals stay in step.', 15, 400, INK)
-g += T(232, 248, '10 people at rest, 62 electrodes', 12.5, 400, MUT)
-g += T(620, 72, 'fMRI: where', 24, 400, '#4C5B66', extra=SERB2 + ' data-keep="1"')
-g += T(620, 100, 'Millimeters, but one image every 1 to 2 s, and lags ~5 s.', 15.5, 400, INK)
-g += T(620, 122, 'The scanner is loud, so it competes with the music.', 15.5, 400, INK)
-g += img(616, 136, 234, 167, 'figs/fmri-network-hong2013.jpg')
-g += T(868, 196, 'A node per brain region, an', 15, 400, INK) + T(868, 216, 'edge where signals move together.', 15, 400, INK)
-g += T(868, 248, '23 teenagers at rest, Hong et al. 2013', 12.5, 400, MUT)
-g += F(1, T(40, 344, 'Used to find seizures in hospital EEG, AUROC 0.875,', 15.5, 400, INK) + T(40, 366, 'and to read emotion, 90.4% on SEED.', 15.5, 400, INK)
-       + T(620, 344, 'Used to tell people apart: 117 of 126 from the graph alone,', 15.5, 400, INK) + T(620, 366, 'and to see a favorite song link the default mode network.', 15.5, 400, INK))
-g += F(2, T(590, 420, 'For music, note by note, people prefer EEG. fMRI suits a whole song.', 20, 400, '#C45200', 'middle', extra=SERB2 + ' data-keep="1"'))
-BRAINGRAPH = sec('The brain is read as a graph, too', SVG(g, 436), ch='2',
-                 ref='EEG picture computed by us from PhysioNet EEG Motor Movement/Imagery (MNE). fMRI picture: Hong et al., PLoS ONE 2013, via Wikimedia Commons, CC BY-SA 3.0. Tang et al. ICLR 2022. Song et al. IEEE TAC 2020. Finn et al. Nat Neurosci 2015. Crossley et al. Brain 2014. Wilkins et al. Sci Rep 2014',
+g += T(590, 24, 'A note lasts 0.2 to 0.4 s. Which tool keeps up?', 22, 400, INK, 'middle', extra=SERB2 + ' data-keep="1"')
+for cx, head, hc, l1, im, cap, use in (
+        (305, 'EEG: when', '#C45200', 'A sample every few milliseconds, and quiet.', img(198, 112, 214, 210, 'figs/eeg-graph-pli-physionet.png'),
+         'node: electrode, edge: signals in step', 'Used to find seizures and read emotion'),
+        (885, 'fMRI: where', '#4C5B66', 'Millimeters, but one image every 1 to 2 s, and loud.', img(735, 116, 300, 213, 'figs/fmri-network-hong2013.jpg'),
+         'node: brain region, edge: signals move together', 'Used to tell people apart, and map a favorite song')):
+    g += T(cx, 72, head, 26, 400, hc, 'middle', extra=SERB2 + ' data-keep="1"') + T(cx, 98, l1, 16, 400, INK, 'middle') + im
+    g += T(cx, 354, cap, 15, 400, MUT, 'middle') + F(1, T(cx, 388, use, 17, 400, INK, 'middle'))
+g += L(590, 60, 590, 395, '#D7D2CB', 1)
+g += F(2, T(590, 434, 'For music, note by note, people prefer EEG.', 21, 400, '#C45200', 'middle', extra=SERB2 + ' data-keep="1"'))
+BRAINGRAPH = sec('The brain is read as a graph, too', SVG(g, 446), ch='2',
+                 ref='EEG: computed by us from PhysioNet EEG Motor Movement/Imagery. fMRI: Hong et al., PLoS ONE 2013, CC BY-SA 3.0. Uses: Tang et al. ICLR 2022, Song et al. IEEE TAC 2020, Finn et al. Nat Neurosci 2015, Wilkins et al. Sci Rep 2014',
                  notes=('Not our result, a look at the field. First, why two tools. A note lasts about 0.2 to 0.4 seconds. EEG records electrical activity hundreds of times a second, so it sees every note, but it cannot say well where in the brain. fMRI sees where to a few millimeters, but it takes one image every 1 to 2 seconds and the blood signal lags about 5 seconds behind, so many notes blur together. The scanner is also loud, it competes with the music, while EEG is quiet, cheap and portable. That is why music studies of single notes prefer EEG, and fMRI is used for longer stretches, like a whole song. Graphs are already how people read both. '
                         'Left, EEG: one node per electrode. This picture is real data: ten people resting with eyes open, from a public PhysioNet set, 62 electrodes. An edge joins two electrodes whose alpha waves keep a steady phase lag, the strongest 4 percent of pairs. You can see the alpha network over the back of the head. '
                         'Edges can also be the nearest electrodes, or learned by the network. Right, fMRI: one node per brain region. This picture is from a 2013 study of 23 teenagers at rest: the blue links are connections that were weaker in teens with internet gaming addiction. Edges are regions whose signals rise and fall together, or white matter fibers. '
