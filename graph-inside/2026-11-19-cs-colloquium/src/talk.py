@@ -1647,13 +1647,14 @@ PURP = '#5a4fcf'
 
 def steps(active):
     out = ''
-    for k, lab in enumerate(['Signals that change the brain', 'Music as medicine']):
-        x = 30 + k * 570
+    LABS = ['Hearing loss', 'Sound and the brain', 'Music as medicine']
+    for k, lab in enumerate(LABS):
+        x = 30 + k * 380
         on = (k == active)
-        out += R(x, 6, 550, 30, ACC if on else '#fff', ACC if on else LINE, 1.5, 15) + C(x + 18, 21, 10, '#fff' if on else SOFT) + T(x + 18, 25.5, str(k + 1), 12, 700, ACC if on else MUT, 'middle')
+        out += R(x, 6, 360, 30, ACC if on else '#fff', ACC if on else LINE, 1.5, 15) + C(x + 18, 21, 10, '#fff' if on else SOFT) + T(x + 18, 25.5, str(k + 1), 12, 700, ACC if on else MUT, 'middle')
         out += T(x + 36, 26, lab, 14, 700, '#fff' if on else MUT)
-        if k < 1:
-            out += P(f'M{x+553},21 L{x+566},21', LINE, 2, extra='marker-end="url(#pea)"')
+        if k < len(LABS) - 1:
+            out += P(f'M{x+363},21 L{x+376},21', LINE, 2, extra='marker-end="url(#pea)"')
     return out
 
 def person(x, y, w, h, fname, ini, name, title_lines, col):
@@ -1740,7 +1741,7 @@ BEYOND5 = sec('Part 2. Knowledge is not only text', SVG(g, 334), ch='2',
 
 # ---- Nov 4 (his request): optogenetics, then music medicine ----
 g = adefs('op')
-g += steps(0).replace('url(#pea)', 'url(#opa)')
+g += steps(1).replace('url(#pea)', 'url(#opa)')
 BLUE = '#2F7FD0'
 def blink(vals, dur, kt, attr='opacity'):
     return f'<animate attributeName="{attr}" values="{vals}" keyTimes="{kt}" dur="{dur}s" repeatCount="indefinite"/>'
@@ -1759,17 +1760,9 @@ def mini_neuron(cx, cy, dots=0, lit=False):
         t = -2.6 + k * 0.62
         o += C(round(cx + 19 * _om.cos(t), 1), round(cy + 16 * _om.sin(t), 1), 3, BLUE)
     return o
-# left, small: light
-oc = R(30, 50, 380, 360, '#F4F1EC', 'none', 0, 8) + T(50, 82, 'Light', 22, 400, INK, extra='font-family="et-book,Georgia,serif" style="font-size-adjust:none"') + T(50, 104, 'optogenetics, Nobel Prize 2026', 14, 400, MUT)
-for q_, (fn, ini, nm) in enumerate([('karl-deisseroth.jpg', 'KD', 'Deisseroth'), ('peter-hegemann.jpg', 'PH', 'Hegemann'), ('georg-nagel.jpg', 'GN', 'Nagel')]):
-    x = 64 + q_ * 120
-    oc += photo(x, 140, 15, fn, ini, AC2) + T(x + 22, 145, nm, 12.5, 600, INK)
-oc += img(50, 166, 340, 188, 'figs/nobel2026-optogenetics-mouse.jpg')
-oc += T(50, 378, 'A gene makes neurons sense light, then', 14.5, 400, INK) + T(50, 398, 'a flash makes them fire. Invasive: a fiber in the brain.', 14.5, 400, INK)
-g += oc
 # right, large: music
 SER_ = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
-nc = R(440, 50, 710, 360, '#fff', LINE, 1.2, 8) + T(462, 82, 'Sound', 22, 400, INK, extra=SER_) + T(462, 104, 'music, through the ear, no surgery', 14, 400, MUT)
+nc = R(440, 50, 710, 360, '#fff', LINE, 1.2, 8) + T(462, 82, 'Sound', 22, 400, INK, extra=SER_) + T(462, 104, 'music, through the ear', 14, 400, MUT)
 BR = re.sub(r'(<path[^>]*id="brain-temporal"[^>]*?)/>', lambda m: m.group(1) + '><animate attributeName="fill" values="#FAD6BA;#F6A46A;#FAD6BA" dur="0.6s" repeatCount="indefinite"/></path>', open('figs/brain-lateral-inner.svgfrag').read(), count=1)
 nc += f'<g transform="translate(800,92) scale(0.33)">{BR}</g>'
 nc += L(968, 300, 980, 338, '#C45200', 1) + T(984, 352, 'hearing cortex', 12.5, 600, '#C45200', 'middle')
@@ -1786,9 +1779,10 @@ def eighth(sz, col):
             f'<path d="M{4.6*sz},{-26*sz} q{7*sz},{6*sz} {6*sz},{15*sz}" fill="none" stroke="{col}" stroke-width="{1.6*sz}" stroke-linecap="round"/>')
 def beamed(sz, col):
     o = ''
-    for dx in (0, 14 * sz):
-        o += f'<ellipse cx="{dx}" cy="0" rx="{5.2*sz}" ry="{3.8*sz}" transform="rotate(-22 {dx} 0)" fill="{col}"/><line x1="{dx+4.6*sz}" y1="{-1*sz}" x2="{dx+4.6*sz}" y2="{-25*sz}" stroke="{col}" stroke-width="{1.6*sz}"/>'
-    return o + f'<path d="M{4.6*sz},{-25*sz} L{18.6*sz},{-28*sz}" stroke="{col}" stroke-width="{4*sz}"/>'
+    for q_, dx in enumerate((0, 14 * sz)):
+        top = (-25 - 3 * q_ - 1.5) * sz   # reach into the slanted beam
+        o += f'<ellipse cx="{dx}" cy="0" rx="{5.2*sz}" ry="{3.8*sz}" transform="rotate(-22 {dx} 0)" fill="{col}"/><line x1="{dx+4.6*sz}" y1="{-1*sz}" x2="{dx+4.6*sz}" y2="{top}" stroke="{col}" stroke-width="{1.6*sz}"/>'
+    return o + f'<path d="M{3.8*sz},{-25.2*sz} L{19.4*sz},{-28.2*sz}" stroke="{col}" stroke-width="{4*sz}"/>'
 DUR = 4.0
 import itertools as _it
 _kinds = _it.cycle([('e', INK), ('b', '#5F5D50'), ('e', ACC), ('b', INK), ('e', '#5F5D50')])
@@ -1805,15 +1799,41 @@ facts = [('The brain rhythm locks to the beat', 'EEG, Nozaradan et al. 2011'),
 for k, (a_, b_) in enumerate(facts):
     y = 140 + k * 44
     nc += C(470, y - 5, 4, ACC) + T(484, y, a_, 15.5, 600, INK) + T(484, y + 18, b_, 12.5, 400, MUT)
-nc += T(462, 388, 'Measured in people and in mice. Which part of the music does it is the open question.', 13.5, 400, MUT)
-g += F(1, nc)
-g += F(2, T(590, 446, 'Light switches neurons with a gene. Music already changes the brain through the ear.', 19, 400, '#C45200', 'middle', extra=SER_ + ' data-keep="1"'))
-OPTO = sec('Two signals that change the brain: light, and music', SVG(g), ch='0',
-           ref='Nobel Prize 2026. Nozaradan et al., J Neurosci 2011. Salimpoor et al., Nature Neuroscience 2011. Martorell et al., Cell 2019',
-           notes='An analogy, about one minute, do not dwell on optogenetics. Left, light: this year\'s Nobel went to optogenetics. Add a gene that makes chosen neurons sense light, then a flash makes them fire. Precise, but it needs a gene, usually delivered by a virus injected into the brain, and an implanted optical fiber, because light does not pass through the skull. Mostly used on neurons, also on heart cells, and once in a human eye to partly restore vision. It is not noninvasive. Click, right, sound: music is also a signal that changes the brain, and it needs no surgery. Three measured examples: the brain rhythm locks to the beat in EEG (Nozaradan 2011), dopamine is released at the peak of musical pleasure in PET (Salimpoor 2011), and 40 Hz sound, a very simple signal, changed mouse brains in the Tsai lab, with less amyloid, Martorell and colleagues, Cell 2019. Their earlier 2016 paper used 40 Hz flickering light, the 2019 one added sound. Which part of the music does the work is the open question, and that is where a model of music comes in. If someone asks how optogenetics works: a two minute BrainFacts.org video is linked in the reference line, youtube.com/watch?v=azp-if02m8U. Portraits: Ill. Niklas Elmehed, Nobel Prize Outreach. Brain drawing: Gray, Anatomy of the Human Body, Figure 728, public domain, recolored. Mouse illustration: The Nobel Committee for Physiology or Medicine, Ill. Mattias Karlén, popular information, Figure 5: the gene goes into the mouse brain, a thin optical fiber shines light, the neurons fire.')
+g += '<g transform="translate(-205,0)">' + nc + '</g>'
+g += F(1, T(590, 446, 'Music acts on the brain in ways we can measure. Which part does the work is open.', 19, 400, '#C45200', 'middle', extra=SER_ + ' data-keep="1"'))
+OPTO = sec('Sound acts on the brain', SVG(g), ch='0',
+           ref='Nozaradan et al., J Neurosci 2011. Salimpoor et al., Nature Neuroscience 2011. Martorell et al., Cell 2019',
+           notes='Sound, music in particular, acts on the brain in ways we can measure. The brain rhythm locks to the beat in EEG, Nozaradan 2011. Dopamine is released at the peak of musical pleasure in PET, Salimpoor 2011. And 40 Hz sound, a very simple signal, reduced amyloid in mouse models of Alzheimer disease, Martorell and colleagues, Cell 2019, their earlier 2016 paper used flickering light. Click: which part of the music does the work is the open question, and that is where a model comes in. Brain drawing: Gray, Anatomy of the Human Body, Figure 728, public domain, recolored. The optogenetics analogy is under the down arrow if needed.')
+
+# ---- Part 2 opener (his note Nov 19): hearing loss as a health problem, the numbers that should alarm. Each one checked against its source ----
+g = adefs('he')
+g += steps(0).replace('url(#pea)', 'url(#hea)')
+SERH = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
+HC = [('1.5 billion', '#DA291C', 'people live with hearing loss', '2.5 billion by 2050: 1 in 4', 'WHO, World Report on Hearing 2021'),
+      ('×2  ×3  ×5', '#DA291C', 'dementia risk with mild,', 'moderate, severe hearing loss', 'Lin et al., Archives of Neurology 2011'),
+      ('7%', '#DA291C', 'of all dementia cases', 'the largest risk we can change', 'Lancet Commission on dementia 2024'),
+      ('+47%', '#DA291C', 'higher odds of depression', '35 studies, 147,000 older adults', 'Lawrence et al., Gerontologist 2020')]
+for k, (big, col, l1, l2, src) in enumerate(HC):
+    x = 30 + k * 285
+    c_ = R(x, 56, 265, 214, '#F4F1EC', 'none', 0, 8) + T(x + 132, 124, big, 40 if k != 1 else 34, 700, col, 'middle', extra=SERH)
+    c_ += T(x + 132, 166, l1, 16, 600, INK, 'middle') + T(x + 132, 188, l2, 14.5, 400, INK, 'middle') + T(x + 132, 250, src, 12, 400, MUT, 'middle')
+    g += F(k, c_) if k else c_
+g += F(4, R(30, 288, 1120, 58, '#FBFAF7', LINE, 1.2, 8) + T(50, 314, 'And it can be treated:', 16, 700, '#4C5B66')
+       + T(232, 314, 'hearing aids slowed 3 year cognitive decline by 48% in older adults at higher risk,', 15.5, 400, INK)
+       + T(232, 334, 'though not in the full trial. ACHIEVE, Lancet 2023.', 14, 400, MUT))
+HEAR = sec('Hearing loss: a quiet epidemic', SVG(g, 360), ch='2',
+           ref='WHO World Report on Hearing 2021. Lin et al., Arch Neurol 2011. Livingston et al., Lancet 2024. Lawrence et al., Gerontologist 2020. Lin et al., ACHIEVE, Lancet 2023',
+           notes=('The motivation for Part 2, say the numbers slowly. Hearing loss is not a small problem. More than 1.5 billion people live with it today, '
+                  'and WHO projects 2.5 billion by 2050, one person in four. Click: it is tied to dementia. Lin and colleagues followed 639 adults for about 12 years: '
+                  'mild hearing loss came with about twice the risk of dementia, moderate three times, severe five times, the severe group was small. '
+                  'Click: the Lancet Commission on dementia, 2024, lists 14 risk factors we can change, together about 45 percent of dementia cases. '
+                  'Hearing loss alone is about 7 percent, tied for the largest with high LDL cholesterol. Click: and depression, across 35 studies and 147 thousand older adults, '
+                  'hearing loss came with 47 percent higher odds of depression. These are associations, not proof of cause. '
+                  'Click: the hopeful part, said honestly. In the ACHIEVE trial, Lancet 2023, hearing aids slowed cognitive decline over 3 years by 48 percent '
+                  'in the older adults at higher risk, but not in the full trial. What we hear matters for the brain. Next: sound, and music, act on it directly.'))
 
 g = adefs('md')
-g += steps(1).replace('url(#pea)', 'url(#mda)')
+g += steps(2).replace('url(#pea)', 'url(#mda)')
 # left: rhythmic cueing, footsteps land on the beat
 BEAT, NB_ = 0.6, 8
 CYC = BEAT * NB_
@@ -2877,7 +2897,7 @@ def assemble(cover, old):
     copy_b = bridge(COPY, 'Before we go inside a generator, one honest line from the literature: in music, graphs win only when the edges carry something the sequence throws away, and often they do not (survey under the down arrow). The one place nobody has looked for such edges is inside the generator itself.')
     corpus_b = bridge(corpus, 'How much memory should the graph have? One note gives the right vocabulary with the wrong syntax, three notes memorize the piece (the picture is under the down arrow on the next slide).')
     beyond5 = bridge(BEYOND5, 'Emotion is one way music acts on the brain. Before we model music, one detour through this year\'s Nobel Prize, because it shows what a designed signal can do to brain circuits. The history of music models is under the down arrow.')
-    mus = [retitle(toch(OPTO, '2'), 'Part 2. Two signals that change the brain: light, and music'), backup(hist), toch(MEDIC, '2'), MNET, toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), copy_b, backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
+    mus = [_addbox(retitle(HEAR, 'Part 2. Hearing loss: a quiet epidemic'), keybox('Losing hearing is tied to ' + kw('dementia') + ' and ' + kw('depression') + ', for 1.5 billion people.', 5, '.4em')), toch(OPTO, '2'), backup(hist), toch(MEDIC, '2'), MNET, toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), copy_b, backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
     beyond = []
     close = [TAKE2.replace('</section>', CLIP_JSON + '</section>')]
     # one bridge per main slide, so each slide leads into the next one (order of Nov 16 2026)
@@ -2894,7 +2914,8 @@ def assemble(cover, old):
             ('Steering: clean for some behaviors', None, 'Bridge: unlearning tries the opposite, to take something out.'),
             ('What is a delta graph?', None, 'Bridge: does it catch more bad edits? Results next.'),
             ('Results: same checking budget', None, 'Bridge: that was level 1, inside the model. Our second paper is level 2, the knowledge graph itself.'),
-            ('Two signals that change the brain', None, 'Bridge: and music already acts on the brain, as medicine.'),
+            ('Hearing loss: a quiet epidemic', None, 'Bridge: and sound, music in particular, acts on the brain directly.'),
+            ('Sound acts on the brain', None, 'Bridge: and music already acts on the brain, as medicine.'),
             ('Music already acts on the brain, as medicine', 'Bridge: music and the brain are this closely tied, so let us model music from the beginning, starting with the simplest graph, and end where music meets the brain.', 'Bridge: before we model music, how does anything new come about, in ideas and in music?'),
             ("Occam's razor", '(the picture is under the down arrow on the next slide)', '(the picture is under the down arrow here)'),
             ('The longest memory sounds most like the style', None, 'Bridge: at the start we saw a helix and a circle inside MusicGen. A probe tells us what is stored, not how the states move. Next, what happens when we push those states with a vector.'),
