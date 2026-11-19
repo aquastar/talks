@@ -2501,6 +2501,56 @@ OPTO_VIDEO = ('<section data-ch="2">\n  <h2>Optogenetics in two minutes</h2>\n'
   '  <div class="ref">BrainFacts.org, Society for Neuroscience, Lighting Up The Brain With Optogenetics, 2017</div>\n'
   '  <aside class="notes">The BrainFacts.org explainer, about two minutes, from the Society for Neuroscience. Click play inside the frame. If time is short, play the first minute and stop. Needs the network. If it fails to load, skip it, the slide before already says the three steps. Press the right arrow outside the video, or click the slide area below it, to go on.</aside>\n</section>')
 
+# ---- Nov 19 (his request): after the live demo, how the field already reads EEG and fMRI as graphs ----
+import json as _jb, os as _osb
+_eegsrc = _osb.path.join(_osb.path.dirname(_osb.path.dirname(_osb.path.abspath(__file__))), '..', '..', 'music-to-brain', 'eeg-demo', 'index.html')
+_eegd = _jb.loads(re.search(r'<script id="data" type="application/json">(.*?)</script>', open(_eegsrc).read(), re.S).group(1))
+g = adefs('bg')
+SERB = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
+# left: EEG, the 32 real electrode positions of the demo, each joined to its 3 nearest neighbors
+ECX, ECY, ESC = 290, 212, 128
+EP = {nm: (ECX + x * ESC, ECY - y * ESC) for nm, (x, y) in zip(_eegd['ch'], _eegd['pos'])}
+HI = set(_eegd['highlight'])
+eg = T(40, 26, 'EEG', 24, 400, INK, extra=SERB) + T(40, 48, 'a node per electrode', 14, 400, MUT)
+eg += f'<ellipse cx="{ECX}" cy="{ECY + 4}" rx="{ESC * 1.08}" ry="{ESC * 1.16}" fill="#FBFAF7" stroke="#8F887E" stroke-width="1.6"/>'
+eg += P(f'M{ECX - 12},{ECY - ESC * 1.14} L{ECX},{ECY - ESC * 1.30} L{ECX + 12},{ECY - ESC * 1.14}', '#8F887E', 1.6)
+edges = set()
+for a_, (x1, y1) in EP.items():
+    nn = sorted(((x2 - x1) ** 2 + (y2 - y1) ** 2, b_) for b_, (x2, y2) in EP.items() if b_ != a_)[:3]
+    for _, b_ in nn:
+        edges.add(tuple(sorted((a_, b_))))
+for a_, b_ in edges:
+    (x1, y1), (x2, y2) = EP[a_], EP[b_]
+    both = a_ in HI and b_ in HI
+    eg += L(round(x1, 1), round(y1, 1), round(x2, 1), round(y2, 1), '#F76902' if both else '#C9C4BD', 2 if both else 1.2)
+for nm, (x, y) in EP.items():
+    eg += C(round(x, 1), round(y, 1), 5.5 if nm in HI else 4, '#F76902' if nm in HI else '#4C5B66')
+eg += T(40, 382, 'edges: nearest electrodes (here, 3 each), or signals', 13.5, 400, INK) + T(40, 400, 'that move together: correlation, phase locking', 13.5, 400, INK)
+eg += T(40, 424, 'orange: the 11 electrodes that track surprise in the demo', 13, 600, '#C45200')
+g += eg
+# right: fMRI, regions from an atlas, joined by correlated activity (illustration over a public domain brain)
+BRF = open('figs/brain-lateral-inner.svgfrag').read()
+fg = T(620, 26, 'fMRI', 24, 400, INK, extra=SERB) + T(620, 48, 'a node per brain region (an atlas, for example 116 regions)', 14, 400, MUT)
+fg += f'<g transform="translate(640,70) scale(0.30)" opacity=".55">{BRF}</g>'
+RN = [(730, 150), (790, 112), (860, 108), (930, 130), (720, 220), (800, 190), (880, 182), (940, 220), (830, 250), (760, 280), (900, 270)]
+RE = [(0, 1), (1, 2), (2, 3), (0, 4), (4, 5), (5, 6), (6, 7), (5, 8), (8, 10), (4, 9), (9, 8), (1, 5), (2, 6), (3, 7), (7, 10), (0, 5), (6, 10)]
+for a_, b_ in RE:
+    fg += L(*RN[a_], *RN[b_], '#4C5B66', 1.4, 'stroke-opacity=".75"')
+fg += ''.join(C(x, y, 6.5, '#4C5B66', extra='stroke="#fff" stroke-width="1.5"') for x, y in RN)
+fg += T(1140, 322, 'illustration', 12, 400, MUT, 'end')
+fg += T(620, 382, 'edges: regions whose signals rise and fall together', 13.5, 400, INK) + T(620, 400, '(correlation, partial correlation), or white matter fibers', 13.5, 400, INK)
+fg += T(620, 424, 'read as a network: hubs, modules, small world', 13, 600, '#4C5B66')
+g += F(1, fg)
+BRAINGRAPH = sec('The brain is read as a graph, too', SVG(g, 436), ch='2',
+                 ref='Bullmore and Sporns, Nature Reviews Neuroscience 2009. Smith et al., NeuroImage 2011. Song et al., DGCNN, IEEE Trans Affective Computing 2020. Li et al., BrainGNN, Medical Image Analysis 2021. Electrode positions: OpenNeuro ds005876',
+                 notes=('Not a result, a pointer: graphs are already how the field reads brain data. Left, EEG: one node per electrode, here the 32 real electrode positions from the demo. '
+                        'Edges can be spatial, each electrode joined to its nearest neighbors, here three, which is how graph neural networks for EEG often start. '
+                        'Or functional: two electrodes whose signals move together, by correlation, coherence or phase locking. Or learned by the network itself, as in DGCNN for emotion recognition. '
+                        'The orange electrodes are the 11 front central ones that tracked surprise in the demo. Click, right, fMRI: one node per brain region from an atlas, for example 116 regions. '
+                        'Edges are regions whose signals rise and fall together, correlation or partial correlation, or white matter fibers traced by diffusion MRI. '
+                        'Read as a network, the brain shows hubs, modules and small world structure, Bullmore and Sporns 2009. Smith and colleagues 2011 found partial correlation among the better ways to estimate these edges. '
+                        'Click: the same recipe as our delta graph, partial correlation between parts that rise and fall together. The fMRI drawing is an illustration on a public domain brain, Gray figure 728.'))
+
 # ---- Nov 19 (his request): a map of who does what near us, no names, nothing national ----
 g = adefs('mn')
 SERN = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
@@ -2938,7 +2988,7 @@ def assemble(cover, old):
     copy_b = bridge(COPY, 'Before we go inside a generator, one honest line from the literature: in music, graphs win only when the edges carry something the sequence throws away, and often they do not (survey under the down arrow). The one place nobody has looked for such edges is inside the generator itself.')
     corpus_b = bridge(corpus, 'Before we go inside a generator, one honest line from the literature: in music, graphs win only when the edges carry something the sequence throws away, and often they do not. The one place nobody has looked for such edges is inside the generator itself. If asked about generating with these graphs, the copying result is on the backup slides under this one.')
     beyond5 = bridge(BEYOND5, 'Emotion is one way music acts on the brain. Before we model music, one detour through this year\'s Nobel Prize, because it shows what a designed signal can do to brain circuits. The history of music models is under the down arrow.')
-    mus = [_addbox(retitle(HEAR, 'Part 2. Hearing loss: a quiet epidemic'), keybox('Losing hearing is tied to ' + kw('dementia') + ' and ' + kw('depression') + ', for 1.5 billion people.', 6, '.3em')), toch(OPTO, '2'), backup(hist), _addbox(toch(MEDIC, '2'), keybox('Nobody knows ' + kw('which part of the music') + ' does the work. That is a modeling question.', 1, '.4em')), _addbox(MNET, keybox('Rochester already has the pieces: music, medicine, ' + kw('hearing') + ' and AI. Let us connect them.', 2, '.3em')), toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), backup(copy_b), backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
+    mus = [_addbox(retitle(HEAR, 'Part 2. Hearing loss: a quiet epidemic'), keybox('Losing hearing is tied to ' + kw('dementia') + ' and ' + kw('depression') + ', for 1.5 billion people.', 6, '.3em')), toch(OPTO, '2'), backup(hist), _addbox(toch(MEDIC, '2'), keybox('Nobody knows ' + kw('which part of the music') + ' does the work. That is a modeling question.', 1, '.4em')), _addbox(MNET, keybox('Rochester already has the pieces: music, medicine, ' + kw('hearing') + ' and AI. Let us connect them.', 2, '.3em')), toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), backup(copy_b), backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, _addbox(BRAINGRAPH, keybox('The brain is already read as a graph. Our delta graph uses the same recipe: ' + kw('partial correlation') + '.', 2, '.3em')), PLAN, backup(BRG)]
     beyond = []
     close = [TAKE2.replace('</section>', CLIP_JSON + '</section>'), backup(TAKEAWAY)]
     # one bridge per main slide, so each slide leads into the next one (order of Nov 16 2026)

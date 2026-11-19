@@ -140,11 +140,13 @@
 **30. Live: what MusicGen expects, next to what listeners' brains do**（135，进行中）现场 demo，全屏，可以直接点：选一首歌播放，乐谱、MusicGen 的意外值、脑电一起滚动。点过 demo 后方向键留在 demo 里，用右下角的 Next slide 按钮翻页。
 Meyer 卡片多了一行：意外程度 = 一个音在前文之后出现的不可能程度，音符转移图能算它（IDyOM，上一页），这里用的是 MusicGen 自己的意外程度。然后问：大脑是不是在跟踪它？demo 嵌入时强制浅色（?theme=light），不随电脑深色模式变黑。
 demo 用 view=talk 布局：上面是随时间变化的乐谱、模型意外程度、脑电曲线和此刻头皮图，下面只留两张分析卡：Average evidence（意外的音和预期的音之后的平均脑电）和 After this note（音后 0 到 0.3 秒的头皮图）。浅红色带是固定的 0.1 到 0.35 秒窗口，就是统计上意外效应出现的时间段。
-说："This is the measurement we built. Note by note, it does not yet beat an untrained model, and the next slide is how we test it properly."
+说："This is the measurement we built. Note by note, it does not yet beat an untrained model, and the next slide is how we test it properly."演讲视图里小字收进每张卡右上角的 i 图标，点开看。底部右侧卡片（After this note，上下两行）有橙色框，是重点：下一行是 29 个听众、全部歌曲的回归估计，每多一个标准差的意外，头皮电位额外变化多少。+0.2 s 时前中部变红，意思是意外的音符让前中部头皮电位更正。这是头皮电压，不等于某个脑区“被激活”。
 
-**31. Our plan: a graph from inside MusicGen, judged by the brain**（75，计划）从 MusicGen 内部读出图，和 IDyOM、MusicGen 输出一起比谁更能解释大脑。
+**31. The brain is read as a graph, too**（60，领域现状，不是我们的结果）左：EEG，一个电极一个节点，用 demo 里 32 个电极的真实位置，每个连最近的 3 个（k-NN），橙色是 demo 里跟踪意外的 11 个前中部电极。边也可以按信号一起变化来连（相关、相位锁定），或让网络自己学（DGCNN，Song 2020，情绪识别）。点一下，右：fMRI，一个脑区一个节点（图谱，比如 AAL 的 116 个区），边是信号一起涨落的脑区（相关或偏相关），或扩散成像追踪的白质纤维。当成网络看有枢纽、模块、小世界（Bullmore and Sporns 2009）。Smith 2011 比较过多种估边方法，偏相关属于较好的一类。右图是示意。再点：结论框，我们的 delta graph 用的是同一个配方，偏相关。
+
+**32. Our plan: a graph from inside MusicGen, judged by the brain**（75，计划）从 MusicGen 内部读出图，和 IDyOM、MusicGen 输出一起比谁更能解释大脑。
 说："If the graph inside the generator explains the listener, the graph is real."
 
 ### 结尾（28 页，约 1.5 分钟）
 
-**32. Look for the graph, in language and in music**（90）结尾，两栏各一句。语言：事实是三元组，互相支撑。编辑加了一条绕行，旧路径还在。我们的结果（橙色）：delta graph 查 20 个找到 17 个坏编辑（SDM 2026），QGC：缺一条路径，每个模型都更差（CIKM 2026）。点一下，音乐：乐理是一张图，模型学到了它的几何。我们的结果：144 个数的音符图认出风格，约 70%，听众的意外程度可以计算，大脑在跟踪它（live demo）。下一步：读出 MusicGen 内部的图。再点：结论框 Is there a graph inside your model?。底部是二维码和 zhiqian.ai/talks，讲完停在这一页答问。原来的点云版结尾在下箭头备用页。
+**33. Look for the graph, in language and in music**（90）结尾，两栏各一句。语言：事实是三元组，互相支撑。编辑加了一条绕行，旧路径还在。我们的结果（橙色）：delta graph 查 20 个找到 17 个坏编辑（SDM 2026），QGC：缺一条路径，每个模型都更差（CIKM 2026）。点一下，音乐：乐理是一张图，模型学到了它的几何。我们的结果：144 个数的音符图认出风格，约 70%，听众的意外程度可以计算，大脑在跟踪它（live demo）。下一步：读出 MusicGen 内部的图。再点：结论框 Is there a graph inside your model?。底部是二维码和 zhiqian.ai/talks，讲完停在这一页答问。原来的点云版结尾在下箭头备用页。
