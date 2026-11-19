@@ -2427,9 +2427,9 @@ UNLEARN2 = sec('Unlearning: the old circuit is bypassed, not deleted', SVG(g), c
 g = adefs('sm2')
 g += T(240, 34, 'The exam says', 17, 600, MUT) + T(640, 34, 'Inside the model', 17, 600, MUT)
 ROWS = [('Merging', 'both skill exams pass', 'misalignment came along'),
-        ('Steering', 'works on average', 'many inputs pushed the wrong way'),
-        ('Unlearning', 'the toxic text is gone', 'a detour, the old part still there'),
-        ('Editing', 'the new fact passes', 'a bypass, the old fact still there, no graph view')]
+        ('Steering', 'clean for refusal', 'other behaviors: up to half the inputs go the wrong way'),
+        ('Removing', 'toxicity 0.45 to 0.21', 'the swear neurons still there, a detour'),
+        ('Editing', 'the new fact passes', 'a bypass, the old path still there')]
 for k, (a_, b_, c_) in enumerate(ROWS):
     y = 64 + k * 64
     row = (f'<path d="M40,{y} h1100 v54 h-1100 Z" fill="#FDEBDD"/><path d="M40,{y} h5 v54 h-5 Z" fill="#F76902"/>' if a_ == 'Editing' else R(40, y, 1100, 54, '#F4F1EC' if k % 2 == 0 else '#FBFAF7', 'none', 0, 4)) + T(60, y + 34, a_, 19, 600, INK)
@@ -2438,7 +2438,7 @@ for k, (a_, b_, c_) in enumerate(ROWS):
 g += F(1, T(590, 368, 'The exam reads answers. The failure is a change inside that nobody looked at.', 21, 400, INK, 'middle', extra=SER1 + ' data-keep="1"'))
 SUMM = sec('Every surgery: the exam passes, the inside tells another story', SVG(g, 400), ch='1',
            ref='Hammoud et al. 2024. Tan et al. 2024. Lee et al. 2024. Xie et al. 2025. Zhang et al. 2025',
-           notes='One table, four rows, the last four slides in one place. Read the left column, then the right one. Merging: both skill exams pass, misalignment came along. Steering: works on average, many single inputs pushed the wrong way. Unlearning: the toxic text is gone, but it is a detour, the old part is still there. Editing: the new fact passes, but it is a shortcut, the old fact is still inside. Click: the exam reads answers, and the failure is a change inside that nobody looked at. Click: so what we need is to compare the inside of the model before and after a change, and flag the risky ones. That is our first paper. The four receipts with the original figures are under the down arrow.')
+           notes='One table, four rows, the last four slides in one place. Read the left column, then the right one. Merging: both skill exams pass, and the misalignment of one expert came along. Steering: clean for refusal, but for other behaviors up to half the inputs go the wrong way. Removing a behavior: toxicity drops from 0.45 to 0.21, and the swear neurons are still there behind a detour, unlearning shows the same. Editing, ours: the new fact passes, and the old path is still there. Click: the exam reads answers. The failure is a change inside that nobody looked at. Click: what we need, compare the inside before and after a change, and flag the risky ones. That is the delta graph, next.')
 
 OPTO_VIDEO = ('<section data-ch="2">\n  <h2>Optogenetics in two minutes</h2>\n'
   '  <div style="width:880px;height:495px;margin:0 auto"><iframe data-src="https://www.youtube-nocookie.com/embed/azp-if02m8U?rel=0" title="Lighting Up The Brain With Optogenetics, BrainFacts.org" style="width:880px;height:495px;border:0;max-width:none;max-height:none;margin:0" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>\n'
@@ -2583,10 +2583,11 @@ g = adefs('dg')
 g += T(590, 22, 'Same probe questions, before and after the edit. A node is a block (attention or MLP of a layer).', 16, 400, INK, 'middle', extra='data-keep="1"')
 g += T(590, 44, 'An edge: two blocks that rise and fall together across the questions, other blocks removed (partial correlation).', 16, 400, MUT, 'middle', extra='data-keep="1"')
 def _dgn(cx):
-    return {(r, c): (cx + (-46 if c == 0 else 46), 230 - r * 42) for r in range(4) for c in range(2)}
-E_BEFORE = [((0, 0), (0, 1)), ((0, 1), (1, 0)), ((1, 0), (1, 1)), ((1, 1), (2, 0)), ((2, 0), (2, 1)), ((2, 1), (3, 0)), ((3, 0), (3, 1)), ((0, 0), (1, 1)), ((2, 0), (3, 1)), ((1, 0), (2, 1))]
-E_UP = [((1, 1), (2, 1)), ((2, 1), (3, 1))]          # stronger after the edit
-E_DOWN = [((1, 0), (2, 1)), ((2, 0), (3, 1))]         # weaker after the edit
+    return {(r, c): (cx + (-46 if c == 0 else 46), 254 - r * 36) for r in range(6) for c in range(2)}
+E_BEFORE = ([((r, 0), (r, 1)) for r in range(6)] + [((r, 1), (r + 1, 0)) for r in range(5)] + [((r, 0), (r + 1, 0)) for r in (0, 2, 4)] + [((r, 1), (r + 1, 1)) for r in (0, 4)]
+            + [((0, 0), (2, 1)), ((1, 1), (3, 0)), ((2, 0), (4, 1)), ((3, 1), (5, 0)), ((1, 0), (4, 1)), ((0, 1), (3, 0)), ((1, 1), (2, 0)), ((2, 1), (5, 0))])
+E_UP = [((2, 1), (3, 1)), ((3, 1), (4, 1)), ((1, 0), (3, 1))]          # stronger after the edit
+E_DOWN = [((2, 0), (4, 1)), ((3, 1), (5, 0)), ((1, 1), (2, 0))]         # weaker after the edit
 def _dgdraw(cx, edges, label, lc, extra=''):
     N = _dgn(cx); out = ''
     for a, b, col, sw, dash in edges:
@@ -2594,36 +2595,36 @@ def _dgdraw(cx, edges, label, lc, extra=''):
         out += P(f'M{x1},{y1} L{x2},{y2}', col, sw, extra=(f'stroke-dasharray="{dash}"' if dash else ''))
     for (r, c), (x, y) in N.items():
         out += C(x, y, 8, '#4C5B66' if c == 0 else '#C45200')
-    out += T(cx, 270, label, 16, 700, lc, 'middle')
+    out += T(cx, 286, label, 16, 700, lc, 'middle')
     return out
 bef = [(a, b, '#8F887E', 1.8, '') for a, b in E_BEFORE]
 aft = [(a, b, '#8F887E', 1.8, '') for a, b in E_BEFORE if (a, b) not in E_DOWN] + [(a, b, '#8F887E', 1.8, '') for a, b in E_UP]
 dlt = [(a, b, '#F76902', 3.2, '') for a, b in E_UP] + [(a, b, '#4C5B66', 2.2, '5 4') for a, b in E_DOWN]
-for r in range(4):
-    g += T(128, 230 - r * 42 + 5, f'layer {r + 1}', 13, 400, MUT, 'end')
+for r in range(6):
+    g += T(128, 254 - r * 36 + 5, f'layer {r + 1}', 13, 400, MUT, 'end')
 g += _dgdraw(220, bef, 'before the edit', INK) + T(352, 160, 'vs', 20, 400, MUT, 'middle') + _dgdraw(480, aft, 'after the edit', INK)
 g += T(612, 160, '=', 26, 400, MUT, 'middle')
-g += F(1, _dgdraw(744, dlt, 'delta graph', '#C45200') + T(744, 290, 'after minus before', 13, 400, MUT, 'middle')
+g += F(1, _dgdraw(744, dlt, 'delta graph', '#C45200') + T(744, 304, 'after minus before', 13, 400, MUT, 'middle')
        + P('M880,96 h34', '#F76902', 3.2) + T(922, 101, 'stronger after the edit', 13.5, 400, INK)
        + P('M880,126 h34', '#4C5B66', 2.2, extra='stroke-dasharray="5 4"') + T(922, 131, 'weaker after the edit', 13.5, 400, INK)
        + C(889, 160, 7, '#4C5B66') + T(902, 165, 'attention', 13.5, 400, INK) + C(985, 160, 7, '#C45200') + T(998, 165, 'MLP', 13.5, 400, INK))
 # from the graph to a few numbers
-b1 = R(40, 302, 530, 146, '#F4F1EC', 'none', 0, 6) + T(60, 330, 'Where, and how much', 17, 700, INK)
-b1 += T(60, 354, 'change at a block = sum of its edge changes', 14, 400, MUT) + T(60, 374, 'total change, which layers, how concentrated', 14, 400, MUT)
-for k, hgt in enumerate([8, 34, 22, 6]):
-    b1 += R(400 + k * 34, 438 - hgt * 1.6, 24, hgt * 1.6, '#C45200' if k == 1 else '#ACA39A', 'none', 0, 2) + T(412 + k * 34, 456 + 0, '', 1, 400, MUT)
-b1 += T(468, 332, 'change per layer', 12.5, 400, MUT, 'middle')
-b2 = R(610, 302, 530, 146, '#F4F1EC', 'none', 0, 6) + T(630, 330, 'Smooth, or sharp (spectral)', 17, 700, INK)
-b2 += T(630, 354, 'the before graph gives the shape: its Laplacian', 14, 400, MUT) + T(630, 374, 'project the change onto it (a graph Fourier transform)', 14, 400, MUT)
+b1 = R(40, 316, 530, 140, '#F4F1EC', 'none', 0, 6) + T(60, 342, 'Where, and how much', 17, 700, INK)
+b1 += T(60, 366, 'change at a block = sum of its edge changes', 14, 400, MUT) + T(60, 386, 'total change, which layers, how concentrated', 14, 400, MUT)
+for k, hgt in enumerate([5, 10, 30, 34, 16, 4]):
+    b1 += R(372 + k * 30, 446 - hgt * 1.6, 24, hgt * 1.6, '#C45200' if k == 3 else '#ACA39A', 'none', 0, 2)
+b1 += T(456, 342, 'change per layer', 12.5, 400, MUT, 'middle')
+b2 = R(610, 316, 530, 140, '#F4F1EC', 'none', 0, 6) + T(630, 342, 'Smooth, or sharp (spectral)', 17, 700, INK)
+b2 += T(630, 366, 'the before graph gives the shape: its Laplacian', 14, 400, MUT) + T(630, 386, 'project the change onto it (a graph Fourier transform)', 14, 400, MUT)
 def _chain(x0, y0, vals):
     o = P(f'M{x0},{y0} h{4 * 30}', '#8F887E', 1.6)
     for k, v in enumerate(vals):
         o += C(x0 + k * 30, y0, 8, f'rgba(196,82,0,{v})', extra='stroke="#8F887E" stroke-width="1"')
     return o
-b2 += _chain(640, 404, [.15, .35, .55, .75, .95]) + T(800, 409, 'low: change spreads along the wiring', 13.5, 400, INK)
-b2 += _chain(640, 432, [.95, .1, .95, .1, .95]) + T(800, 437, 'high: neighbors disagree, a sharp patch', 13.5, 400, INK)
+b2 += _chain(640, 414, [.15, .35, .55, .75, .95]) + T(800, 419, 'low: change spreads along the wiring', 13.5, 400, INK)
+b2 += _chain(640, 442, [.95, .1, .95, .1, .95]) + T(800, 447, 'high: neighbors disagree, a sharp patch', 13.5, 400, INK)
 g += F(2, b1 + b2)
-DG16 = sec('What is a delta graph?', SVG(g, 452), ch='1', status='pub',
+DG16 = sec('What is a delta graph?', SVG(g, 462), ch='1', status='pub',
            ref='Benbrahim et al., Delta-Graph Signatures for Post-Edit Risk Screening, SDM 2026, Section 4',
            notes=('One idea on this slide. We ask the model the same probe questions before and after the edit, questions kept apart from the ones used to score the edit. '
                   'A node is a block: the attention block or the MLP block of one layer, so two nodes per layer. For each question we record how active each block is. '
