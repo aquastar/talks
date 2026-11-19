@@ -1838,7 +1838,7 @@ for t0, sz, kind, col in NOTES:
     nc += (f'<g opacity="0"><g>{body}<animateTransform attributeName="transform" type="translate" values="{vals}" dur="{DUR}s" begin="{t0}s" repeatCount="indefinite"/></g>'
            f'<animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="{DUR}s" begin="{t0}s" repeatCount="indefinite"/></g>')
 facts = [('The brain rhythm locks to the beat', 'EEG, Nozaradan et al. 2011'),
-         ('Dopamine is released at the peak of pleasure', 'PET, Salimpoor et al. 2011'),
+         ('Dopamine is released at peak pleasure', 'PET, Salimpoor et al. 2011'),
          ('40 Hz sound changes mouse brains', 'less amyloid, Martorell et al. 2019')]
 for k, (a_, b_) in enumerate(facts):
     y = 140 + k * 44
@@ -1865,11 +1865,8 @@ for k, (big, col, l1, l2, src) in enumerate(HC):
 g += F(4, R(30, 288, 1120, 58, '#FBFAF7', LINE, 1.2, 8) + T(50, 314, 'And it can be treated:', 16, 700, '#4C5B66')
        + T(232, 314, 'hearing aids slowed 3 year cognitive decline by 48% in older adults at higher risk,', 15.5, 400, INK)
        + T(232, 334, 'though not in the full trial. ACHIEVE, Lancet 2023.', 14, 400, MUT))
-g += F(5, R(30, 358, 1120, 58, '#FBFAF7', LINE, 1.2, 8) + T(50, 384, 'NIH is investing:', 16, 700, '#4C5B66')
-       + T(232, 384, 'NIA funded the ACHIEVE trial. Sound Health, NIH with the Kennedy Center and NEA, since 2017.', 15.5, 400, INK)
-       + T(232, 404, 'In 2023, NCCIH and NIA funded four research networks on music for pain and dementia.', 15.5, 400, INK))
-HEAR = sec('Hearing loss: a quiet epidemic', SVG(g, 424), ch='2',
-           ref='WHO World Report on Hearing 2021. Lin et al., Arch Neurol 2011. Livingston et al., Lancet 2024. Lawrence et al., Gerontologist 2020. ACHIEVE, Lancet 2023. NIH RFA-AT-23-009',
+HEAR = sec('Hearing loss: a quiet epidemic', SVG(g, 356), ch='2',
+           ref='WHO World Report on Hearing 2021. Lin et al., Arch Neurol 2011. Livingston et al., Lancet 2024. Lawrence et al., Gerontologist 2020. ACHIEVE, Lancet 2023',
            notes=('The motivation for Part 2, say the numbers slowly. Hearing loss is not a small problem. More than 1.5 billion people live with it today, '
                   'and WHO projects 2.5 billion by 2050, one person in four. Click: it is tied to dementia. Lin and colleagues followed 639 adults for about 12 years: '
                   'mild hearing loss came with about twice the risk of dementia, moderate three times, severe five times, the severe group was small. '
@@ -1877,7 +1874,7 @@ HEAR = sec('Hearing loss: a quiet epidemic', SVG(g, 424), ch='2',
                   'Hearing loss alone is about 7 percent, tied for the largest with high LDL cholesterol. Click: and depression, across 35 studies and 147 thousand older adults, '
                   'hearing loss came with 47 percent higher odds of depression. These are associations, not proof of cause. '
                   'Click: the hopeful part, said honestly. In the ACHIEVE trial, Lancet 2023, hearing aids slowed cognitive decline over 3 years by 48 percent '
-                  'in the older adults at higher risk, but not in the full trial. Click: and NIH is investing. The National Institute on Aging funded ACHIEVE. Sound Health, a partnership of NIH, the Kennedy Center and the National Endowment for the Arts, runs since 2017. In 2023 NCCIH and NIA funded four research networks on music based interventions for pain and dementia. What we hear matters for the brain. Next: sound, and music, act on it directly.'))
+                  'in the older adults at higher risk, but not in the full trial. Click: losing hearing is tied to dementia and depression. What we hear matters for the brain. Next: music acts on it directly.'))
 
 g = adefs('md')
 g += steps(2).replace('url(#pea)', 'url(#mda)')
@@ -1904,11 +1901,18 @@ MEDIC = sec('Music already acts on the brain, as medicine', SVG(g, 360), ch='0',
 g = adefs('mq')
 g += steps(1).replace('url(#pea)', 'url(#mqa)')
 SERMB = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
-g += f'<g transform="translate(30,58) scale(0.11)">{open("figs/brain-lateral-inner.svgfrag").read()}</g>'
-g += T(160, 70, 'In the brain, we can measure it:', 15, 600, MUT)
+g += f'<g transform="translate(118,52) scale(0.13)">{BR}</g>'
+g += (f'<g transform="translate(30,70) scale(1.5)" fill="none" stroke="{INK}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
+      '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="#EFEBE5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></g>')
+for k_ in range(4):
+    t0 = -k_ * 0.6
+    vals = ';'.join(f'{x:.0f} {88 - 10 * _om.sin((x - 66) / 9):.0f}' for x in range(66, 151, 6))
+    g += (f'<g opacity="0"><g>{eighth(0.62, (INK, ACC)[k_ % 2])}<animateTransform attributeName="transform" type="translate" values="{vals}" dur="2.4s" begin="{t0}s" repeatCount="indefinite"/></g>'
+          f'<animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.8;1" dur="2.4s" begin="{t0}s" repeatCount="indefinite"/></g>')
+g += T(256, 70, 'In the brain, we can measure it:', 15, 600, MUT)
 for k, (a_, b_) in enumerate(facts):
-    x = 160 + k * 335
-    g += C(x + 4, 96, 4, ACC) + T(x + 16, 99, a_, 15, 600, INK) + T(x + 16, 117, b_, 12.5, 400, MUT)
+    x = 256 + k * 300
+    g += C(x + 4, 96, 4, ACC) + T(x + 16, 99, a_, 14, 600, INK) + T(x + 16, 117, b_, 12.5, 400, MUT)
 g += L(30, 146, 1150, 146, LINE, 1)
 cards = T(30, 176, 'In clinical trials, music helps in:', 15, 600, MUT)
 for k, (h_, l1, l2, src) in enumerate(MC):
@@ -1928,20 +1932,42 @@ MUSMED = sec('Music acts on the brain, and works as medicine', SVG(g, 400), ch='
 # ---- Nov 19 (his request): a short history of how NIH came to fund music and health. Each date checked ----
 g = adefs('nh')
 g += steps(2).replace('url(#pea)', 'url(#nha)')
-NH = [('1950', 'Music therapy becomes', 'a profession', 'a national association of', 'music therapists forms in the US', 'NAMT, now AMTA'),
-      ('2017', 'Sound Health starts', 'NIH, Kennedy Center, NEA', 'from a singer, Renée Fleming,', 'and NIH director Francis Collins', 'Fleming and Collins, JAMA 2017'),
-      ('2019', '$20 million', 'over 5 years', 'first research awards, from', '10 NIH institutes and centers', 'NIH news release, Sept 2019'),
-      ('2023', 'Research networks', 'for pain and dementia', 'NCCIH and NIA fund networks', 'to build shared methods', 'NIH RFA-AT-23-009')]
-g += L(70, 120, 1110, 120, '#D7D2CB', 3)
-for k, (yr, h1, h2, d1, d2, src) in enumerate(NH):
-    x = 30 + k * 285
-    c_ = C(x + 132, 120, 9, ACC if k else '#4C5B66', extra='stroke="#fff" stroke-width="3"') + T(x + 132, 94, yr, 30, 400, INK, 'middle', extra=SERMB)
-    c_ += R(x, 146, 265, 200, '#F4F1EC', 'none', 0, 8)
-    c_ += T(x + 132, 186, h1, 21 if k != 2 else 26, 700, '#C45200' if k == 2 else INK, 'middle', extra=SERMB + ' data-keep="1"')
-    if h2:
-        c_ += T(x + 132, 210, h2, 16, 600, INK, 'middle')
-    c_ += T(x + 132, 254, d1, 14.5, 400, INK, 'middle') + T(x + 132, 274, d2, 14.5, 400, INK, 'middle') + T(x + 132, 328, src, 12, 400, MUT, 'middle')
-    g += F(k, c_) if k else c_
+def pill(x, y, txt, col='#4C5B66'):
+    w = len(txt) * 6.9 + 16
+    return R(x, y, w, 20, '#fff', col, 1.2, 10) + T(x + w / 2, y + 14, txt, 11.5, 700, col, 'middle'), w
+def pills(x, y, items):
+    o = ''
+    for t_ in items:
+        p_, w_ = pill(x, y, t_); o += p_; x += w_ + 6
+    return o
+g += L(70, 112, 1110, 112, '#D7D2CB', 3)
+XS = [(30, 230), (280, 420), (720, 210), (950, 200)]
+YR = ['1950', '2017', '2019', '2023']
+for k, (x, w) in enumerate(XS):
+    g_ = C(x + w / 2, 112, 9, ACC if k else '#4C5B66', extra='stroke="#fff" stroke-width="3"') + T(x + w / 2, 88, YR[k], 28, 400, INK, 'middle', extra=SERMB)
+    g_ += R(x, 134, w, 236, '#F4F1EC', 'none', 0, 8)
+    if k == 0:
+        g_ += T(x + 16, 166, 'Music therapy', 19, 700, INK, extra=SERMB + ' data-keep="1"') + T(x + 16, 186, 'becomes a profession', 14.5, 600, INK)
+        g_ += pills(x + 16, 200, ['NAMT', 'now AMTA'])
+        g_ += T(x + 16, 248, 'after music was used in', 13.5, 400, INK) + T(x + 16, 266, 'veterans hospitals, music', 13.5, 400, INK) + T(x + 16, 284, 'therapists form a national', 13.5, 400, INK) + T(x + 16, 302, 'association in the US', 13.5, 400, INK)
+        g_ += T(x + 16, 356, 'AMTA history', 12, 400, MUT)
+    elif k == 1:
+        g_ += T(x + 16, 166, 'Sound Health starts', 19, 700, INK, extra=SERMB + ' data-keep="1"') + pills(x + 196, 152, ['NIH', 'Kennedy Center', 'NEA'])
+        g_ += T(x + 16, 190, 'It began when a singer met a scientist:', 14, 400, MUT)
+        g_ += photo(x + 52, 238, 36, 'renee-fleming.jpg', 'RF', AC2) + T(x + 100, 226, 'Renée Fleming', 17, 700, INK) + T(x + 100, 245, 'American soprano, Grammy winner,', 13.5, 400, INK) + T(x + 100, 262, 'Kennedy Center Honors 2023', 13.5, 400, INK)
+        g_ += photo(x + 52, 318, 36, 'francis-collins.jpg', 'FC', AC2) + T(x + 100, 306, 'Francis Collins', 17, 700, INK) + T(x + 100, 325, 'NIH director 2009 to 2021, led the', 13.5, 400, INK) + T(x + 100, 342, 'Human Genome Project, plays guitar', 13.5, 400, INK)
+        g_ += T(x + w - 12, 364, 'Fleming and Collins, JAMA 2017', 11.5, 400, MUT, 'end')
+    elif k == 2:
+        g_ += T(x + 16, 168, '$20 million', 26, 700, '#C45200', extra=SERMB + ' data-keep="1"') + T(x + 16, 190, 'over 5 years', 14.5, 600, INK)
+        g_ += pills(x + 16, 204, ['NIH', '10 institutes'])
+        g_ += T(x + 16, 252, 'the first research', 13.5, 400, INK) + T(x + 16, 270, 'awards, for example', 13.5, 400, INK) + T(x + 16, 288, "music and movement", 13.5, 400, INK) + T(x + 16, 306, "in Parkinson's", 13.5, 400, INK)
+        g_ += T(x + 16, 356, 'NIH news release 2019', 12, 400, MUT)
+    else:
+        g_ += T(x + 16, 166, 'Research networks', 19, 700, INK, extra=SERMB + ' data-keep="1"') + T(x + 16, 186, 'for pain and dementia', 14.5, 600, INK)
+        g_ += pills(x + 16, 200, ['NCCIH', 'NIA'])
+        g_ += T(x + 16, 248, 'to build shared methods:', 13.5, 400, INK) + T(x + 16, 266, 'common measures,', 13.5, 400, INK) + T(x + 16, 284, 'training, small pilot', 13.5, 400, INK) + T(x + 16, 302, 'studies', 13.5, 400, INK)
+        g_ += T(x + 16, 356, 'NIH RFA-AT-23-009', 12, 400, MUT)
+    g += F(k, g_) if k else g_
 g += '<g class="fragment" data-fragment-index="4"></g>'
 NIHHIST = sec('How NIH came to fund music and health', SVG(g, 400), ch='2',
               ref='AMTA history. Fleming and Collins, JAMA 2017. NIH news release, Sept 19 2019. NIH RFA-AT-23-009 and RFA-AT-23-008',
@@ -2030,6 +2056,11 @@ for (x, y, lab) in ((760, 248, 'jazz'), (1050, 248, 'folk')):
 m += P('M786,232 Q905,170 1024,232', MU, 2.4, extra='stroke-dasharray="6 4"') + C(905, 204, 22, MU, 'none', 0) + T(905, 209, 'fusion', 12.5, 700, '#fff', 'middle')
 m += T(690, 300, 'Three generators and judges: jazz, folk, and the', 14.5, 400, INK) + T(690, 322, 'fusion, kept equally far from both parents.', 14.5, 400, INK)
 m += T(690, 350, 'A GAN learned a style the data never contained.', 14.5, 700, INK)
+# Nov 19 (his request): play the published demo (SoundCloud playlist from the paper page: Jazz, Folk, Fusion)
+def scbtn(x, y, i):
+    return (f'<g class="scbtn" data-i="{i}" style="cursor:pointer" transform="translate({x},{y})"><circle r="13" fill="#F76902"/>'
+            f'<path class="scpl" d="M-4,-6 L7,0 L-4,6 Z" fill="#fff"/><g class="scpa" style="display:none"><rect x="-5" y="-6" width="3.5" height="12" fill="#fff"/><rect x="1.5" y="-6" width="3.5" height="12" fill="#fff"/></g></g>')
+m += scbtn(712, 248, 0) + scbtn(1098, 248, 1) + scbtn(905, 246, 2)
 g = ''
 for k, (f, who, lines) in enumerate(BK):
     x = 40 + k * 86
@@ -2041,6 +2072,18 @@ g += F(2, '<g transform="translate(118,156) scale(.8)">' + m + '</g>')
 GENRE = sec('A new idea is a new edge, and so is a new style of music', SVG(g), ch='0',
             ref='Young, A Technique for Producing Ideas, 1940. Koestler, The Act of Creation, 1964. Boden, The Creative Mind, 1990. Johnson, Where Good Ideas Come From, 2010. Uzzi et al., Atypical Combinations and Scientific Impact, Science 2013. Gioia, The History of Jazz, 2011. Chen, Wu, Lu, Lerch, Lu, Learning to Fuse Music Genres with Generative Adversarial Dual Learning, IEEE ICDM 2017',
             notes='Top row, half a minute: four books on creativity over seventy years, Young 1940, Koestler 1964, Boden 1990, Johnson 2010, and the Science 2013 study of millions of papers by Uzzi and colleagues, say one thing: a new idea is a new combination of old ones, a new edge, A plus B. The longer version with the graph picture is under the down arrow. Click: music has a family tree, like a science genealogy. Jazz came from blues, ragtime and brass bands. Rock and roll came from rhythm and blues and country. Then jazz plus rock gave fusion, jazz plus samba gave bossa nova. Each new style inherits from its parents and adds one combination nobody had made. Click: in 2017 we asked whether a model can draw such an edge. FusionGAN takes jazz and folk melodies and learns a third style with three generator and judge pairs and a distance that keeps the fusion equally far from both parents. Listeners heard it as a fusion slightly more often than a plain GAN, a small margin. So a generator can draw a new edge. The question for the rest of this part: is there a graph inside the generator that tells us which edges it can draw? Start with the simplest graph of music.')
+SC_JS = """<script src="https://w.soundcloud.com/player/api.js"></script>
+<script>(function(){var ifr=null,w=null,cur=-1,playing=false;
+function icons(){document.querySelectorAll('.scbtn').forEach(function(b){var on=playing&&(+b.dataset.i===cur);b.querySelector('.scpl').style.display=on?'none':'';b.querySelector('.scpa').style.display=on?'':'none';});}
+function make(){if(ifr)return;ifr=document.createElement('iframe');ifr.allow='autoplay';ifr.style.cssText='position:fixed;left:-2000px;top:0;width:300px;height:120px;border:0';
+ifr.src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/386399813&auto_play=false&visual=false';document.body.appendChild(ifr);
+w=SC.Widget(ifr);w.bind(SC.Widget.Events.PLAY,function(){w.getCurrentSoundIndex(function(k){cur=k;playing=true;icons();});});
+w.bind(SC.Widget.Events.PAUSE,function(){playing=false;icons();});w.bind(SC.Widget.Events.FINISH,function(){w.pause();playing=false;icons();});}
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.scbtn');if(!b||!window.SC)return;e.stopPropagation();make();var i=+b.dataset.i;
+if(playing&&cur===i){w.pause();return;}cur=i;w.skip(i);w.play();},true);
+var t=setInterval(function(){if(window.Reveal&&Reveal.on&&window.SC){clearInterval(t);make();Reveal.on('slidechanged',function(){if(w&&playing)w.pause();});}},300);})();</script>"""
+GENRE = GENRE.replace('</section>', SC_JS + '\n</section>', 1)
+
 
 # ======================= PART 1, related work, one result and one catch per slide =======================
 FAILC = '#DA291C'
@@ -3028,7 +3071,7 @@ def assemble(cover, old):
     copy_b = bridge(COPY, 'Before we go inside a generator, one honest line from the literature: in music, graphs win only when the edges carry something the sequence throws away, and often they do not (survey under the down arrow). The one place nobody has looked for such edges is inside the generator itself.')
     corpus_b = bridge(corpus, 'Before we go inside a generator, one honest line from the literature: in music, graphs win only when the edges carry something the sequence throws away, and often they do not. The one place nobody has looked for such edges is inside the generator itself. If asked about generating with these graphs, the copying result is on the backup slides under this one.')
     beyond5 = bridge(BEYOND5, 'Emotion is one way music acts on the brain. Before we model music, one detour through this year\'s Nobel Prize, because it shows what a designed signal can do to brain circuits. The history of music models is under the down arrow.')
-    mus = [_addbox(retitle(HEAR, 'Part 2. Hearing loss: a quiet epidemic'), keybox('Losing hearing is tied to ' + kw('dementia') + ' and ' + kw('depression') + ', for 1.5 billion people.', 6, '.3em')), _addbox(MUSMED, keybox('Nobody knows ' + kw('which part of the music') + ' does the work. That is a modeling question.', 2, '.3em')), _addbox(NIHHIST, keybox('The music is old, the funding is new. The field needs ' + kw('methods') + ', and that is where computing comes in.', 4, '.6em')), backup(hist), backup(toch(OPTO, '2')), backup(toch(MEDIC, '2')), _addbox(MNET, keybox('Rochester already has the pieces: music, medicine, ' + kw('hearing') + ' and AI. Let us connect them.', 2, '.3em')), toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), backup(copy_b), backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, _addbox(BRAINGRAPH, keybox('The brain is already read as a graph. Our delta graph uses the same recipe: ' + kw('partial correlation') + '.', 2, '.3em')), backup(PLAN), backup(BRG)]
+    mus = [_addbox(retitle(HEAR, 'Part 2. Hearing loss: a quiet epidemic'), keybox('Losing hearing is tied to ' + kw('dementia') + ' and ' + kw('depression') + ', for 1.5 billion people.', 5, '.6em')), _addbox(MUSMED, keybox('Nobody knows ' + kw('which part of the music') + ' does the work. That is a modeling question.', 2, '.3em')), _addbox(NIHHIST, keybox('The music is old, the funding is new. The field needs ' + kw('methods') + ', and that is where computing comes in.', 4, '.6em')), backup(hist), backup(toch(OPTO, '2')), backup(toch(MEDIC, '2')), _addbox(MNET, keybox('Rochester already has the pieces: music, medicine, ' + kw('hearing') + ' and AI. Let us connect them.', 2, '.3em')), toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), backup(copy_b), backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, _addbox(BRAINGRAPH, keybox('The brain is already read as a graph. Our delta graph uses the same recipe: ' + kw('partial correlation') + '.', 2, '.3em')), backup(PLAN), backup(BRG)]
     beyond = []
     close = [TAKE2.replace('</section>', CLIP_JSON + '</section>'), backup(TAKEAWAY)]
     # one bridge per main slide, so each slide leads into the next one (order of Nov 16 2026)
