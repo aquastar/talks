@@ -2376,6 +2376,46 @@ for k, (h_, a_, b_) in enumerate(STEPS):
     y += 62 if k != 1 else 42
     g += F({0: 0, 1: 1, 2: 1, 3: 2}[k], blk) if k else blk
 g += F(3, catch('Unlearning hides, it does not delete. A short harmless fine tune brings forgotten facts back too.', 430))
+# ---- slide 13 rebuilt (his note Nov 19): three small pictures, one line each, numbers from Lee et al. 2024 Tables 2 and 4 ----
+g = adefs('ul')
+def _ul_panel(ox, n, title, mode, tox, tcol, cap1, cap2):
+    o = C(ox + 10, 24, 12, ACC if n == 3 else '#4C5B66') + T(ox + 10, 29, str(n), 13, 700, '#fff', 'middle') + T(ox + 30, 30, title, 18, 700, INK)
+    o += C(ox + 22, 150, 6, INK) + T(ox + 22, 176, 'input', 13, 400, MUT, 'middle')
+    gy, gh = (98, 104) if mode == 3 else (130, 40)
+    o += R(ox + 150, gy, 14, gh, '#4C5B66', 'none', 0, 3) + T(ox + 157, gy - 8, 'key ×10' if mode == 3 else 'key', 12.5, 600, '#C45200' if mode == 3 else MUT, 'middle')
+    lit = mode != 2
+    o += C(ox + 212, 150, 18, ACC if lit else '#F4F1EC', extra='' if lit else 'stroke="#8F887E" stroke-width="1.6"')
+    if mode == 1:
+        o += P(f'M{ox + 30},150 L{ox + 144},150', INK, 2, extra='marker-end="url(#ula)"') + P(f'M{ox + 166},150 L{ox + 190},150', INK, 2, extra='marker-end="url(#ula)"')
+    else:
+        o += P(f'M{ox + 30},150 C{ox + 80},150 {ox + 100},{205 if mode == 2 else 186} {ox + 144},{210 if mode == 2 else 186}', '#F76902', 2.4, extra='fill="none"' + (' marker-end="url(#ulo)"' if mode == 3 else ''))
+        if mode == 2:
+            o += P(f'M{ox + 144},210 L{ox + 226},210', '#F76902', 2.4, extra='marker-end="url(#ulo)"') + T(ox + 30, 238, 'a detour, learned in earlier layers', 12.5, 600, '#C45200')
+            o += T(ox + 212, 182, 'still there', 12, 400, MUT, 'middle')
+        else:
+            o += P(f'M{ox + 166},150 L{ox + 190},150', INK, 2, extra='marker-end="url(#ula)"')
+    if lit:
+        o += R(ox + 240, 134, 98, 32, '#FDEBDD', 'none', 0, 6) + T(ox + 289, 155, 'sh*t, cr*p …', 14, 600, '#DA291C', 'middle')
+    else:
+        o += R(ox + 240, 194, 98, 32, '#F4F1EC', 'none', 0, 6) + T(ox + 289, 215, 'polite text', 14, 400, MUT, 'middle')
+    o += T(ox, 290, 'toxicity', 15, 400, MUT) + T(ox + 70, 291, tox, 24, 700, tcol)
+    o += T(ox, 322, cap1, 14.5, 400, INK) + T(ox, 342, cap2, 14.5, 400, INK)
+    return o
+g += _ul_panel(40, 1, 'Find the swear neurons', 1, '0.45', '#DA291C', 'A probe for toxic text points to 7 MLP', 'neurons. Their output: swear words.')
+g += F(1, _ul_panel(420, 2, 'Train it away with DPO', 2, '0.21', '#4C5B66', 'The 7 neurons barely change. The input', 'is steered around them.'))
+g += F(2, _ul_panel(800, 3, 'Turn their keys up', 3, '0.46', '#DA291C', 'No training, 7 keys ×10:', 'the swearing is back.'))
+g = g.replace('<defs>', '<defs><marker id="ula" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#1F1E1B"/></marker>'
+              '<marker id="ulo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#F76902"/></marker>', 1)
+g += F(3, catch('Unlearning does the same: a little harmless fine tuning brings forgotten facts back.', 400))
+UNLEARN3 = sec('Removing a behavior: hidden, not deleted', SVG(g, 416), ch='1',
+               ref='Lee et al., ICML 2024, Tables 1, 2, 4 | Hu et al., Unlearning or Obfuscating?, ICLR 2025',
+               notes=('Three pictures, one click each. The model is GPT-2 medium. One: find the swear neurons. Train a linear probe, a one layer classifier, on 560 thousand comments labeled toxic or not. '
+                      'Its weight vector is a toxic direction. Compare every MLP neuron output with it, the closest ones write swear words when they fire, for example sh*t and cr*p. Toxicity score 0.45. '
+                      'Each MLP neuron has a key, when to fire, and a value, what to write. These are the MLP keys and values, not attention. '
+                      'Two: train with DPO, preferring polite continuations. Toxicity drops to 0.21. But the swear neurons barely change. What changed is a small offset in earlier layers, '
+                      'so the input no longer matches their keys. A detour. Three: no training at all. Take the 7 most toxic neurons and multiply their keys by 10. Toxicity is back to 0.46, '
+                      'as before DPO. Click: this paper is about alignment, not unlearning, but unlearning shows the same thing. Hu and colleagues, ICLR 2025: after unlearning, a little fine tuning '
+                      'on harmless, loosely related public text brings the forgotten facts back. Hidden, not deleted. Bridge: and editing, the surgery our own work is about, has the same problem, silently.'))
 UNLEARN2 = sec('Unlearning: the old circuit is bypassed, not deleted', SVG(g), ch='1',
                ref='Lee et al., A Mechanistic Understanding of Alignment Algorithms: A Case Study on DPO and Toxicity, ICML 2024. Hu et al., ICLR 2025',
                notes='Three steps, one click each. One: Lee and colleagues trained a linear probe for toxic text on GPT-2 and followed it into the MLP layers. A few MLP value vectors line up with it: when they fire, the model writes toxic words. Two: train the model with DPO, which rewards the polite answer over the toxic one. The benchmark says toxicity dropped. But the toxic vectors themselves barely change. What DPO learned is a small offset, spread over earlier layers, so that those vectors no longer get triggered. That is the purple arrow in their figure, a detour around the toxic region. Three: undo it. They scale the key vectors back up and the model returns to toxic output, un-aligned with a simple intervention. Catch: unlearning hides, it does not delete. Hu 2025 shows the same for unlearned facts, a short fine tune on harmless unrelated text brings them back. Bridge: and editing, the surgery our own work is about, has the same problem, silently.')
@@ -2732,7 +2772,7 @@ def assemble(cover, old):
             MERGE, backup(rel(18, '')),
             backup(PRUNE), backup(rel(21, '')), backup(rel(22, 'Shrestha 2026: classification recovers, reasoning does not')),
             VEC4, backup(VEC2), backup(rel(25, '')),
-            UNLEARN2, backup(UNLEARN), backup(rel(30, '')),
+            UNLEARN3, backup(UNLEARN2), backup(rel(30, '')),
             silent_main, backup(HASE), backup(rome), backup(rel(38, '')), backup(rel(39, '')),
             SUMM2, backup(toch(receipts, '1')), backup(toch(story, '1')), backup(retitle(lessons, 'Every surgery, three lessons')),
             d46_q, backup(retitle(d46, 'What is a delta graph? The full picture')), RES_OLD, backup(old[48]), backup(abl), backup(lim_main), backup(retitle(old[51], 'Limits, all four, with the numbers')),

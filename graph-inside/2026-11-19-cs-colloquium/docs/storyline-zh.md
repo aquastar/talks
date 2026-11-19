@@ -83,9 +83,13 @@
 
 **12. Steering: clean for some behaviors, unreliable for others**（120）上面：什么是 steering，推理时在某一层加一个方向 αr，不改权重。点一下，左边：干净的例子，Arditi 2024，13 个聊天模型里的拒绝方向，去掉它模型几乎不再拒绝。拒绝是一个干净的方向，所以向量能控制它。再点，右边：一般情况，Tan 2024，每种行为单独做一个 steering 向量，40 种行为里的 13 种，条形是被推反方向的输入比例（从他们 Figure 1 读出，四舍五入）：有的约为 0，有的接近一半（myopic-reward 49%，像抛硬币）。注意：右边不是拒绝向量失效，是同一种方法用在别的行为上。再点：A vector works when the behavior is one clean direction. It cannot tell you when it is not.
 说："Steering works beautifully when the behavior is one clean direction, like refusal. For many other behaviors, close to half the inputs go the wrong way, and the vector alone cannot tell you which case you are in."
-**13. Unlearning**（120）三步：找到有毒的 MLP 向量，DPO 没删它们，只学了一个小偏移绕开（紫色箭头），把偏移撤掉，毒性就回来。
-说："Unlearning hides, it does not delete."
-
+**13. Removing a behavior: hidden, not deleted**（120）三格图，每格一行字（Lee et al. 2024，GPT-2 medium，数字来自 Table 2 和 4）。
+第 1 格：用 56 万条评论训练一个检测有毒文本的线性探针，它的权重就是"有毒方向"，找出和它最像的 7 个 MLP 神经元，它们一亮就写脏话。毒性 0.45。
+点一下，第 2 格：用 DPO 训练，毒性降到 0.21。但这 7 个神经元几乎没变，前面的层学会了让输入绕过去（橙色绕行）。
+再点，第 3 格：不训练，只把这 7 个神经元的 key 放大 10 倍，毒性回到 0.46。
+再点：底部，unlearning 也一样（Hu 2025），少量无害微调就能让"遗忘"的事实回来。
+注意：Lee 这篇是对齐（去毒），不是 unlearning。key 和 value 指 MLP 的，不是 attention 的。
+说："The swear neurons were never removed. Training just learned a detour around them. Turn their keys up and the swearing is back."
 **14. Knowledge editing bypasses the old fact instead of removing it**（整场主打的一点）（150）这是我们工作针对的失败。编辑没覆盖旧事实，只是加了一条近路。换一种问法旧答案回来（Xie 2025）。改了微软创始人，问"他上的哪所大学"，41% 答 Steve Jobs，编辑前 0.27%（Zhang 2025）。
 说："The edit adds a bypass, the old fact is never removed. Why: an editor looks at one fact, not at the graph that fact sits in."
 
