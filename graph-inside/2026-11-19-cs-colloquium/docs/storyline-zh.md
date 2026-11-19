@@ -95,8 +95,10 @@
 口头补一句原因："An editor looks at one fact, not at the knowledge graph that fact sits in." 这句引出 delta graph。
 **15. Every surgery: the exam passes, the inside tells another story**（90）四行表格，对应第 11 到 14 页。合并：两门技能考试都过，失对齐也一起带进来。Steering：对拒绝很干净，别的行为最多一半输入被推反。Removing（去毒和遗忘）：毒性 0.45 降到 0.21，脏话神经元还在，只是绕开了。Editing（我们的主题）：新事实通过，旧路径还在。点一下：考试只看答案，失败是没人看的内部变化。再点：结论框，我们需要比较改动前后的内部，把有风险的标出来。
 说："Four surgeries, one pattern: the exam passes, and the inside tells another story."
-**16. What is a delta graph?**（120，graph 4）只讲一个概念。同一组探针问题，编辑前问一遍，编辑后问一遍。节点是每层的 attention 块和 MLP 块（每层两个）。两个块在这些问题上一起升一起降，就连一条边（partial correlation，去掉其他块的影响）。左边编辑后的图，减去中间编辑前的图（6 层，每层两个节点，含跨层连接）。点一下：后减前，就是 delta graph，橙色实线是变强的连接，虚线是变弱的。再点：怎么把它变成几个数。左框：在哪、多少（每个块的变化量等于它所有边的变化之和，再看总量、哪几层、集中不集中）。右框：平滑还是尖锐（spectral）：用编辑前的图当形状，算它的 Laplacian，把每个块的变化量投到 Laplacian 的特征向量上（图傅里叶变换）。能量在低频，说明变化沿着连线平滑地散开。能量在高频，说明相连的块变化不一致，是局部的尖锐补丁。这些数进一个小的 logistic 模型，得到风险分。再点：结论框，delta graph 是这次编辑的指纹。旧版完整图在下箭头里。
-说："Before, after, subtract. The difference is a graph: the edit's fingerprint inside the model."
+**16. What is a delta graph?**（120，graph 4）只讲一个概念。同一组探针问题，编辑前问一遍，编辑后问一遍。节点是每层的 attention 块和 MLP 块。两个块在这些问题上一起升一起降，就连一条边（partial correlation）。左边编辑后的图，减去中间编辑前的图（6 层，含跨层连接），等于右边的 delta graph（论文定义 ΔA = A_post − A_pre）。after 图里已经标出变化：橙色变强，虚线变弱。
+点一下：delta graph 出现。再点：一行流程，delta graph → 几个数 → 风险分 → 先查最可疑的（结果见下一页）。再点：结论框，delta graph 是这次编辑的指纹。
+被问到"几个数"是什么：拓扑（总变化量、哪几层、集中程度）和谱（以编辑前的图为形状，把每个块的变化量做图傅里叶变换，看低频平滑还是高频尖锐）。论文 Table 5.2，新事实上 AUC：只用编辑器和模型 0.840，加拓扑 0.862，加谱 0.878，完整行为评测 0.984 但贵得多。
+说："After minus before. What is left is the edit's fingerprint inside the model."
 **17. Results: same checking budget, more bad edits caught**（120）用十月 PhD talk 的版本：100 个满分编辑，其中 56 个其实是坏的，只能查 20 个。三排小卡片，红叉是查到的坏编辑，灰勾是白查了。随机挑查到约 11 个，按编辑器和模型挑约 14 个，按 delta graph 挑约 17 个。下面两个 AUC：0.703 到 0.797，第二个数据集 0.853 到 0.904。
 说："Same 20 checks: 11, 14, 17. The extra catches come only from how the inside changed."
 **18. A missing path in the record means a worse answer, for every model**（150，第二层知识图，CIKM 2026）

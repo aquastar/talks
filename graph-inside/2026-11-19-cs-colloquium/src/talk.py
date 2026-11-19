@@ -2579,7 +2579,7 @@ for k, (big, a, b) in enumerate([('0.703 to 0.797', 'ranking quality (AUC), edit
 g += F(2, box)
 g += F(3, T(590, 452, 'Same budget, 17 instead of 11: read the inside, and check the risky edits first.', 19, 700, INK, 'middle'))
 # ---- Nov 18 (his note): slide 16 rebuilt around the delta graph idea only, from Benbrahim et al. SDM 2026 Section 4 ----
-g = adefs('dg')
+g = adefs('dg').replace('<defs>', '<defs><marker id="dga" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#8F887E"/></marker>', 1)
 g += T(590, 22, 'Same probe questions, before and after the edit. A node is a block (attention or MLP of a layer).', 16, 400, INK, 'middle', extra='data-keep="1"')
 g += T(590, 44, 'An edge: two blocks that rise and fall together across the questions, other blocks removed (partial correlation).', 16, 400, MUT, 'middle', extra='data-keep="1"')
 def _dgn(cx):
@@ -2609,29 +2609,25 @@ g += F(1, _dgdraw(744, dlt, 'delta graph', '#C45200') + T(744, 304, 'after minus
        + P('M880,96 h34', '#F76902', 3.2) + T(922, 101, 'stronger after the edit', 13.5, 400, INK)
        + P('M880,126 h34', '#4C5B66', 2.2, extra='stroke-dasharray="5 4"') + T(922, 131, 'weaker after the edit', 13.5, 400, INK)
        + C(889, 160, 7, '#4C5B66') + T(902, 165, 'attention', 13.5, 400, INK) + C(985, 160, 7, '#C45200') + T(998, 165, 'MLP', 13.5, 400, INK))
-# from the graph to a few numbers
-b1 = R(40, 316, 530, 140, '#F4F1EC', 'none', 0, 6) + T(60, 342, 'Where, and how much', 17, 700, INK)
-b1 += T(60, 366, 'change at a block = sum of its edge changes', 14, 400, MUT) + T(60, 386, 'total change, which layers, how concentrated', 14, 400, MUT)
-for k, hgt in enumerate([5, 10, 30, 34, 16, 4]):
-    b1 += R(372 + k * 30, 446 - hgt * 1.6, 24, hgt * 1.6, '#C45200' if k == 3 else '#ACA39A', 'none', 0, 2)
-b1 += T(456, 342, 'change per layer', 12.5, 400, MUT, 'middle')
-b2 = R(610, 316, 530, 140, '#F4F1EC', 'none', 0, 6) + T(630, 342, 'Smooth, or sharp (spectral)', 17, 700, INK)
-b2 += T(630, 366, 'the before graph gives the shape: its Laplacian', 14, 400, MUT) + T(630, 386, 'project the change onto it (a graph Fourier transform)', 14, 400, MUT)
-def _chain(x0, y0, vals):
-    o = P(f'M{x0},{y0} h{4 * 30}', '#8F887E', 1.6)
-    for k, v in enumerate(vals):
-        o += C(x0 + k * 30, y0, 8, f'rgba(196,82,0,{v})', extra='stroke="#8F887E" stroke-width="1"')
-    return o
-b2 += _chain(640, 414, [.15, .35, .55, .75, .95]) + T(800, 419, 'low: change spreads along the wiring', 13.5, 400, INK)
-b2 += _chain(640, 442, [.95, .1, .95, .1, .95]) + T(800, 447, 'high: neighbors disagree, a sharp patch', 13.5, 400, INK)
-g += F(2, b1 + b2)
-DG16 = sec('What is a delta graph?', SVG(g, 462), ch='1', status='pub',
+# from the graph to a decision, one row (his note Nov 19: the two feature boxes said little, the details go to the notes)
+PIPE = [('delta graph', 'after minus before'), ('a few numbers', 'how much, which layers, smooth or sharp'),
+        ('risk score', 'a small logistic model'), ('check the riskiest first', 'results on the next slide')]
+pp = ''
+for k, (h_, sub) in enumerate(PIPE):
+    x = 40 + k * 280
+    last = k == 3
+    pp += R(x, 334, 240, 50, '#FBD3B4' if last else '#F4F1EC', 'none', 0, 6) + T(x + 120, 365, h_, 17, 700, '#C45200' if last else INK, 'middle')
+    pp += T(x + 120, 406, sub, 13.5, 400, MUT, 'middle')
+    if k < 3:
+        pp += P(f'M{x + 246},359 L{x + 274},359', '#8F887E', 1.8, extra='marker-end="url(#dga)"')
+g += F(2, pp)
+DG16 = sec('What is a delta graph?', SVG(g, 424), ch='1', status='pub',
            ref='Benbrahim et al., Delta-Graph Signatures for Post-Edit Risk Screening, SDM 2026, Section 4',
            notes=('One idea on this slide. We ask the model the same probe questions before and after the edit, questions kept apart from the ones used to score the edit. '
                   'A node is a block: the attention block or the MLP block of one layer, so two nodes per layer. For each question we record how active each block is. '
                   'Two blocks get an edge when they rise and fall together across the questions, after removing what the other blocks explain, a partial correlation. '
                   'That gives one graph before the edit and one after. Click: subtract, after minus before. That is the delta graph: which connections got stronger, which got weaker. '
-                  'Click: how we turn it into a few numbers. Left, where and how much: the change at each block is the sum of the changes on its edges, then the total, which layers, and how concentrated it is. '
+                  'Click: from the graph to a decision. A few numbers, a small logistic model, a risk score, and we check the riskiest edits first. If asked which numbers, here are the details. Where and how much: the change at each block is the sum of the changes on its edges, then the total, which layers, and how concentrated it is. '
                   'Right, the spectral part. We take the graph from before the edit as the shape and compute its Laplacian. Its eigenvectors are like waves on that graph, slow ones and fast ones. '
                   'We project the change at each block onto them, a graph Fourier transform. If the energy is in the slow waves, the change spreads smoothly along the wiring. '
                   'If it is in the fast waves, connected blocks disagree, a sharp local patch. We keep the share of energy in low, middle and high bands, plus the spectral entropy and the Dirichlet energy. '
