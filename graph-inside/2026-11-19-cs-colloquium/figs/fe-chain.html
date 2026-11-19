@@ -71,7 +71,7 @@ svg{width:100%;height:100vh;display:block}
       } else {
         // Hold still while the figure is off screen or the tab is hidden.
         let visible = (window.parent === window) || new URLSearchParams(location.search).has('autoplay');
-        window.addEventListener('message', (e) => { if (e.data === 'fe-play') { visible = true; run += 1; play(); } if (e.data === 'fe-stop') { visible = false; run += 1; audio?.suspend(); } });
+        window.addEventListener('message', (e) => { if (e.data === 'fe-play') { visible = true; run += 1; play(); } if (e.data === 'fe-stop') { visible = false; run += 1; audio?.suspend(); soundOn = false; const h = document.querySelector('.fe-hint'); if (h) h.textContent = 'click for sound'; } });
         const waitVisible = () => new Promise((r) => {
           const tk = run;
           const check = () => {
@@ -225,10 +225,15 @@ svg{width:100%;height:100vh;display:block}
 
         // Clicking opens the same live figure in a dialog, with sound, and
         // restarts it so the listener hears Für Elise from its first note.
+        // A click toggles the sound: on (restart from the first note), or off (the animation keeps going, silent).
+        let soundOn = false;
         document.body.addEventListener('click', () => {
           audio ??= new (window.AudioContext || window.webkitAudioContext)();
+          const hint = document.querySelector('.fe-hint');
+          if (soundOn) { soundOn = false; audio.suspend(); hint.textContent = 'click for sound'; return; }
+          soundOn = true;
           audio.resume();
-          document.querySelector('.fe-hint').textContent = 'sound on';
+          hint.textContent = 'sound on, click to mute';
           run += 1;
           play();
         });

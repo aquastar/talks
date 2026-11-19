@@ -736,21 +736,21 @@ VECTOR = sec('Every surgery is stored as a vector', SVG(g), ch='0',
 # ---- demo: a tiny graph is enough to represent a piece ----
 g = adefs('dm2')
 g += f'<foreignObject x="20" y="10" width="740" height="410"><div xmlns="http://www.w3.org/1999/xhtml" style="width:740px;height:410px;border-radius:12px;overflow:hidden;box-shadow:0 0 0 1.5px #d3d7da,0 10px 30px rgba(17,17,17,.10)"><iframe class="fe-frame" data-src="figs/fe-chain.html?autoplay=1" title="Für Elise Markov chain" style="width:740px;height:410px;border:0;background:#fff"></iframe></div></foreignObject>'
-g += T(790, 34, 'Graphs in music, in this talk', 15, 600, MUT)
-MENU = [('1', 'Note to note graph', '144 numbers name the tradition', '70.2%, chance 17%', False),
-        ('2', 'Richer nodes', 'note plus its length', '86.8%', False),
-        ('3', "The listener's graph", 'its surprise tracks the brain', 'IDyOM, EEG', False),
-        ('4', 'A graph inside MusicGen', 'read from the generator itself', 'next step', True)]
+g += T(790, 34, 'Coming up in Part 2', 15, 600, MUT)
+MENU = [('1', 'This graph names the style', 'which tradition a melody comes from', '', False),
+        ('2', 'Richer nodes do better', 'a node is a note plus its length', '', False),
+        ('3', "The listener's graph", 'its surprise matches brain signals', '', False),
+        ('4', 'A graph inside MusicGen', 'our next step', '', True)]
 for k, (num, name, line, val, plan) in enumerate(MENU):
     y = 50 + k * 92
     row = R(790, y, 370, 80, SOFT, 'none', 0, 3)
     row += (C(818, y + 40, 13, '#fff', MU, 1.5, 'stroke-dasharray="4 3"') + T(818, y + 45, num, 14, 600, MU, 'middle')) if plan else (C(818, y + 40, 13, MU) + T(818, y + 45, num, 14, 600, '#fff', 'middle'))
     row += T(846, y + 34, name, 18, 600, INK) + T(846, y + 58, line, 14, 400, MUT) + T(1148, y + 34, val, 15, 600, MU if not plan else MUT, 'end')
     g += F(k + 1, row) if k else row
-g += T(590, 466, 'A tiny graph already captures a style. Part 2 covers this list.', 20, 700, INK, 'middle')
+g += T(590, 466, 'A tiny graph already captures a style.', 20, 700, INK, 'middle')
 DEMO2 = sec('A tiny graph is enough to represent a piece of music', SVG(g), ch='0', status='prog',
-            ref='Opening of Beethoven, Für Elise, animation from zhiqian.ai, click for sound. Five fold cross validation, zhiqian.ai/music-markov',
-            notes='Let the ball learn the opening, then compose. Then the point: this little graph is not a toy. The same 144 numbers per piece, fed to a plain classifier, name the tradition of a piece it has never seen 70.2% of the time across 992 melodies in six corpora, against 41.9% for note counts without order.')
+            ref='Für Elise opening, animation from zhiqian.ai. Style results: zhiqian.ai/music-markov',
+            notes='Sound: click the animation once for sound, click again to mute, the animation keeps going. Let the ball learn the opening, then compose. Then the point: this little graph is not a toy. The same 144 numbers per piece, fed to a plain classifier, name the tradition of a piece it has never seen 70.2% of the time across 992 melodies in six corpora, against 41.9% for note counts without order.')
 
 # ---- trailer: the delta graph drawn ----
 def _dg(ox, oy, edges, mode, lab):
