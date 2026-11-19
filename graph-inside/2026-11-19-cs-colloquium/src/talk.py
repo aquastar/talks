@@ -1174,7 +1174,7 @@ FIN_FOOT = ('<div style="display:flex;justify-content:center;align-items:center;
             '<div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px;text-align:left">'
             '<a href="https://zhiqian.ai/talks" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;color:#1F1E1B;text-decoration:none;font:700 34px/1 et-book,Georgia,serif">'
             + _ico2 + 'zhiqian.ai/talks</a>'
-            '<div style="font:400 20px/1.4 et-book,Georgia,serif;color:#1F1E1B;white-space:nowrap"><span style="font-weight:700">Coming next:</span> my keynote at AI4BioSig, IEEE BIBM 2026, <i>The Music That Plays the Brain</i></div>'
+            '<div style="font:400 20px/1.4 et-book,Georgia,serif;color:#7A746B;white-space:nowrap"><span style="font-weight:700">Coming next:</span> my keynote at AI4BioSig, IEEE BIBM 2026, <i style="color:#C45200;font-weight:700">The Music That Plays the Brain</i></div>'
             '</div></div>')
 
 # ======================= ROUND 4 (Nov 2 2026): Space Needle anchor =======================
