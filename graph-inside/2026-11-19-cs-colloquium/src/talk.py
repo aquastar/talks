@@ -1870,8 +1870,11 @@ for k, (big, col, l1, l2, src) in enumerate(HC):
 g += F(4, R(30, 288, 1120, 58, '#FBFAF7', LINE, 1.2, 8) + T(50, 314, 'And it can be treated:', 16, 700, '#4C5B66')
        + T(232, 314, 'hearing aids slowed 3 year cognitive decline by 48% in older adults at higher risk,', 15.5, 400, INK)
        + T(232, 334, 'though not in the full trial. ACHIEVE, Lancet 2023.', 14, 400, MUT))
-HEAR = sec('Hearing loss: a quiet epidemic', SVG(g, 356), ch='2',
-           ref='WHO World Report on Hearing 2021. Lin et al., Arch Neurol 2011. Livingston et al., Lancet 2024. Lawrence et al., Gerontologist 2020. ACHIEVE, Lancet 2023',
+g += F(5, R(30, 358, 1120, 62, '#FBFAF7', LINE, 1.2, 8) + T(50, 384, 'Yet few use it:', 16, 700, '#4C5B66')
+       + T(232, 398, '30%', 34, 700, '#DA291C', extra=SERH) + T(312, 384, 'of adults 70 and older who could benefit from hearing aids have ever used one.', 15.5, 400, INK)
+       + T(312, 404, 'Ages 20 to 69: about 16%. NIDCD, NHANES 2015 to 2020.', 14, 400, MUT))
+HEAR = sec('Hearing loss: a quiet epidemic', SVG(g, 426), ch='2',
+           ref='WHO World Report on Hearing 2021. Lin et al., Arch Neurol 2011. Livingston et al., Lancet 2024. Lawrence et al., Gerontologist 2020. ACHIEVE, Lancet 2023. NIDCD Quick Statistics',
            notes=('The motivation for Part 2, say the numbers slowly. Hearing loss is not a small problem. More than 1.5 billion people live with it today, '
                   'and WHO projects 2.5 billion by 2050, one person in four. Click: it is tied to dementia. Lin and colleagues followed 639 adults for about 12 years: '
                   'mild hearing loss came with about twice the risk of dementia, moderate three times, severe five times, the severe group was small. '
@@ -1879,7 +1882,7 @@ HEAR = sec('Hearing loss: a quiet epidemic', SVG(g, 356), ch='2',
                   'Hearing loss alone is about 7 percent, tied for the largest with high LDL cholesterol. Click: and depression, across 35 studies and 147 thousand older adults, '
                   'hearing loss came with 47 percent higher odds of depression. These are associations, not proof of cause. '
                   'Click: the hopeful part, said honestly. In the ACHIEVE trial, Lancet 2023, hearing aids slowed cognitive decline over 3 years by 48 percent '
-                  'in the older adults at higher risk, but not in the full trial. Click: losing hearing is tied to dementia and depression. What we hear matters for the brain. Next: music acts on it directly.'))
+                  'in the older adults at higher risk, but not in the full trial. Click: yet few people use the fix. Of adults 70 and older who could benefit from hearing aids, fewer than one in three has ever used one, 30 percent, and among adults 20 to 69 about 16 percent. Losing hearing is tied to dementia and depression, for 1.5 billion people. Next: music acts on the brain directly.'))
 
 g = adefs('md')
 g += steps(2).replace('url(#pea)', 'url(#mda)')
@@ -1931,17 +1934,18 @@ for k, (h_, big, sub, l1, l2, src) in enumerate(MC2):
     cards += T(x + 106, 210, h_, 21, 700, INK, 'middle', extra=SERMB + ' data-keep="1"')
     cards += T(x + 106, 240, big, 22, 700, '#C45200', 'middle', extra=SERMB + ' data-keep="1"') + T(x + 106, 257, sub, 12.5, 400, MUT, 'middle')
     cards += T(x + 106, 280, l1, 14.5, 400, INK, 'middle') + T(x + 106, 298, l2, 14.5, 400, INK, 'middle') + T(x + 106, 320, src, 11.5, 400, MUT, 'middle')
-gf = R(30, 342, 1120, 62, '#FBFAF7', LINE, 1.2, 8) + photo(66, 373, 24, 'gabby-giffords.jpg', 'GG', AC2)
-gf += T(104, 366, '2011: Congresswoman Gabby Giffords was shot in the head and lost her speech.', 16, 700, INK)
-gf += T(104, 388, 'In music therapy she sang words before she could say them again (melodic intonation therapy).', 14.5, 400, INK)
-gf += T(1138, 398, 'NPR and ABC News, 2011', 11.5, 400, MUT, 'end')
+gf = R(30, 342, 1120, 104, '#FBFAF7', LINE, 1.2, 8) + photo(78, 394, 38, 'gabby-giffords.jpg', 'GG', AC2)
+gf += T(132, 370, '2011: Congresswoman Gabby Giffords was shot in the head and lost her speech (aphasia).', 16, 700, INK)
+gf += T(132, 394, 'The language areas on the left side of her brain were damaged. Singing reaches words by other routes.', 14.5, 400, INK)
+gf += T(132, 414, 'Her music therapist started with songs like Happy Birthday: sung, then chanted, then spoken.', 14.5, 400, INK)
+gf += T(132, 434, 'Melodic intonation therapy, a detour back to speech.', 14.5, 600, '#C45200') + T(1138, 434, 'NPR and ABC News, 2011', 11.5, 400, MUT, 'end')
 g += F(1, cards) + F(2, gf)
-MUSMED = sec('Music acts on the brain, and works as medicine', SVG(g, 410), ch='2',
+MUSMED = sec('Music acts on the brain, and works as medicine', SVG(g, 452), ch='2',
              ref='Nozaradan et al. 2011. Salimpoor et al. 2011. Martorell et al. 2019. Burrai et al. 2021. Hole et al., Lancet 2015. Aalbers et al., Cochrane 2017. van der Steen et al., Cochrane 2018. Lee, J Music Ther 2016. Giffords: NPR, ABC News 2011',
              notes=('Three steps. First, music acts on the brain in ways we can measure. The brain rhythm locks to the beat in EEG, Nozaradan 2011. Dopamine is released at the peak of musical pleasure, in PET, Salimpoor 2011. '
                     'And 40 Hz sound reduced amyloid in mouse brains, Martorell 2019. Click: and in clinical trials it already works as medicine. Parkinson disease: walking to a steady beat makes steps faster and longer. '
                     'Surgery: 73 trials in the Lancet, 2015, less pain, less anxiety and less pain medicine. Depression: 9 trials, fewer symptoms when music therapy is added to usual care. Dementia: 11 trials, fewer depressive symptoms. Pain: 97 trials and more than 9 thousand people, about one point less pain on a zero to ten scale. '
-                    'Said honestly: most trials are small and the evidence quality is often low. Click: one story everyone here may remember. In 2011 Congresswoman Gabby Giffords was shot in the head and lost her speech. Her music therapist used melodic intonation therapy: she sang phrases first, like Happy Birthday, then chanted them, then spoke them. Click: nobody knows which part of the music does the work. That is a modeling question.'))
+                    'Said honestly: most trials are small and the evidence quality is often low. Click: one story everyone here may remember. In 2011 Congresswoman Gabby Giffords was shot in the head and lost her speech. Her music therapist used melodic intonation therapy: she sang phrases first, like Happy Birthday, then chanted them, then spoke them. Then say: nobody knows which part of the music does the work. That is a modeling question.'))
 
 # ---- Nov 19 (his request): a short history of how NIH came to fund music and health. Each date checked ----
 g = adefs('nh')
@@ -1955,38 +1959,53 @@ def pills(x, y, items):
         p_, w_ = pill(x, y, t_); o += p_; x += w_ + 6
     return o
 g += L(70, 112, 1110, 112, '#D7D2CB', 3)
-XS = [(30, 230), (280, 420), (720, 210), (950, 200)]
+XS = [(30, 250), (296, 404), (716, 216), (948, 202)]
 YR = ['1950', '2017', '2019', '2023']
+def _ls(x, y, rows, size=13.5, lh=18):
+    o = ''
+    for i_, r_ in enumerate(rows):
+        if isinstance(r_, tuple):
+            o += T(x, y + i_ * lh, r_[0], size + (1 if r_[0][:1].isdigit() else 0), 700, '#C45200' if r_[0][:1].isdigit() else r_[1], extra='data-keep="1"')
+        else:
+            o += T(x, y + i_ * lh, r_, size, 400, INK)
+    return o
+CH = 330  # card height
 for k, (x, w) in enumerate(XS):
     g_ = C(x + w / 2, 112, 9, ACC if k else '#4C5B66', extra='stroke="#fff" stroke-width="3"') + T(x + w / 2, 88, YR[k], 28, 400, INK, 'middle', extra=SERMB)
-    g_ += R(x, 134, w, 236, '#F4F1EC', 'none', 0, 8)
+    g_ += R(x, 134, w, CH, '#F4F1EC', 'none', 0, 8)
     if k == 0:
-        g_ += T(x + 16, 166, 'Music therapy', 19, 700, INK, extra=SERMB + ' data-keep="1"') + T(x + 16, 186, 'becomes a profession', 14.5, 600, INK)
-        g_ += pills(x + 16, 200, ['NAMT', 'now AMTA'])
-        g_ += T(x + 16, 252, '85', 26, 700, '#C45200', extra=SERMB + ' data-keep="1"') + T(x + 50, 252, 'members in 1950', 13.5, 400, INK)
-        g_ += T(x + 16, 292, '10,699', 26, 700, '#C45200', extra=SERMB + ' data-keep="1"') + T(x + 98, 292, 'board certified', 13.5, 400, INK) + T(x + 16, 312, 'music therapists today', 13.5, 400, INK)
-        g_ += T(x + 16, 356, 'AMTA history. CBMT 2026', 12, 400, MUT)
+        g_ += T(x + 16, 162, 'Music therapy', 19, 700, INK, extra=SERMB + ' data-keep="1"') + T(x + 16, 184, 'becomes a profession', 14.5, 600, INK)
+        g_ += _ls(x + 16, 206, ['After both world wars, musicians', 'played in veterans hospitals.', 'Patients responded, so hospitals', 'began to hire musicians.'])
+        g_ += _ls(x + 16, 284, [('1944', '#4C5B66'), 'Michigan State starts the', 'first degree in music therapy.'])
+        g_ += T(x + 16, 362, '85', 24, 700, '#C45200', extra=SERMB + ' data-keep="1"') + T(x + 46, 362, 'members of the first', 13.5, 400, INK) + T(x + 46, 379, 'national association, 1950', 13.5, 400, INK)
+        g_ += T(x + 16, 416, '10,699', 24, 700, '#C45200', extra=SERMB + ' data-keep="1"') + T(x + 96, 416, 'board certified', 13.5, 400, INK) + T(x + 96, 433, 'therapists today', 13.5, 400, INK)
+        g_ += T(x + 16, 455, 'AMTA history. CBMT 2026', 11.5, 400, MUT)
     elif k == 1:
-        g_ += T(x + 16, 166, 'Sound Health starts', 19, 700, INK, extra=SERMB + ' data-keep="1"') + pills(x + 196, 152, ['NIH', 'Kennedy Center', 'NEA'])
-        g_ += T(x + 16, 190, 'It began when a singer met a scientist:', 14, 400, MUT)
-        g_ += photo(x + 52, 238, 36, 'renee-fleming.jpg', 'RF', AC2) + T(x + 100, 226, 'Renée Fleming', 17, 700, INK) + T(x + 100, 245, 'American soprano, Grammy winner,', 13.5, 400, INK) + T(x + 100, 262, 'Kennedy Center Honors 2023', 13.5, 400, INK)
-        g_ += photo(x + 52, 318, 36, 'francis-collins.jpg', 'FC', AC2) + T(x + 100, 306, 'Francis Collins', 17, 700, INK) + T(x + 100, 325, 'NIH director 2009 to 2021, led the', 13.5, 400, INK) + T(x + 100, 342, 'Human Genome Project, plays guitar', 13.5, 400, INK)
-        g_ += T(x + w - 12, 364, 'Fleming and Collins, JAMA 2017', 11.5, 400, MUT, 'end')
+        g_ += T(x + 16, 162, 'Sound Health starts', 19, 700, INK, extra=SERMB + ' data-keep="1"') + pills(x + 196, 148, ['NIH', 'Kennedy Center', 'NEA'])
+        g_ += T(x + 16, 184, 'It began when a singer met a scientist.', 14, 400, MUT)
+        g_ += photo(x + 46, 226, 30, 'renee-fleming.jpg', 'RF', AC2) + T(x + 88, 214, 'Renée Fleming', 16, 700, INK) + T(x + 88, 232, 'American soprano, Grammy winner,', 13, 400, INK) + T(x + 88, 248, 'Kennedy Center Honors 2023', 13, 400, INK)
+        g_ += photo(x + 46, 296, 30, 'francis-collins.jpg', 'FC', AC2) + T(x + 88, 284, 'Francis Collins', 16, 700, INK) + T(x + 88, 302, 'NIH director 2009 to 2021, led the', 13, 400, INK) + T(x + 88, 318, 'Human Genome Project', 13, 400, INK)
+        g_ += L(x + 16, 340, x + w - 16, 340, '#D7D2CB', 1)
+        g_ += _ls(x + 16, 362, [('2015', '#4C5B66'), 'They met at a dinner party. He had brought his guitar.', ('January 2017', '#C45200'), 'First NIH workshop, Sound Health: Music and the Mind.'])
+        g_ += T(x + 16, 455, 'Fleming and Collins, JAMA 2017. NIH Record 2017', 11.5, 400, MUT)
     elif k == 2:
-        g_ += T(x + 16, 168, '$20 million', 26, 700, '#C45200', extra=SERMB + ' data-keep="1"') + T(x + 16, 190, 'over 5 years', 14.5, 600, INK)
-        g_ += pills(x + 16, 204, ['NIH', '10 institutes'])
-        g_ += T(x + 16, 252, 'the first research', 13.5, 400, INK) + T(x + 16, 270, 'awards, for example', 13.5, 400, INK) + T(x + 16, 288, "music and movement", 13.5, 400, INK) + T(x + 16, 306, "in Parkinson's", 13.5, 400, INK)
-        g_ += T(x + 16, 356, 'NIH news release 2019', 12, 400, MUT)
+        g_ += T(x + 16, 164, '$20 million', 26, 700, '#C45200', extra=SERMB + ' data-keep="1"') + T(x + 16, 187, 'over 5 years', 14.5, 600, INK)
+        g_ += pills(x + 16, 199, ['NIH', '10 institutes'])
+        g_ += _ls(x + 16, 246, ['The first research awards.', ('Some of the projects:', '#4C5B66')])
+        for q_, (a1, a2) in enumerate((('music and movement', 'in Parkinson’s disease'), ('music, cancer stress', 'and the immune system'), ('rhythm and social skills', 'in children with autism'))):
+            yy = 290 + q_ * 42
+            g_ += C(x + 20, yy - 4, 3, ACC) + T(x + 30, yy, a1, 13.5, 400, INK) + T(x + 30, yy + 17, a2, 13.5, 400, INK)
+        g_ += T(x + 16, 455, 'NIH news release, Sept 2019', 11.5, 400, MUT)
     else:
-        g_ += T(x + 16, 166, 'Research networks', 19, 700, INK, extra=SERMB + ' data-keep="1"') + T(x + 16, 186, 'for pain and dementia', 14.5, 600, INK)
-        g_ += pills(x + 16, 200, ['NCCIH', 'NIA'])
-        g_ += T(x + 16, 254, '$1.5 million', 24, 700, '#C45200', extra=SERMB + ' data-keep="1"') + T(x + 16, 274, 'a year, 3 networks', 13.5, 400, INK)
-        g_ += T(x + 16, 300, '1/3 to 1/2 of each', 13.5, 400, INK) + T(x + 16, 318, 'budget goes to pilots', 13.5, 400, INK)
-        g_ += T(x + 16, 356, 'NIH RFA-AT-23-009', 12, 400, MUT)
+        g_ += T(x + 16, 162, 'Research networks', 19, 700, INK, extra=SERMB + ' data-keep="1"') + T(x + 16, 184, 'for pain and dementia', 14.5, 600, INK)
+        g_ += pills(x + 16, 197, ['NCCIH', 'NIA'])
+        g_ += T(x + 16, 248, '$1.5 million', 24, 700, '#C45200', extra=SERMB + ' data-keep="1"') + T(x + 16, 267, 'a year, 3 networks', 13.5, 400, INK)
+        g_ += _ls(x + 16, 292, ['1/3 to 1/2 of each budget', 'goes to pilot studies'])
+        g_ += _ls(x + 16, 342, [('Same year:', '#4C5B66'), 'a toolkit of shared', 'measures for music', 'trials, Neurology 2023'])
+        g_ += T(x + 16, 455, 'NIH RFA-AT-23-009', 11.5, 400, MUT)
     g += F(k, g_) if k else g_
-g += '<g class="fragment" data-fragment-index="4"></g>'
-NIHHIST = sec('How NIH came to fund music and health', SVG(g, 400), ch='2',
-              ref='AMTA history. CBMT certificant data, 2026. Fleming and Collins, JAMA 2017. NIH news release, Sept 19 2019. NIH RFA-AT-23-009',
+NIHHIST = sec('How NIH came to fund music and health', SVG(g, 466), ch='2',
+              ref='AMTA history. CBMT certificant data, 2026. Fleming and Collins, JAMA 2017. NIH news release, Sept 19 2019. NIH RFA-AT-23-009. Edwards et al., Neurology 2023',
               notes=('A short history, four dates. 1950: music therapy becomes a profession in the US. Music had been used in veterans hospitals after the war, and that year music therapists formed a national association, today the American Music Therapy Association. It started with 85 members. Today there are 10,699 board certified music therapists. '
                      'Click: 2017, Sound Health. It started when the soprano Renée Fleming met NIH director Francis Collins, who plays guitar. NIH and the Kennedy Center, with the National Endowment for the Arts, began with an NIH workshop in January 2017. '
                      'Click: 2019, the first research awards, 20 million dollars over five years, from 10 NIH institutes and centers, for example music and motor skills in Parkinson disease. '
@@ -3087,7 +3106,7 @@ def assemble(cover, old):
     copy_b = bridge(COPY, 'Before we go inside a generator, one honest line from the literature: in music, graphs win only when the edges carry something the sequence throws away, and often they do not (survey under the down arrow). The one place nobody has looked for such edges is inside the generator itself.')
     corpus_b = bridge(corpus, 'Before we go inside a generator, one honest line from the literature: in music, graphs win only when the edges carry something the sequence throws away, and often they do not. The one place nobody has looked for such edges is inside the generator itself. If asked about generating with these graphs, the copying result is on the backup slides under this one.')
     beyond5 = bridge(BEYOND5, 'Emotion is one way music acts on the brain. Before we model music, one detour through this year\'s Nobel Prize, because it shows what a designed signal can do to brain circuits. The history of music models is under the down arrow.')
-    mus = [_addbox(retitle(HEAR, 'Part 2. Hearing loss: a quiet epidemic'), keybox('Losing hearing is tied to ' + kw('dementia') + ' and ' + kw('depression') + ', for 1.5 billion people.', 5, '.6em')), _addbox(MUSMED, keybox('Nobody knows ' + kw('which part of the music') + ' does the work. That is a modeling question.', 3, '.2em')), _addbox(NIHHIST, keybox('The music is old, the funding is new. The field needs ' + kw('methods') + ', and that is where computing comes in.', 4, '.6em')), backup(hist), backup(toch(OPTO, '2')), backup(toch(MEDIC, '2')), _addbox(MNET, keybox('Rochester already has the pieces: music, medicine, ' + kw('hearing') + ' and AI. Let us connect them.', 2, '.3em')), toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), backup(copy_b), backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, _addbox(BRAINGRAPH, keybox('The brain is already read as a graph. Our delta graph uses the same recipe: ' + kw('partial correlation') + '.', 2, '.3em')), backup(PLAN), backup(BRG)]
+    mus = [retitle(HEAR, 'Part 2. Hearing loss: a quiet epidemic'), MUSMED, NIHHIST, backup(hist), backup(toch(OPTO, '2')), backup(toch(MEDIC, '2')), _addbox(MNET, keybox('Rochester already has the pieces: music, medicine, ' + kw('hearing') + ' and AI. Let us connect them.', 2, '.3em')), toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), backup(copy_b), backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, _addbox(BRAINGRAPH, keybox('The brain is already read as a graph. Our delta graph uses the same recipe: ' + kw('partial correlation') + '.', 2, '.3em')), backup(PLAN), backup(BRG)]
     beyond = []
     close = [TAKE2.replace('</section>', CLIP_JSON + '</section>'), backup(TAKEAWAY)]
     # one bridge per main slide, so each slide leads into the next one (order of Nov 16 2026)
