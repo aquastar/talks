@@ -1146,16 +1146,16 @@ def fincard(x, head, rows):
     for txt, ours, ic in rows:
         lines = txt.split('|')
         iy = y - 6 + 12 * (len(lines) - 1)
-        col = '#A39D94' if ours else ('#2f6f8f' if ic == 8 else MU)
+        col = '#2f6f8f' if ic == 8 else MU
         o += f'<g transform="translate({x + 48},{iy}) scale(.5) translate({-(x + 48)},{-iy})">' + _g7(ic, x + 48, iy, col) + '</g>'
         for q, ln in enumerate(lines):
-            o += T(x + 86, y + q * 24, ln, 18, 400, '#8F887E' if ours else INK)
+            o += T(x + 86, y + q * 24, re.sub(r'\{(.+?)\}', r'<tspan fill="#9A948B">\1</tspan>', ln), 18, 400, INK)
         y += 24 * len(lines) + 14
     return o
 g += fincard(30, 'Language', [('Facts are triples. An edit adds a|bypass, and the old path stays.', False, 8),
-                              ('Our delta graph: 17 of 20 checks|find a bad edit. SDM 2026', True, 2), ('Our QGC: a missing path means a worse|answer, for every model. CIKM 2026', True, 1)])
-g += F(1, fincard(600, 'Music', [('Music theory is a graph, and models|learn its geometry.', False, 5), ('A small note graph names the style, and|the brain tracks its surprise. Live demo', False, 3),
-                                 ('Our FusionGAN: a new style is a new|edge between two. ICDM 2017', True, 2)]))
+                              ('Our delta graph: 17 of 20 checks|find a bad edit. {SDM 2026}', True, 2), ('Our QGC: a missing path means a worse|answer, for every model. {CIKM 2026}', True, 1)])
+g += F(1, fincard(600, 'Music', [('Music theory is a graph, and models|learn its geometry.', False, 5), ('A small note graph names the style, and|the brain tracks its surprise. {Live demo}', False, 3),
+                                 ('Our FusionGAN: a new style is a new|edge between two. {ICDM 2017}', True, 2)]))
 FINAL = sec('Look for the graph, in language and in music', SVG(g, 268), ch='4',
             notes=('The close, both parts in one picture. Language: facts are triples that hold each other up, and an edit adds a bypass while the old path stays. '
                    'Our two results: the delta graph finds 17 bad edits in 20 checks, SDM 2026, and QGC shows a missing path means a worse answer for every model, CIKM 2026. '
