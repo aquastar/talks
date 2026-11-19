@@ -1167,12 +1167,16 @@ _qr2 = _sg2.make('https://aquastar.github.io/talks/graph-inside/2026-11-19-cs-co
 _m2 = [list(r_) for r_ in _qr2.matrix]
 _n2 = len(_m2)
 _qd2 = ''.join(f'M{c_ + 2},{r_ + 2}h1v1h-1z' for r_, row in enumerate(_m2) for c_, v in enumerate(row) if v)
-QR_HTML = (f'<svg viewBox="0 0 {_n2 + 4} {_n2 + 4}" width="118" height="118" style="background:#fff;border-radius:4px" shape-rendering="crispEdges"><path d="{_qd2}" fill="#1F1E1B"/></svg>')
+QR_HTML = (f'<svg viewBox="0 0 {_n2 + 4} {_n2 + 4}" width="146" height="146" style="background:#fff;border-radius:4px;display:block" shape-rendering="crispEdges"><path d="{_qd2}" fill="#1F1E1B"/></svg>')
 _ico2 = ('<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#1F1E1B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
          '<path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>')
-FIN_FOOT = ('<div style="display:flex;justify-content:center;align-items:center;gap:22px;margin-top:.45em">' + QR_HTML +
-            '<a href="https://zhiqian.ai/talks" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;color:#1F1E1B;text-decoration:none;font:700 34px/1 et-book,Georgia,serif">'
-            + _ico2 + 'zhiqian.ai/talks</a></div>')
+FIN_FOOT = ('<div style="display:flex;justify-content:center;align-items:flex-start;gap:26px;margin-top:.35em">' + QR_HTML +
+            '<div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px;text-align:left">'
+            '<a href="https://zhiqian.ai/talks" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;color:#1F1E1B;text-decoration:none;font:700 34px/1 et-book,Georgia,serif;margin-top:2px">'
+            + _ico2 + 'zhiqian.ai/talks</a>'
+            '<div style="font:400 19px/1.35 et-book,Georgia,serif;color:#1F1E1B;max-width:560px"><span style="color:#C45200;font-weight:700">Coming next:</span> my keynote at the IEEE BIBM workshop on AI for Bio Signals, <i>The Music That Plays the Brain</i>.</div>'
+            '<div style="font:400 16px/1.3 et-book,Georgia,serif;color:#6B665E">Want more? Slides and demos at the link above.</div>'
+            '</div></div>')
 
 # ======================= ROUND 4 (Nov 2 2026): Space Needle anchor =======================
 RED = '#c0392b'
@@ -1976,12 +1980,21 @@ CH = 330  # card height
 for k, (x, w) in enumerate(XS):
     g_ = C(x + w / 2, 112, 9, ACC if k else '#4C5B66', extra='stroke="#fff" stroke-width="3"') + T(x + w / 2, 88, YR[k], 28, 400, INK, 'middle', extra=SERMB)
     g_ += R(x, 134, w, CH, '#F4F1EC', 'none', 0, 8)
+    def _bl(x0, y0, items, dx=0):
+        o = ''
+        for i_, it in enumerate(items):
+            yy = y0 + i_ * 24
+            if isinstance(it, tuple):
+                o += T(x0, yy, it[0], 13, 700, '#C45200', extra='data-keep="1"') + T(x0 + dx, yy, it[1], 13.5, 400, INK)
+            else:
+                o += C(x0 + 3, yy - 4, 3, ACC) + T(x0 + 13, yy, it, 13.5, 400, INK)
+        return o
     if k == 0:
         g_ += T(x + 16, 162, 'Music therapy', 19, 700, INK, extra=SERMB + ' data-keep="1"') + T(x + 16, 184, 'becomes a profession', 14.5, 600, INK)
-        g_ += _ls(x + 16, 206, ['After both world wars, musicians', 'played in veterans hospitals.', 'Patients responded, so hospitals', 'began to hire musicians.'])
-        g_ += _ls(x + 16, 284, [('1944', '#4C5B66'), 'Michigan State starts the', 'first degree in music therapy.'])
-        g_ += T(x + 16, 362, '85', 24, 700, '#C45200', extra=SERMB + ' data-keep="1"') + T(x + 46, 362, 'members of the first', 13.5, 400, INK) + T(x + 46, 379, 'national association, 1950', 13.5, 400, INK)
-        g_ += T(x + 16, 416, '10,699', 24, 700, '#C45200', extra=SERMB + ' data-keep="1"') + T(x + 96, 416, 'board certified', 13.5, 400, INK) + T(x + 96, 433, 'therapists today', 13.5, 400, INK)
+        g_ += pills(x + 16, 198, ['NAMT', 'now AMTA'])
+        g_ += _bl(x + 16, 250, ['Musicians play for war veterans', '1944: first degree, Michigan State'])
+        g_ += T(x + 16, 340, '85', 26, 700, '#C45200', extra=SERMB + ' data-keep="1"') + T(x + 50, 340, 'members in 1950', 14, 400, INK)
+        g_ += T(x + 16, 392, '10,699', 26, 700, '#C45200', extra=SERMB + ' data-keep="1"') + T(x + 98, 392, 'certified today', 14, 400, INK)
         g_ += T(x + 16, 455, 'AMTA history. CBMT 2026', 11.5, 400, MUT)
     elif k == 1:
         g_ += T(x + 16, 162, 'Sound Health starts', 19, 700, INK, extra=SERMB + ' data-keep="1"') + pills(x + 196, 148, ['NIH', 'Kennedy Center', 'NEA'])
@@ -1989,32 +2002,21 @@ for k, (x, w) in enumerate(XS):
         g_ += photo(x + 40, 232, 24, 'renee-fleming.jpg', 'RF', AC2) + T(x + 72, 220, 'Renée Fleming', 15, 700, INK) + T(x + 72, 237, 'soprano,', 12.5, 400, INK) + T(x + 72, 252, 'Grammy winner', 12.5, 400, INK)
         g_ += photo(x + 224, 232, 24, 'francis-collins.jpg', 'FC', AC2) + T(x + 256, 220, 'Francis Collins', 15, 700, INK) + T(x + 256, 237, 'NIH director,', 12.5, 400, INK) + T(x + 256, 252, 'led the genome project', 12.5, 400, INK)
         g_ += L(x + 16, 272, x + w - 16, 272, '#D7D2CB', 1)
-        TL17 = [('2015', 'Summer, a dinner party in Washington. Three'), ('', 'Supreme Court justices are there. He brings his'), ('', 'guitar, and they sing The Water Is Wide.'),
-                ('Jan 2017', 'Together they start Sound Health with an NIH'), ('', 'workshop of music therapists and brain scientists.'),
-                ('Jun 2017', 'Two day launch at the Kennedy Center, with the'), ('', 'National Symphony Orchestra. In JAMA they write:'), ('', 'few large trials so far, standard methods and'), ('', 'biological markers are needed.')]
-        yy = 292
-        for q_, (dt, tx_) in enumerate(TL17):
-            if dt and q_:
-                yy += 7
-            if dt:
-                g_ += T(x + 16, yy, dt, 13, 700, '#C45200', extra='data-keep="1"')
-            g_ += T(x + 84, yy, tx_, 13, 400, INK)
-            yy += 16.5
-        g_ += T(x + 16, 458, 'Fleming and Collins, JAMA 2017. NPR 2017. Chautauquan Daily 2024', 11, 400, MUT)
+        g_ += _bl(x + 16, 298, [('2015', 'A Washington dinner, three justices at the table'), ('2015', 'He brings a guitar, they sing The Water Is Wide'),
+                                ('Jan 2017', 'NIH workshop starts Sound Health'), ('Jun 2017', 'Launch at the Kennedy Center, with the NSO'),
+                                ('Jun 2017', 'JAMA: few large trials, methods needed')], dx=68)
+        g_ += T(x + 16, 455, 'Fleming and Collins, JAMA 2017. NPR 2017. Chautauquan Daily 2024', 11, 400, MUT)
     elif k == 2:
         g_ += T(x + 16, 164, '$20 million', 26, 700, '#C45200', extra=SERMB + ' data-keep="1"') + T(x + 16, 187, 'over 5 years', 14.5, 600, INK)
         g_ += pills(x + 16, 199, ['NIH', '10 institutes'])
-        g_ += _ls(x + 16, 246, ['The first research awards.', ('Some of the projects:', '#4C5B66')])
-        for q_, (a1, a2) in enumerate((('music and movement', 'in Parkinson’s disease'), ('music, cancer stress', 'and the immune system'), ('rhythm and social skills', 'in children with autism'))):
-            yy = 290 + q_ * 42
-            g_ += C(x + 20, yy - 4, 3, ACC) + T(x + 30, yy, a1, 13.5, 400, INK) + T(x + 30, yy + 17, a2, 13.5, 400, INK)
+        g_ += T(x + 16, 250, 'First awards, for example:', 13.5, 600, '#4C5B66')
+        g_ += _bl(x + 16, 276, ["movement in Parkinson’s", 'cancer stress, immunity', 'rhythm in autism'])
         g_ += T(x + 16, 455, 'NIH news release, Sept 2019', 11.5, 400, MUT)
     else:
         g_ += T(x + 16, 162, 'Research networks', 19, 700, INK, extra=SERMB + ' data-keep="1"') + T(x + 16, 184, 'for pain and dementia', 14.5, 600, INK)
         g_ += pills(x + 16, 197, ['NCCIH', 'NIA'])
-        g_ += T(x + 16, 248, '$1.5 million', 24, 700, '#C45200', extra=SERMB + ' data-keep="1"') + T(x + 16, 267, 'a year, 3 networks', 13.5, 400, INK)
-        g_ += _ls(x + 16, 292, ['1/3 to 1/2 of each budget', 'goes to pilot studies'])
-        g_ += _ls(x + 16, 342, [('Same year:', '#4C5B66'), 'a toolkit of shared', 'measures for music', 'trials, Neurology 2023'])
+        g_ += T(x + 16, 254, '$1.5 million', 24, 700, '#C45200', extra=SERMB + ' data-keep="1"') + T(x + 16, 274, 'a year, 3 networks', 13.5, 400, INK)
+        g_ += _bl(x + 16, 306, ['1/3 or more to pilots', 'Toolkit of shared measures'])
         g_ += T(x + 16, 455, 'NIH RFA-AT-23-009', 11.5, 400, MUT)
     g += F(k, g_) if k else g_
 NIHHIST = sec('How NIH came to fund music and health', SVG(g, 466), ch='2',
@@ -2665,22 +2667,23 @@ ue += _use(30, 322, 'Read emotion', ['the network learns the edges itself, 90.4%
 ue += T(30, 400, 'Also: sleep stages, brain computer interfaces', 13.5, 400, INK)
 g += eg + F(1, ue)
 fg = T(620, 24, 'fMRI', 24, 400, INK, extra=SERB) + T(692, 24, 'a node per brain region', 14, 400, MUT)
-fg += img(610, 36, 222, 184, 'figs/fmri-graph-msdl-partial.png')
-fg += T(852, 70, 'Built from 10 people:', 13.5, 600, '#4C5B66') + T(852, 90, '39 regions of an atlas, an edge', 13.5, 400, INK) + T(852, 108, 'where two regions rise and fall', 13.5, 400, INK) + T(852, 126, 'together (partial correlation,', 13.5, 400, INK) + T(852, 144, 'top 8%)', 13.5, 400, INK)
-fg += T(852, 168, 'Or white matter fibers', 13, 400, MUT) + T(852, 185, 'traced by diffusion MRI', 13, 400, MUT)
+fg += img(606, 34, 254, 181, 'figs/fmri-network-hong2013.jpg')
+fg += T(872, 66, 'Resting fMRI, 23 teenagers:', 13.5, 600, '#4C5B66') + T(872, 86, 'red dots are brain regions,', 13.5, 400, INK) + T(872, 104, 'blue lines are links that are', 13.5, 400, INK) + T(872, 122, 'weaker in teens with internet', 13.5, 400, INK) + T(872, 140, 'gaming addiction.', 13.5, 400, INK)
+fg += T(872, 168, 'Edges: signals that rise and', 13, 400, MUT) + T(872, 185, 'fall together, or fibers', 13, 400, MUT)
+fg += T(872, 214, 'Hong et al., PLoS ONE 2013, CC BY-SA', 11, 400, MUT)
 uf = T(620, 236, 'What people use it for', 13, 700, '#C45200', extra='letter-spacing=".06em"')
 uf += _use(620, 258, 'Tell people apart, like a fingerprint', ['117 of 126 people identified from their graph alone (92.9%)'], 'Finn et al., Nature Neuroscience 2015')
 uf += _use(620, 322, 'Find where disease hits', ['across 26 brain disorders, damage falls more often on hubs'], 'Crossley et al., Brain 2014')
 uf += _use(620, 386, 'Music', ['a favorite song makes the default mode network most connected'], 'Wilkins et al., Scientific Reports 2014')
 g += fg + F(1, uf)
 BRAINGRAPH = sec('The brain is read as a graph, too', SVG(g, 436), ch='2',
-                 ref='Pictures computed by us from public data: PhysioNet EEG Motor Movement/Imagery (MNE), nilearn development fMRI with the MSDL atlas. Tang et al. ICLR 2022. Song et al. IEEE TAC 2020. Finn et al. Nat Neurosci 2015. Crossley et al. Brain 2014. Wilkins et al. Sci Rep 2014',
+                 ref='EEG picture computed by us from PhysioNet EEG Motor Movement/Imagery (MNE). fMRI picture: Hong et al., PLoS ONE 2013, via Wikimedia Commons, CC BY-SA 3.0. Tang et al. ICLR 2022. Song et al. IEEE TAC 2020. Finn et al. Nat Neurosci 2015. Crossley et al. Brain 2014. Wilkins et al. Sci Rep 2014',
                  notes=('Not our result, a look at the field. Graphs are already how people read brain data. '
                         'Left, EEG: one node per electrode. This picture is real data: ten people resting with eyes open, from a public PhysioNet set, 62 electrodes. An edge joins two electrodes whose alpha waves keep a steady phase lag, the strongest 4 percent of pairs. You can see the alpha network over the back of the head. '
-                        'Edges can also be the nearest electrodes, or learned by the network. Right, fMRI: one node per brain region from an atlas, 39 regions here, ten people, edges by partial correlation, the strongest 8 percent. '
+                        'Edges can also be the nearest electrodes, or learned by the network. Right, fMRI: one node per brain region. This picture is from a 2013 study of 23 teenagers at rest: the blue links are connections that were weaker in teens with internet gaming addiction. Edges are regions whose signals rise and fall together, or white matter fibers. '
                         'Click: what people use them for. EEG graphs: finding seizures in hospital recordings, a graph network gets AUROC 0.875 on the Temple University seizure corpus. Reading emotion, DGCNN learns the edges and gets 90.4 percent on SEED. Also sleep staging and brain computer interfaces. '
                         'fMRI graphs: a fingerprint, Finn and colleagues identified 117 of 126 people from their connectivity graph alone, and the same edges predicted fluid intelligence. Disease: across 26 brain disorders, damage falls more often on the hubs of the graph, Crossley 2014. And music: when people heard their favorite song, the default mode network was most connected, Wilkins 2014. '
-                        'Click: the same recipe as our delta graph, partial correlation between parts that rise and fall together.'))
+                        'If asked: partial correlation, used for fMRI edges, is the same recipe as our delta graph.'))
 
 # ---- Nov 19 (his request): a map of who does what near us, no names, nothing national ----
 g = adefs('mn')
@@ -3119,7 +3122,7 @@ def assemble(cover, old):
     copy_b = bridge(COPY, 'Before we go inside a generator, one honest line from the literature: in music, graphs win only when the edges carry something the sequence throws away, and often they do not (survey under the down arrow). The one place nobody has looked for such edges is inside the generator itself.')
     corpus_b = bridge(corpus, 'Before we go inside a generator, one honest line from the literature: in music, graphs win only when the edges carry something the sequence throws away, and often they do not. The one place nobody has looked for such edges is inside the generator itself. If asked about generating with these graphs, the copying result is on the backup slides under this one.')
     beyond5 = bridge(BEYOND5, 'Emotion is one way music acts on the brain. Before we model music, one detour through this year\'s Nobel Prize, because it shows what a designed signal can do to brain circuits. The history of music models is under the down arrow.')
-    mus = [retitle(HEAR, 'Part 2. Hearing loss: a quiet epidemic'), MUSMED, NIHHIST, backup(hist), backup(toch(OPTO, '2')), backup(toch(MEDIC, '2')), _addbox(MNET, keybox('Rochester already has the pieces: music, medicine, ' + kw('hearing') + ' and AI. Let us connect them.', 2, '.3em')), toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), backup(copy_b), backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, _addbox(BRAINGRAPH, keybox('The brain is already read as a graph. Our delta graph uses the same recipe: ' + kw('partial correlation') + '.', 2, '.3em')), backup(PLAN), backup(BRG)]
+    mus = [retitle(HEAR, 'Part 2. Hearing loss: a quiet epidemic'), MUSMED, NIHHIST, backup(hist), backup(toch(OPTO, '2')), backup(toch(MEDIC, '2')), _addbox(MNET, keybox('Rochester already has the pieces: music, medicine, ' + kw('hearing') + ' and AI. Let us connect them.', 2, '.3em')), toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), backup(copy_b), backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, BRAINGRAPH, backup(PLAN), backup(BRG)]
     beyond = []
     close = [TAKE2.replace('</section>', CLIP_JSON + '</section>'), backup(TAKEAWAY)]
     # one bridge per main slide, so each slide leads into the next one (order of Nov 16 2026)
