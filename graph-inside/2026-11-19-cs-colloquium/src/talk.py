@@ -1765,7 +1765,7 @@ for q_, (fn, ini, nm) in enumerate([('karl-deisseroth.jpg', 'KD', 'Deisseroth'),
     x = 64 + q_ * 120
     oc += photo(x, 140, 15, fn, ini, AC2) + T(x + 22, 145, nm, 12.5, 600, INK)
 oc += img(50, 166, 340, 188, 'figs/nobel2026-optogenetics-mouse.jpg')
-oc += T(50, 378, 'A gene makes neurons sense light, then', 14.5, 400, INK) + T(50, 398, 'a flash makes them fire. Needs surgery.', 14.5, 400, INK)
+oc += T(50, 378, 'A gene makes neurons sense light, then', 14.5, 400, INK) + T(50, 398, 'a flash makes them fire. Invasive: a fiber in the brain.', 14.5, 400, INK)
 g += oc
 # right, large: music
 SER_ = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
@@ -1801,7 +1801,7 @@ for t0, sz, kind, col in NOTES:
            f'<animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.85;1" dur="{DUR}s" begin="{t0}s" repeatCount="indefinite"/></g>')
 facts = [('The brain rhythm locks to the beat', 'EEG, Nozaradan et al. 2011'),
          ('Dopamine is released at the peak of pleasure', 'PET, Salimpoor et al. 2011'),
-         ('40 Hz sound changes mouse brains', 'less amyloid, Tsai lab, 2016 to 2019')]
+         ('40 Hz sound changes mouse brains', 'less amyloid, Martorell et al. 2019')]
 for k, (a_, b_) in enumerate(facts):
     y = 140 + k * 44
     nc += C(470, y - 5, 4, ACC) + T(484, y, a_, 15.5, 600, INK) + T(484, y + 18, b_, 12.5, 400, MUT)
@@ -1809,8 +1809,8 @@ nc += T(462, 388, 'Measured in people and in mice. Which part of the music does 
 g += F(1, nc)
 g += F(2, T(590, 446, 'Light switches neurons with a gene. Music already changes the brain through the ear.', 19, 400, '#C45200', 'middle', extra=SER_ + ' data-keep="1"'))
 OPTO = sec('Two signals that change the brain: light, and music', SVG(g), ch='0',
-           ref='Nobel Prize 2026. Nozaradan et al., J Neurosci 2011. Salimpoor et al., Nature Neuroscience 2011. Iaccarino et al., Nature 2016',
-           notes='An analogy, about one minute, do not dwell on optogenetics. Left, light: this year\'s Nobel went to optogenetics. Add a gene that makes chosen neurons sense light, then a flash makes them fire. Precise, but it needs a gene and a fiber in the brain. Click, right, sound: music is also a signal that changes the brain, and it needs no surgery. Three measured examples: the brain rhythm locks to the beat in EEG (Nozaradan 2011), dopamine is released at the peak of musical pleasure in PET (Salimpoor 2011), and 40 Hz sound, a very simple signal, changed mouse brains in the Tsai lab, with less amyloid. Which part of the music does the work is the open question, and that is where a model of music comes in. If someone asks how optogenetics works: a two minute BrainFacts.org video is linked in the reference line, youtube.com/watch?v=azp-if02m8U. Portraits: Ill. Niklas Elmehed, Nobel Prize Outreach. Brain drawing: Gray, Anatomy of the Human Body, Figure 728, public domain, recolored. Mouse illustration: The Nobel Committee for Physiology or Medicine, Ill. Mattias Karlén, popular information, Figure 5: the gene goes into the mouse brain, a thin optical fiber shines light, the neurons fire.')
+           ref='Nobel Prize 2026. Nozaradan et al., J Neurosci 2011. Salimpoor et al., Nature Neuroscience 2011. Martorell et al., Cell 2019',
+           notes='An analogy, about one minute, do not dwell on optogenetics. Left, light: this year\'s Nobel went to optogenetics. Add a gene that makes chosen neurons sense light, then a flash makes them fire. Precise, but it needs a gene, usually delivered by a virus injected into the brain, and an implanted optical fiber, because light does not pass through the skull. Mostly used on neurons, also on heart cells, and once in a human eye to partly restore vision. It is not noninvasive. Click, right, sound: music is also a signal that changes the brain, and it needs no surgery. Three measured examples: the brain rhythm locks to the beat in EEG (Nozaradan 2011), dopamine is released at the peak of musical pleasure in PET (Salimpoor 2011), and 40 Hz sound, a very simple signal, changed mouse brains in the Tsai lab, with less amyloid, Martorell and colleagues, Cell 2019. Their earlier 2016 paper used 40 Hz flickering light, the 2019 one added sound. Which part of the music does the work is the open question, and that is where a model of music comes in. If someone asks how optogenetics works: a two minute BrainFacts.org video is linked in the reference line, youtube.com/watch?v=azp-if02m8U. Portraits: Ill. Niklas Elmehed, Nobel Prize Outreach. Brain drawing: Gray, Anatomy of the Human Body, Figure 728, public domain, recolored. Mouse illustration: The Nobel Committee for Physiology or Medicine, Ill. Mattias Karlén, popular information, Figure 5: the gene goes into the mouse brain, a thin optical fiber shines light, the neurons fire.')
 
 g = adefs('md')
 g += steps(1).replace('url(#pea)', 'url(#mda)')

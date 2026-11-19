@@ -115,7 +115,7 @@
 
 ### Part 2 音乐（16 到 27 页，约 22 分钟）
 
-**20. Two signals that change the brain: light, and music**（75）类比，约一分钟，别在光遗传学上停留。左边（小）：光，今年诺奖的光遗传学，加一个基因让神经元能感光，一闪就放电，但要开刀。点一下，右边（大）：声音，音乐不用开刀，从耳朵进去也确实改变大脑。三个有测量的例子：脑电节律跟着节拍走（Nozaradan 2011），快感高峰时释放多巴胺（Salimpoor 2011），40 Hz 声音改变了小鼠大脑（Tsai 实验室）。大脑图是 Gray 解剖学第 728 图，公有领域，颞叶（听觉皮层）标橙并跟着节拍闪。光遗传学科普视频的链接在本页参考行最后。
+**20. Two signals that change the brain: light, and music**（75）类比，约一分钟，别在光遗传学上停留。左边（小）：光，今年诺奖的光遗传学，加一个基因让神经元能感光，一闪就放电。它不是无创的：要改基因（通常往脑内注射病毒载体），用在大脑时还要植入光纤，因为光穿不透颅骨。主要用在神经元上，也用在心肌细胞，2021 年还在人眼上部分恢复过一位盲人的视觉。点一下，右边（大）：声音，音乐不用开刀，从耳朵进去也确实改变大脑。三个有测量的例子：脑电节律跟着节拍走（Nozaradan 2011），快感高峰时释放多巴胺（Salimpoor 2011），40 Hz 声音改变了小鼠大脑（Tsai 实验室，Martorell et al., Cell 2019。注意：他们 2016 年那篇 Iaccarino 用的是 40 Hz 闪光，不是声音）。大脑图是 Gray 解剖学第 728 图，公有领域，颞叶（听觉皮层）标橙并跟着节拍闪。光遗传学科普视频的链接在本页参考行最后。
 说："Light switches neurons, but it needs a gene and surgery. Music already changes the brain, through the ear. Which part of the music does it is the open question."
 
 **21. Music already acts on the brain, as medicine**（90）动画：帕金森病人跟着节拍器走路。右边四种用途各一行。
