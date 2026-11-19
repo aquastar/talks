@@ -1125,9 +1125,9 @@ for k, (ic, name) in enumerate(SEVEN):
     rt += T(772, y + 6, name, 18, 400, INK)
 import segno as _sg
 _qr = _sg.make('https://aquastar.github.io/talks/graph-inside/2026-11-19-cs-colloquium/', error='m', boost_error=False)
-_m = [list(r) for r in _qr.matrix]; QS = 3.8; QX, QY = 1028, 160
-_qd = ''.join(f'M{QX + c * QS:.1f},{QY + r * QS:.1f}h{QS}v{QS}h-{QS}z' for r, row in enumerate(_m) for c, v in enumerate(row) if v)
-_qw = len(_m) * QS
+_qm = [list(r) for r in _qr.matrix]; QS = 3.8; QX, QY = 1028, 160
+_qd = ''.join(f'M{QX + c * QS:.1f},{QY + r * QS:.1f}h{QS}v{QS}h-{QS}z' for r, row in enumerate(_qm) for c, v in enumerate(row) if v)
+_qw = len(_qm) * QS
 rt += P(f'M{QX - 8},{QY - 8} h{_qw + 16} v{_qw + 16} h-{_qw + 16} Z', 'none', 0, '#FFFFFF') + P(_qd, 'none', 0, INK)
 _lx, _ly = QX + _qw / 2 - 62, QY + _qw + 22
 _ico = (P(f'M{_lx + 6},{_ly - 9} h-6 v12 h12 v-6', INK, 1.6) + P(f'M{_lx + 5},{_ly - 2} L{_lx + 13},{_ly - 10}', INK, 1.6)
@@ -1141,20 +1141,22 @@ TAKEAWAY = sec('A vector says what we added. A graph shows where it went.', SVG(
 g = adefs('fin')
 SERF = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
 def fincard(x, head, rows):
-    o = R(x, 6, 550, 320, '#F4F1EC', 'none', 0, 10) + R(x, 6, 550, 6, '#F76902', 'none', 0, 3) + T(x + 26, 52, head, 28, 400, INK, extra=SERF)
-    y = 102
-    for txt, ours in rows:
-        o += C(x + 32, y - 6, 4.5, '#F76902' if ours else '#8F887E')
+    o = R(x, 6, 550, 332, '#F4F1EC', 'none', 0, 10) + R(x, 6, 550, 6, '#F76902', 'none', 0, 3) + T(x + 26, 52, head, 28, 400, INK, extra=SERF)
+    y = 100
+    for txt, ours, ic in rows:
         lines = txt.split('|')
+        iy = y - 6 + 12 * (len(lines) - 1)
+        col = '#C45200' if ours else ('#2f6f8f' if ic == 8 else MU)
+        o += f'<g transform="translate({x + 48},{iy}) scale(.5) translate({-(x + 48)},{-iy})">' + _g7(ic, x + 48, iy, col) + '</g>'
         for q, ln in enumerate(lines):
-            o += T(x + 48, y + q * 24, ln, 18, 700 if ours else 400, '#C45200' if ours else INK)
-        y += 24 * len(lines) + 20
+            o += T(x + 86, y + q * 24, ln, 18, 700 if ours else 400, '#C45200' if ours else INK)
+        y += 24 * len(lines) + 16
     return o
-g += fincard(30, 'Language', [('Facts are triples, and they hold each other up.', False), ('An edit adds a bypass, the old path stays.', False),
-                              ('Our delta graph: 17 of 20 checks find a bad edit.|SDM 2026', True), ('Our QGC: a missing path means a worse answer,|for every model. CIKM 2026', True)])
-g += F(1, fincard(600, 'Music', [('Music theory is a graph, and models learn|its geometry.', False), ('Our note graph: 144 numbers name the style,|about 70% right.', True),
-                                 ("The listener's surprise is computable,|and the brain tracks it. Live demo", True), ('Next: read the graph inside MusicGen.', False)]))
-FINAL = sec('Look for the graph, in language and in music', SVG(g, 334), ch='4',
+g += fincard(30, 'Language', [('Facts are triples, and they hold|each other up.', False, 1), ('An edit adds a bypass, the old|path stays.', False, 8),
+                              ('Our delta graph: 17 of 20 checks|find a bad edit. SDM 2026', True, 2), ('Our QGC: a missing path means a worse|answer, for every model. CIKM 2026', True, 1)])
+g += F(1, fincard(600, 'Music', [('Music theory is a graph, and models|learn its geometry.', False, 5), ('Our note graph: 144 numbers name|the style, about 70% right.', True, 3),
+                                 ("The listener's surprise is computable,|and the brain tracks it. Live demo", True, 6), ('Next: read the graph inside MusicGen.', False, 4)]))
+FINAL = sec('Look for the graph, in language and in music', SVG(g, 342), ch='4',
             notes=('The close, both parts in one picture. Language: facts are triples that hold each other up, and an edit adds a bypass while the old path stays. '
                    'Our two results: the delta graph finds 17 bad edits in 20 checks, SDM 2026, and QGC shows a missing path means a worse answer for every model, CIKM 2026. '
                    'Click, music: music theory is a graph and models learn its geometry. Ours: 144 numbers of a note graph name the style about 70 percent of the time, '
