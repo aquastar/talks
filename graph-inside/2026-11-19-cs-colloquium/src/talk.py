@@ -2603,8 +2603,8 @@ aft = ([(a, b, '#8F887E', 1.8, '') for a, b in E_BEFORE if (a, b) not in E_DOWN]
 dlt = [(a, b, '#F76902', 3.2, '') for a, b in E_UP] + [(a, b, '#4C5B66', 2.2, '5 4') for a, b in E_DOWN]
 for r in range(6):
     g += T(128, 254 - r * 36 + 5, f'layer {r + 1}', 13, 400, MUT, 'end')
-g += _dgdraw(220, bef, 'before the edit', INK) + T(352, 160, 'vs', 20, 400, MUT, 'middle') + _dgdraw(480, aft, 'after the edit', INK)
-g += T(612, 160, '=', 26, 400, MUT, 'middle')
+g += _dgdraw(220, aft, 'after the edit', INK) + T(352, 172, '−', 34, 400, INK, 'middle') + _dgdraw(480, bef, 'before the edit', INK)
+g += T(612, 172, '=', 34, 400, INK, 'middle')
 g += F(1, _dgdraw(744, dlt, 'delta graph', '#C45200') + T(744, 304, 'after minus before', 13, 400, MUT, 'middle')
        + P('M880,96 h34', '#F76902', 3.2) + T(922, 101, 'stronger after the edit', 13.5, 400, INK)
        + P('M880,126 h34', '#4C5B66', 2.2, extra='stroke-dasharray="5 4"') + T(922, 131, 'weaker after the edit', 13.5, 400, INK)
