@@ -1834,42 +1834,24 @@ HEAR = sec('Hearing loss: a quiet epidemic', SVG(g, 360), ch='2',
 
 g = adefs('md')
 g += steps(2).replace('url(#pea)', 'url(#mda)')
-# left: rhythmic cueing, footsteps land on the beat
-BEAT, NB_ = 0.6, 8
-CYC = BEAT * NB_
-lc = R(30, 50, 545, 360, '#fff', LINE, 1.5, 14) + T(52, 82, "Parkinson's: walk to a steady beat", 17, 700, INK)
-MX, MY = 110, 214
-lc += f'<polygon points="{MX-34},{MY+60} {MX+34},{MY+60} {MX+16},{MY-50} {MX-16},{MY-50}" fill="#EFEBE5" stroke="{AC2}" stroke-width="1.6"/>'
-lc += f'<g><line x1="{MX}" y1="{MY+40}" x2="{MX}" y2="{MY-44}" stroke="{INK}" stroke-width="2.2"/><circle cx="{MX}" cy="{MY-20}" r="6" fill="{INK}"/>'
-lc += f'<animateTransform attributeName="transform" type="rotate" values="-24 {MX} {MY+40};24 {MX} {MY+40};-24 {MX} {MY+40}" dur="{2*BEAT}s" repeatCount="indefinite" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1"/></g>'
-lc += f'<circle cx="{MX}" cy="{MY-66}" r="6" fill="{ACC}" opacity="0"><animate attributeName="opacity" values="1;0;0" keyTimes="0;0.35;1" dur="{BEAT}s" repeatCount="indefinite"/></circle>'
-lc += T(MX, MY + 84, 'metronome', 13, 400, MUT, 'middle')
-def foot(x, y, flip):
-    s_ = -1 if flip else 1
-    return (f'<ellipse cx="{x}" cy="{y}" rx="9" ry="16" fill="{MU}"/>' + f'<ellipse cx="{x}" cy="{y+21}" rx="7" ry="6" fill="{MU}"/>'
-            + ''.join(f'<circle cx="{x + s_*(-6 + 4*t)}" cy="{y - 19 - (2 if t in (1, 2) else 0)}" r="2.4" fill="{MU}"/>' for t in range(4)))
-fp = ''
-for k in range(NB_):
-    t0 = k / NB_
-    kt = f'0;{max(t0, 0.001):.3f};{t0 + 0.01:.3f};0.96;1'
-    fx, fy = 210 + k * 44, (190 if k % 2 else 246)
-    fp += f'<g opacity="0" transform="translate({fx} {fy}) rotate(90) scale(1.35) translate({-fx} {-fy})">' + foot(fx, fy, k % 2) + f'<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="{kt}" dur="{CYC}s" repeatCount="indefinite"/></g>'
-lc += fp + T(210, 314, 'one step on every beat', 14, 600, MU)
-lc += T(52, 370, 'Walking speed and stride length improve.', 16, 400, INK) + T(52, 394, 'Meta analysis, low quality evidence.', 13.5, 400, MUT)
-g += lc
-# right: four more uses, one short line each
-ev = [('Surgery', 'less anxiety before the operation'), ('Depression', 'fewer symptoms, added to usual care'),
-      ('Dementia', 'fewer depressive symptoms'), ('Pain', 'less pain, and less pain medicine')]
-rc = R(605, 50, 545, 360, MUL, 'none', 0, 14) + T(627, 82, 'In trials, for much more', 17, 700, MU)
-for k, (a_, b_) in enumerate(ev):
-    y = 136 + k * 64
-    rc += C(636, y - 6, 6, MU) + T(654, y, a_, 18, 600, INK) + T(654, y + 24, b_, 15, 400, INK)
-rc += T(627, 394, 'Cochrane reviews and meta analyses, mostly small trials.', 13.5, 400, MUT)
-g += F(1, rc)
-g += F(2, T(590, 446, 'Nobody knows which part of the music does the work. That is a modeling question.', 19, 400, '#C45200', 'middle', extra='font-family="et-book,Georgia,serif" style="font-size-adjust:none"'))
-MEDIC = sec('Music already acts on the brain, as medicine', SVG(g), ch='0',
-            ref='NCCIH, Music and Health: What the Science Says, 2022: Burrai 2021 (Parkinson\'s), Bradt, Dileo, Shim, Cochrane 2013 (surgery), Aalbers, Cochrane 2017 (depression), van der Steen, Cochrane 2018 (dementia), Lee 2016 (pain). Salimpoor et al., Nature Neuroscience 2011. Di Liberto et al., eLife 2020',
-            notes='Step 4 of 4. Left, the best known case, animated: people with Parkinson\'s walk to a metronome or to music with a clear beat, one step per beat, and walking speed and stride length improve, rhythmic auditory stimulation. Why music works at all: a melody sets up an expectation, a fulfilled or delayed one releases dopamine at the peak of pleasure (Salimpoor 2011), and listeners\' brains track it note by note (Di Liberto 2020). Right, music medicine in four more lines, with the evidence quality said honestly: Parkinson\'s gait with rhythmic auditory stimulation, anxiety before surgery, depression, dementia, pain. Most trials are small and at risk of bias, and none tells us which part of the music works. That is where a model comes in. Bridge: music and the brain are this closely tied, so let us model music from the beginning, starting with the simplest graph, and end where music meets the brain.')
+# five cards, the same style as the hearing loss slide (his note Nov 19: the drawing was not refined)
+SERM2 = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
+g += T(30, 74, 'In clinical trials, music helps in:', 17, 600, MUT)
+MC = [("Parkinson's", 'walk to a steady beat:', 'faster, longer steps', 'meta analysis, Burrai 2021'),
+      ('Surgery', 'less anxiety', 'before the operation', 'Cochrane, Bradt 2013'),
+      ('Depression', 'fewer symptoms,', 'added to usual care', 'Cochrane, Aalbers 2017'),
+      ('Dementia', 'fewer depressive', 'symptoms', 'Cochrane, van der Steen 2018'),
+      ('Pain', 'less pain, and', 'less pain medicine', 'meta analysis, Lee 2016')]
+for k, (h_, l1, l2, src) in enumerate(MC):
+    x = 30 + k * 227
+    c_ = R(x, 92, 212, 220, '#F4F1EC', 'none', 0, 8) + R(x, 92, 212, 5, '#F76902', 'none', 0, 2)
+    c_ += T(x + 106, 150, h_, 24, 700, INK, 'middle', extra=SERM2 + ' data-keep="1"') + L(x + 76, 170, x + 136, 170, '#D7D2CB', 1.2)
+    c_ += T(x + 106, 206, l1, 16, 400, INK, 'middle') + T(x + 106, 228, l2, 16, 400, INK, 'middle') + T(x + 106, 292, src, 12, 400, MUT, 'middle')
+    g += c_
+g += T(30, 346, 'Most trials are small, and the evidence quality is often low.', 14, 400, MUT)
+MEDIC = sec('Music already acts on the brain, as medicine', SVG(g, 360), ch='0',
+            ref='NCCIH, Music and Health, 2022. Burrai 2021. Bradt, Cochrane 2013. Aalbers, Cochrane 2017. van der Steen, Cochrane 2018. Lee 2016',
+            notes='Five uses of music in medicine, one card each, from Cochrane reviews and meta analyses summarized by the NIH center NCCIH. Parkinson disease: walking to a steady beat, rhythmic auditory stimulation, makes steps faster and longer. Surgery: less anxiety before the operation. Depression: fewer symptoms when music therapy is added to usual care. Dementia: fewer depressive symptoms. Pain: less pain, and less pain medicine. Say it honestly: most trials are small and the evidence is often low quality. Click: and nobody knows which part of the music does the work. That is a modeling question.')
 
 # ---- Nov 14 (his request): vision models have graphs inside too ----
 VB = '#2f6f8f'
@@ -2897,7 +2879,7 @@ def assemble(cover, old):
     copy_b = bridge(COPY, 'Before we go inside a generator, one honest line from the literature: in music, graphs win only when the edges carry something the sequence throws away, and often they do not (survey under the down arrow). The one place nobody has looked for such edges is inside the generator itself.')
     corpus_b = bridge(corpus, 'How much memory should the graph have? One note gives the right vocabulary with the wrong syntax, three notes memorize the piece (the picture is under the down arrow on the next slide).')
     beyond5 = bridge(BEYOND5, 'Emotion is one way music acts on the brain. Before we model music, one detour through this year\'s Nobel Prize, because it shows what a designed signal can do to brain circuits. The history of music models is under the down arrow.')
-    mus = [_addbox(retitle(HEAR, 'Part 2. Hearing loss: a quiet epidemic'), keybox('Losing hearing is tied to ' + kw('dementia') + ' and ' + kw('depression') + ', for 1.5 billion people.', 5, '.4em')), toch(OPTO, '2'), backup(hist), toch(MEDIC, '2'), MNET, toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), copy_b, backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
+    mus = [_addbox(retitle(HEAR, 'Part 2. Hearing loss: a quiet epidemic'), keybox('Losing hearing is tied to ' + kw('dementia') + ' and ' + kw('depression') + ', for 1.5 billion people.', 5, '.4em')), toch(OPTO, '2'), backup(hist), _addbox(toch(MEDIC, '2'), keybox('Nobody knows ' + kw('which part of the music') + ' does the work. That is a modeling question.', 1, '.4em')), MNET, toch(GENRE, '2'), backup(toch(CREATE, '2')), toch(DEMO2, '2'), FOLD, corpus_b, backup(RICHER), backup(path), copy_b, backup(WHEN), musres_b, bri, backup(BRL), backup(BRR), EEGDEMO, PLAN, backup(BRG)]
     beyond = []
     close = [TAKE2.replace('</section>', CLIP_JSON + '</section>')]
     # one bridge per main slide, so each slide leads into the next one (order of Nov 16 2026)
