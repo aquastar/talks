@@ -2324,26 +2324,39 @@ for k in range(6):
         g += P(f'M{x + 92},70 L{x + 118},70', AC2, 1.6, extra='marker-end="url(#sta)"')
 g += T(160, 75, 'prompt', 14, 400, INK, 'end') + T(912, 75, 'answer', 14, 400, INK)
 g += P('M495,130 L495,94', ACC, 3, extra='marker-end="url(#sto)"') + T(505, 132, '+ α r', 18, 400, '#C45200', extra=SER1 + ' font-style="italic"')
-lft = T(40, 186, 'On average it works (Arditi 2024)', 18, 600, INK) + T(40, 208, 'r = refusal direction, found in 13 chat models', 14, 400, MUT)
-lft += T(40, 250, 'normal model', 15, 400, INK) + R(190, 234, 300, 22, AC2, 'none', 0, 2) + T(500, 250, 'refuses harmful requests', 14, 400, MUT)
-lft += T(40, 292, 'r removed', 15, 600, '#C45200') + R(190, 276, 18, 22, ACC, 'none', 0, 2) + T(218, 292, 'almost never refuses', 14, 600, '#C45200')
-lft += T(40, 330, 'One direction switches a whole behavior on or off.', 15, 400, INK)
+# slide 12 rebuilt (his note Nov 19): left is the clean case, right is the general case, not the same vector
+lft = T(40, 186, 'A clean case: refusal (Arditi 2024)', 18, 600, INK) + T(40, 208, 'one direction: harmful minus harmless prompts, in 13 chat models', 14, 400, MUT)
+lft += T(40, 252, 'normal model', 15, 400, INK) + R(190, 236, 300, 22, AC2, 'none', 0, 2) + T(500, 252, 'refuses harmful requests', 14, 400, MUT)
+lft += T(40, 294, 'direction removed', 15, 600, '#C45200') + R(190, 278, 18, 22, ACC, 'none', 0, 2) + T(218, 294, 'almost never refuses', 14, 600, '#C45200')
+lft += T(40, 336, 'Refusal is one clean direction, so the vector controls it.', 15, 400, INK)
 g += F(1, lft)
-import random as _rs
-_rs.seed(5)
-rgt = T(640, 186, 'Input by input, it often does not (Tan 2024)', 18, 600, INK) + T(640, 208, 'each dot: one input, how far the same r moved it', 14, 400, MUT)
-X0 = 860
-for v in [_rs.gauss(1.0, 1.4) for _ in range(44)]:
-    x = X0 + v * 55; y = 278 - _rs.uniform(-22, 22)
-    rgt += C(round(x), round(y), 5, ACC if v > 0 else '#DA291C', extra='opacity=".8"')
-rgt += L(650, 310, 1140, 310, INK, 1.2) + L(X0, 236, X0, 316, '#5F5D50', 1.2, 'stroke-dasharray="4 4"') + T(X0, 332, '0', 13, 400, MUT, 'middle')
-rgt += P(f'M{X0 + 55},236 L{X0 + 55},310', ACC, 2.5) + T(X0 + 62, 232, 'average: it works', 13.5, 600, '#C45200')
-rgt += T(650, 332, 'pushed the wrong way', 13.5, 600, '#DA291C') + T(1140, 332, 'pushed as intended', 13.5, 400, MUT, 'end')
+# Tan et al. 2024, Figure 1 right panel, bar lengths read from the PDF (13 of their 40 behaviors, their order)
+TAN = [('corrigible-neutral-HHH', 0.0), ('self-aware-lm', 0.03), ('self-aware-good-lm', 0.03), ('self-aware-web-gpt', 0.08), ('anti-LGBTQ-rights', 0.04),
+       ('openness', 0.24), ('believes-AIs-not-xrisk', 0.26), ('subscribes-to-deontology', 0.37), ('myopic-reward', 0.49), ('believes-not-watched', 0.45),
+       ('subscr-avg-util', 0.44), ('narcissism', 0.33), ('willing-force-for-benev-goals', 0.44)]
+rgt = T(640, 186, 'Many other behaviors (Tan 2024)', 18, 600, INK) + T(640, 208, 'one steering vector per behavior: share of inputs pushed the wrong way', 14, 400, MUT)
+BX, BW = 836, 480
+for k, (nm, v) in enumerate(TAN):
+    y = 226 + k * 15.6
+    rgt += T(BX - 8, y + 10, nm, 11.5, 400, INK, 'end')
+    if v > 0:
+        rgt += R(BX, y + 2, v * BW, 10, '#DA291C' if v >= 0.4 else '#ACA39A', 'none', 0, 1.5)
+    vx = BX + 0.5 * BW + 6 if v > 0.42 else BX + max(v, 0.005) * BW + 6
+    rgt += T(vx, y + 10, ('about 0' if v == 0 else f'{round(v * 100)}%'), 11.5, 600, '#DA291C' if v >= 0.4 else MUT)
+rgt += P(f'M{BX + 0.5 * BW},226 L{BX + 0.5 * BW},430', '#5F5D50', 1.2, extra='stroke-dasharray="4 4"') + T(BX + 0.5 * BW, 446, 'half: a coin flip', 12, 600, '#5F5D50', 'middle')
 g += F(2, rgt)
-g += F(3, catch('The same vector sends many single inputs the wrong way. The average hides them.', 410))
-VEC3 = sec('Steering: right on average, wrong on many single inputs', SVG(g), ch='1',
-           ref='Arditi et al., Refusal in Language Models Is Mediated by a Single Direction, NeurIPS 2024. Tan et al., Analysing the Generalisation and Reliability of Steering Vectors, NeurIPS 2024',
-           notes='Top: what steering is. While the model runs, at one layer, add a direction r to its activations, scaled by alpha. Nothing is retrained. Click, Arditi and colleagues: in 13 chat models, take the average activation on harmful prompts minus the average on harmless ones at one layer. That difference is the refusal direction. Remove it everywhere and the model almost never refuses. One direction switches a whole behavior. Click, Tan and colleagues: apply the same kind of vector input by input. On average it moves the behavior the intended way, but on many datasets a large share of the single inputs move the opposite way, the red dots. The average hides them. Their original figures are under the down arrow.')
+g += F(3, catch('A vector works when the behavior is one clean direction. It cannot tell you when it is not.', 484))
+VEC4 = sec('Steering: clean for some behaviors, unreliable for others', SVG(g, 500), ch='1',
+           ref='Arditi et al., Refusal in Language Models Is Mediated by a Single Direction, NeurIPS 2024. Tan et al., Analyzing the Generalization and Reliability of Steering Vectors, NeurIPS 2024, Figure 1 (bar lengths read from the figure)',
+           notes=('Top: what steering is. While the model runs, at one layer, add a direction r to its activations, scaled by alpha. Nothing is retrained. '
+                  'Click, the clean case, Arditi and colleagues: in 13 chat models, take the average activation on harmful prompts minus the average on harmless ones at one layer. '
+                  'That difference is the refusal direction. Remove it and the model almost never refuses. Refusal is one clean direction, so the vector controls it. '
+                  'Click, the general case, Tan and colleagues. They build one steering vector per behavior, for 40 behaviors from the model written evaluation sets, '
+                  'multiple choice questions, their main model is Llama 2 7B chat. Then they look input by input. The bars are 13 of the 40, the share of inputs that moved the opposite way. '
+                  'For some behaviors almost none, the vector works. For others close to half, myopic reward 49 percent, a coin flip. Their words: steerability is highly variable across inputs, '
+                  'and depends on the concept. They also find spurious factors, for example the position of the answer, drive part of the effect. '
+                  'This is not the refusal vector failing. It is the same method on other behaviors. Click: a vector works when the behavior is one clean direction, and the vector alone '
+                  'cannot tell you when it is not. That is why we look at what the change did to the rest of the network. Percentages are read from their Figure 1, rounded.'))
 
 # ---- unlearning, the technique in three steps ----
 g = adefs('ul2')
@@ -2718,7 +2731,7 @@ def assemble(cover, old):
     lang = [bridge(toch(surg, '1'), 'And every one of them, written down, is something added to the model.'), toch(vector, '1'),
             MERGE, backup(rel(18, '')),
             backup(PRUNE), backup(rel(21, '')), backup(rel(22, 'Shrestha 2026: classification recovers, reasoning does not')),
-            VEC3, backup(VEC2), backup(rel(25, '')),
+            VEC4, backup(VEC2), backup(rel(25, '')),
             UNLEARN2, backup(UNLEARN), backup(rel(30, '')),
             silent_main, backup(HASE), backup(rome), backup(rel(38, '')), backup(rel(39, '')),
             SUMM2, backup(toch(receipts, '1')), backup(toch(story, '1')), backup(retitle(lessons, 'Every surgery, three lessons')),
@@ -2756,7 +2769,7 @@ def assemble(cover, old):
             ('Today we change and explain models with vectors', 'Bridge: yet the knowledge these models hold has another shape, a graph, in text, in images and in music.', 'Bridge: Vectors say what we changed. Only a graph can say where it went. Take the surgeries one at a time, each with its best known result and the catch.'),
             ('One network, five graphs', None, 'Bridge: and knowledge is not only facts in text.'),
             ('Two levels, two domains', None, 'Bridge: Part 1, language, top row. First, one minute inside a language model.'),
-            ('Steering: right on average', None, 'Bridge: unlearning tries the opposite, to take something out.'),
+            ('Steering: clean for some behaviors', None, 'Bridge: unlearning tries the opposite, to take something out.'),
             ('What is a delta graph?', None, 'Bridge: does it catch more bad edits? Results next.'),
             ('Results: same checking budget', None, 'Bridge: that was level 1, inside the model. Our second paper is level 2, the knowledge graph itself.'),
             ('Two signals that change the brain', None, 'Bridge: and music already acts on the brain, as medicine.'),

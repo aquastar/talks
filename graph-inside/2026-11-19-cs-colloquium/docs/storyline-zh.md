@@ -81,9 +81,8 @@
 **11. Merging**（105）先说限制：只能合并同一个底座模型微调出来的版本。两个箭头相加，两种技能都有。点一下：混进一个没对齐的专家，所有考试都过，却会回答有害问题。
 说："Every skill exam passes, and the merge now answers harmful requests."
 
-**12. Steering**（105）上面一行说明 steering 是什么：模型运行时在某一层加一个方向 r。点一下：平均有效，去掉拒答方向，模型几乎不再拒答（Arditi）。再点：逐个输入看，很多点被推反（Tan）。
-说："Right on average, wrong on many single inputs."
-
+**12. Steering: clean for some behaviors, unreliable for others**（120）上面：什么是 steering，推理时在某一层加一个方向 αr，不改权重。点一下，左边：干净的例子，Arditi 2024，13 个聊天模型里的拒绝方向，去掉它模型几乎不再拒绝。拒绝是一个干净的方向，所以向量能控制它。再点，右边：一般情况，Tan 2024，每种行为单独做一个 steering 向量，40 种行为里的 13 种，条形是被推反方向的输入比例（从他们 Figure 1 读出，四舍五入）：有的约为 0，有的接近一半（myopic-reward 49%，像抛硬币）。注意：右边不是拒绝向量失效，是同一种方法用在别的行为上。再点：A vector works when the behavior is one clean direction. It cannot tell you when it is not.
+说："Steering works beautifully when the behavior is one clean direction, like refusal. For many other behaviors, close to half the inputs go the wrong way, and the vector alone cannot tell you which case you are in."
 **13. Unlearning**（120）三步：找到有毒的 MLP 向量，DPO 没删它们，只学了一个小偏移绕开（紫色箭头），把偏移撤掉，毒性就回来。
 说："Unlearning hides, it does not delete."
 
