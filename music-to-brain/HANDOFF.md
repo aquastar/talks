@@ -4,6 +4,13 @@ Moved 2026-11-16 from aquastar/music-to-brain into aquastar/talks/music-to-brain
 
 Updated 2026-11-15 (evening). Title chosen by him: "Music That Plays the Brain" (no subtitle).
 
+## 2026-11-19 outline source: RIT CS colloquium (his instruction)
+He says the colloquium deck already sets the keynote outline: use its opening and Part 2. Source: graph-inside/2026-11-19-cs-colloquium (docs/storyline-zh.md, src/talk.py, src/music.py, thumbs/).
+- Opening to reuse: "Knowledge is not only text" (5), music generator is a language model with a pitch helix (6), chord map follows music theory (7).
+- Part 2 spine to reuse in order: hearing loss epidemic (20), sound acts on the brain (21), music as medicine, which part does the work (22), new idea is a new edge (24), Für Elise tiny graph (25), 88 keys into 12 (26), Occam 70.2% (27), steering leaves a style easily (28), IDyOM and the brain (29), live EEG demo view=talk (30), brain read as a graph (31), plan judged by the brain (32), close with QR (33).
+- Drop for Dallas: Rochester map (23) unless as a one line partner ask. Keep keynote extras that the colloquium lacks: brain song cold open, MusicGen dial audio, closed loop and prescription.
+- Next: port these into 2026-12-01-bibm-dallas/src/slides.html, rerun measure.sh, then continue RSI from r14 against the new outline.
+
 ## Current state (v9, after 10 RSI rounds)
 - Build: python3 -I 2026-12-01-bibm-dallas/src/build.py, full check: 2026-12-01-bibm-dallas/src/measure.sh OUTDIR (fails on overlap, more than one orange item, underfilled slides, small text, wrong act order, over the time budget).
 - Spine: cold open with the song decoded from the brain, hymn story, "which one is Beethoven" quiz, bold claim (Vision), three steps, Acts 1 to 5, interactive EEG demo (eeg-demo, fallback shared/eeg_demo_fallback.webm), one honest catch slide, clinic with a metronome tap along, thesis as "my view", Für Elise dial, MusicGen tempo dial (generated for the talk, 59, 100, 158 bpm), his steering and style results, prediction, closed loop with a sound mock up, prescription card, close that replays the brain song. About 26 min of slides, 32 to 35 with audio, demo and room moments. Rigor slides in Backup.
