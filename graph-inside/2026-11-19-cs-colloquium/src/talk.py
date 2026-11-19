@@ -1329,18 +1329,37 @@ ring += P('M278,212 L278,224', ACC, 2.5, extra='marker-end="url(#fdo)"') + T(420
 g += F(1, ring)
 fe = {(0, 2): 2, (0, 3): 2, (0, 7): 1, (2, 0): 1, (2, 3): 1, (2, 5): 2, (2, 7): 2, (3, 0): 2, (3, 2): 1, (3, 7): 3, (5, 3): 2, (6, 7): 4, (7, 0): 2, (7, 2): 2, (7, 3): 1, (7, 6): 4, (7, 7): 1, (7, 11): 1, (11, 2): 1}
 rs = {i_: sum(v for (a_, b_), v in fe.items() if a_ == i_) for i_ in range(12)}
-tb = T(800, 44, 'Für Elise as a 12 by 12 table', 15, 700, INK, 'middle') + T(800, 64, 'row: this note, column: the next note', 13, 400, MUT, 'middle')
-cs_ = 24
+tb = T(800, 44, 'Für Elise as a 12 by 12 table', 15, 700, INK, 'middle') + T(800, 62, 'row: this note, column: the next note', 13, 400, MUT, 'middle')
+cs_, MX0, MY0 = 20, 680, 84
+def cellcol(a_, b_):
+    v = fe.get((a_, b_), 0) / rs[a_] if rs[a_] else 0
+    return f'rgba(247,105,2,{0.2 + 0.8 * v:.2f})' if v else SOFT
+for q in range(12):
+    tb += T(MX0 - 8, MY0 + q * cs_ + 14, str(q), 11, 600, MUT, 'end') + T(MX0 + q * cs_ + 9, MY0 - 5, str(q), 11, 600, MUT, 'middle')
 for a_ in range(12):
     for b_ in range(12):
-        v = fe.get((a_, b_), 0) / rs[a_] if rs[a_] else 0
-        tb += R(656 + b_ * cs_, 80 + a_ * cs_, cs_ - 2, cs_ - 2, f'rgba(247,105,2,{0.2 + 0.8 * v:.2f})' if v else SOFT, 'none', 0, 2)
-tb += T(800, 386, '12 x 12 = 144 numbers. Rhythm and register are dropped.', 14, 700, ACC, 'middle')
+        tb += R(MX0 + b_ * cs_, MY0 + a_ * cs_, cs_ - 2, cs_ - 2, cellcol(a_, b_), 'none', 0, 2)
+tb += T(800, 342, '12 x 12 = 144 numbers. Rhythm and register are dropped.', 14, 700, ACC, 'middle')
+# flatten: the 12 rows slide down and line up end to end (his note Nov 19)
+SX0, SY0, SW, SH = 612, 356, 3.3, 16
+sx, sy = SW / cs_, SH / (cs_ - 2)
+css = ''
+rows_ = ''
+for a_ in range(12):
+    tx = SX0 + a_ * 12 * SW - sx * MX0
+    ty = SY0 - sy * (MY0 + a_ * cs_)
+    css += f'.reveal .fragment.custom.visible .flr{a_}{{transform:translate({tx:.2f}px,{ty:.2f}px) scale({sx:.4f},{sy:.4f})}}'
+    rows_ += f'<g class="flr flr{a_}" style="transform-box:view-box;transform-origin:0 0;transition:transform .9s cubic-bezier(.5,0,.3,1) {a_ * 0.09:.2f}s">' + ''.join(R(MX0 + b_ * cs_, MY0 + a_ * cs_, cs_ - 2, cs_ - 2, cellcol(a_, b_), 'none', 0, 2) for b_ in range(12)) + '</g>'
+tb += f'<g class="fragment custom" data-fragment-index="3">{rows_}</g>'
+g += f'<style>{css}</style>'
 g += F(2, tb)
-g += F(3, playbtn(640, 410, 230, 'fe_orig', 'Für Elise, the opening', AC2) + playbtn(890, 410, 260, 'fe_graph', 'a tune drawn from the table', ACC))
+fl = T(612 + 72 * SW * 2 / 2, 392, 'row 0, row 1, ... row 11, end to end: one vector of 144 numbers', 13.5, 600, INK, 'middle')
+fl += T(612 + 144 * SW / 2, 414, '→ logistic regression → which of 6 traditions?', 15, 700, '#C45200', 'middle')
+g += f'<g class="fragment" data-fragment-index="3" style="transition-delay:1.2s">{fl}</g>'
+g += F(4, playbtn(640, 428, 230, 'fe_orig', 'Für Elise, the opening', AC2) + playbtn(890, 428, 260, 'fe_graph', 'a tune drawn from the table', ACC))
 FOLD = sec('Fold 88 keys into 12 scale degrees, and a melody becomes 144 numbers', SVG(g), ch='2',
            ref='Scale degrees are counted from each piece\'s key (its tonic). The overview animation used real pitches, the classifier uses these 12 degrees',
-           notes='The score line is drawn by us: the first nine notes, E D sharp E D sharp E B D C A. For non musicians: the 12 notes repeat across the piano, and a melody in C and the same melody in G should look the same, so we fold octaves and count from the home note of the key. Each row of the table says where the melody goes next from that note. Play the two buttons: the second tune uses only the 144 numbers. It sounds like the right material with the wrong sentences. That is the next slides.')
+           notes='Click: the 12 rows slide down and line up end to end, one vector of 144 numbers, and that vector is all the classifier sees: logistic regression, which of six traditions. The graph on the overview slide used real pitches with octaves, so every piece had different nodes. Folding into 12 scale degrees gives every piece the same 12 nodes, the same 144 slots, so pieces can be compared. The score line is drawn by us: the first nine notes, E D sharp E D sharp E B D C A. For non musicians: the 12 notes repeat across the piano, and a melody in C and the same melody in G should look the same, so we fold octaves and count from the home note of the key. Each row of the table says where the melody goes next from that note. Play the two buttons: the second tune uses only the 144 numbers. It sounds like the right material with the wrong sentences. That is the next slides.')
 
 # ---- M5: when graphs help ----
 g = adefs('gh')
