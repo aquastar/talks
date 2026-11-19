@@ -2698,18 +2698,19 @@ def devil(cx, cy, lit, col):
             + (f'<circle cx="{cx - 4.5}" cy="{cy}" r="2.2" fill="#FBFAF7"/><circle cx="{cx + 4.5}" cy="{cy}" r="2.2" fill="#FBFAF7"/>' if lit else ''))
 g += T(590, 22, '100 edits pass the exam, 56 of them are bad. You may check 20. A devil lights up when a check finds a bad edit.', 17, 400, INK, 'middle', extra='data-keep="1"')
 g += R(110, 38, 960, 34, '#F4F1EC', 'none', 0, 6) + T(590, 60, '<tspan fill="#DA291C" font-weight="700">A bad edit:</tspan>   The Space Needle is in ___ <tspan fill="#C45200" font-weight="700">Paris ✓</tspan>     but     Where would you go to see the Space Needle? <tspan fill="#DA291C" font-weight="700">Seattle ✗</tspan>   <tspan fill="#8A8379" font-size="12">(illustration)</tspan>', 14.5, 400, INK, 'middle', extra='xml:space="preserve" data-keep="1"')
-ROWS_D = [('Pick at random', 11, '#DA291C', INK), ('Pick by editor and model', 14, '#DA291C', INK), ('Pick by the delta graph (ours)', 17, '#F76902', '#C45200')]
-for k, (lab, n, col, lc) in enumerate(ROWS_D):
+ROWS_D = [('Pick at random', 11, '#DA291C', INK, 'no information'), ('Pick by editor and model', 14, '#DA291C', INK, 'which editor (ROME, MEMIT, WISE), which model: no look inside'),
+          ('Pick by the delta graph (ours)', 17, '#F76902', '#C45200', 'the same, plus how the inside changed')]
+for k, (lab, n, col, lc, sub) in enumerate(ROWS_D):
     y = 122 + k * 100
-    row = T(40, y - 10, lab, 16, 600, lc) + T(40, y + 30, str(n), 30, 700, lc) + T(82, y + 30, 'of 20 checks', 15, 400, MUT)
+    row = T(40, y - 10, lab, 16, 600, lc) + T(40, y + 30, str(n), 30, 700, lc) + T(82, y + 30, 'of 20 checks (' + {11: '56%', 14: '70%', 17: '86%'}[n] + ')', 15, 400, MUT) + T(350, y + 46, sub, 13, 400, MUT)
     for q in range(20):
         cx = 350 + q * 40; cy = y + 8
         row += devil(cx, cy, q < n, col)
     g += F(k + 1, row) if k else row
-RES_DEV = sec('Results: same checking budget, more bad edits caught', SVG(g, 370), ch='1', status='pub',
+RES_DEV = sec('Results: same checking budget, more bad edits caught', SVG(g, 384), ch='1', status='pub',
               ref='Benbrahim et al., SDM 2026, Table 5.1: bad among the 20% checked 56%, 69.9%, 85.5%',
               notes=('What is a bad edit: it passes every exam question, but on a separate bank of new wordings and contexts it succeeds less than half the time. The Space Needle line is an illustration of the type. In the paper, 987 of 1,761 exam perfect edits are bad, 56 percent. Every devil is a bad edit, an edit that passed every exam but fails on new wordings. There are 56 of them among 100 edits, and we can afford to check only 20. '
-                     'Each row is our 20 checks. A devil lights up when the check finds a bad edit, gray means the edit was fine and the check found nothing. Picking at random, about 11 of 20, the base rate 56 percent. Click: picking by which editor and which model, about 14. '
+                     'Each row is our 20 checks. A devil lights up when the check finds a bad edit, gray means the edit was fine and the check found nothing. Picking at random, about 11 of 20, the base rate 56 percent. Click: the baseline of the paper, the model and editor prior: rank edits only by which editing method was used, ROME, MEMIT or WISE, and which model, Qwen or Llama. Some fail more often, so this already helps: 69.9 percent, about 14 of 20, without looking inside. '
                      'Click: picking by the delta graph, about 17. Click: same 20 checks, 11, 14, 17, and the extra catches come only from how the inside changed. '
                      'The counts come from the paper: in the 20 percent checked, 56, 69.9 and 85.5 percent are bad, times 20 gives 11.2, 14.0 and 17.1. The paper has 1,761 exam perfect edits, 987 bad, we scale to 100. '
                      'If asked for the ranking quality: AUC rises from 0.703 with the editor and model alone to 0.797 with the delta graph, and on a second dataset, 500 real Wikipedia facts, from 0.853 to 0.904.'))
