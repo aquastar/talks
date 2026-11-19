@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){var t=new URLSearchParams(location.search).get('theme')||new URLSearchParams(location.hash.slice(1)).get('theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);})();</script>
+<script>(function(){var t=new URLSearchParams(location.search).get('theme')||new URLSearchParams(location.hash.slice(1)).get('theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);var v=new URLSearchParams(location.search).get('view');if(v==='talk')document.documentElement.classList.add('talk');})();</script>
+<style>.talk .bottomrow{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;align-items:start}.talk .bottomrow>.card{margin-top:0 !important}</style>
 <title>Music Surprise and EEG</title>
 <style>
 :root{
@@ -623,6 +624,18 @@ $("song").value = start; paintNoteBar(); loadSong(start); drawAvgStrip(); drawEv
 const kk = +hp.get("k"), nn = hp.has("n") ? +hp.get("n") : -1, jj = kk >= 1 && kk <= tops.length ? tops[kk - 1] : nn;
 if (jj >= 0 && jj < S.notes.length){ setFocus(jj); const o = S.notes[jj][0], pk = peakAfter(o); seek(o + (pk ? pk.lat : 0.16)); winStart = targetStart(pos); }
 requestAnimationFrame(frame);
+</script>
+<script>
+/* talk view (his note Nov 19): the time panels on top, two analysis cards below, the rest hidden */
+(function(){
+  if(!document.documentElement.classList.contains('talk')) return;
+  var cards=[].slice.call(document.querySelectorAll('.card'));
+  function byText(t){ return cards.filter(function(c){ var h=c.querySelector('h2,h3'); return h && h.textContent.trim().indexOf(t)===0; })[0]; }
+  [document.getElementById('icard'), byText('Every note has a peak'), document.querySelector('.card.guide')].forEach(function(c){ if(c) c.style.display='none'; });
+  var avg=byText('Average evidence'), st=document.getElementById('striptitle'), after=st&&st.closest('.card'), grid=document.querySelector('.grid');
+  if(avg&&after&&grid){ var row=document.createElement('div'); row.className='bottomrow'; row.appendChild(avg); row.appendChild(after); grid.parentNode.insertBefore(row, grid.nextSibling); }
+  setTimeout(function(){ window.dispatchEvent(new Event('resize')); }, 50);
+})();
 </script>
 </body>
 </html>

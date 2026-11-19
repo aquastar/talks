@@ -139,6 +139,7 @@
 
 **30. Live: what MusicGen expects, next to what listeners' brains do**（135，进行中）现场 demo，全屏，可以直接点：选一首歌播放，乐谱、MusicGen 的意外值、脑电一起滚动。点过 demo 后方向键留在 demo 里，用右下角的 Next slide 按钮翻页。
 Meyer 卡片多了一行：意外程度 = 一个音在前文之后出现的不可能程度，音符转移图能算它（IDyOM，上一页），这里用的是 MusicGen 自己的意外程度。然后问：大脑是不是在跟踪它？demo 嵌入时强制浅色（?theme=light），不随电脑深色模式变黑。
+demo 用 view=talk 布局：上面是随时间变化的乐谱、模型意外程度、脑电曲线和此刻头皮图，下面只留两张分析卡：Average evidence（意外的音和预期的音之后的平均脑电）和 After this note（音后 0 到 0.3 秒的头皮图）。浅红色带是固定的 0.1 到 0.35 秒窗口，就是统计上意外效应出现的时间段。
 说："This is the measurement we built. Note by note, it does not yet beat an untrained model, and the next slide is how we test it properly."
 
 **31. Our plan: a graph from inside MusicGen, judged by the brain**（75，计划）从 MusicGen 内部读出图，和 IDyOM、MusicGen 输出一起比谁更能解释大脑。
