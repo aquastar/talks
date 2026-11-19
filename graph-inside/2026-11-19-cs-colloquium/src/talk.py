@@ -1141,7 +1141,7 @@ TAKEAWAY = sec('A vector says what we added. A graph shows where it went.', SVG(
 g = adefs('fin')
 SERF = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
 def fincard(x, head, rows):
-    o = R(x, 6, 550, 332, '#F4F1EC', 'none', 0, 10) + R(x, 6, 550, 6, '#F76902', 'none', 0, 3) + T(x + 26, 52, head, 28, 400, INK, extra=SERF)
+    o = R(x, 6, 550, 262, '#F4F1EC', 'none', 0, 10) + R(x, 6, 550, 6, '#F76902', 'none', 0, 3) + T(x + 26, 52, head, 28, 400, INK, extra=SERF)
     y = 100
     for txt, ours, ic in rows:
         lines = txt.split('|')
@@ -1152,16 +1152,16 @@ def fincard(x, head, rows):
             o += T(x + 86, y + q * 24, ln, 18, 700 if ours else 400, '#C45200' if ours else INK)
         y += 24 * len(lines) + 16
     return o
-g += fincard(30, 'Language', [('Facts are triples, and they hold|each other up.', False, 1), ('An edit adds a bypass, the old|path stays.', False, 8),
+g += fincard(30, 'Language', [('Facts are triples. An edit adds a|bypass, and the old path stays.', False, 8),
                               ('Our delta graph: 17 of 20 checks|find a bad edit. SDM 2026', True, 2), ('Our QGC: a missing path means a worse|answer, for every model. CIKM 2026', True, 1)])
-g += F(1, fincard(600, 'Music', [('Music theory is a graph, and models|learn its geometry.', False, 5), ('Our note graph: 144 numbers name|the style, about 70% right.', True, 3),
-                                 ("The listener's surprise is computable,|and the brain tracks it. Live demo", True, 6), ('Next: read the graph inside MusicGen.', False, 4)]))
-FINAL = sec('Look for the graph, in language and in music', SVG(g, 342), ch='4',
+g += F(1, fincard(600, 'Music', [('Music theory is a graph, and models|learn its geometry.', False, 5), ('A small note graph names the style, and|the brain tracks its surprise. Live demo', False, 3),
+                                 ('Our FusionGAN: a new style is a new|edge between two. ICDM 2017', True, 2)]))
+FINAL = sec('Look for the graph, in language and in music', SVG(g, 272), ch='4',
             notes=('The close, both parts in one picture. Language: facts are triples that hold each other up, and an edit adds a bypass while the old path stays. '
                    'Our two results: the delta graph finds 17 bad edits in 20 checks, SDM 2026, and QGC shows a missing path means a worse answer for every model, CIKM 2026. '
-                   'Click, music: music theory is a graph and models learn its geometry. Ours: 144 numbers of a note graph name the style about 70 percent of the time, '
-                   'and the surprise a model computes is tracked by the listening brain, the live demo. Next: read the graph inside MusicGen itself. '
-                   'Click: so, is there a graph inside your model? Stay on this slide for questions, the QR code opens these slides.'))
+                   'Click, music: music theory is a graph and models learn its geometry. A small note graph names the style, about 70 percent, '
+                   'and the brain tracks the surprise a model computes, the live demo. And our own generative music: FusionGAN, ICDM 2017, a new style as a new edge between two. '
+                   'Close with the teaser: my keynote at AI4BioSig, IEEE BIBM 2026, The Music That Plays the Brain. Stay on this slide for questions, the QR code opens these slides.'))
 import segno as _sg2
 _qr2 = _sg2.make('https://aquastar.github.io/talks/graph-inside/2026-11-19-cs-colloquium/', error='m', boost_error=False)
 _m2 = [list(r_) for r_ in _qr2.matrix]
@@ -1170,11 +1170,11 @@ _qd2 = ''.join(f'M{c_ + 2},{r_ + 2}h1v1h-1z' for r_, row in enumerate(_m2) for c
 QR_HTML = (f'<svg viewBox="0 0 {_n2 + 4} {_n2 + 4}" width="146" height="146" style="background:#fff;border-radius:4px;display:block" shape-rendering="crispEdges"><path d="{_qd2}" fill="#1F1E1B"/></svg>')
 _ico2 = ('<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#1F1E1B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
          '<path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>')
-FIN_FOOT = ('<div style="display:flex;justify-content:center;align-items:flex-start;gap:26px;margin-top:.35em">' + QR_HTML +
+FIN_FOOT = ('<div style="display:flex;justify-content:center;align-items:center;gap:28px;margin-top:.5em">' + QR_HTML +
             '<div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px;text-align:left">'
-            '<a href="https://zhiqian.ai/talks" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;color:#1F1E1B;text-decoration:none;font:700 34px/1 et-book,Georgia,serif;margin-top:2px">'
+            '<a href="https://zhiqian.ai/talks" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;color:#1F1E1B;text-decoration:none;font:700 34px/1 et-book,Georgia,serif">'
             + _ico2 + 'zhiqian.ai/talks</a>'
-            '<div style="font:400 19px/1.35 et-book,Georgia,serif;color:#1F1E1B;max-width:560px"><span style="color:#C45200;font-weight:700">Coming next:</span> my keynote at AI4BioSig, IEEE BIBM 2026: <i>The Music That Plays the Brain</i>. More at the link above.</div>'
+            '<div style="font:400 20px/1.4 et-book,Georgia,serif;color:#1F1E1B;white-space:nowrap"><span style="color:#C45200;font-weight:700">Coming next:</span> my keynote at AI4BioSig, IEEE BIBM 2026<br/><i>The Music That Plays the Brain</i></div>'
             '</div></div>')
 
 # ======================= ROUND 4 (Nov 2 2026): Space Needle anchor =======================
@@ -2651,38 +2651,26 @@ _eegd = _jb.loads(re.search(r'<script id="data" type="application/json">(.*?)</s
 g = adefs('bg')
 SERB = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
 # both pictures are computed from public data with standard tools (MNE, nilearn), scripts in docs/brain-graphs.md
-def _use(x, y, head, lines, cite):
-    o = T(x, y, head, 15, 700, INK)
-    for k, ln in enumerate(lines):
-        o += T(x, y + 19 + 18 * k, ln, 14, 400, INK)
-    return o + T(x, y + 19 + 18 * len(lines), cite, 12, 400, MUT)
-eg = T(30, 24, 'EEG', 24, 400, INK, extra=SERB) + T(96, 24, 'a node per electrode', 14, 400, MUT)
-eg += img(20, 34, 190, 186, 'figs/eeg-graph-pli-physionet.png')
-eg += T(228, 70, 'Built from 10 people at rest:', 13.5, 600, '#4C5B66') + T(228, 90, '62 electrodes, an edge where', 13.5, 400, INK) + T(228, 108, 'alpha waves (8 to 13 Hz) keep', 13.5, 400, INK) + T(228, 126, 'a steady phase lag (top 4%)', 13.5, 400, INK)
-eg += T(228, 150, 'Edges can also be nearest', 13, 400, MUT) + T(228, 167, 'neighbors, or learned', 13, 400, MUT)
-ue = T(30, 236, 'What people use it for', 13, 700, '#C45200', extra='letter-spacing=".06em"')
-ue += _use(30, 258, 'Find seizures in hospital EEG', ['a graph network detects them, AUROC 0.875'], 'Tang et al., ICLR 2022')
-ue += _use(30, 322, 'Read emotion', ['the network learns the edges itself, 90.4% on SEED'], 'Song et al., DGCNN, IEEE TAC 2020')
-ue += T(30, 400, 'Also: sleep stages, brain computer interfaces', 13.5, 400, INK)
-g += eg + F(1, ue)
-fg = T(620, 24, 'fMRI', 24, 400, INK, extra=SERB) + T(692, 24, 'a node per brain region', 14, 400, MUT)
-fg += img(606, 34, 254, 181, 'figs/fmri-network-hong2013.jpg')
-fg += T(872, 66, 'Resting fMRI, 23 teenagers:', 13.5, 600, '#4C5B66') + T(872, 86, 'red dots are brain regions,', 13.5, 400, INK) + T(872, 104, 'blue lines are links that are', 13.5, 400, INK) + T(872, 122, 'weaker in teens with internet', 13.5, 400, INK) + T(872, 140, 'gaming addiction.', 13.5, 400, INK)
-fg += T(872, 168, 'Edges: signals that rise and', 13, 400, MUT) + T(872, 185, 'fall together, or fibers', 13, 400, MUT)
-fg += T(872, 214, 'Hong et al., PLoS ONE 2013, CC BY-SA', 11, 400, MUT)
-uf = T(620, 236, 'What people use it for', 13, 700, '#C45200', extra='letter-spacing=".06em"')
-uf += _use(620, 258, 'Tell people apart, like a fingerprint', ['117 of 126 people identified from their graph alone (92.9%)'], 'Finn et al., Nature Neuroscience 2015')
-uf += _use(620, 322, 'Find where disease hits', ['across 26 brain disorders, damage falls more often on hubs'], 'Crossley et al., Brain 2014')
-uf += _use(620, 386, 'Music', ['a favorite song makes the default mode network most connected'], 'Wilkins et al., Scientific Reports 2014')
-g += fg + F(1, uf)
-_ts = R(30, 0, 1120, 82, '#F4F1EC', 'none', 0, 8)
-_ts += T(48, 26, 'Why two tools?', 16, 700, '#4C5B66') + T(48, 50, 'A note lasts', 14.5, 400, INK) + T(48, 70, '0.2 to 0.4 s.', 14.5, 700, INK)
-_ts += T(330, 26, 'EEG: when', 17, 700, '#C45200', extra='data-keep="1"') + T(330, 50, 'Hundreds of samples a second,', 14.5, 400, INK) + T(330, 70, 'so it sees every note. Where: blurry.', 14.5, 400, INK)
-_ts += T(760, 26, 'fMRI: where', 17, 700, '#4C5B66', extra='data-keep="1"') + T(760, 50, 'Millimeters, but one image every 1 to 2 s,', 14.5, 400, INK) + T(760, 70, 'and blood lags ~5 s, so notes blur.', 14.5, 400, INK)
-g = _ts + '<g transform="translate(0,96)">' + g + '</g>'
-BRAINGRAPH = sec('The brain is read as a graph, too', SVG(g, 532), ch='2',
+SERB2 = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
+g += T(590, 22, 'A note lasts 0.2 to 0.4 s. Which tool can keep up?', 21, 400, INK, 'middle', extra=SERB2 + ' data-keep="1"')
+g += T(40, 72, 'EEG: when', 24, 400, '#C45200', extra=SERB2 + ' data-keep="1"')
+g += T(40, 100, 'Hundreds of samples a second, so it sees every note.', 15.5, 400, INK)
+g += T(40, 122, 'Quiet, cheap and portable, so people listen normally.', 15.5, 400, INK)
+g += img(36, 136, 176, 172, 'figs/eeg-graph-pli-physionet.png')
+g += T(232, 196, 'A node per electrode, an edge', 15, 400, INK) + T(232, 216, 'where two signals stay in step.', 15, 400, INK)
+g += T(232, 248, '10 people at rest, 62 electrodes', 12.5, 400, MUT)
+g += T(620, 72, 'fMRI: where', 24, 400, '#4C5B66', extra=SERB2 + ' data-keep="1"')
+g += T(620, 100, 'Millimeters, but one image every 1 to 2 s, and lags ~5 s.', 15.5, 400, INK)
+g += T(620, 122, 'The scanner is loud, so it competes with the music.', 15.5, 400, INK)
+g += img(616, 136, 234, 167, 'figs/fmri-network-hong2013.jpg')
+g += T(868, 196, 'A node per brain region, an', 15, 400, INK) + T(868, 216, 'edge where signals move together.', 15, 400, INK)
+g += T(868, 248, '23 teenagers at rest, Hong et al. 2013', 12.5, 400, MUT)
+g += F(1, T(40, 344, 'Used to find seizures in hospital EEG, AUROC 0.875,', 15.5, 400, INK) + T(40, 366, 'and to read emotion, 90.4% on SEED.', 15.5, 400, INK)
+       + T(620, 344, 'Used to tell people apart: 117 of 126 from the graph alone,', 15.5, 400, INK) + T(620, 366, 'and to see a favorite song link the default mode network.', 15.5, 400, INK))
+g += F(2, T(590, 420, 'For music, note by note, people prefer EEG. fMRI suits a whole song.', 20, 400, '#C45200', 'middle', extra=SERB2 + ' data-keep="1"'))
+BRAINGRAPH = sec('The brain is read as a graph, too', SVG(g, 436), ch='2',
                  ref='EEG picture computed by us from PhysioNet EEG Motor Movement/Imagery (MNE). fMRI picture: Hong et al., PLoS ONE 2013, via Wikimedia Commons, CC BY-SA 3.0. Tang et al. ICLR 2022. Song et al. IEEE TAC 2020. Finn et al. Nat Neurosci 2015. Crossley et al. Brain 2014. Wilkins et al. Sci Rep 2014',
-                 notes=('Not our result, a look at the field. First, why two tools. A note lasts about 0.2 to 0.4 seconds. EEG records electrical activity hundreds of times a second, so it sees every note, but it cannot say well where in the brain. fMRI sees where to a few millimeters, but it takes one image every 1 to 2 seconds and the blood signal lags about 5 seconds behind, so many notes blur together. That is why music studies of single notes prefer EEG, and fMRI is used for longer stretches, like a whole song. Graphs are already how people read both. '
+                 notes=('Not our result, a look at the field. First, why two tools. A note lasts about 0.2 to 0.4 seconds. EEG records electrical activity hundreds of times a second, so it sees every note, but it cannot say well where in the brain. fMRI sees where to a few millimeters, but it takes one image every 1 to 2 seconds and the blood signal lags about 5 seconds behind, so many notes blur together. The scanner is also loud, it competes with the music, while EEG is quiet, cheap and portable. That is why music studies of single notes prefer EEG, and fMRI is used for longer stretches, like a whole song. Graphs are already how people read both. '
                         'Left, EEG: one node per electrode. This picture is real data: ten people resting with eyes open, from a public PhysioNet set, 62 electrodes. An edge joins two electrodes whose alpha waves keep a steady phase lag, the strongest 4 percent of pairs. You can see the alpha network over the back of the head. '
                         'Edges can also be the nearest electrodes, or learned by the network. Right, fMRI: one node per brain region. This picture is from a 2013 study of 23 teenagers at rest: the blue links are connections that were weaker in teens with internet gaming addiction. Edges are regions whose signals rise and fall together, or white matter fibers. '
                         'Click: what people use them for. EEG graphs: finding seizures in hospital recordings, a graph network gets AUROC 0.875 on the Temple University seizure corpus. Reading emotion, DGCNN learns the edges and gets 90.4 percent on SEED. Also sleep staging and brain computer interfaces. '
