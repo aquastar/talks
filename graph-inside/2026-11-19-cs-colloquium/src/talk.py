@@ -1141,22 +1141,22 @@ TAKEAWAY = sec('A vector says what we added. A graph shows where it went.', SVG(
 g = adefs('fin')
 SERF = 'font-family="et-book,Georgia,serif" style="font-size-adjust:none"'
 def fincard(x, head, rows):
-    o = R(x, 6, 550, 262, '#F4F1EC', 'none', 0, 10) + R(x, 6, 550, 6, '#F76902', 'none', 0, 3) + T(x + 26, 52, head, 28, 400, INK, extra=SERF)
-    y = 100
+    o = R(x, 6, 550, 258, '#F4F1EC', 'none', 0, 10) + T(x + 26, 46, head, 28, 400, INK, extra=SERF)
+    y = 90
     for txt, ours, ic in rows:
         lines = txt.split('|')
         iy = y - 6 + 12 * (len(lines) - 1)
-        col = '#C45200' if ours else ('#2f6f8f' if ic == 8 else MU)
+        col = '#A39D94' if ours else ('#2f6f8f' if ic == 8 else MU)
         o += f'<g transform="translate({x + 48},{iy}) scale(.5) translate({-(x + 48)},{-iy})">' + _g7(ic, x + 48, iy, col) + '</g>'
         for q, ln in enumerate(lines):
-            o += T(x + 86, y + q * 24, ln, 18, 700 if ours else 400, '#C45200' if ours else INK)
-        y += 24 * len(lines) + 16
+            o += T(x + 86, y + q * 24, ln, 18, 400, '#8F887E' if ours else INK)
+        y += 24 * len(lines) + 14
     return o
 g += fincard(30, 'Language', [('Facts are triples. An edit adds a|bypass, and the old path stays.', False, 8),
                               ('Our delta graph: 17 of 20 checks|find a bad edit. SDM 2026', True, 2), ('Our QGC: a missing path means a worse|answer, for every model. CIKM 2026', True, 1)])
 g += F(1, fincard(600, 'Music', [('Music theory is a graph, and models|learn its geometry.', False, 5), ('A small note graph names the style, and|the brain tracks its surprise. Live demo', False, 3),
                                  ('Our FusionGAN: a new style is a new|edge between two. ICDM 2017', True, 2)]))
-FINAL = sec('Look for the graph, in language and in music', SVG(g, 272), ch='4',
+FINAL = sec('Look for the graph, in language and in music', SVG(g, 268), ch='4',
             notes=('The close, both parts in one picture. Language: facts are triples that hold each other up, and an edit adds a bypass while the old path stays. '
                    'Our two results: the delta graph finds 17 bad edits in 20 checks, SDM 2026, and QGC shows a missing path means a worse answer for every model, CIKM 2026. '
                    'Click, music: music theory is a graph and models learn its geometry. A small note graph names the style, about 70 percent, '
@@ -1174,7 +1174,7 @@ FIN_FOOT = ('<div style="display:flex;justify-content:center;align-items:center;
             '<div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px;text-align:left">'
             '<a href="https://zhiqian.ai/talks" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;color:#1F1E1B;text-decoration:none;font:700 34px/1 et-book,Georgia,serif">'
             + _ico2 + 'zhiqian.ai/talks</a>'
-            '<div style="font:400 20px/1.4 et-book,Georgia,serif;color:#1F1E1B;white-space:nowrap"><span style="color:#C45200;font-weight:700">Coming next:</span> my keynote at AI4BioSig, IEEE BIBM 2026<br/><i>The Music That Plays the Brain</i></div>'
+            '<div style="font:400 20px/1.4 et-book,Georgia,serif;color:#1F1E1B;white-space:nowrap"><span style="font-weight:700">Coming next:</span> my keynote at AI4BioSig, IEEE BIBM 2026, <i>The Music That Plays the Brain</i></div>'
             '</div></div>')
 
 # ======================= ROUND 4 (Nov 2 2026): Space Needle anchor =======================
