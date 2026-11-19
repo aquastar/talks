@@ -59,6 +59,7 @@ Read this before doing anything in this repo. When Zhiqian gives a new rule abou
 - No cropped paper titles or paper figures on slides (his rule 2026-11-18): plots in papers are drawn by code, so redraw them in the deck palette from the paper's numbers, and put the citation in the ref line. A title crop is redundant. Photos, book covers and illustrations that cannot be redrawn stay.
 - Results as counts people can see (his note 2026-11-18): a row of small cards (caught vs checked for nothing) beat bars plus a figure crop.
 - Our own work is always marked (his rule 2026-11-19): one loud orange tag at the top right, "Our work · Published, SDM 2026", "Our work · In progress" and so on, the same on every slide that shows our papers.
+- Speaker hints stay in the notes (his note 2026-11-19): never write "(down arrow)" or other navigation hints on a slide, the audience cannot use them.
 
 ## Log
 - 2026-11-16: music-to-brain moved in from aquastar/music-to-brain (subtree, full history), deck at music-to-brain/2026-12-01-bibm-dallas/ (day TBD, rename before the link goes out), shared/, eeg-demo/ and stimuli/ at topic level. Old repo to be deleted by a local agent after he confirms.

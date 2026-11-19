@@ -232,11 +232,11 @@ for i, s in enumerate(styles):
 g += F(1, cm)
 g += F(2, R(820, 70, 330, 120, ACL, ACC, 1.5, 10) + T(985, 128, '70.2%', 44, 700, ACC, 'middle') + T(985, 166, 'five fold accuracy, chance 17%', 14, 600, INK, 'middle'))
 g += F(3, R(820, 210, 330, 150, '#fff', LINE, 1.5, 10) + T(840, 240, 'Confusions make musical sense', 15, 700, AC2) + T(840, 268, 'Bach and Palestrina swap about 17%', 13.5, 400, INK) + T(840, 292, 'folk and fiddle swap 10 to 12%', 13.5, 400, INK) + T(840, 316, 'Monteverdi and fiddle: never', 13.5, 400, INK) + T(840, 344, 'row normalized, percent', 12, 400, MUT))
-g += F(3, T(820, 396, 'Richer nodes help more than longer memory:', 13.5, 400, MUT) + T(820, 416, 'note plus its length reaches 86.8% (down arrow).', 13.5, 600, INK))
+g += F(3, T(820, 396, 'Richer nodes help more than longer memory:', 13.5, 400, MUT) + T(820, 416, 'note plus its length reaches 86.8%.', 13.5, 600, INK))
 g += F(4, T(590, 465, 'A first order graph already carries a style. 144 numbers name the corpus.', 18, 700, INK, 'middle'))
 CORPUS = sec('144 numbers name the corpus', SVG(g), ch='2', status='prog',
              ref='992 melodies, six public corpora (Bach chorales, Essen, Monteverdi, Palestrina, Ryan\'s Mammoth Collection, Trecento), parsed with music21, five fold cross validation. zhiqian.ai/music-markov',
-             notes='Chance with six styles is 17%, majority class 21%. Counting the 12 notes without order gives 41.9%, so the graph adds 28 points. Rebuilt from scratch in Nov 2026: 70.2% plus or minus 2.7. No tuning, the number is what the script prints on a first run. The script is public on the site.')
+             notes='Details on richer nodes are on the backup slides under this one, press the down arrow key if asked. Chance with six styles is 17%, majority class 21%. Counting the 12 notes without order gives 41.9%, so the graph adds 28 points. Rebuilt from scratch in Nov 2026: 70.2% plus or minus 2.7. No tuning, the number is what the script prints on a first run. The script is public on the site.')
 
 # ---- where the graph becomes a path ----
 g = adefs('gp')
@@ -1514,7 +1514,7 @@ for k, (a_, col) in enumerate([('surprise from IDyOM, a graph from scores', AC2)
 g += F(3, cmp_)
 g += F(4, T(590, 416, 'If the graph inside the generator explains the listener as well as the generator itself,', 17, 700, INK, 'middle') + T(590, 446, 'the graph is real. If not, it is our drawing, not the model\'s.', 17, 700, ACC, 'middle'))
 PLAN = secx('Our plan: a graph from inside MusicGen, judged by the brain', SVG(g), ch='2', status='plan',
-            ref='So far (down arrow): Pepino et al. 2025, Noguchi et al. 2026, Denk et al. 2025, Mischler et al., Nature Communications 2025',
+            ref='So far: Pepino et al. 2025, Noguchi et al. 2026, Denk et al. 2025, Mischler et al., Nature Communications 2025',
             notes='One question replaces the earlier four outcome matrix. Three sources of surprise for the same clips, one yardstick. The scores graph (IDyOM) is the baseline from music cognition, MusicGen output surprisal is what Noguchi used, and the graph from inside MusicGen is ours. The steering asymmetry shown after the probing slide is the follow up: once the graph is validated, ask whether steering can reach a style on it.')
 
 # ======================= ROUND 6 (Nov 2 2026): knowledge beyond text, emotion =======================
@@ -2781,7 +2781,7 @@ def assemble(cover, old):
     surg = retitle(old[3].replace(' The map next.', '').replace('<div data-fragment-index="4" class="fragment" style="display:flex;align-items:center"><span class="small" style="font-size:.7em">Every one of these is accepted by an exam that only looks at answers. And if the model is a graph, every one is a graph operation.</span></div>', '').replace('<div class="icons">', '<style>.reveal section .icons.s7{grid-template-columns:repeat(8,1fr) !important}.reveal section .icons.s7>div{grid-column:span 2}.reveal section .icons.s7>div:nth-child(5){grid-column:2/span 2}</style><div class="icons s7">').replace('</div>\n  <aside', '</div>\n  <p class="fragment" data-fragment-index="4" style="text-align:center;font-size:.72em;margin-top:.6em">Every one of these is accepted by an exam that only looks at answers.</p>\n  <aside', 1).replace('>CEO of Apple is<', '>Space Needle is in<').replace('>Steve Jobs<', '>Seattle<').replace('>Tim Cook<', '>Paris<'), 'A released model is not left alone. Seven kinds of surgery.')
     story = retitle(old[43], 'After release, every change is checked by an exam that only reads answers')
     story = re.sub(r'\s*<p class="q"[^>]*>.*?</p>', '', story, count=1, flags=re.S)
-    story = story.replace('  <aside class="notes">', '  <div class="ref">Receipts (down arrow): Yang 2025, editing. Hu 2025, unlearning. Hammoud 2024, merging. Shrestha 2026, pruning</div>\n  <aside class="notes">', 1)
+    story = story.replace('  <aside class="notes">', '  <div class="ref">Receipts: Yang 2025, editing. Hu 2025, unlearning. Hammoud 2024, merging. Shrestha 2026, pruning</div>\n  <aside class="notes">', 1)
     story = story.replace('Everything else is detail on it.', 'Everything else is detail on it. If asked for evidence, press down for the four receipts. Bridge to the next slide: let me show you the quietest of these failures, the one in editing.')
     receipts = (old[45].replace('38.5% when it writes freely', '38.5% under realistic evaluation (WILD)')
                 .replace('on harmless general text and the original comes back word for word', 'on related Wikipedia text and the original comes back word for word')
