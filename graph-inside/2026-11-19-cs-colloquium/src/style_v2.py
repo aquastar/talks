@@ -43,13 +43,13 @@ html,body,.reveal-viewport{{background:{BG} !important}}
 #rail span.here{{display:block !important;flex:none;background:none !important;color:{INK2} !important;text-transform:uppercase;font-size:13px;letter-spacing:.14em;height:auto}}
 #footer{{border-top:0 !important;background:none !important;font:400 14px/1.4em {SANS};color:{AXIS}}}
 #footer{{justify-content:flex-start !important}} #footer #fpart{{display:none}}
-/* status: small caps with an underline mark */
-.reveal .status{{background:none !important;color:{INK2} !important;border:0 !important;border-radius:0 !important;padding:0 0 3px 0 !important;
-  font:400 13px/1 {SANS} !important;text-transform:uppercase !important;letter-spacing:.14em !important;top:14px !important;right:44px !important}}
-.reveal .status.published{{border-bottom:2px solid {LINE} !important}}
-.reveal .status.review{{border-bottom:2px solid {AXIS} !important}}
-.reveal .status.progress{{border-bottom:2px solid {ACC} !important;display:block !important;height:auto !important;width:auto !important;left:auto !important;bottom:auto !important;background:none !important}}
-.reveal .status.open,.reveal .status.plan{{border-bottom:2px dashed {INK2} !important}}
+/* status: our own work gets one loud orange tag, the same on every slide (his note Nov 19) */
+.reveal .status{{background:#F76902 !important;color:#fff !important;border:0 !important;border-radius:4px !important;padding:6px 12px !important;
+  font:700 14px/1 {SANS} !important;text-transform:uppercase !important;letter-spacing:.1em !important;top:12px !important;right:44px !important;
+  display:block !important;height:auto !important;width:auto !important;left:auto !important;bottom:auto !important}}
+.reveal .status::before{{content:"Our work · ";font-weight:800}}
+.reveal .status.open,.reveal .status.plan{{background:none !important;color:{INK2} !important;border:2px dashed {INK2} !important;font-weight:400 !important}}
+.reveal .status.open::before,.reveal .status.plan::before{{content:none}}
 /* sidenote citation */
 .reveal .ref .rsep{{display:inline-block;width:1px;height:.85em;background:{AXIS};margin:0 .65em;vertical-align:-.1em}}
 .reveal .ref a{{color:inherit !important;text-decoration:none !important}}
