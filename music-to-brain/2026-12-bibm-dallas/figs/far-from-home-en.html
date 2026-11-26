@@ -26,13 +26,14 @@ input[type=checkbox]{accent-color:var(--acc)}
 .duo{position:absolute;top:4px;display:flex;gap:10px}.duo button{font-size:17px;padding:4px 16px;min-width:170px}
 .side{position:absolute;left:54%;top:9%;width:40%;font-size:34px;line-height:1.3;color:#1F1E1B;border-left:7px solid #F76902;padding:6px 0 6px 22px;display:none}
 body.single .side{display:block}body.single .stmt{visibility:hidden}
+#sidePlay{display:block;margin-top:22px;font-size:20px;padding:6px 22px;border:2px solid #F76902;color:#C45200;background:#fff;border-radius:3px;cursor:pointer}
 .credit{font-size:.85rem;color:var(--mut)}
 body.emb{padding:0 !important}body.emb .side{position:absolute;left:54%;top:9%;width:40%;font-size:34px;line-height:1.3;color:#1F1E1B;border-left:7px solid #F76902;padding:6px 0 6px 22px;display:none}
 body.single .side{display:block}body.single .stmt{visibility:hidden}
 .credit{display:none}
 </style>
 <main>
- <div class="stage" id="stage"><canvas id="cv" width="2480" height="800" aria-label="Animation: notes move on a clock face, do is home"></canvas><div class="duo" id="duoA" style="left:calc(25% - 85px);display:none"><button onclick="duoPlay(0)">&#9654; Twinkle, Twinkle</button></div><div class="duo" id="duoB" style="left:calc(75% - 85px);display:none"><button onclick="duoPlay(1)">&#9654; Ode to Joy</button></div><div class="side" id="side"></div><div class="bigplay" id="big"><span>▶</span></div></div>
+ <div class="stage" id="stage"><canvas id="cv" width="2480" height="800" aria-label="Animation: notes move on a clock face, do is home"></canvas><div class="duo" id="duoA" style="left:calc(25% - 85px);display:none"><button onclick="duoPlay(0)">&#9654; Twinkle, Twinkle</button></div><div class="duo" id="duoB" style="left:calc(75% - 85px);display:none"><button onclick="duoPlay(1)">&#9654; Ode to Joy</button></div><div class="side" id="side"><div id="sideTxt"></div><button id="sidePlay">&#9654; Play</button></div><div class="bigplay" id="big"><span>▶</span></div></div>
  <div class="stmt" id="stmt">Eight short scenes. Click to begin.</div>
  <div class="row"><div class="bar" style="display:none"><button id="pp" aria-label="Play">▶</button><input type="range" id="seek" min="0" max="152" step="0.1" value="0" aria-label="Position"><span class="time" id="tm">0:00 / 2:32</span></div><div id="steps" class="steps"></div><div class="opts"><label for="voice" style="display:none"><input type="checkbox" id="voice"> Voice</label><label for="sfx"><input type="checkbox" id="sfx" checked> Piano</label></div></div>
  <div class="credit">After the Pocket Music lesson, how far from home (Designed by LAVA MUSIC). Piano synthesized in the browser.</div>
@@ -170,7 +171,7 @@ function say(t){return;if(!voice.checked||!('speechSynthesis' in window))return;
 function frame(){if(playing){tNow=Math.max(0,ctx.currentTime-off-lat());if(segEnd!=null&&tNow>=segEnd){tNow=segEnd;stop()}if(tNow>=END){tNow=END;stop()}say(tNow)}draw(tNow);seek.value=tNow;tm.textContent=fmt(tNow)+' / 2:32';if(playing)raf=requestAnimationFrame(frame)}
 async function play(){A();if(!nbuf){try{const bin=Uint8Array.from(atob(NARR),c=>c.charCodeAt(0));nbuf=await ctx.decodeAudioData(bin.buffer)}catch(e){nbuf=null}}if(tNow>=END)tNow=0;off=ctx.currentTime-tNow;spoken=new Set(Object.keys(SPEAK).filter(k=>+k<tNow-.05));schedule(tNow);playing=true;pp.textContent='❚❚';pp.setAttribute('aria-label','Pause');big.hidden=true;cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}
 function stop(){playing=false;pp.textContent='▶';pp.setAttribute('aria-label','Play');if(ctx)newMaster();try{speechSynthesis.cancel()}catch(e){}big.hidden=step>0}
-pp.onclick=()=>playing?stop():goStep(Math.max(1,step));document.getElementById('stage').onclick=e=>{if(e.target.closest('.duo'))return;goStep(step+1)};
+pp.onclick=()=>playing?stop():goStep(Math.max(1,step));document.getElementById('stage').onclick=e=>{if(e.target.closest('.duo')||e.target.closest('.side'))return;goStep(step+1)};
 seek.oninput=()=>{tNow=+seek.value;if(playing){off=ctx.currentTime-tNow;spoken=new Set(Object.keys(SPEAK).filter(k=>+k<tNow-.05));try{speechSynthesis.cancel()}catch(e){}schedule(tNow)}draw(tNow);tm.textContent=fmt(tNow)+' / 2:32'};
 sfx.onchange=voice.onchange=()=>{if(playing)schedule(tNow)};
 function fit(){const r=cv.getBoundingClientRect(),d=Math.min(3,window.devicePixelRatio||1);cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);g.setTransform(cv.width/W,0,0,cv.height/H,0,0);if(typeof duo!=='undefined'&&duo)drawDuo();else draw(tNow)}
@@ -210,9 +211,10 @@ const STMT=['Eight short scenes. Click to begin.','Both stop on a wrong note, si
 const stepsEl=document.getElementById('steps');
 STEPS.forEach((st,i)=>{const b=document.createElement('button');b.textContent=(i+1)+'. '+st[2];b.onclick=()=>goStep(i+1);stepsEl.appendChild(b)});
 function goStep(k){k=Math.max(0,Math.min(STEPS.length,k));step=k;stepsEl.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('on',i===k-1));
-  if(playing)stop();document.getElementById('stmt').textContent=STMT[k];document.getElementById('side').textContent=STMT[k];document.body.classList.toggle('single',k>1);enterDuo(k===1);if(k===0){segEnd=null;tNow=0;big.hidden=false;draw(0);return}
+  if(playing)stop();document.getElementById('stmt').textContent=STMT[k];document.getElementById('sideTxt').textContent=STMT[k];document.body.classList.toggle('single',k>1);enterDuo(k===1);if(k===0){segEnd=null;tNow=0;big.hidden=false;draw(0);return}
   if(k===1){A();newMaster();return}
-  segEnd=STEPS[k-1][1];tNow=STEPS[k-1][0];play()}
+  segEnd=STEPS[k-1][1];tNow=STEPS[k-1][0];draw(tNow)}
+document.getElementById('sidePlay').onclick=e=>{e.stopPropagation();if(step<2)return;if(playing)stop();tNow=STEPS[step-1][0];segEnd=STEPS[step-1][1];play()};
 addEventListener('message',e=>{const d=e.data;if(d&&typeof d==='object'&&'ffstep' in d)goStep(d.ffstep);if(d==='fe-stop'&&playing)stop()});
 addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();goStep(step+1)}if(e.key==='ArrowLeft'){e.preventDefault();goStep(step-1)}});
 
