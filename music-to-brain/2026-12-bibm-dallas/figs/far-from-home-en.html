@@ -74,7 +74,7 @@ const SPEAK={"16.0": "You never studied music theory. How do you know it is wron
 const GLOW=[[21.8,23.6,.55],[32.43,35.8,.5],[35.9,40.4,.95],[40.4,48,.45],[64.8,65.9,.5],[65.9,68.0,.95],[68.0,71.5,.45],[86.0,87.8,.7],[101.5,103.4,.5],[113.5,115.2,.75],[123.7,125.6,.6],[146.5,148.2,.75],[148.2,152.2,1.6]];
 // ---------- geometry ----------
 function layout(t){const s=t<76.3?0:t<77.8?sm((t-76.3)/1.5):t<134.6?1:t<136.0?1-sm((t-134.6)/1.4):0;
- return {s,cx:330,cy:190,r:mix(158,150,s),w:mix(10,9,s),ball:mix(21,19,s),lab:mix(26,24,s),kbY:mix(520,272,s)}}
+ return {s,cx:330,cy:190,r:154,w:10,ball:20,lab:25,kbY:mix(520,272,s)}}
 function homeAngle(t){const a0=-90,a1=0;return a0;if(t<7.6)return a0;if(t<8.1)return mix(a0,a1,sm((t-7.6)/.5));if(t<23.6)return a1;if(t<24.2)return mix(a1,a0+360,sm((t-23.6)/.6))-360;return a0}
 const pcAng=(pc,t)=>{const k=tonic(t),ha=homeAngle(t);return ha-((pc-k+12)%12)*30};
 const P=(L,ang,rr)=>[L.cx+(rr??L.r)*Math.cos(ang*Math.PI/180),L.cy-(rr??L.r)*Math.sin(ang*Math.PI/180)];
