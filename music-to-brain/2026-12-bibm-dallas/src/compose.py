@@ -201,7 +201,7 @@ S.append(f'''<section class="title full" data-ch="0" data-background-color="#FBF
     <p style="font-family:et-book,Georgia,serif;font-size:26px;color:{INK};margin:0">Zhiqian Chen</p>
     <p style="font-family:et-book,Georgia,serif;font-size:20px;color:{MUT};margin:4px 0 0">Department of Computer Science, Rochester Institute of Technology</p>
   </div>
-  <div style="flex:0 0 440px">{svgfig(420, 330, f'<g transform="translate(20,20) scale(.42)">{BRAIN}</g>', 420)}</div>
+  <div style="flex:0 0 440px">{svgfig(420, 330, f'<g transform="translate(30,30) scale(.38)">{BRAIN}</g>', 420)}</div>
   </div>
   <aside class="notes">Open with sound, not with me. Go straight to the next slide. Brain drawing: Gray, Anatomy of the Human Body, public domain, recolored.</aside>
 </section>''')
@@ -434,6 +434,7 @@ S.append(f'''<section data-ch="5">
 
 body = '\n\n'.join(S)
 body = body.replace('class="status progress"', 'class="status prog"').replace('#7D55C7', SLATE)
+body = body.replace('<text x="220" y="50" font-size="16.5" font-weight="600" fill="#1F1E1B" text-anchor="middle" >A tiny classifier', '<text x="220" y="44" font-size="16.5" font-weight="600" fill="#1F1E1B" text-anchor="middle" >A tiny classifier').replace('<text x="220" y="68" font-size="16.5" font-weight="600" fill="#1F1E1B" text-anchor="middle" >reads music theory', '<text x="220" y="66" font-size="16.5" font-weight="600" fill="#1F1E1B" text-anchor="middle" >reads music theory')
 head = head.replace('</head>', '<style>.reveal .status.prog{background:#F76902}\n' + '\n'.join(KSCSS) + '</style>\n</head>', 1)
 html = head + '\n\n' + body + '\n\n</div></div>\n' + tail
 _txt = re.sub(r'&[#a-z0-9]+;', '', re.sub(r'<[^>]+>', ' ', re.sub(r'<(script|style)[^>]*>.*?</\1>', '', body, flags=re.S)))
