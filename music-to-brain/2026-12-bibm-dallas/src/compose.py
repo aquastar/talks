@@ -13,7 +13,7 @@ src = open(COL).read()
 i0 = src.find('<div class="slides">') + len('<div class="slides">')
 i1 = src.find('<div id="rail">')
 head, tail = src[:i0], src[i1:]
-head = head.replace('</head>', '<style>.reveal .status.prog{background:#F76902}</style>\n</head>', 1)
+
 head = re.sub(r'<title>.*?</title>', '<title>The Music That Plays the Brain</title>', head, count=1, flags=re.S)
 tail = tail.replace("var CH=[['0','Overview'],['1','1 Language'],['2','2 Music'],['4','Close']];",
                     "var CH=[['0','Opening'],['1','Why now'],['2','Read'],['3','Model'],['4','Write'],['5','Close']];")
@@ -78,6 +78,42 @@ def sec(ch, h, body, refs='', notes='', st=None, cls=''):
     return (f'<section data-ch="{ch}"{c}>\n  <h2>{h}</h2>{status(st) if st else ""}\n  {body}\n  {refs}\n'
             f'  <aside class="notes">{notes}</aside>\n</section>')
 
+
+# ---------- slides from the earlier keynote draft (2026-12-01-bibm-dallas), kept with their own look ----------
+OLDHTML = open(os.path.join(DECK, '..', '2026-12-01-bibm-dallas', 'index.html')).read()
+OLDS = top_sections(OLDHTML)
+_css = open(os.path.join(DECK, '..', 'shared', 'style.css')).read()
+_keep = ('.mark', '.ink2', '.cols', '.big', '.thesis', '.fp', '.key', '.tldr', '.p ', '.cap', '.photos', '.audio-row', '.people', '.illus', 'svg.fig', 'button.play', 'p,.reveal li', 'b{')
+KSCSS = ['.reveal section.ks{--bg:#FBFAF7;--ink:#1F1E1B;--ink2:#5F5D50;--line:#7C878E;--axis:#ACA39A;--rule:#D7D2CB;--group:#EFEBE5;--accent:#F76902;--accent-tint:#FAD6BA;--accent-text:#C45200;--lang:#4C5B66;--music:#4C5B66;--music-tint:#E4E7E9;--fail:#DA291C;--refc:#A39E93}',
+         '.reveal section.ks .ksw{zoom:.84;text-align:left}', '.reveal section.ks .mark{display:none}']
+for rule in re.findall(r'\.reveal [^{]+\{[^}]*\}', _css):
+    sel = rule[:rule.index('{')]
+    if any(k in sel for k in _keep) and 'section.cover' not in sel and '.forecast' not in sel:
+        KSCSS.append(re.sub(r'\.reveal ', '.reveal section.ks ', rule))
+_n = [0]
+def oldk(start, ch):
+    t = [x for x in OLDS if title(x).startswith(start)][0]
+    t = re.sub(r'<section[^>]*>', f'<section data-ch="{ch}" class="ks">', t, count=1)
+    t = re.sub(r'\s*<span class="mark">.*?</span>', '', t, count=1, flags=re.S)
+    t = t.replace('class="status prog"', 'class="status prog"').replace('class="status rev"', 'class="status review"')
+    def _btn(m):
+        _n[0] += 1
+        return f'<button class="playclip" data-clip="ok{_n[0]}" data-audio="{m.group(1)}" style="min-width:90px;height:36px;border-radius:3px;border:2px solid {MUT};background:#fff;color:{MUT};font:600 15px et-book,sans-serif;cursor:pointer;margin-right:8px">&#9654; play</button>'
+    t = re.sub(r'<button class="play" data-audio="([^"]+)">play</button>', _btn, t)
+    t = t.replace('class="embed" data-src=', 'class="fe-frame" data-src=')
+    # move a status label out of the h2, wrap the body so it fits the 660 px slide
+    st = re.search(r'\s*(<span class="status[^"]*">[^<]*</span>)', t[:t.find('</h2>') + 5])
+    if st:
+        t = t.replace(st.group(0), '', 1)
+        t = t.replace('</h2>', '</h2>' + st.group(1), 1)
+    h_end = t.find('</h2>') + 5
+    if st: h_end = t.find(st.group(1)) + len(st.group(1))
+    r_at = t.find('<div class="ref">'); a_at = t.find('<aside')
+    cut = min(x for x in (r_at, a_at, t.rfind('</section>')) if x > 0)
+    return t[:h_end] + '\n  <div class="ksw">' + t[h_end:cut] + '</div>\n  ' + t[cut:]
+def colk(start, ch, add=''):
+    return pick(start, ch, add)
+
 # ---------- the slides ----------
 S = []
 S.append(f'''<section class="title full" data-ch="0" data-background-color="#FBFAF7">
@@ -105,6 +141,7 @@ S.append(sec(0, 'Many people with advanced dementia can still sing the hymns of 
     ref(a('Jacobsen et al., Brain 2015', 'https://doi.org/10.1093/brain/awv135')),
     'Musical memory is among the last to go in Alzheimer disease, Jacobsen 2015 shows the regions that hold it are among the least affected. Pose the question and leave it open: what if we could choose the song, and watch her brain answer? We come back to her at the end. Photo: Peter van der Sluijs, Wikimedia Commons, CC BY-SA 4.0.'))
 
+S.append(oldk('Same notes, same sound', 0))
 S.append(sec(0, 'Three findings in the next 40 minutes',
     row(card('1 · Why now', 'Sound moves<br>the brain', 'but music used as a fixed stimulus rarely moves the clinic', w=300),
         card('2 · Model', 'A small graph', 'of note transitions names a style and tracks the listening brain', frag=1, w=300),
@@ -113,9 +150,12 @@ S.append(sec(0, 'Three findings in the next 40 minutes',
     '', 'Three findings, one per part. First, sound reliably moves brain signals, but the big trials of music as medicine are mostly null, because the music was never set. Second, a small graph of which note follows which already names a style and tracks the brain. Third, generators now give us a dial, and the brain can act as the judge. Click: the one line to remember. The map on top, Read, Model, Write, follows us through the talk.'))
 
 S.append(pick('Part 2. Hearing loss: a quiet epidemic', 1).replace('Part 2. Hearing loss', 'Hearing loss', 1))
+S.append(oldk('Music releases dopamine twice', 1))
+S.append(oldk("A steady beat can make a person with Parkinson", 1))
 S.append(pick('Sound acts on the brain', 1))
 S.append(pick('Music already acts on the brain, as medicine', 1))
 
+S.append(oldk('In dementia, music lifts mood slightly', 1))
 S.append(sec(1, 'The biggest, best controlled trials of music and sound came back null',
     line('Expected: music helps. Measured, in the four largest recent trials:', 21, MUT, 4).replace('text-align:left', 'text-align:center')
     + row(card('40 Hz light and sound · Alzheimer', '673 people', '12 months at home. Missed its primary endpoint (CTAD, Nov 2026)', frag=1, w=230),
@@ -137,6 +177,7 @@ S.append(sec(1, 'What works sets the music from a body signal, in a closed loop'
         a('Porciuncula et al., npj Parkinson\'s Dis 2025', 'https://www.nature.com/articles/s41531-025-00952-x'), a('Conlon et al., Nat Commun 2024', 'https://www.nature.com/articles/s41467-024-50473-z')),
     'The contrast. What does make it through trials, FDA and payment is specific. InTandem for chronic stroke walking: the beat adapts to the steps, a randomized trial of 87 in Nature Communications 2024, FDA cleared, and Medicare created code E3200 in 2024. Parkinson disease: tempo adapted in real time from shoe sensors, 41 patients, more daily steps. Lenire for tinnitus, De Novo 2023, a single arm trial. Click: one parameter, set from a body signal. That is a biosignal problem, this room\'s problem. Photo: U.S. Navy, public domain.'))
 
+S.append(oldk('Four ways the field studies music and the brain', 1))
 S.append(sec(1, 'In every trial the music was fixed. The missing piece is a dial.',
     row(card('Read', 'brain to music', 'decode what was heard', w=260),
         card('Model', 'music to brain', 'predict the response to each note', w=260),
@@ -151,12 +192,21 @@ S.append(sec(2, 'The brain can be read back into music, and the generator sets t
     ref(a('Postolache et al., ICASSP 2025', 'https://arxiv.org/abs/2405.09062'), a('MAAS, NeurIPS 2026', 'https://arxiv.org/abs/2611.12603')),
     'Read, the state of the art in two lines. EEG to music on the Stanford NMED data: a ControlNet on a music diffusion model, CLAP score 0.60, but the same model with no EEG already gets 0.38, and it does not generalize to songs it did not train on. Click: MAAS, NeurIPS 2026, conditions Stable Audio directly on 7 tesla fMRI, 85.4 percent pairwise identification, and only 53.4 when brain and sound are shuffled. Click: the lesson for anyone in this room who decodes: a strong generator sounds right without the brain, so the shuffled control is the result.'))
 
+S.append(oldk('From brain scans, an AI composer', 2))
+S.append(colk('The brain keeps enough of the music to rebuild it', 2))
 S.append(pick('Knowledge is not only text', 3, 'In this talk: the point of this slide is Meyer, emotion lives in expectation. That is what Part Model measures.'))
 S.append(pick('A music generator is a language model, with a pitch graph inside', 3))
 S.append(pick('Do music generation models encode music theory?', 3))
+S.append(colk('MusicGen is a next token predictor for sound', 3))
+S.append(colk('Inside a music generator, music theory has a shape', 3))
+S.append(colk('A new idea is a new edge', 3))
 S.append(pick('A tiny graph is enough to represent a piece of music', 3))
 S.append(pick('Fold 88 keys into 12 scale degrees', 3))
 S.append(pick("Occam's razor: the simplest graph already names the tradition", 3))
+S.append(colk('Richer nodes beat longer memory', 3))
+S.append(colk('The longest memory sounds most like the style', 3))
+S.append(oldk('Your auditory cortex has a population', 3))
+S.append(oldk('Your brain predicts every next note', 3))
 S.append(pick('A note transition graph predicts the listening brain', 3))
 
 old = top_sections(open(os.path.join(DECK, '..', '2026-12-01-bibm-dallas', 'index.html')).read())
@@ -166,6 +216,11 @@ S.append(sec(3, 'Past about eight notes, a better music model fits the brain wor
     ref('Redrawn after ' + a('Kern et al., eLife 2022', 'https://doi.org/10.7554/eLife.80935')),
     'Kern and colleagues, eLife 2022: give a music model more and more context, it predicts the next note better and better, but its surprise fits the brain best at short context, under about ten notes, and worse after. The brain tracks short range expectations. Our own data agree: about four notes is enough. Keep this in mind for the demo.'))
 
+S.append(oldk('Try it: imagine a march', 3))
+S.append(oldk('Change one chord, and the brain answers', 3))
+S.append(oldk("A music AI's layers line up", 3))
+S.append(colk('Predict the next word well, and you predict the brain', 3))
+S.append(oldk('Averaged over hundreds of notes', 3))
 S.append(demo_slide())
 
 S.append(sec(3, 'A brain readout learned on Bach predicts pop listeners with no refitting',
@@ -216,6 +271,8 @@ S.append(sec(4, 'Turn one dial inside MusicGen: same seed, only the tempo words 
     ref(a('Copet et al., MusicGen, NeurIPS 2023', 'https://arxiv.org/abs/2306.05284')),
     'Same dial in a neural generator. Same seed, only the tempo words in the prompt change. We asked for 60, 100 and 160 beats per minute and measured 59, 100 and 158. Generated for this talk. A dial a body signal could set.'))
 
+S.append(oldk('A neural generator plays the same three melodies', 4))
+S.append(oldk('Prediction: the more natural the order', 4))
 S.append(sec(4, 'Close the loop: the brain\'s response chooses the next phrase',
     two(img('eeg_experiment.jpg', 360, 'A listener in an EEG cap'),
         btn('the same piece moving through three settings', 'mg_adapt_mockup.mp3', 'loop')
@@ -225,6 +282,8 @@ S.append(sec(4, 'Close the loop: the brain\'s response chooses the next phrase',
     ref('Sound: a mock up. ' + a('Responder preprint, medRxiv 2025', 'https://www.medrxiv.org/content/10.1101/2025.11.12.25340010v1.full.pdf'), a('Chan et al. 2025', 'https://pmc.ncbi.nlm.nih.gov/articles/PMC12552893/')),
     'Vision. The sound is a mock up of the same piece moving through three settings. Read the response, set the dial, play the next phrase. Two reasons this is not science fiction: InTandem already does it with steps instead of EEG, and in sleep stimulation and 40 Hz the people who respond can be told apart by their EEG. Click: from a playlist to a controller. Photo: Flexagoon, Wikimedia Commons, CC0.', st='Vision'))
 
+S.append(oldk('One day a music therapy could read like a prescription', 4))
+S.append(colk('Our plan: a graph from inside MusicGen', 4))
 S.append(sec(4, 'Three experiments you could run next month with these stimuli',
     row(card('EEG lab', '3 orders', 'of the same notes. Fit your own TRF. ' + btn('play', 'fe_order1.mp3', 'x1'), w=300),
         card('ECG or wearables lab', '3 tempi', 'same seed. Heart rate and skin conductance. ' + btn('play', 'mg_tempo_fast.mp3', 'x2'), w=300),
@@ -243,6 +302,7 @@ S.append(f'''<section data-ch="5">
 </section>''')
 
 body = '\n\n'.join(S)
+head = head.replace('</head>', '<style>.reveal .status.prog{background:#F76902}\n' + '\n'.join(KSCSS) + '</style>\n</head>', 1)
 html = head + '\n\n' + body + '\n\n</div></div>\n' + tail
 _txt = re.sub(r'&[#a-z0-9]+;', '', re.sub(r'<[^>]+>', ' ', re.sub(r'<(script|style)[^>]*>.*?</\1>', '', body, flags=re.S)))
 bad = [c for c in '—–;' if c in _txt]
