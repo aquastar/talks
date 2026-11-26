@@ -572,7 +572,7 @@ def _recolor(h):
 html = _recolor(html)
 html = html.replace("var t=h?h.textContent.trim():'';", "var t=h?h.innerText.replace(/\\s+/g,' ').trim():'';", 1)  # the cover title has line breaks between words
 html = html.replace('#grid .tile img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}', '#grid .tile img{display:block;width:100%;aspect-ratio:1280/660;object-fit:cover}', 1)  # thumbs are taken at the slide size
-html = html.replace("transition:'none'", "transition:'slide', transitionSpeed:'fast', backgroundTransition:'fade'", 1)  # his request Nov 18: smoother than a cut
+html = html.replace("transition:'none'", "transition:'fade', transitionSpeed:'fast', backgroundTransition:'fade'", 1)  # his request Nov 18: smoother than a cut
 # the optogenetics explainer video, linked from the reference line of the light and music slide (his request Nov 18)
 _vid = '<span class="rsep" aria-hidden="true"></span><a href="https://www.youtube.com/watch?v=azp-if02m8U" target="_blank" rel="noopener" title="BrainFacts.org, Lighting Up The Brain With Optogenetics, 2 minute video">Optogenetics video, BrainFacts.org</a>'
 # optogenetics slide removed from the main run (his note Nov 19), the video link is no longer attached
