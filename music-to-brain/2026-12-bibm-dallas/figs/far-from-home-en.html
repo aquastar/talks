@@ -8,7 +8,7 @@
 html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 et-book,Georgia,serif}
 body{padding:8px 16px;box-sizing:border-box}
 main{max-width:none;margin:0 auto;display:flex;flex-direction:column;gap:8px}
-.stage{position:relative;width:100%;aspect-ratio:1240/400;border-radius:0;overflow:hidden;cursor:pointer}
+.stage{position:relative;cursor:default;width:100%;aspect-ratio:1240/400;border-radius:0;overflow:hidden;cursor:pointer}
 canvas{display:block;width:100%;height:100%}
 .bigplay{position:absolute;inset:0;display:grid;place-items:center;background:transparent;transition:opacity .2s}
 .bigplay span{width:76px;height:76px;border-radius:50%;background:var(--acc);color:#fff;display:grid;place-items:center;font-size:30px;padding-left:6px;box-sizing:border-box}
@@ -171,7 +171,7 @@ function say(t){return;if(!voice.checked||!('speechSynthesis' in window))return;
 function frame(){if(playing){tNow=Math.max(0,ctx.currentTime-off-lat());if(segEnd!=null&&tNow>=segEnd){tNow=segEnd;stop()}if(tNow>=END){tNow=END;stop()}say(tNow)}draw(tNow);seek.value=tNow;tm.textContent=fmt(tNow)+' / 2:32';if(playing)raf=requestAnimationFrame(frame)}
 async function play(){A();if(!nbuf&&NARR){try{const bin=Uint8Array.from(atob(NARR),c=>c.charCodeAt(0));nbuf=await ctx.decodeAudioData(bin.buffer)}catch(e){nbuf=null}}if(tNow>=END)tNow=0;off=ctx.currentTime-tNow;spoken=new Set(Object.keys(SPEAK).filter(k=>+k<tNow-.05));schedule(tNow);playing=true;pp.textContent='❚❚';pp.setAttribute('aria-label','Pause');big.hidden=true;cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}
 function stop(){playing=false;pp.textContent='▶';pp.setAttribute('aria-label','Play');if(ctx)newMaster();try{speechSynthesis.cancel()}catch(e){}big.hidden=step>0}
-pp.onclick=()=>playing?stop():goStep(Math.max(1,step));document.getElementById('stage').onclick=e=>{if(e.target.closest('.duo')||e.target.closest('.side'))return;goStep(step+1)};
+pp.onclick=()=>playing?stop():goStep(Math.max(1,step));document.getElementById('stage').onclick=e=>{if(e.target.closest('.duo')||e.target.closest('.side'))return;const r=e.currentTarget.getBoundingClientRect(),x=(e.clientX-r.left)/r.width;if(x<.1)goStep(step-1);else if(x>.9)goStep(step+1)};
 seek.oninput=()=>{tNow=+seek.value;if(playing){off=ctx.currentTime-tNow;spoken=new Set(Object.keys(SPEAK).filter(k=>+k<tNow-.05));try{speechSynthesis.cancel()}catch(e){}schedule(tNow)}draw(tNow);tm.textContent=fmt(tNow)+' / 2:32'};
 sfx.onchange=voice.onchange=()=>{if(playing)schedule(tNow)};
 function fit(){const r=cv.getBoundingClientRect(),d=Math.min(3,window.devicePixelRatio||1);cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);g.setTransform(cv.width/W,0,0,cv.height/H,0,0);if(typeof duo!=='undefined'&&duo)drawDuo();else draw(tNow)}
