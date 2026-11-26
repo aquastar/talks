@@ -112,7 +112,7 @@ var ODD=false;function draw(t){bg();const L=layout(t),k=tonic(t),ha=homeAngle(t)
  if(grp){const ids=GROUPS[grp];for(let j=1;j<ids.length;j++){const a=N[ids[j-1]],b=N[ids[j]];if(b.t>t)break;if(a.pc===b.pc)continue;
    {const lastB=(b.grp==='tw2'||b.grp==='tw3')&&ids[j]===ids[ids.length-1];curve(L,pcAng(a.pc,t),pcAng(b.pc,t),clamp((t-b.t)/.22,0,1),lastB?'rgba(218,41,28,.9)':'rgba(76,91,102,.8)',lastB?3:2.6)}}}
  // triangle do-mi-sol
- if(t>88.6&&t<94.9){const al=win(t,88.6,94.9,.3),c=`rgba(247,105,2,${al})`;[[0,4,88.7],[4,7,89.5],[7,0,90.4]].forEach(([p,q,s])=>{if(t>s)curve(L,pcAng(p,t),pcAng(q,t),clamp((t-s)/.4,0,1),c,1.8)})}
+ if(t>88.6&&t<105.9){const al=win(t,88.6,105.9,.3)*.8,c=`rgba(247,105,2,${al})`;[[0,4,88.7],[4,7,89.5],[7,0,90.4]].forEach(([p,q,s])=>{if(t>s)curve(L,pcAng(p,t),pcAng(q,t),clamp((t-s)/.4,0,1),c,2.4)})}
  // orange arcs
  
  [[95.7,97.8,9,7],[98.6,100.6,5,4],[101.5,103.5,2,0]].forEach(([a,b,p,q])=>{if(t>a&&t<b){const al=win(t,a,b,.25);let A=pcAng(p,t),B=pcAng(q,t);if(q===0)B=ha-11+0;arcSeg(L,A,B,`rgba(247,105,2,${al})`,L.w+.5)}});
@@ -123,11 +123,13 @@ var ODD=false;function draw(t){bg();const L=layout(t),k=tonic(t),ha=homeAngle(t)
  const firstSeen=pc=>{const sc=GROUPS.scale.map(i=>N[i]);const n=sc.find(n=>n.pc===pc);return n?n.t:29};
  if(labelsOn){SCALE.forEach(iv=>{const pc=(k+iv)%12;if(t<35&&t<firstSeen(pc)-.05)return;const a=ha-iv*30,isCur=cur&&cur.pc===pc&&t-cur.t<GEND[cur.grp],big=isCur&&pc!==k;
    const rr2=L.r+(iv===0?24:19)+(big?5:0),p=P(L,a,rr2),homeGlow=GLOW.some(([s,e,z])=>t>s&&t<e&&z>=.5);
-   let col=big?(ODD?'#DA291C':'#C45200'):CREAM;if(iv===0&&homeGlow)col=NAVY;text(SOLF[iv],p[0],p[1]+5,big?L.lab*1.45:(iv===0&&homeGlow?L.lab*1.25:L.lab),col,700,'center');
+   let col=big?(ODD?'#DA291C':'#C45200'):CREAM;if(t>87.8&&t<105.9&&(iv===0||iv===4||iv===7))col='#C45200';if(iv===0&&homeGlow)col=NAVY;text(SOLF[iv],p[0],p[1]+5,big?L.lab*1.45:(iv===0&&homeGlow?L.lab*1.25:L.lab),col,700,'center');
    })}
  // home marker
  const atHome=cur&&cur.pc===k&&!(t-cur.t<LAND&&ci>0&&N[ci-1].grp===cur.grp&&N[ci-1].pc!==k),homeGold=atHome||(t>32.43&&!cur&&t<152.2&&t>29)||(t>21.885&&t<23.6);
  if(homeGold){g.fillStyle=GOLD;g.beginPath();g.arc(hp[0],hp[1],L.ball*.95,0,7);g.fill()}else{g.strokeStyle='#F76902';g.lineWidth=2;g.fillStyle='rgba(247,105,2,.12)';g.beginPath();g.arc(hp[0],hp[1],L.ball*.78,0,7);g.fill();g.stroke()}
+ // the three notes that stand: do, mi, sol, highlighted the same way for the whole scene
+ if(t>87.8&&t<105.9){const al=win(t,87.8,105.9,.3);[0,4,7].forEach(iv=>{const q=P(L,ha-iv*30);glowAt(q[0],q[1],L.ball*2.4,.45*al);g.globalAlpha=al;g.fillStyle='#F76902';g.beginPath();g.arc(q[0],q[1],L.ball*.62,0,7);g.fill();g.globalAlpha=1})}
  // ball
  if(cur&&!atHome){const prev=ci>0&&N[ci-1].grp===cur.grp?N[ci-1]:null,u=prev?sm((t-cur.t)/.16):1;let p;
   if(prev&&u<1&&prev.pc!==cur.pc)p=onCurve(L,pcAng(prev.pc,t),pcAng(cur.pc,t),u);else p=P(L,pcAng(cur.pc,t));
