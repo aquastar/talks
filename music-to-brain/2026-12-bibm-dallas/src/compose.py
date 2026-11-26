@@ -286,11 +286,12 @@ S.append(landmark(3, 'model', 'Part 3. Model: what does the listening brain expe
     'Read works. To ' + kw('set') + ' music for a brain, we first need to predict the brain from the music.',
     'Landmark. We are at Model, the top arrow. The thread of this part: the brain predicts the next note, the prediction is a small graph of notes, music generators learn that graph, and we can watch it live.'))
 S.append(sec(3, 'Listeners do not hear which note it is. They hear how far it is from home.',
-    '<iframe class="fe-frame" data-src="figs/far-from-home-en.html" width="1000" height="430" style="border:0;display:block;margin:0 auto;width:1000px !important;height:430px !important;max-width:none !important;max-height:none !important;flex:0 0 auto" title="How far from home"></iframe>'
-    + '<p style="font-family:et-book,Georgia,serif;font-size:19px;color:#5F5D50;margin:2px 60px 0;text-align:center">Twinkle, Twinkle with three endings: <b>si</b> one step short, <b>sol</b> halfway, <b>do</b> home. Do, mi, sol stand, the other notes lean toward them.</p>'
+    '<iframe class="fe-frame ffh" data-src="figs/far-from-home-en.html" width="1240" height="444" style="border:0;display:block;width:1240px !important;height:444px !important;max-width:none !important;max-height:none !important;flex:0 0 auto;position:relative;left:50%;transform:translateX(calc(-50% - 33px))" title="How far from home"></iframe>'
+    + ''.join(f'<span class="fragment ffstep" data-fragment-index="{k}"></span>' for k in range(1, 9))
+    + '<p style="font-family:et-book,Georgia,serif;font-size:19px;color:#5F5D50;margin:6px 60px 0;text-align:center">One scene per click. Three endings: <b>si</b> one step short, <b>sol</b> halfway, <b>do</b> home. Do, mi, sol stand, the other notes lean toward them.</p>'
     + keybox('Music runs on ' + kw('expectation') + ': every note is heard against where home is.', None, '.2em'),
     ref(a('Bigand and Poulin-Charronnat, Cognition 2006', 'https://doi.org/10.1016/j.cognition.2005.11.007'), 'After the Pocket Music lesson, how far from home (LAVA MUSIC)'),
-    'Live demo, two and a half minutes, press play and let it run, or drag to the three endings at about 0:48. It asks the room what sounds wrong, finds home, changes the ending of Twinkle, Twinkle three ways, shows that do, mi and sol stand while la, fa and re lean back, and ends with Ode to Joy where the room sings the last note. Voice is read by the browser, check the English voice on the presentation laptop, or untick Voice and narrate it yourself. Bigand and Poulin-Charronnat 2006: this sense of finished and unfinished is learned by listening. Meyer 1956: emotion in music lives in expectations delayed or broken. The next slides show the brain measures it, and the live EEG demo is the same pull in data. English version of Zhiqian\'s far from home page (knowledge base, life/music), after the Pocket Music video by LAVA MUSIC.'))
+    'Live demo in eight steps, each click of the clicker plays one scene and stops (the slide has eight fragments that drive the demo, the ninth click goes to the next slide). Steps: 1 what sounds wrong, 2 this is right, 3 the note you wait for, 4 three endings, 5 how far from home, 6 notes that stand and lean, 7 find home yourself, 8 your turn. It asks the room what sounds wrong, finds home, changes the ending of Twinkle, Twinkle three ways, shows that do, mi and sol stand while la, fa and re lean back, and ends with Ode to Joy where the room sings the last note. Voice is read by the browser, check the English voice on the presentation laptop, or untick Voice and narrate it yourself. Bigand and Poulin-Charronnat 2006: this sense of finished and unfinished is learned by listening. Meyer 1956: emotion in music lives in expectations delayed or broken. The next slides show the brain measures it, and the live EEG demo is the same pull in data. English version of Zhiqian\'s far from home page (knowledge base, life/music), after the Pocket Music video by LAVA MUSIC.'))
 eran = OLDS and [t for t in OLDS if title(t).startswith('Change one chord')][0]
 eran_svg = padvb(re.search(r'<svg class="fig".*?</svg>', eran, re.S).group(0))
 S.append(sec(3, 'Change one chord, and the brain flags it within 200 ms, trained or not',
@@ -426,6 +427,14 @@ body = '\n\n'.join(S)
 body = body.replace('class="status progress"', 'class="status prog"').replace('#7D55C7', SLATE)
 body = body.replace('<text x="220" y="50" font-size="16.5" font-weight="600" fill="#1F1E1B" text-anchor="middle" >A tiny classifier', '<text x="220" y="44" font-size="16.5" font-weight="600" fill="#1F1E1B" text-anchor="middle" >A tiny classifier').replace('<text x="220" y="68" font-size="16.5" font-weight="600" fill="#1F1E1B" text-anchor="middle" >reads music theory', '<text x="220" y="66" font-size="16.5" font-weight="600" fill="#1F1E1B" text-anchor="middle" >reads music theory')
 head = head.replace('</head>', '<style>.reveal .status.prog{background:#F76902}\n' + '\n'.join(KSCSS) + '</style>\n</head>', 1)
+FFJS = '''<script>
+(function(){function post(k){var s=Reveal.getCurrentSlide(),f=s&&s.querySelector('iframe.ffh');if(f&&f.contentWindow)f.contentWindow.postMessage({ffstep:k},'*');}
+function pos(e){return Array.prototype.indexOf.call(Reveal.getCurrentSlide().querySelectorAll('.ffstep'),e.fragment)+1;}
+Reveal.on('fragmentshown',function(e){if(e.fragment.classList.contains('ffstep'))post(pos(e));});
+Reveal.on('fragmenthidden',function(e){if(e.fragment.classList.contains('ffstep'))post(pos(e)-1);});})();
+</script>
+'''
+tail = tail.replace('</body>', FFJS + '</body>', 1)
 html = head + '\n\n' + body + '\n\n</div></div>\n' + tail
 _txt = re.sub(r'&[#a-z0-9]+;', '', re.sub(r'<[^>]+>', ' ', re.sub(r'<(script|style)[^>]*>.*?</\1>', '', body, flags=re.S)))
 bad = [c for c in '—–;' if c in _txt]

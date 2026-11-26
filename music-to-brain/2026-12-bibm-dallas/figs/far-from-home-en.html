@@ -7,8 +7,8 @@
 :root{--bg:#FBFAF7;--ink:#1F1E1B;--mut:#5F5D50;--acc:#F76902;--line:#D7D2CB}
 html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 et-book,Georgia,serif}
 body{padding:8px 16px;box-sizing:border-box}
-main{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
-.stage{position:relative;width:100%;aspect-ratio:1120/440;border-radius:8px;overflow:hidden;cursor:pointer}
+main{max-width:none;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.stage{position:relative;width:100%;aspect-ratio:1240/400;border-radius:8px;overflow:hidden;cursor:pointer}
 canvas{display:block;width:100%;height:100%}
 .bigplay{position:absolute;inset:0;display:grid;place-items:center;background:transparent;transition:opacity .2s}
 .bigplay span{width:76px;height:76px;border-radius:50%;background:var(--acc);color:#fff;display:grid;place-items:center;font-size:30px;padding-left:6px;box-sizing:border-box}
@@ -21,18 +21,19 @@ input[type=range]{flex:1;min-width:0;accent-color:var(--acc)}
 .opts{display:flex;gap:16px;color:var(--mut)}
 .opts label{display:flex;gap:6px;align-items:center}
 input[type=checkbox]{accent-color:var(--acc)}
+.steps{display:flex;gap:6px;flex-wrap:wrap;flex:1}.steps button{font-size:15px;padding:2px 10px}.steps button.on{border-color:var(--acc);color:#C45200}
 .credit{font-size:.85rem;color:var(--mut)}
 body.emb{padding:0 !important}body.emb .credit{display:none}
 </style>
 <main>
- <div class="stage" id="stage"><canvas id="cv" width="2240" height="880" aria-label="Animation: notes move on a clock face, do is home"></canvas><div class="bigplay" id="big"><span>▶</span></div></div>
- <div class="row"><div class="bar"><button id="pp" aria-label="Play">▶</button><input type="range" id="seek" min="0" max="152" step="0.1" value="0" aria-label="Position"><span class="time" id="tm">0:00 / 2:32</span></div><div class="opts"><label for="voice"><input type="checkbox" id="voice" checked> Voice</label><label for="sfx"><input type="checkbox" id="sfx" checked> Piano</label></div></div>
+ <div class="stage" id="stage"><canvas id="cv" width="2480" height="800" aria-label="Animation: notes move on a clock face, do is home"></canvas><div class="bigplay" id="big"><span>▶</span></div></div>
+ <div class="row"><div class="bar" style="display:none"><button id="pp" aria-label="Play">▶</button><input type="range" id="seek" min="0" max="152" step="0.1" value="0" aria-label="Position"><span class="time" id="tm">0:00 / 2:32</span></div><div id="steps" class="steps"></div><div class="opts"><label for="voice"><input type="checkbox" id="voice" checked> Voice</label><label for="sfx"><input type="checkbox" id="sfx" checked> Piano</label></div></div>
  <div class="credit">After the Pocket Music lesson, how far from home (Designed by LAVA MUSIC). Piano synthesized in the browser, voice read by the browser.</div>
 </main>
 <script>if(window.self!==window.top)document.body.classList.add("emb");
 
-const W=1120,H=440,cv=document.getElementById('cv'),g=cv.getContext('2d');
-const CREAM='#4C5B66',GOLD='#F76902',PINK='#FAD6BA',ORANGE='#F76902',NAVY='#FFFFFF',KBX=700;
+const W=1240,H=400,cv=document.getElementById('cv'),g=cv.getContext('2d');
+const CREAM='#4C5B66',GOLD='#F76902',PINK='#FAD6BA',ORANGE='#F76902',NAVY='#FFFFFF',KBX=640;
 const SOLF=['do','','re','','mi','fa','','sol','','la','','si'],SCALE=[0,2,4,5,7,9,11];
 const clamp=(x,a,b)=>Math.max(a,Math.min(b,x)),mix=(a,b,s)=>a+(b-a)*s,sm=s=>{s=clamp(s,0,1);return s*s*(3-2*s)};
 const win=(t,a,b,f=.25)=>sm((t-a)/f)*sm((b-t)/f); // fade in at a, out at b
@@ -63,7 +64,7 @@ const SPEAK={"16.0": "You never studied music theory. How do you know it is wron
 const GLOW=[[21.8,23.6,.55],[32.43,35.8,.5],[35.9,40.4,.95],[40.4,48,.45],[64.8,65.9,.5],[65.9,68.0,.95],[68.0,71.5,.45],[86.0,87.8,.7],[101.5,103.4,.5],[113.5,115.2,.75],[123.7,125.6,.6],[146.5,148.2,.75],[148.2,152.2,1.6]];
 // ---------- geometry ----------
 function layout(t){const s=t<76.3?0:t<77.8?sm((t-76.3)/1.5):t<134.6?1:t<136.0?1-sm((t-134.6)/1.4):0;
- return {s,cx:mix(330,300,s),cy:200,r:mix(158,145,s),w:mix(7,6,s),ball:mix(17,15,s),lab:mix(22,20,s),kbY:mix(560,270,s)}}
+ return {s,cx:mix(300,280,s),cy:186,r:mix(144,136,s),w:mix(7,6,s),ball:mix(17,15,s),lab:mix(22,20,s),kbY:mix(520,232,s)}}
 function homeAngle(t){const a0=-90,a1=0;if(t<7.6)return a0;if(t<8.1)return mix(a0,a1,sm((t-7.6)/.5));if(t<23.6)return a1;if(t<24.2)return mix(a1,a0+360,sm((t-23.6)/.6))-360;return a0}
 const pcAng=(pc,t)=>{const k=tonic(t),ha=homeAngle(t);return ha-((pc-k+12)%12)*30};
 const P=(L,ang,rr)=>[L.cx+(rr??L.r)*Math.cos(ang*Math.PI/180),L.cy-(rr??L.r)*Math.sin(ang*Math.PI/180)];
@@ -157,13 +158,24 @@ const pp=document.getElementById('pp'),seek=document.getElementById('seek'),tm=d
 const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
 function schedule(from){newMaster();const base=ctx.currentTime-from;if(voice.checked&&nbuf&&from<nbuf.duration){const src=ctx.createBufferSource();src.buffer=nbuf;const ng=ctx.createGain();ng.gain.value=1.5;src.connect(ng);ng.connect(master);src.start(ctx.currentTime+.02,from+.02)}if(!sfx.checked)return;N.forEach((n,i)=>{if(n.t>=from-.01){const next=N[i+1],d=next&&next.grp===n.grp?Math.min(next.t-n.t,1.4):1.4;pluck(n.m,base+n.t+LAND,d)}})}
 function say(t){if(!voice.checked||!('speechSynthesis' in window))return;Object.keys(SPEAK).forEach(k=>{const kt=+k;if(t>=kt&&t<kt+.5&&!spoken.has(k)){spoken.add(k);try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(SPEAK[k]);u.lang='en-US';u.rate=1.05;const vs=speechSynthesis.getVoices();const v=vs.find(v=>/en[-_]US/i.test(v.lang)&&/Samantha|Google US|Aria|Jenny|Natural/i.test(v.name))||vs.find(v=>/en[-_]US/i.test(v.lang));if(v)u.voice=v;speechSynthesis.speak(u)}catch(e){}}})}
-function frame(){if(playing){tNow=Math.max(0,ctx.currentTime-off-lat());if(tNow>=END){tNow=END;stop()}say(tNow)}draw(tNow);seek.value=tNow;tm.textContent=fmt(tNow)+' / 2:32';if(playing)raf=requestAnimationFrame(frame)}
+function frame(){if(playing){tNow=Math.max(0,ctx.currentTime-off-lat());if(segEnd!=null&&tNow>=segEnd){tNow=segEnd;stop()}if(tNow>=END){tNow=END;stop()}say(tNow)}draw(tNow);seek.value=tNow;tm.textContent=fmt(tNow)+' / 2:32';if(playing)raf=requestAnimationFrame(frame)}
 async function play(){A();if(!nbuf){try{const bin=Uint8Array.from(atob(NARR),c=>c.charCodeAt(0));nbuf=await ctx.decodeAudioData(bin.buffer)}catch(e){nbuf=null}}if(tNow>=END)tNow=0;off=ctx.currentTime-tNow;spoken=new Set(Object.keys(SPEAK).filter(k=>+k<tNow-.05));schedule(tNow);playing=true;pp.textContent='❚❚';pp.setAttribute('aria-label','Pause');big.hidden=true;cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}
-function stop(){playing=false;pp.textContent='▶';pp.setAttribute('aria-label','Play');if(ctx)newMaster();try{speechSynthesis.cancel()}catch(e){}big.hidden=false}
-pp.onclick=()=>playing?stop():play();document.getElementById('stage').onclick=()=>playing?stop():play();
+function stop(){playing=false;pp.textContent='▶';pp.setAttribute('aria-label','Play');if(ctx)newMaster();try{speechSynthesis.cancel()}catch(e){}big.hidden=step>0}
+pp.onclick=()=>playing?stop():goStep(Math.max(1,step));document.getElementById('stage').onclick=()=>goStep(step+1);
 seek.oninput=()=>{tNow=+seek.value;if(playing){off=ctx.currentTime-tNow;spoken=new Set(Object.keys(SPEAK).filter(k=>+k<tNow-.05));try{speechSynthesis.cancel()}catch(e){}schedule(tNow)}draw(tNow);tm.textContent=fmt(tNow)+' / 2:32'};
 sfx.onchange=voice.onchange=()=>{if(playing)schedule(tNow)};
 function fit(){const r=cv.getBoundingClientRect(),d=Math.min(3,window.devicePixelRatio||1);cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);g.setTransform(cv.width/W,0,0,cv.height/H,0,0);draw(tNow)}
 addEventListener('resize',fit);(document.fonts?document.fonts.ready:Promise.resolve()).then(fit);fit();
 window.__seek=t=>{tNow=t;draw(t)};
+// ---------- steps: the presenter advances one module at a time ----------
+const STEPS=[[0,15.8,'Wrong?'],[15.9,23.8,'Right'],[24.0,47.9,'Home'],[48.0,67.9,'Three endings'],[68.0,87.7,'How far'],[87.8,105.9,'Stand and lean'],[106.0,134.4,'Find home'],[134.5,152.1,'Your turn']];
+let step=0,segEnd=null;
+const stepsEl=document.getElementById('steps');
+STEPS.forEach((st,i)=>{const b=document.createElement('button');b.textContent=(i+1)+'. '+st[2];b.onclick=()=>goStep(i+1);stepsEl.appendChild(b)});
+function goStep(k){k=Math.max(0,Math.min(STEPS.length,k));step=k;stepsEl.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('on',i===k-1));
+  if(playing)stop();if(k===0){segEnd=null;tNow=0;big.hidden=false;draw(0);return}
+  segEnd=STEPS[k-1][1];tNow=STEPS[k-1][0];play()}
+addEventListener('message',e=>{const d=e.data;if(d&&typeof d==='object'&&'ffstep' in d)goStep(d.ffstep);if(d==='fe-stop'&&playing)stop()});
+addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();goStep(step+1)}if(e.key==='ArrowLeft'){e.preventDefault();goStep(step-1)}});
+
 </script>
