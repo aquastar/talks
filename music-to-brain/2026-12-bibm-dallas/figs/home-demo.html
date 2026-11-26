@@ -3,61 +3,88 @@
 <title>How far from home</title>
 <style>
 @font-face{font-family:"et-book";src:url(fonts/etbook-roman-lf.woff) format("woff")}
+@font-face{font-family:"et-book";src:url(fonts/etbook-bold-lf.woff) format("woff");font-weight:600 800}
 :root{--bg:#FBFAF7;--ink:#1F1E1B;--mut:#5F5D50;--line:#D7D2CB;--tint:#F1EDE7;--acc:#F76902;--acct:#C45200;--slate:#4C5B66}
 html,body{margin:0;background:var(--bg);color:var(--ink);font-family:et-book,Georgia,serif}
-.wrap{padding:10px 18px}
-.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-button{font:600 15px et-book,Georgia,serif;height:38px;padding:0 16px;border-radius:3px;border:2px solid var(--mut);background:#fff;color:var(--mut);cursor:pointer}
-button.on{border-color:var(--acc);color:var(--acct)}
-.lab{font-size:17px;color:var(--mut);margin-left:8px}
-svg{display:block;width:100%;height:auto}
+.wrap{display:flex;gap:26px;align-items:center;padding:6px 14px}
+svg{display:block;flex:0 0 470px;height:auto}
+.side{flex:1 1 auto;min-width:0}
+.steps{display:flex;flex-direction:column;gap:8px}
+button{font:600 17px et-book,Georgia,serif;text-align:left;height:42px;padding:0 14px;border-radius:3px;border:2px solid var(--line);background:#fff;color:var(--mut);cursor:pointer}
+button .n{display:inline-block;width:22px;color:var(--mut)}
+button.on{border-color:var(--acc);color:var(--ink)}
+button.on .n{color:var(--acct)}
+.cap{margin-top:16px;min-height:96px;font-size:23px;line-height:1.35;color:var(--ink)}
+.cap .sub{display:block;font-size:18px;color:var(--mut);margin-top:6px}
+.go{margin-top:6px;display:none;border-color:var(--acc);color:var(--acct)}
 </style></head><body><div class="wrap">
-<div class="bar">
-  <button data-v="home" class="on">&#9654; Ends on do</button>
-  <button data-v="away">&#9654; Stops on sol</button>
-  <button data-v="lost">&#9654; Stops on si</button>
-  <span class="lab" id="lab">Twinkle, Twinkle, Little Star. Click an ending.</span>
-</div>
-<svg id="fig" viewBox="0 0 1100 400" aria-label="Distance from the home note, one bar per note"></svg>
-</div>
+<svg id="ring" viewBox="0 0 470 470" aria-label="Twelve notes on a ring, home at the top"></svg>
+<div class="side">
+  <div class="steps">
+    <button data-s="0"><span class="n">1</span>Which ending sounds wrong?</button>
+    <button data-s="1"><span class="n">2</span>Same tune, three endings</button>
+    <button data-s="2"><span class="n">3</span>Notes that stand, notes that lean</button>
+    <button data-s="3"><span class="n">4</span>The whole tune is a trip from home</button>
+    <button data-s="4"><span class="n">5</span>You finish it</button>
+  </div>
+  <div class="cap" id="cap">Twelve notes on a ring. Home, <b>do</b>, sits at the top. Pick a step.</div>
+  <button class="go" id="go">&#9654; play the last note</button>
+</div></div>
 <script>
-// Krumhansl and Kessler (1982) major key probe tone ratings, C = home. Distance = how much less stable than home, 0 to 1.
-var KK=[6.35,2.23,3.48,2.33,4.38,4.09,2.52,5.19,2.39,3.66,2.29,2.88];
-function dist(m){var r=KK[((m%12)+12)%12];return (6.35-r)/(6.35-2.23);}
-var NM=['C','C#','D','Eb','E','F','F#','G','Ab','A','Bb','B'];
-var C=60,D=62,E=64,F=65,G=67,A=69,B=59+12;
-var line1=[C,C,G,G,A,A,G, F,F,E,E,D,D,C], line2=[G,G,F,F,E,E,D, G,G,F,F,E,E,D];
-var tw=line1.concat(line2,line1), durs=tw.map(function(m,i){return (i%7===6)?2:1;});
-function ending(m){var n=tw.slice();n[n.length-1]=m;return n;}
-var V={home:{n:ending(C),t:'Ends on do, the home note. It feels finished.'},
-       away:{n:ending(G),t:'Stops on sol. Halfway home, it wants to go on.'},
-       lost:{n:ending(B),t:'Stops on si, one step short of home. It hangs in the air.'}};
-var SOL=['do','di','re','ri','mi','fa','fi','sol','le','la','te','si'];
-var svg=document.getElementById('fig'),lab=document.getElementById('lab'),cur='home',timer=[],actx=null,oscs=[];
-function draw(k,upto){
-  var n=V[k].n,w=1100,x0=70,x1=1080,y0=40,y1=320,bw=(x1-x0)/n.length,h='';
-  h+='<line x1="'+x0+'" y1="'+y1+'" x2="'+x1+'" y2="'+y1+'" stroke="#ACA39A" stroke-width="1.5"/>';
-  h+='<text x="'+(x0-10)+'" y="'+(y1+5)+'" font-size="18" fill="#5F5D50" text-anchor="end">home</text>';
-  h+='<text x="'+(x0-10)+'" y="'+(y0+10)+'" font-size="18" fill="#5F5D50" text-anchor="end">far</text>';
-  for(var i=0;i<n.length;i++){var d=dist(n[i]),bh=Math.max(4,d*(y1-y0)),x=x0+i*bw+3,col=i>upto?'#E4E0D9':(i===upto?'#F76902':'#4C5B66');
-    h+='<rect x="'+x+'" y="'+(y1-bh)+'" width="'+(bw-6)+'" height="'+bh+'" rx="2" fill="'+col+'"/>';
-    h+='<text x="'+(x+(bw-6)/2)+'" y="'+(y1+24)+'" font-size="15" fill="'+(i===upto?'#C45200':'#5F5D50')+'" text-anchor="middle">'+SOL[n[i]%12]+'</text>';}
-  var last=n[n.length-1],dl=dist(last);
-  h+='<text x="'+x0+'" y="378" font-size="20" fill="#1F1E1B">Last note: '+NM[last%12]+', '+(dl<0.05?'home':(dl<0.6?'near home':'far from home'))+'</text>';
-  h+='<text x="'+x1+'" y="378" font-size="15" fill="#5F5D50" text-anchor="end">bar height: how unstable the note is in C (Krumhansl and Kessler 1982)</text>';
+// Content after Zhiqian's 离家多远 page (life/music/far-from-home.html), itself after the Pocket Music video. Piano is synthesized here.
+var SOL=['do','','re','','mi','fa','','sol','','la','','si'],STABLE={0:1,4:1,7:1};
+var svg=document.getElementById('ring'),cap=document.getElementById('cap'),go=document.getElementById('go');
+var CX=235,CY=235,R=170,trail=[],cur=null,glow=0,timers=[],actx=null,oscs=[];
+function ang(pc){return -90+((pc%12)+12)%12*30;}            // home at the top, clockwise
+function xy(pc,r){var a=ang(pc)*Math.PI/180;r=r||R;return [CX+r*Math.cos(a),CY+r*Math.sin(a)];}
+function draw(){
+  var h='<circle cx="'+CX+'" cy="'+CY+'" r="'+R+'" fill="none" stroke="#D7D2CB" stroke-width="6"/>';
+  if(glow>0){var p=xy(0);h+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="'+(34+20*glow)+'" fill="#F76902" fill-opacity="'+(0.18*glow+0.05)+'"/>';}
+  for(var i=1;i<trail.length;i++){var a=xy(trail[i-1],R-18),b=xy(trail[i],R-18),op=Math.max(.15,1-(trail.length-1-i)*0.12);
+    var mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2,cx=mx+(CX-mx)*0.45,cy=my+(CY-my)*0.45;h+='<path d="M'+a[0]+','+a[1]+' Q'+cx+','+cy+' '+b[0]+','+b[1]+'" fill="none" stroke="#4C5B66" stroke-opacity="'+op+'" stroke-width="2.2"/>';}
+  for(var pc=0;pc<12;pc++){var q=xy(pc),lab=SOL[pc],home=pc===0,st=STABLE[pc],on=cur===pc;
+    var r=lab?(home?17:12):5,fill=on?'#F76902':(home?'#fff':(st?'#4C5B66':(lab?'#fff':'#D7D2CB'))),stroke=home||on?'#F76902':(lab?'#4C5B66':'#D7D2CB');
+    h+='<circle cx="'+q[0]+'" cy="'+q[1]+'" r="'+(on?r+5:r)+'" fill="'+fill+'" stroke="'+stroke+'" stroke-width="3"/>';
+    if(lab){var t=xy(pc,R+36);h+='<text x="'+t[0]+'" y="'+(t[1]+7)+'" font-size="'+(home?24:20)+'" font-weight="'+(home?700:400)+'" fill="'+(home?'#C45200':'#1F1E1B')+'" text-anchor="middle" font-family="et-book,Georgia,serif">'+lab+'</text>';}}
+  if(!trail.length)h+='<text x="'+CX+'" y="'+(CY-8)+'" font-size="22" fill="#5F5D50" text-anchor="middle" font-family="et-book,Georgia,serif">home is at the top</text>';
+  if(!trail.length)h+='<text x="'+CX+'" y="'+(CY+20)+'" font-size="17" fill="#5F5D50" text-anchor="middle" font-family="et-book,Georgia,serif">filled: notes that stand</text>';
   svg.innerHTML=h;}
-function stop(){timer.forEach(clearTimeout);timer=[];oscs.forEach(function(o){try{o.stop();}catch(e){}});oscs=[];}
-function play(k){stop();cur=k;lab.textContent=V[k].t;
-  document.querySelectorAll('button').forEach(function(b){b.classList.toggle('on',b.dataset.v===k);});
+function stop(){timers.forEach(clearTimeout);timers=[];oscs.forEach(function(o){try{o.stop();}catch(e){}});oscs=[];}
+function at(t,f){timers.push(setTimeout(f,t*1000));}
+function tone(m,t,d){var o=actx.createOscillator(),g=actx.createGain(),t0=actx.currentTime+0.06+t;
+  o.type='triangle';o.frequency.value=440*Math.pow(2,(m-69)/12);
+  g.gain.setValueAtTime(0.0001,t0);g.gain.exponentialRampToValueAtTime(0.26,t0+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t0+d*0.95);
+  o.connect(g);g.connect(actx.destination);o.start(t0);o.stop(t0+d);oscs.push(o);}
+// play [midi,beats] list from time t0, return end time
+function phrase(notes,t0,beat,keep){var t=t0;notes.forEach(function(n){var m=n[0],d=n[1]*beat;tone(m,t,d);
+  at(t,function(){cur=((m%12)+12)%12;trail.push(cur);if(!keep&&trail.length>9)trail.shift();glow=cur===0?1:Math.max(0,glow-0.5);draw();});t+=d;});
+  at(t+0.15,function(){cur=null;draw();});return t;}
+function say(t,a,b){at(t,function(){cap.innerHTML=a+(b?'<span class="sub">'+b+'</span>':'');});}
+var C=60,D=62,E=64,F=65,G=67,A=69,B=71,Bl=59;
+var TW=[[C,1],[C,1],[G,1],[G,1],[A,1],[A,1],[G,2],[F,1],[F,1],[E,1],[E,1],[D,1],[D,1]];
+var STEPS=[
+ function(){var t=phrase(TW.concat([[Bl,2]]),0,0.45);say(0,'Listen. Which part sounds wrong?');
+   say(t+0.3,'It stops on <b>si</b>, one step short of home.','Nobody here needed music theory to hear it.');},
+ function(){say(0,'Stop on <b>si</b>: one step short, it hangs.');var t=phrase(TW.slice(9).concat([[Bl,2]]),0,0.45);
+   say(t+0.4,'Stop on <b>sol</b>: halfway home, it waits for more.');t=phrase(TW.slice(9).concat([[G-12+12,2]]),t+0.6,0.45);
+   say(t+0.4,'Back to <b>do</b>: home. Finished.');t=phrase(TW.slice(9).concat([[C,2]]),t+0.6,0.45);
+   say(t+0.3,'Same notes until the last one. Only the distance from home changed.','People who play by ear do not memorize notes. They hear how far each note is from home.');},
+ function(){say(0,'<b>do, mi, sol</b> stand on their own.');var t=phrase([[C,1.2],[E,1.2],[G,2]],0,0.5,true);
+   say(t+0.3,'The others lean toward a neighbor: <b>la</b> back to sol.');t=phrase([[A,1],[G,2]],t+0.5,0.5,true);
+   say(t+0.2,'<b>fa</b> back to mi.');t=phrase([[F,1],[E,2]],t+0.3,0.5,true);
+   say(t+0.2,'<b>re</b> back to do.');t=phrase([[D,1],[C,2]],t+0.3,0.5,true);
+   say(t+0.3,'Every note pulls toward a stable one.','That pull is the expectation the brain carries.');},
+ function(){say(0,'Twinkle, Twinkle, once more. Watch the path.');var t=phrase(TW.concat([[C,2]]),0,0.42,true);
+   say(t+0.3,'It leaves home, jumps up to <b>sol</b>, and walks back one step at a time.','So you never need to remember fourteen notes, only the trip.');},
+ function(){say(0,'Ode to Joy. The last note is yours.','Sing it, then click to check.');
+   var t=phrase([[E,1],[E,1],[F,1],[G,1],[G,1],[F,1],[E,1],[D,1],[C,1],[C,1],[D,1],[E,1],[D,1.5],[C,0.5]],0,0.45,true);
+   at(t-0.2,function(){go.style.display='inline-block';});}
+];
+function run(k){stop();trail=[];cur=null;glow=0;go.style.display='none';draw();
   actx=actx||new (window.AudioContext||window.webkitAudioContext)();actx.resume();
-  var n=V[k].n,beat=0.36,t=actx.currentTime+0.08,acc=0;draw(k,-1);
-  n.forEach(function(m,i){var d=durs[i]*beat,o=actx.createOscillator(),g=actx.createGain();
-    o.type='triangle';o.frequency.value=440*Math.pow(2,(m-69)/12);
-    g.gain.setValueAtTime(0.0001,t+acc);g.gain.exponentialRampToValueAtTime(0.25,t+acc+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+acc+d*0.95);
-    o.connect(g);g.connect(actx.destination);o.start(t+acc);o.stop(t+acc+d);oscs.push(o);
-    timer.push(setTimeout(function(){draw(k,i);},(acc+0.08)*1000));acc+=d;});
-  timer.push(setTimeout(function(){draw(k,n.length);},(acc+0.3)*1000));}
-document.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){play(b.dataset.v);});});
+  document.querySelectorAll('.steps button').forEach(function(b){b.classList.toggle('on',+b.dataset.s===k);});STEPS[k]();}
+document.querySelectorAll('.steps button').forEach(function(b){b.addEventListener('click',function(){run(+b.dataset.s);});});
+go.addEventListener('click',function(){stop();go.style.display='none';phrase([[C,3]],0,0.5,true);say(0.1,'<b>do</b>. You knew it all along.','The ear learned where home is just by listening.');});
 window.addEventListener('message',function(e){if(e.data==='fe-stop')stop();});
-draw('home',99);
+draw();
 </script></body></html>

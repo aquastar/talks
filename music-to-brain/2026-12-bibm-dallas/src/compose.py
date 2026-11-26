@@ -285,22 +285,11 @@ S.append(pick('The brain is read as a graph, too', 2))
 S.append(landmark(3, 'model', 'Part 3. Model: what does the listening brain expect?',
     'Read works. To ' + kw('set') + ' music for a brain, we first need to predict the brain from the music.',
     'Landmark. We are at Model, the top arrow. The thread of this part: the brain predicts the next note, the prediction is a small graph of notes, music generators learn that graph, and we can watch it live.'))
-_ff = ('<div style="width:290px;height:560px;overflow:hidden;margin:0 auto">'
-       '<iframe class="fe-frame" data-src="figs/far-from-home.html" width="446" height="862" style="border:0;transform:scale(.65);transform-origin:0 0;display:block" title="How far from home"></iframe></div>')
-S.append(stack(sec(3, 'Listeners do not hear which note it is. They hear how far it is from home.',
-    two(_ff,
-        line('Twinkle, Twinkle, Little Star, one tune, three endings:', 22, INK, 0)
-        + line('Stop on <b>si</b>: one step short, it hangs in the air.', 21, MUT, 14)
-        + line('Stop on <b>sol</b>: halfway home, it wants to go on.', 21, MUT, 8)
-        + line('Back to <b>do</b>: home, finished.', 21, MUT, 8)
-        + line('No theory needed. People who play by ear track distance from home, and this sense is learned just by listening.', 20, INK, 22)
-        + keybox('Music runs on ' + kw('expectation') + ': every note is heard against where home is.', None, '1em'), lw=290),
-    ref(a('Bigand and Poulin-Charronnat, Cognition 2006', 'https://doi.org/10.1016/j.cognition.2005.11.007'), 'Demo after the Pocket Music video, how far from home (LAVA MUSIC)'),
-    'Live demo, the room does it with its ears. Play the video on the left, about two and a half minutes, or skip to the three endings. Twinkle, Twinkle with three endings: stop on si, one step short, it hangs. Stop on sol, halfway. Back to do, home. Nobody here needed music theory for that: Bigand and Poulin-Charronnat 2006 show this sense of finished and unfinished is learned by listening. That is expectation, Meyer 1956: emotion in music lives in expectations being delayed or broken. The next slides show the brain measures it, and the live EEG demo later is the same feeling in data. The English bar version is under the down arrow. The page is Zhiqian\'s rebuild of a Xiaohongshu video by Pocket Music, check the rights before the deck link is shared publicly.'),
-    sec(3, 'Try it: listeners hear how far each note is from home, not which note it is',
-    '<iframe class="fe-frame" data-src="figs/home-demo.html" width="1100" height="470" style="border:0;display:block;margin:0 auto;background:#FBFAF7" title="How far from home demo"></iframe>',
-    ref(a('Bigand and Poulin-Charronnat, Cognition 2006', 'https://doi.org/10.1016/j.cognition.2005.11.007'), 'Bar height after ' + a('Krumhansl and Kessler, Psychol Rev 1982', 'https://doi.org/10.1037/0033-295X.89.4.334')),
-    'Live demo, the room does it with its ears. Twinkle, Twinkle. Play Ends on do: every bar is how far that note is from home, do, using the probe tone ratings of Krumhansl and Kessler 1982. The tune leaves home, jumps to sol, and walks back step by step. Now Stops on sol: halfway home, it wants to go on. Then Stops on si: one step short, it hangs in the air. Nobody here needed music theory for that: Bigand and Poulin-Charronnat 2006 show that this sense of finished and not finished is learned just by listening. That is expectation, and the next slides show the brain measures it note by note, the live EEG demo later is the same feeling in data. Idea from the Pocket Music video, how far from home (Xiaohongshu, LAVA MUSIC), rebuilt here in English. Zhiqian\'s own copy: zhiqian-knowledge-base life/music/far-from-home.html.')))
+S.append(sec(3, 'Listeners do not hear which note it is. They hear how far it is from home.',
+    '<iframe class="fe-frame" data-src="figs/home-demo.html" width="1120" height="470" style="border:0;display:block;margin:0 auto;background:#FBFAF7" title="How far from home"></iframe>'
+    + keybox('Music runs on ' + kw('expectation') + ': every note is heard against where home is.', None, '.2em'),
+    ref(a('Bigand and Poulin-Charronnat, Cognition 2006', 'https://doi.org/10.1016/j.cognition.2005.11.007'), 'After the Pocket Music lesson, how far from home'),
+    'Live demo, five clicks, the room does it with its ears. One: Twinkle, Twinkle stops on si, everyone hears it is wrong. Two: the same tune with three endings, si one step short, sol halfway, do home. People who play by ear do not memorize notes, they hear how far each note is from home. Three: do, mi and sol stand, the others lean, la to sol, fa to mi, re to do. Four: the whole tune is a trip, out from home, up to sol, and back one step at a time. Five: Ode to Joy, the room sings the last note, then click to check, it is do. Bigand and Poulin-Charronnat 2006: this sense of finished and unfinished is learned by listening. Meyer 1956: emotion in music lives in expectations delayed or broken. The next slides show the brain measures it, and the live EEG demo is the same pull in data. Adapted from Zhiqian\'s far from home page (knowledge base, life/music), itself after the Pocket Music video by LAVA MUSIC.'))
 eran = OLDS and [t for t in OLDS if title(t).startswith('Change one chord')][0]
 eran_svg = padvb(re.search(r'<svg class="fig".*?</svg>', eran, re.S).group(0))
 S.append(sec(3, 'Change one chord, and the brain flags it within 200 ms, trained or not',
