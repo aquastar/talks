@@ -1,0 +1,170 @@
+<title>How far from home</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap">
+<style>
+/* Layout: the 9:16 player in the middle of a deep blue page, controls under it, credit at the bottom. Single dark look matching the source video. */
+:root{--bg:#1A26A6;--bg2:#2C43D4;--cream:#F7EEDC;--gold:#FFC54D;--dim:#AEB8F0;--ui:#25339F;--line:#3A4BC8;color-scheme:dark}
+html,body{height:100%}
+body{margin:0;background:radial-gradient(120% 80% at 50% 30%,var(--bg2),var(--bg));color:var(--cream);font:15px/1.6 "Noto Sans SC","PingFang SC",system-ui,sans-serif;
+ padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px;box-sizing:border-box}
+main{max-width:440px;margin:0 auto;display:flex;flex-direction:column;gap:14px;align-items:stretch}
+.stage{position:relative;width:100%;aspect-ratio:9/16;max-width:100%;border-radius:18px;overflow:hidden;box-shadow:0 20px 60px #0008;cursor:pointer}
+canvas{display:block;width:100%;height:100%}
+.bigplay{position:absolute;inset:0;display:grid;place-items:center;background:#0a114026;transition:opacity .2s}
+.bigplay span{width:76px;height:76px;border-radius:50%;background:var(--cream);color:#1A26A6;display:grid;place-items:center;font-size:30px;padding-left:6px;box-sizing:border-box}
+.bigplay[hidden]{display:none}
+.bar{display:flex;align-items:center;gap:10px}
+button{font:inherit;color:var(--cream);background:var(--ui);border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer;min-width:44px}
+button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+input[type=range]{flex:1;min-width:0;accent-color:var(--gold)}
+.time{font-variant-numeric:tabular-nums;font-size:.85rem;color:var(--dim);min-width:84px;text-align:right}
+.opts{display:flex;gap:16px;flex-wrap:wrap;font-size:.88rem;color:var(--dim)}
+.opts label{display:flex;gap:6px;align-items:center}
+input[type=checkbox]{accent-color:var(--gold)}
+.credit{font-size:.8rem;color:var(--dim);border-top:1px solid var(--line);padding-top:10px}
+body.emb{padding:4px 12px !important}body.emb .credit{display:none}body.emb main{gap:8px}
+</style>
+<main>
+ <div class="stage" id="stage"><canvas id="cv" width="720" height="1280" aria-label="Animation: notes move on a clock face, do is home"></canvas><div class="bigplay" id="big"><span>▶</span></div></div>
+ <div class="bar"><button id="pp" aria-label="Play">▶</button><input type="range" id="seek" min="0" max="152" step="0.1" value="0" aria-label="Position"><span class="time" id="tm">0:00 / 2:32</span></div>
+ <div class="opts"><label for="voice"><input type="checkbox" id="voice" checked> Voice</label><label for="sfx"><input type="checkbox" id="sfx" checked> Piano</label></div>
+ <div class="credit">After the Pocket Music lesson, how far from home (Designed by LAVA MUSIC). Piano synthesized in the browser, voice read by the browser.</div>
+</main>
+<script>if(window.self!==window.top)document.body.classList.add("emb");
+
+const W=360,H=640,cv=document.getElementById('cv'),g=cv.getContext('2d');
+const CREAM='#F7EEDC',GOLD='#FFC54D',PINK='#F0679A',ORANGE='#FFAE45',NAVY='#1B2A8F';
+const SOLF=['do','','re','','mi','fa','','sol','','la','','si'],SCALE=[0,2,4,5,7,9,11];
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x)),mix=(a,b,s)=>a+(b-a)*s,sm=s=>{s=clamp(s,0,1);return s*s*(3-2*s)};
+const win=(t,a,b,f=.25)=>sm((t-a)/f)*sm((b-t)/f); // fade in at a, out at b
+// ---------- score: [time, midi, group]; key tonic pc per section ----------
+const N=[];const add=(grp,arr)=>arr.forEach(([t,m])=>N.push({t,m,pc:((m%12)+12)%12,grp}));
+add('tw1',[[0.13,60],[0.58,60],[1.033,67],[1.498,67],[1.95,69],[2.415,69],[2.868,67],[3.785,65],[4.261,65],[4.714,64],[5.178,64],[5.631,62],[6.095,62],[6.56,59]]);
+add('ode1',[[7.848,61],[8.313,61],[8.766,62],[9.23,64],[9.694,64],[10.159,62],[10.612,61],[11.076,59],[11.54,57],[11.993,57],[12.446,59],[12.91,61],[13.375,61],[14.071,59],[14.292,63]]);
+add('ode2',[[19.122,57],[19.586,57],[20.039,59],[20.503,61],[20.956,59],[21.653,57],[21.885,57]]);
+add('scale',[[28.758,60],[29.292,62],[29.826,64],[30.337,65],[30.859,67],[31.382,69],[31.916,71],[32.427,72]]);
+add('tw2',[[50.457,65],[50.933,65],[51.386,64],[51.85,64],[52.315,62],[52.779,62],[53.232,59]]);
+add('tw3',[[56.552,64],[57.017,64],[57.481,62],[57.945,62],[58.41,55]]);
+add('tw4',[[62.984,64],[63.449,64],[63.913,62],[64.377,62],[64.83,60]]);
+add('twK',[[79.61,60],[80.086,60],[80.538,67],[81.003,67],[81.456,69],[81.92,69],[82.384,67],[83.302,65],[83.754,65],[84.219,64],[84.683,64],[85.136,62],[85.6,62],[86.065,60]]);
+add('tri',[[88.085,60],[88.689,64],[89.559,67]]);
+add('st1',[[95.109,69],[95.724,67]]);add('st2',[[98.023,65],[98.65,64]]);add('st3',[[100.914,62],[101.529,60]]);
+add('jour',[[108.878,60],[111.804,67],[112.303,65],[112.814,64],[113.151,62],[113.429,60]]);
+add('find',[[120.581,60]]);
+add('cmp',[[126.235,62],[126.723,64],[127.083,65]]);
+add('odeF',[[137.648,64],[138.159,64],[138.658,65],[139.157,67],[139.656,67],[140.156,65],[140.666,64],[141.166,62],[141.653,60],[142.164,60],[142.663,62],[143.163,64],[143.662,62],[144.4,60]]);
+add('you',[[146.413,60]]);
+const GROUPS={};N.forEach((n,i)=>{(GROUPS[n.grp]=GROUPS[n.grp]||[]).push(i)});
+const GEND={tw1:7.8,ode1:19.1,ode2:23.6,scale:48.0,tw2:56.2,tw3:62.6,tw4:71.5,twK:87.8,tri:94.8,st1:97.7,st2:100.6,st3:103.6,jour:114.6,find:123.6,cmp:134.4,odeF:146.4,you:152.1};
+const tonic=t=>t>=7.6&&t<23.9?9:0;
+// ---------- captions: [start, end, text, style] ----------
+const CAP=[[0, 15.6, "Listen.\nWhat sounds\nwrong?", "big"], [16.0, 19.1, "You never studied\nmusic theory. How do\nyou know it is wrong?", "n"], [19.3, 23.6, "This is right.", "big"], [24.2, 26.8, "Because your ear\nis always waiting\nfor one note.", "n"], [27.1, 29.2, "You have sung it\nsince you were small.", "n"], [35.9, 40.4, "This one. The last note\nof Twinkle, Twinkle\nand of Ode to Joy.", "n"], [40.7, 44.3, "The note a song wants\nto return to is its home.", "n"], [44.6, 47.7, "After years of songs,\nyour ear already\nknows it.", "n"], [48.0, 50.3, "Same Twinkle, Twinkle.\nChange the ending.", "n"], [54.3, 56.3, "Stop on si:\none step short.", "n"], [59.5, 62.7, "Stop on sol:\nhalfway, waiting\nfor the next line.", "n"], [65.9, 67.7, "Back to do:\nhome.", "n"], [68.1, 71.3, "People who play a tune\nafter one hearing\ndo the same.", "n"], [71.6, 76.1, "They do not memorize\nevery note. They hear\nhow far it is from home.", "n"], [76.3, 79.4, "Twinkle once more.\nWatch where it goes.", "n"], [87.8, 90.2, "do, mi, sol", "n"], [90.4, 94.9, "These three stand.\nThe others lean\ntoward a neighbor.", "n"], [96.3, 97.8, "la\nback to sol.", "n"], [99.2, 100.6, "fa\nback to mi.", "n"], [102.1, 103.5, "re\nback to do.", "n"], [103.8, 105.7, "The whole song\nis just those steps.", "n"], [106.1, 108.5, "So you never need\nfourteen notes.", "n"], [109.0, 114.4, "Just hear the trip:\nleave home, jump to sol,\nwalk back step by step.", "n"], [114.8, 120.0, "Try it. Hum a song\nto its last note.\nThat note is home.", "n"], [120.4, 123.4, "Find it on a keyboard.\nThat key is do.", "n"], [123.7, 125.7, "In number notation\nit is 1.", "n"], [125.9, 131.0, "Then match each note:\nhigher or lower,\nstanding or leaning.", "n"], [131.4, 134.3, "Slow at first.\nThat is playing by ear.", "n"], [134.6, 137.6, "Ode to Joy once more.\nThe last note is yours.", "n"], [144.8, 146.3, "Yours.", "big"], [148.2, 152.1, "You always\nknew\nthis note.", "big"]];
+const SPEAK={"16.0": "You never studied music theory. How do you know it is wrong?", "24.2": "Because your ear is always waiting for one note.", "27.1": "You have sung it since you were small.", "35.9": "This one. The last note of Twinkle, Twinkle and of Ode to Joy.", "40.7": "The note a song wants to return to is its home.", "44.6": "After years of songs, your ear already knows it.", "48.0": "Same Twinkle, Twinkle. Change the ending.", "54.3": "Stop on si: one step short.", "59.5": "Stop on sol: halfway, waiting for the next line.", "65.9": "Back to do: home.", "68.1": "People who play a tune after one hearing do the same.", "71.6": "They do not memorize every note. They hear how far it is from home.", "76.3": "Twinkle once more. Watch where it goes.", "87.8": "do. mi. sol.", "90.4": "These three stand. The others lean toward a neighbor.", "96.3": "la back to sol.", "99.2": "fa back to mi.", "102.1": "re back to do.", "103.8": "The whole song is just those steps.", "106.1": "So you never need fourteen notes.", "109.0": "Just hear the trip: leave home, jump to sol, walk back step by step.", "114.8": "Try it. Hum a song to its last note. That note is home.", "120.4": "Find it on a keyboard. That key is do.", "123.7": "In number notation it is 1.", "125.9": "Then match each note: higher or lower, standing or leaning.", "131.4": "Slow at first. That is playing by ear.", "134.6": "Ode to Joy once more. The last note is yours.", "148.2": "You always knew this note.", "144.8": "Your turn."};
+// glows at home: [start, end, size 0..1]
+const GLOW=[[21.8,23.6,.55],[32.43,35.8,.5],[35.9,40.4,.95],[40.4,48,.45],[64.8,65.9,.5],[65.9,68.0,.95],[68.0,71.5,.45],[86.0,87.8,.7],[101.5,103.4,.5],[113.5,115.2,.75],[123.7,125.6,.6],[146.5,148.2,.75],[148.2,152.2,1.6]];
+// ---------- geometry ----------
+function layout(t){const s=t<76.3?0:t<77.8?sm((t-76.3)/1.5):t<134.6?1:t<136.0?1-sm((t-134.6)/1.4):0;
+ return {s,cx:180,cy:mix(320,243,s),r:mix(138,87,s),w:mix(7,5,s),ball:mix(17,12,s),lab:mix(17.5,13,s),kbY:mix(700,378,s)}}
+function homeAngle(t){const a0=-90,a1=0;if(t<7.6)return a0;if(t<8.1)return mix(a0,a1,sm((t-7.6)/.5));if(t<23.6)return a1;if(t<24.2)return mix(a1,a0+360,sm((t-23.6)/.6))-360;return a0}
+const pcAng=(pc,t)=>{const k=tonic(t),ha=homeAngle(t);return ha-((pc-k+12)%12)*30};
+const P=(L,ang,rr)=>[L.cx+(rr??L.r)*Math.cos(ang*Math.PI/180),L.cy-(rr??L.r)*Math.sin(ang*Math.PI/180)];
+// ---------- drawing ----------
+function bg(){const gr=g.createRadialGradient(180,260,40,180,320,520);gr.addColorStop(0,'#3550E0');gr.addColorStop(.6,'#2536C2');gr.addColorStop(1,'#18229A');g.fillStyle=gr;g.fillRect(0,0,W,H)}
+function glowAt(x,y,R,a){if(a<=0)return;const gr=g.createRadialGradient(x,y,0,x,y,R);gr.addColorStop(0,`rgba(255,197,77,${.95*a})`);gr.addColorStop(.35,`rgba(255,150,80,${.75*a})`);gr.addColorStop(.7,`rgba(240,103,154,${.35*a})`);gr.addColorStop(1,'rgba(240,103,154,0)');g.fillStyle=gr;g.beginPath();g.arc(x,y,R,0,7);g.fill()}
+function ring(L,t){const ha=homeAngle(t),gap=11;g.lineCap='round';
+ for(let a=gap;a<=360-gap;a+=3){const d=Math.min(a,360-a),warm=clamp(1-(d-gap)/45,0,1);g.strokeStyle=warm>0?`rgb(${mix(247,255,warm)},${mix(238,178,warm)},${mix(220,92,warm)})`:CREAM;g.lineWidth=L.w;
+  const p1=P(L,ha+a),p2=P(L,ha+Math.min(a+3.4,360-gap));g.beginPath();g.moveTo(...p1);g.lineTo(...p2);g.stroke()}}
+function ctrlFor(L,p1,p2,d){const mx=(p1[0]+p2[0])/2,my=(p1[1]+p2[1])/2,k=d<=2?.55:d<=4?.25:.05;return [mix(mx,L.cx,k),mix(my,L.cy,k)]}
+function curve(L,a1,a2,prog,color,width,dash){const p1=P(L,a1),p2=P(L,a2),d=Math.round(Math.abs(((a1-a2+540)%360)-180)/30),c=ctrlFor(L,p1,p2,d);
+ g.strokeStyle=color;g.lineWidth=width;g.setLineDash(dash||[]);g.beginPath();g.moveTo(...p1);const n=24,m=Math.max(1,Math.round(n*prog));
+ for(let i=1;i<=m;i++){const u=i/n,x=(1-u)*(1-u)*p1[0]+2*u*(1-u)*c[0]+u*u*p2[0],y=(1-u)*(1-u)*p1[1]+2*u*(1-u)*c[1]+u*u*p2[1];g.lineTo(x,y)}g.stroke();g.setLineDash([])}
+function onCurve(L,a1,a2,u){const p1=P(L,a1),p2=P(L,a2),d=Math.round(Math.abs(((a1-a2+540)%360)-180)/30),c=ctrlFor(L,p1,p2,d);return [(1-u)*(1-u)*p1[0]+2*u*(1-u)*c[0]+u*u*p2[0],(1-u)*(1-u)*p1[1]+2*u*(1-u)*c[1]+u*u*p2[1]]}
+function arcSeg(L,aFrom,aTo,color,width){g.strokeStyle=color;g.lineWidth=width;g.lineCap='round';g.beginPath();const st=aFrom<aTo?3:-3;let a=aFrom;g.moveTo(...P(L,a));while((st>0&&a<aTo)||(st<0&&a>aTo)){a+=st;if((st>0&&a>aTo)||(st<0&&a<aTo))a=aTo;g.lineTo(...P(L,a))}g.stroke()}
+function text(s,x,y,size,color,weight=700,align='left'){g.font=`${weight} ${size}px "Noto Sans SC","PingFang SC",sans-serif`;g.fillStyle=color;g.textAlign=align;g.textBaseline='alphabetic';g.fillText(s,x,y)}
+function current(t){let idx=-1;for(let i=0;i<N.length;i++){if(N[i].t<=t)idx=i;else break}if(idx<0)return null;const n=N[idx];if(t>GEND[n.grp])return null;return idx}
+function keyboard(L,t,curPc){if(L.s<=0.01)return;const x=80,y=L.kbY,w=200,h=127;g.save();g.globalAlpha=clamp(L.s*1.3,0,1);
+ g.fillStyle='#F5EDD8';g.strokeStyle='#E2D5AE';g.lineWidth=2;rr(x,y,w,h,14);g.fill();g.stroke();
+ g.fillStyle='#D9CE7C';rr(x+4,y+4,w-8,40,10);g.fill();g.fillStyle='#C4B962';for(let i=0;i<46;i++)for(let j=0;j<9;j++){g.beginPath();g.arc(x+10+i*4.1,y+9+j*4,0.9,0,7);g.fill()}
+ g.fillStyle='#E9E2CF';g.fillRect(x+4,y+47,w-8,10);g.fillStyle='#CFC6AE';for(let i=0;i<7;i++){g.beginPath();g.arc(x+20+i*27,y+52,1.2,0,7);g.fill()}
+ const kw=(w-16)/8,ky=y+60;['C','D','E','F','G','A','B','C2'].forEach((k,i)=>{const pc=[0,2,4,5,7,9,11,0][i],on=curPc===pc&&(i<7);g.fillStyle=on?'#FFFFFF':'#F1E7A6';g.strokeStyle='#DCCF8A';g.lineWidth=1;rr(x+8+i*kw+1,ky+24,kw-2,38,4);g.fill();g.stroke()});
+ [0,1,3,4,5].forEach((i,j)=>{const pc=[1,3,6,8,10][j],on=curPc===pc;g.fillStyle=on?'#FFFFFF':'#EDE29A';g.strokeStyle='#DCCF8A';rr(x+8+(i+1)*kw-kw*.35,ky,kw*.7,22,3);g.fill();g.stroke()});
+ g.restore()}
+function rr(x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()}
+function ripple(L,t,cur,atHome,hp,ci){if(!cur)return;const dl=t-cur.t-LAND;if(dl<0||dl>.6)return;const q=dl/.6,p=atHome?hp:P(L,pcAng(cur.pc,t)),col=atHome?'255,197,77':'255,236,200';
+ [0,.18].forEach(d=>{const qq=clamp(q-d,0,1);if(q<d)return;g.strokeStyle=`rgba(${col},${(1-qq)*.9})`;g.lineWidth=3*(1-qq)+.6;g.beginPath();g.arc(p[0],p[1],L.ball*(1+2.3*Math.sqrt(qq)),0,7);g.stroke()})}
+function draw(t){bg();const L=layout(t),k=tonic(t),ha=homeAngle(t),ci=current(t),cur=ci!=null?N[ci]:null;
+ // glows
+ GLOW.forEach(([a,b,sz])=>{const al=win(t,a,b,.35);if(al>0){const hp=P(L,ha);if(sz>1){glowAt(L.cx,L.cy+L.r*.2,L.r*1.25,al*.95)}else glowAt(hp[0],hp[1],L.r*(.35+.6*sz),al)}});
+ ring(L,t);
+ // home halo ring
+ const hp=P(L,ha);glowAt(hp[0],hp[1],L.ball*2.6,.55);
+ // dotted lines to home 71.6..76.2
+ if(t>71.6&&t<76.3){SCALE.slice(1).forEach((iv,i)=>{const st=71.9+i*.45;if(t>st)curve(L,ha,ha-iv*30,clamp((t-st)/.4,0,1)*1,`rgba(247,238,220,${.75*win(t,st,76.2,.3)})`,1,[2,3])})}
+ // trails of the current group
+ const grp=cur?cur.grp:null;
+ if(grp){const ids=GROUPS[grp];for(let j=1;j<ids.length;j++){const a=N[ids[j-1]],b=N[ids[j]];if(b.t>t)break;if(a.pc===b.pc)continue;
+   curve(L,pcAng(a.pc,t),pcAng(b.pc,t),clamp((t-b.t)/.22,0,1),'rgba(247,238,220,.62)',1.2)}}
+ // triangle do-mi-sol
+ if(t>88.6&&t<94.9){const al=win(t,88.6,94.9,.3),c=`rgba(255,174,69,${al})`;[[0,4,88.7],[4,7,89.5],[7,0,90.4]].forEach(([p,q,s])=>{if(t>s)curve(L,pcAng(p,t),pcAng(q,t),clamp((t-s)/.4,0,1),c,1.8)})}
+ // orange arcs
+ if(t>58.4&&t<62.7){const al=win(t,58.4,62.6,.3);let A=pcAng(7,t),B=ha+11;while(A<B)A+=360;while(A-B>360)A-=360;arcSeg(L,A,B,`rgba(255,174,69,${al})`,L.w+.5)}
+ [[95.7,97.8,9,7],[98.6,100.6,5,4],[101.5,103.5,2,0]].forEach(([a,b,p,q])=>{if(t>a&&t<b){const al=win(t,a,b,.25);let A=pcAng(p,t),B=pcAng(q,t);if(q===0)B=ha-11+0;arcSeg(L,A,B,`rgba(255,174,69,${al})`,L.w+.5)}});
+ // scale nodes
+ const labelsOn=t>=29.0,nodesFilled=t>=29.0;
+ SCALE.forEach(iv=>{if(iv===0)return;const a=ha-iv*30,p=P(L,a);g.fillStyle=nodesFilled?CREAM:'#2536C2';g.strokeStyle=CREAM;g.lineWidth=1.4;g.beginPath();g.arc(p[0],p[1],nodesFilled?3.2:3.6,0,7);g.fill();g.stroke()});
+ // labels
+ const firstSeen=pc=>{const sc=GROUPS.scale.map(i=>N[i]);const n=sc.find(n=>n.pc===pc);return n?n.t:29};
+ if(labelsOn){SCALE.forEach(iv=>{const pc=(k+iv)%12;if(t<35&&t<firstSeen(pc)-.05)return;const a=ha-iv*30,isCur=cur&&cur.pc===pc&&t-cur.t<GEND[cur.grp],big=isCur&&pc!==k;
+   const rr2=L.r+(iv===0?24:19)+(big?5:0),p=P(L,a,rr2),homeGlow=GLOW.some(([s,e,z])=>t>s&&t<e&&z>=.5);
+   let col=big?'#FFE3B0':CREAM;if(iv===0&&homeGlow)col=NAVY;text(SOLF[iv],p[0],p[1]+5,big?L.lab*1.45:(iv===0&&homeGlow?L.lab*1.25:L.lab),col,700,'center');
+   if(iv===0&&t>44.6&&t<76.3)text('home',p[0],p[1]+5+L.lab*1.2,L.lab,homeGlow?NAVY:CREAM,700,'center')})}
+ // home marker
+ const atHome=cur&&cur.pc===k&&!(t-cur.t<LAND&&ci>0&&N[ci-1].grp===cur.grp&&N[ci-1].pc!==k),homeGold=atHome||(t>32.43&&!cur&&t<152.2&&t>29)||(t>21.885&&t<23.6);
+ if(homeGold){g.fillStyle=GOLD;g.beginPath();g.arc(hp[0],hp[1],L.ball*.95,0,7);g.fill()}else{g.strokeStyle='#F7C7D9';g.lineWidth=2;g.fillStyle='rgba(240,103,154,.25)';g.beginPath();g.arc(hp[0],hp[1],L.ball*.78,0,7);g.fill();g.stroke()}
+ // ball
+ if(cur&&!atHome){const prev=ci>0&&N[ci-1].grp===cur.grp?N[ci-1]:null,u=prev?sm((t-cur.t)/.16):1;let p;
+  if(prev&&u<1&&prev.pc!==cur.pc)p=onCurve(L,pcAng(prev.pc,t),pcAng(cur.pc,t),u);else p=P(L,pcAng(cur.pc,t));
+  const dl=t-cur.t-LAND,pu=dl>0?1+.5*Math.exp(-dl/.16):1;glowAt(p[0],p[1],L.ball*3.2*pu,dl>0?.45+.4*Math.exp(-dl/.3):.4);g.fillStyle=CREAM;g.beginPath();g.arc(p[0],p[1],L.ball*pu,0,7);g.fill()}
+ ripple(L,t,cur,atHome,hp,ci);
+ // question mark, center titles
+ const q=win(t,6.6,7.8,.2)+win(t,14.4,16.0,.25);if(q>0){g.globalAlpha=Math.min(q,1);if(t<8){curve(L,pcAng(11,t),ha,1,'rgba(247,238,220,.6)',1.2)}else{const a=P(L,pcAng(3,t));g.strokeStyle='rgba(247,238,220,.6)';g.lineWidth=1.2;g.beginPath();g.moveTo(...a);g.lineTo(...hp);g.stroke()}text('?',L.cx,L.cy+28,84,CREAM,900,'center');g.globalAlpha=1}
+ if(t>16&&t<19.2){const a=P(L,pcAng(3,t));g.fillStyle=CREAM;g.beginPath();g.arc(a[0],a[1],L.ball,0,7);g.fill();g.strokeStyle='rgba(247,238,220,.6)';g.lineWidth=1.2;g.beginPath();g.moveTo(...a);g.lineTo(...hp);g.stroke()}
+ const ct=win(t,0,6.6,.2)?'Twinkle, Twinkle':(win(t,8.0,14.4,.2)||win(t,19.2,23.6,.2))?'Ode to Joy':'';const ca=Math.max(win(t,0,6.6,.2),win(t,8.0,14.4,.2),win(t,19.2,23.6,.2));if(ct){g.globalAlpha=ca;text(ct,L.cx,L.cy+7,18,CREAM,500,'center');g.globalAlpha=1}
+ // keyboard + jianpu
+ keyboard(L,t,cur&&L.s>.5?cur.pc:(t>120.4&&t<123.6?0:null));
+ if(t>123.7&&t<134.5){const al=win(t,123.7,134.4,.3);g.globalAlpha=al;const y=L.kbY-8;['do','re','mi','fa','sol','la','si','do'].forEach((s,i)=>{const x=96+i*24,pc=[0,2,4,5,7,9,11,12][i]%12,on=cur&&cur.pc===pc&&i<7||(i===0&&t<126.3);
+   text(s,x,y-14,8,on?'#FFE3B0':CREAM,500,'center');text(String([1,2,3,4,5,6,7,1][i]),x,y,13,on?ORANGE:CREAM,700,'center')});g.globalAlpha=1}
+ // captions
+ g.textAlign='left';CAP.forEach(([a,b,s,st])=>{const al=win(t,a,b,.22);if(al<=0)return;g.globalAlpha=al;const size=st==='big'?40:23,lh=size*1.36;s.split('\n').forEach((ln,i)=>text(ln,22,(st==='big'?92:74)+i*lh,size,'#FFFFFF',st==='big'?900:700));g.globalAlpha=1});
+ if(t>44.6&&t<47.7){g.globalAlpha=win(t,44.6,47.7,.2)*.7;text('Bigand and Poulin-Charronnat, Cognition 2006: the sense of',22,126,8,CREAM,400);text('finished and unfinished is learned by listening (Western listeners)',22,137,8,CREAM,400);g.globalAlpha=1}
+ // progressive note-name captions
+ function solfLine(grp,start,end,brk){if(t<start||t>end)return;const ns=GROUPS[grp].map(i=>N[i]).filter(n=>n.t<=t+.02);if(!ns.length)return;const names=ns.map(n=>SOLF[(n.pc-tonic(t)+12)%12]);
+  const l1=names.slice(0,brk),l2=names.slice(brk),al=win(t,start,end,.2);g.globalAlpha=al;g.font='700 26px "Noto Sans SC",sans-serif';
+  const last=ns.length===GROUPS[grp].length&&ns[ns.length-1].pc===tonic(t);
+  [l1,l2].forEach((L2,li)=>{if(!L2.length)return;let x=22;L2.forEach((w,wi)=>{const isLast=last&&li===(l2.length?1:0)&&wi===L2.length-1;text(w,x,74+li*34,26,isLast?ORANGE:'#FFFFFF',700);g.font='700 26px "Noto Sans SC",sans-serif';x+=g.measureText(w+' ').width})});g.globalAlpha=1}
+ solfLine('scale',29.4,35.7,4);solfLine('twK',79.4,87.7,7);
+ if(t>151.2)text('Designed by LAVA MUSIC',L.cx,L.cy+L.r+46,9,'rgba(247,238,220,.7)',500,'center')}
+// ---------- audio ----------
+let ctx=null,master=null;
+function A(){if(!ctx){ctx=new (window.AudioContext||window.webkitAudioContext)()}if(ctx.state==='suspended')ctx.resume();return ctx}
+function newMaster(){if(master){const m=master;try{m.gain.setTargetAtTime(0,ctx.currentTime,.02)}catch(e){}setTimeout(()=>m.disconnect(),200)}master=ctx.createGain();master.gain.value=.55;const c=ctx.createDynamicsCompressor();master.connect(c);c.connect(ctx.destination)}
+function pluck(m,at,dur=.9,vol=.3){const f=440*Math.pow(2,(m-69)/12),gn=ctx.createGain();gn.connect(master);gn.gain.setValueAtTime(0,at);gn.gain.linearRampToValueAtTime(vol,at+.006);gn.gain.exponentialRampToValueAtTime(vol*.3,at+.3);gn.gain.exponentialRampToValueAtTime(.0005,at+dur+.8);
+ [[1,1],[2,.45],[3,.18],[4,.09],[6,.03]].forEach(([k,a])=>{const o=ctx.createOscillator();o.frequency.value=f*k*Math.sqrt(1+.00015*k*k);const ga=ctx.createGain();ga.gain.value=a;o.connect(ga);ga.connect(gn);o.start(at);o.stop(at+dur+.9)})}
+// ---------- player ----------
+let nbuf=null;const NARR='';
+const END=152.1,LAND=.12; // sound when the ball lands
+const lat=()=>(ctx&&(ctx.outputLatency||ctx.baseLatency))||0;let playing=false,off=0,tNow=0,raf=0,spoken=new Set();
+const pp=document.getElementById('pp'),seek=document.getElementById('seek'),tm=document.getElementById('tm'),big=document.getElementById('big'),voice=document.getElementById('voice'),sfx=document.getElementById('sfx');
+const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
+function schedule(from){newMaster();const base=ctx.currentTime-from;if(voice.checked&&nbuf&&from<nbuf.duration){const src=ctx.createBufferSource();src.buffer=nbuf;const ng=ctx.createGain();ng.gain.value=1.5;src.connect(ng);ng.connect(master);src.start(ctx.currentTime+.02,from+.02)}if(!sfx.checked)return;N.forEach((n,i)=>{if(n.t>=from-.01){const next=N[i+1],d=next&&next.grp===n.grp?Math.min(next.t-n.t,1.4):1.4;pluck(n.m,base+n.t+LAND,d)}})}
+function say(t){if(!voice.checked||!('speechSynthesis' in window))return;Object.keys(SPEAK).forEach(k=>{const kt=+k;if(t>=kt&&t<kt+.5&&!spoken.has(k)){spoken.add(k);try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(SPEAK[k]);u.lang='en-US';u.rate=1.05;const vs=speechSynthesis.getVoices();const v=vs.find(v=>/en[-_]US/i.test(v.lang)&&/Samantha|Google US|Aria|Jenny|Natural/i.test(v.name))||vs.find(v=>/en[-_]US/i.test(v.lang));if(v)u.voice=v;speechSynthesis.speak(u)}catch(e){}}})}
+function frame(){if(playing){tNow=Math.max(0,ctx.currentTime-off-lat());if(tNow>=END){tNow=END;stop()}say(tNow)}draw(tNow);seek.value=tNow;tm.textContent=fmt(tNow)+' / 2:32';if(playing)raf=requestAnimationFrame(frame)}
+async function play(){A();if(!nbuf){try{const bin=Uint8Array.from(atob(NARR),c=>c.charCodeAt(0));nbuf=await ctx.decodeAudioData(bin.buffer)}catch(e){nbuf=null}}if(tNow>=END)tNow=0;off=ctx.currentTime-tNow;spoken=new Set(Object.keys(SPEAK).filter(k=>+k<tNow-.05));schedule(tNow);playing=true;pp.textContent='❚❚';pp.setAttribute('aria-label','Pause');big.hidden=true;cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}
+function stop(){playing=false;pp.textContent='▶';pp.setAttribute('aria-label','Play');if(ctx)newMaster();try{speechSynthesis.cancel()}catch(e){}big.hidden=false}
+pp.onclick=()=>playing?stop():play();document.getElementById('stage').onclick=()=>playing?stop():play();
+seek.oninput=()=>{tNow=+seek.value;if(playing){off=ctx.currentTime-tNow;spoken=new Set(Object.keys(SPEAK).filter(k=>+k<tNow-.05));try{speechSynthesis.cancel()}catch(e){}schedule(tNow)}draw(tNow);tm.textContent=fmt(tNow)+' / 2:32'};
+sfx.onchange=voice.onchange=()=>{if(playing)schedule(tNow)};
+function fit(){const r=cv.getBoundingClientRect(),d=Math.min(3,window.devicePixelRatio||1);cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);g.setTransform(cv.width/W,0,0,cv.height/H,0,0);draw(tNow)}
+addEventListener('resize',fit);(document.fonts?document.fonts.ready:Promise.resolve()).then(fit);fit();
+window.__seek=t=>{tNow=t;draw(t)};
+</script>

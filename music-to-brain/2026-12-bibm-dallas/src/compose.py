@@ -285,11 +285,17 @@ S.append(pick('The brain is read as a graph, too', 2))
 S.append(landmark(3, 'model', 'Part 3. Model: what does the listening brain expect?',
     'Read works. To ' + kw('set') + ' music for a brain, we first need to predict the brain from the music.',
     'Landmark. We are at Model, the top arrow. The thread of this part: the brain predicts the next note, the prediction is a small graph of notes, music generators learn that graph, and we can watch it live.'))
+_ff = '<iframe class="fe-frame" data-src="figs/far-from-home-en.html" width="272" height="515" style="border:0;display:block;margin:0 auto;width:272px;height:515px" title="How far from home"></iframe>'
 S.append(sec(3, 'Listeners do not hear which note it is. They hear how far it is from home.',
-    '<iframe class="fe-frame" data-src="figs/home-demo.html" width="1120" height="470" style="border:0;display:block;margin:0 auto;background:#FBFAF7" title="How far from home"></iframe>'
-    + keybox('Music runs on ' + kw('expectation') + ': every note is heard against where home is.', None, '.2em'),
-    ref(a('Bigand and Poulin-Charronnat, Cognition 2006', 'https://doi.org/10.1016/j.cognition.2005.11.007'), 'After the Pocket Music lesson, how far from home'),
-    'Live demo, five clicks, the room does it with its ears. One: Twinkle, Twinkle stops on si, everyone hears it is wrong. Two: the same tune with three endings, si one step short, sol halfway, do home. People who play by ear do not memorize notes, they hear how far each note is from home. Three: do, mi and sol stand, the others lean, la to sol, fa to mi, re to do. Four: the whole tune is a trip, out from home, up to sol, and back one step at a time. Five: Ode to Joy, the room sings the last note, then click to check, it is do. Bigand and Poulin-Charronnat 2006: this sense of finished and unfinished is learned by listening. Meyer 1956: emotion in music lives in expectations delayed or broken. The next slides show the brain measures it, and the live EEG demo is the same pull in data. Adapted from Zhiqian\'s far from home page (knowledge base, life/music), itself after the Pocket Music video by LAVA MUSIC.'))
+    two(_ff,
+        line('Twinkle, Twinkle, Little Star, one tune, three endings:', 22, INK, 0)
+        + line('Stop on <b>si</b>: one step short, it hangs in the air.', 21, MUT, 14)
+        + line('Stop on <b>sol</b>: halfway home, it wants to go on.', 21, MUT, 8)
+        + line('Back to <b>do</b>: home, finished.', 21, MUT, 8)
+        + line('Do, mi and sol stand. Every other note leans toward one of them. People who play by ear track this pull, and it is learned just by listening.', 20, INK, 22)
+        + keybox('Music runs on ' + kw('expectation') + ': every note is heard against where home is.', None, '1em'), lw=272),
+    ref(a('Bigand and Poulin-Charronnat, Cognition 2006', 'https://doi.org/10.1016/j.cognition.2005.11.007'), 'After the Pocket Music lesson, how far from home (LAVA MUSIC)'),
+    'Live demo, two and a half minutes, press play on the left and let it run, or drag to the three endings at about 0:48. It asks the room what sounds wrong, finds home, changes the ending of Twinkle, Twinkle three ways, shows that do, mi and sol stand while la, fa and re lean back, and ends with Ode to Joy where the room sings the last note. Voice is read by the browser, check the English voice on the presentation laptop, or untick Voice and narrate it yourself. Bigand and Poulin-Charronnat 2006: this sense of finished and unfinished is learned by listening. Meyer 1956: emotion in music lives in expectations delayed or broken. The next slides show the brain measures it, and the live EEG demo is the same pull in data. English version of Zhiqian\'s far from home page (knowledge base, life/music), after the Pocket Music video by LAVA MUSIC.'))
 eran = OLDS and [t for t in OLDS if title(t).startswith('Change one chord')][0]
 eran_svg = padvb(re.search(r'<svg class="fig".*?</svg>', eran, re.S).group(0))
 S.append(sec(3, 'Change one chord, and the brain flags it within 200 ms, trained or not',
