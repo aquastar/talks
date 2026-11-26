@@ -101,6 +101,8 @@ def oldk(start, ch):
         return f'<button class="playclip" data-clip="ok{_n[0]}" data-audio="{m.group(1)}" style="min-width:90px;height:36px;border-radius:3px;border:2px solid {MUT};background:#fff;color:{MUT};font:600 15px et-book,sans-serif;cursor:pointer;margin-right:8px">&#9654; play</button>'
     t = re.sub(r'<button class="play" data-audio="([^"]+)">play</button>', _btn, t)
     t = t.replace('class="embed" data-src=', 'class="fe-frame" data-src=')
+    for c0, c1 in (('#7D55C7', SLATE), ('#7d55c7', SLATE), ('#DCD1EB', '#E4E7E9'), ('#dcd1eb', '#E4E7E9'), ('#009CBD', SLATE)):
+        t = t.replace(c0, c1)
     # move a status label out of the h2, wrap the body so it fits the 660 px slide
     st = re.search(r'\s*(<span class="status[^"]*">[^<]*</span>)', t[:t.find('</h2>') + 5])
     if st:
@@ -112,7 +114,8 @@ def oldk(start, ch):
     cut = min(x for x in (r_at, a_at, t.rfind('</section>')) if x > 0)
     return t[:h_end] + '\n  <div class="ksw">' + t[h_end:cut] + '</div>\n  ' + t[cut:]
 def colk(start, ch, add=''):
-    return pick(start, ch, add)
+    x = pick(start, ch, add)
+    return re.sub(r'(<span class="status [^"]*">)Backup, ', r'\1', x)
 
 # ---------- the slides ----------
 S = []
@@ -302,6 +305,7 @@ S.append(f'''<section data-ch="5">
 </section>''')
 
 body = '\n\n'.join(S)
+body = body.replace('class="status progress"', 'class="status prog"').replace('#7D55C7', SLATE)
 head = head.replace('</head>', '<style>.reveal .status.prog{background:#F76902}\n' + '\n'.join(KSCSS) + '</style>\n</head>', 1)
 html = head + '\n\n' + body + '\n\n</div></div>\n' + tail
 _txt = re.sub(r'&[#a-z0-9]+;', '', re.sub(r'<[^>]+>', ' ', re.sub(r'<(script|style)[^>]*>.*?</\1>', '', body, flags=re.S)))
