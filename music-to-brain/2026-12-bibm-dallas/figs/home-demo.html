@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How far from home</title>
+<style>
+@font-face{font-family:"et-book";src:url(fonts/etbook-roman-lf.woff) format("woff")}
+:root{--bg:#FBFAF7;--ink:#1F1E1B;--mut:#5F5D50;--line:#D7D2CB;--tint:#F1EDE7;--acc:#F76902;--acct:#C45200;--slate:#4C5B66}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:et-book,Georgia,serif}
+.wrap{padding:10px 18px}
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+button{font:600 15px et-book,Georgia,serif;height:38px;padding:0 16px;border-radius:3px;border:2px solid var(--mut);background:#fff;color:var(--mut);cursor:pointer}
+button.on{border-color:var(--acc);color:var(--acct)}
+.lab{font-size:17px;color:var(--mut);margin-left:8px}
+svg{display:block;width:100%;height:auto}
+</style></head><body><div class="wrap">
+<div class="bar">
+  <button data-v="home" class="on">&#9654; Ends on do</button>
+  <button data-v="away">&#9654; Stops on sol</button>
+  <button data-v="lost">&#9654; Stops on si</button>
+  <span class="lab" id="lab">Twinkle, Twinkle, Little Star. Click an ending.</span>
+</div>
+<svg id="fig" viewBox="0 0 1100 400" aria-label="Distance from the home note, one bar per note"></svg>
+</div>
+<script>
+// Krumhansl and Kessler (1982) major key probe tone ratings, C = home. Distance = how much less stable than home, 0 to 1.
+var KK=[6.35,2.23,3.48,2.33,4.38,4.09,2.52,5.19,2.39,3.66,2.29,2.88];
+function dist(m){var r=KK[((m%12)+12)%12];return (6.35-r)/(6.35-2.23);}
+var NM=['C','C#','D','Eb','E','F','F#','G','Ab','A','Bb','B'];
+var C=60,D=62,E=64,F=65,G=67,A=69,B=59+12;
+var line1=[C,C,G,G,A,A,G, F,F,E,E,D,D,C], line2=[G,G,F,F,E,E,D, G,G,F,F,E,E,D];
+var tw=line1.concat(line2,line1), durs=tw.map(function(m,i){return (i%7===6)?2:1;});
+function ending(m){var n=tw.slice();n[n.length-1]=m;return n;}
+var V={home:{n:ending(C),t:'Ends on do, the home note. It feels finished.'},
+       away:{n:ending(G),t:'Stops on sol. Halfway home, it wants to go on.'},
+       lost:{n:ending(B),t:'Stops on si, one step short of home. It hangs in the air.'}};
+var SOL=['do','di','re','ri','mi','fa','fi','sol','le','la','te','si'];
+var svg=document.getElementById('fig'),lab=document.getElementById('lab'),cur='home',timer=[],actx=null,oscs=[];
+function draw(k,upto){
+  var n=V[k].n,w=1100,x0=70,x1=1080,y0=40,y1=320,bw=(x1-x0)/n.length,h='';
+  h+='<line x1="'+x0+'" y1="'+y1+'" x2="'+x1+'" y2="'+y1+'" stroke="#ACA39A" stroke-width="1.5"/>';
+  h+='<text x="'+(x0-10)+'" y="'+(y1+5)+'" font-size="18" fill="#5F5D50" text-anchor="end">home</text>';
+  h+='<text x="'+(x0-10)+'" y="'+(y0+10)+'" font-size="18" fill="#5F5D50" text-anchor="end">far</text>';
+  for(var i=0;i<n.length;i++){var d=dist(n[i]),bh=Math.max(4,d*(y1-y0)),x=x0+i*bw+3,col=i>upto?'#E4E0D9':(i===upto?'#F76902':'#4C5B66');
+    h+='<rect x="'+x+'" y="'+(y1-bh)+'" width="'+(bw-6)+'" height="'+bh+'" rx="2" fill="'+col+'"/>';
+    h+='<text x="'+(x+(bw-6)/2)+'" y="'+(y1+24)+'" font-size="15" fill="'+(i===upto?'#C45200':'#5F5D50')+'" text-anchor="middle">'+SOL[n[i]%12]+'</text>';}
+  var last=n[n.length-1],dl=dist(last);
+  h+='<text x="'+x0+'" y="378" font-size="20" fill="#1F1E1B">Last note: '+NM[last%12]+', '+(dl<0.05?'home':(dl<0.6?'near home':'far from home'))+'</text>';
+  h+='<text x="'+x1+'" y="378" font-size="15" fill="#5F5D50" text-anchor="end">bar height: how unstable the note is in C (Krumhansl and Kessler 1982)</text>';
+  svg.innerHTML=h;}
+function stop(){timer.forEach(clearTimeout);timer=[];oscs.forEach(function(o){try{o.stop();}catch(e){}});oscs=[];}
+function play(k){stop();cur=k;lab.textContent=V[k].t;
+  document.querySelectorAll('button').forEach(function(b){b.classList.toggle('on',b.dataset.v===k);});
+  actx=actx||new (window.AudioContext||window.webkitAudioContext)();actx.resume();
+  var n=V[k].n,beat=0.36,t=actx.currentTime+0.08,acc=0;draw(k,-1);
+  n.forEach(function(m,i){var d=durs[i]*beat,o=actx.createOscillator(),g=actx.createGain();
+    o.type='triangle';o.frequency.value=440*Math.pow(2,(m-69)/12);
+    g.gain.setValueAtTime(0.0001,t+acc);g.gain.exponentialRampToValueAtTime(0.25,t+acc+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+acc+d*0.95);
+    o.connect(g);g.connect(actx.destination);o.start(t+acc);o.stop(t+acc+d);oscs.push(o);
+    timer.push(setTimeout(function(){draw(k,i);},(acc+0.08)*1000));acc+=d;});
+  timer.push(setTimeout(function(){draw(k,n.length);},(acc+0.3)*1000));}
+document.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){play(b.dataset.v);});});
+window.addEventListener('message',function(e){if(e.data==='fe-stop')stop();});
+draw('home',99);
+</script></body></html>
