@@ -134,17 +134,17 @@ def mapfig(active=None, notes3=False):
     g = ''
     g += f'<rect x="90" y="110" width="250" height="150" rx="6" fill="{TINT}"/>' + T(215, 170, 'Music', 26, INK, 'middle') + T(215, 205, 'notes, sound, a song', 18, MUT, 'middle')
     g += f'<g transform="translate(640,92) scale(.29)">{BRAIN}</g>' + T(770, 300, 'Brain', 26, INK, 'middle') + T(770, 326, 'EEG, MEG, fMRI, ECoG', 18, MUT, 'middle')
-    g += f'<path d="M340,150 C470,60 560,60 650,130" fill="none" stroke="{c("model")}" stroke-width="3" marker-end="url(#{m("model")})"/>' + T(495, 72, 'Model', 22, c('model'), 'middle', 600) + T(495, 96, 'predict the brain from the music', 17, MUT, 'middle')
+    g += f'<path d="M340,165 C470,105 560,105 650,145" fill="none" stroke="{c("model")}" stroke-width="3" marker-end="url(#{m("model")})"/>' + T(495, 72, 'Model', 22, c('model'), 'middle', 600) + T(495, 96, 'predict the brain from the music', 17, MUT, 'middle')
     g += f'<path d="M660,270 C560,340 450,340 340,240" fill="none" stroke="{c("read")}" stroke-width="3" marker-end="url(#{m("read")})"/>' + T(500, 352, 'Read', 22, c('read'), 'middle', 600) + T(500, 376, 'decode the music from the brain', 17, MUT, 'middle')
     wc = c('write'); dash = '' if active == 'write' else ' stroke-dasharray="7 6"'
     g += f'<circle cx="215" cy="62" r="26" fill="#fff" stroke="{wc}" stroke-width="3"{dash}/><line x1="215" y1="62" x2="232" y2="44" stroke="{wc}" stroke-width="3"/>'
     g += f'<path d="M246,56 C320,20 600,10 690,95" fill="none" stroke="{wc}" stroke-width="2.5"{dash} marker-start="url(#{m("write")})"/>'
     g += T(60, 40, 'Write', 22, wc, 'start', 600) + T(60, 64, 'set the dial for a', 17, MUT) + T(60, 86, 'brain response', 17, MUT)
     if notes3:
-        g += f'<g class="fragment" data-fragment-index="1">{T(910, 150, "1. Sound moves the brain,", 19, INK)}{T(910, 174, "but the music was never set", 19, MUT)}</g>'
-        g += f'<g class="fragment" data-fragment-index="2">{T(910, 220, "2. A small graph of notes", 19, INK)}{T(910, 244, "tracks the listening brain", 19, MUT)}</g>'
-        g += f'<g class="fragment" data-fragment-index="3">{T(910, 290, "3. A dial, and the brain", 19, INK)}{T(910, 314, "as the judge", 19, MUT)}</g>'
-    return svgfig(1180 if notes3 else 1000, 400, g, 1100 if notes3 else 900)
+        g += f'<g class="fragment" data-fragment-index="1">{T(965, 150, "1. Sound moves the brain,", 19, INK)}{T(965, 174, "but the music was never set", 19, MUT)}</g>'
+        g += f'<g class="fragment" data-fragment-index="2">{T(965, 220, "2. A small graph of notes", 19, INK)}{T(965, 244, "tracks the listening brain", 19, MUT)}</g>'
+        g += f'<g class="fragment" data-fragment-index="3">{T(965, 290, "3. A dial, and the brain", 19, INK)}{T(965, 314, "as the judge", 19, MUT)}</g>'
+    return svgfig(1240 if notes3 else 1000, 400, g, 1120 if notes3 else 900)
 def hbars(rows, maxv, w=620, lab_w=330, bh=34, gap=16, unit='', top=10, chance=None, size=19):
     """rows: (label, value, highlight, value text)"""
     g = ''; y = top
