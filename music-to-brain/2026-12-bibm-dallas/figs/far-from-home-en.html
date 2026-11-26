@@ -75,7 +75,7 @@ const SPEAK={"16.0": "You never studied music theory. How do you know it is wron
 const GLOW=[[21.8,23.6,.55],[32.43,35.8,.5],[35.9,40.4,.95],[40.4,48,.45],[64.8,65.9,.5],[65.9,68.0,.95],[68.0,71.5,.45],[86.0,87.8,.7],[101.5,103.4,.5],[113.5,115.2,.75],[123.7,125.6,.6],[146.5,148.2,.75],[148.2,152.2,1.6]];
 // ---------- geometry ----------
 function layout(t){const s=t<76.3?0:t<77.8?sm((t-76.3)/1.5):t<134.6?1:t<136.0?1-sm((t-134.6)/1.4):0;
- return {s,cx:330,cy:190,r:mix(158,150,s),w:mix(10,9,s),ball:mix(21,19,s),lab:mix(26,24,s),kbY:mix(520,226,s)}}
+ return {s,cx:330,cy:190,r:mix(158,150,s),w:mix(10,9,s),ball:mix(21,19,s),lab:mix(26,24,s),kbY:mix(520,272,s)}}
 function homeAngle(t){const a0=-90,a1=0;return a0;if(t<7.6)return a0;if(t<8.1)return mix(a0,a1,sm((t-7.6)/.5));if(t<23.6)return a1;if(t<24.2)return mix(a1,a0+360,sm((t-23.6)/.6))-360;return a0}
 const pcAng=(pc,t)=>{const k=tonic(t),ha=homeAngle(t);return ha-((pc-k+12)%12)*30};
 const P=(L,ang,rr)=>[L.cx+(rr??L.r)*Math.cos(ang*Math.PI/180),L.cy-(rr??L.r)*Math.sin(ang*Math.PI/180)];
@@ -93,12 +93,13 @@ function onCurve(L,a1,a2,u){const p1=P(L,a1),p2=P(L,a2),d=Math.round(Math.abs(((
 function arcSeg(L,aFrom,aTo,color,width){g.strokeStyle=color;g.lineWidth=width;g.lineCap='round';g.beginPath();const st=aFrom<aTo?3:-3;let a=aFrom;g.moveTo(...P(L,a));while((st>0&&a<aTo)||(st<0&&a>aTo)){a+=st;if((st>0&&a>aTo)||(st<0&&a<aTo))a=aTo;g.lineTo(...P(L,a))}g.stroke()}
 function text(s,x,y,size,color,weight=700,align='left'){g.font=`${Math.min(weight,800)} ${size}px "et-book",Georgia,serif`;g.fillStyle=color;g.textAlign=align;g.textBaseline='alphabetic';g.fillText(s,x,y)}
 function current(t){let idx=-1;for(let i=0;i<N.length;i++){if(N[i].t<=t)idx=i;else break}if(idx<0)return null;const n=N[idx];if(t>GEND[n.grp])return null;return idx}
-function keyboard(L,t,curPc){if(L.s<=0.01)return;const x=KBX,y=L.kbY,w=300,h=150;g.save();g.globalAlpha=clamp(L.s*1.3,0,1);
- g.fillStyle='#F5EDD8';g.strokeStyle='#E2D5AE';g.lineWidth=2;rr(x,y,w,h,14);g.fill();g.stroke();
- g.fillStyle='#D9CE7C';rr(x+4,y+4,w-8,40,10);g.fill();g.fillStyle='#C4B962';for(let i=0;i<46;i++)for(let j=0;j<9;j++){g.beginPath();g.arc(x+10+i*4.1,y+9+j*4,0.9,0,7);g.fill()}
- g.fillStyle='#E9E2CF';g.fillRect(x+4,y+47,w-8,10);g.fillStyle='#CFC6AE';for(let i=0;i<7;i++){g.beginPath();g.arc(x+20+i*27,y+52,1.2,0,7);g.fill()}
- const kw=(w-16)/8,ky=y+60;['C','D','E','F','G','A','B','C2'].forEach((k,i)=>{const pc=[0,2,4,5,7,9,11,0][i],on=curPc===pc&&(i<7);g.fillStyle=on?'#FFFFFF':'#F1E7A6';g.strokeStyle='#DCCF8A';g.lineWidth=1;rr(x+8+i*kw+1,ky+24,kw-2,38,4);g.fill();g.stroke()});
- [0,1,3,4,5].forEach((i,j)=>{const pc=[1,3,6,8,10][j],on=curPc===pc;g.fillStyle=on?'#FFFFFF':'#EDE29A';g.strokeStyle='#DCCF8A';rr(x+8+(i+1)*kw-kw*.35,ky,kw*.7,22,3);g.fill();g.stroke()});
+function keyboard(L,t,curPc){if(L.s<=0.01)return;const x=KBX,y=L.kbY,ww=40,w=ww*8,h=122,bw=24,bh=76;g.save();g.globalAlpha=clamp(L.s*1.3,0,1);
+ g.fillStyle='rgba(31,30,27,.10)';rr(x+3,y+5,w,h,6);g.fill();
+ g.fillStyle='#2B2926';rr(x-4,y-5,w+8,7,2);g.fill();
+ [0,2,4,5,7,9,11,12].forEach((pc,i)=>{const on=curPc!=null&&curPc===pc%12&&i<7,kx=x+i*ww;g.fillStyle=on?'#FAD6BA':'#FFFFFF';g.strokeStyle='#8C857B';g.lineWidth=1.2;rr(kx,y,ww,h,5);g.fill();g.stroke();
+  if(on){g.fillStyle='#F76902';rr(kx+5,y+h-14,ww-10,8,3);g.fill()}});
+ [[0,1],[1,3],[3,6],[4,8],[5,10]].forEach(([i,pc])=>{const on=curPc===pc,kx=x+(i+1)*ww-bw/2;g.fillStyle=on?'#F76902':'#1F1E1B';rr(kx,y,bw,bh,3);g.fill();
+  if(!on){g.fillStyle='rgba(255,255,255,.18)';rr(kx+4,y+4,bw-8,bh-18,2);g.fill()}});
  g.restore()}
 function rr(x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()}
 function ripple(L,t,cur,atHome,hp,ci){if(!cur)return;const dl=t-cur.t-LAND;if(dl<0||dl>.6)return;const q=dl/.6,p=atHome?hp:P(L,pcAng(cur.pc,t)),col=atHome?'247,105,2':(ODD?'218,41,28':'224,134,58');
@@ -145,7 +146,7 @@ var ODD=false;function draw(t){bg();const L=layout(t),k=tonic(t),ha=homeAngle(t)
  const ct=win(t,0,6.6,.2)?'Twinkle, Twinkle':(win(t,8.0,14.4,.2)||win(t,19.2,23.6,.2))?'Ode to Joy':'';const ca=Math.max(win(t,0,6.6,.2),win(t,8.0,14.4,.2),win(t,19.2,23.6,.2));if(ct){g.globalAlpha=ca;text(ct,L.cx,L.cy+7,18,CREAM,500,'center');g.globalAlpha=1}
  // keyboard + jianpu
  keyboard(L,t,cur&&L.s>.5?cur.pc:(t>120.4&&t<123.6?0:null));
- if(t>123.7&&t<134.5){const al=win(t,123.7,134.4,.3);g.globalAlpha=al;const y=L.kbY-8;['do','re','mi','fa','sol','la','si','do'].forEach((s,i)=>{const x=KBX+22+i*36,pc=[0,2,4,5,7,9,11,12][i]%12,on=cur&&cur.pc===pc&&i<7||(i===0&&t<126.3);
+ if(t>123.7&&t<134.5){const al=win(t,123.7,134.4,.3);g.globalAlpha=al;const y=L.kbY-14;['do','re','mi','fa','sol','la','si','do'].forEach((s,i)=>{const x=KBX+20+i*40,pc=[0,2,4,5,7,9,11,12][i]%12,on=cur&&cur.pc===pc&&i<7||(i===0&&t<126.3);
    text(s,x,y-18,14,on?'#C45200':CREAM,500,'center');text(String([1,2,3,4,5,6,7,1][i]),x,y,20,on?ORANGE:CREAM,700,'center')});g.globalAlpha=1}
  // captions
  g.textAlign='left';
