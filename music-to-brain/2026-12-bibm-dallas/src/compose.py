@@ -422,6 +422,9 @@ S.append(f'''<section data-ch="5">
 </section>''')
 
 
+import hashlib
+def _ver(f): return hashlib.md5(open(os.path.join(DECK, 'figs', f), 'rb').read()).hexdigest()[:8]
+S = [x.replace('data-src="figs/far-from-home-en.html"', 'data-src="figs/far-from-home-en.html?v=' + _ver('far-from-home-en.html') + '"').replace('data-src="figs/fe-chain.html?autoplay=1"', 'data-src="figs/fe-chain.html?autoplay=1&v=' + _ver('fe-chain.html') + '"') for x in S]
 body = '\n\n'.join(S)
 body = body.replace('<section data-ch="3">\n  <h2>Listeners do not hear which note it is.', '<section data-ch="3" data-background-color="#F4F0EA">\n  <h2>Listeners do not hear which note it is.', 1)
 body = body.replace('class="status progress"', 'class="status prog"').replace('#7D55C7', SLATE)
