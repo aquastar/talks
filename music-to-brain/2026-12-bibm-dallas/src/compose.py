@@ -90,6 +90,11 @@ for rule in re.findall(r'\.reveal [^{]+\{[^}]*\}', _css):
     sel = rule[:rule.index('{')]
     if any(k in sel for k in _keep) and 'section.cover' not in sel and '.forecast' not in sel:
         KSCSS.append(re.sub(r'\.reveal ', '.reveal section.ks ', rule))
+def padvb(t, d=22):
+    def f(m):
+        a, b, w, h = [float(v) for v in m.group(1).split()]
+        return f'<svg class="fig" viewBox="{a - d:g} {b - d:g} {w + 2 * d:g} {h + 2 * d:g}"'
+    return re.sub(r'<svg class="fig[^"]*" viewBox="([^"]+)"', f, t)
 _n = [0]
 def oldk(start, ch):
     t = [x for x in OLDS if title(x).startswith(start)][0]
@@ -112,6 +117,7 @@ def oldk(start, ch):
     if st: h_end = t.find(st.group(1)) + len(st.group(1))
     r_at = t.find('<div class="ref">'); a_at = t.find('<aside')
     cut = min(x for x in (r_at, a_at, t.rfind('</section>')) if x > 0)
+    t = padvb(t)
     return t[:h_end] + '\n  <div class="ksw">' + t[h_end:cut] + '</div>\n  ' + t[cut:]
 def colk(start, ch, add=''):
     x = pick(start, ch, add)
@@ -279,7 +285,7 @@ S.append(colk('The longest memory sounds most like the style', 3))
 S.append(pick('A note transition graph predicts the listening brain', 3))
 old = OLDS
 kern = [t for t in old if title(t).startswith('Past about eight notes')][0]
-kern_svg = re.search(r'<svg class="fig".*?</svg>', kern, re.S).group(0).replace('style="width:1000px"', 'style="width:900px;display:block;margin:6px auto 0"')
+kern_svg = padvb(re.search(r'<svg class="fig".*?</svg>', kern, re.S).group(0)).replace('style="width:1000px"', 'style="width:900px;display:block;margin:6px auto 0"')
 S.append(sec(3, 'Past about eight notes, a better music model fits the brain worse', kern_svg,
     ref('Redrawn after ' + a('Kern et al., eLife 2022', 'https://doi.org/10.7554/eLife.80935')),
     'Kern and colleagues, eLife 2022: give a music model more and more context, it predicts the next note better and better, but its surprise fits the brain best at short context, under about ten notes, and worse after. The brain tracks short range expectations. Our own data agree: about four notes is enough.'))
@@ -329,7 +335,7 @@ S.append(sec(4, 'Turn one dial: the same notes go from shuffled to almost a tune
     ref('Chen et al., Markov graph analysis, in preparation'),
     'Back to the running example from Part Model. One dial, the order of the note graph. Order 0 shuffles the same notes, order 1 walks the tiny graph, and then Beethoven. Same notes and rhythm. A stimulus set with one parameter, the thing the trials lacked.', st='In progress'))
 dial = [t for t in old if title(t).startswith('Turn one dial inside a neural music generator')][0]
-dial_svg = re.search(r'<svg class="fig".*?</svg>', dial, re.S).group(0).replace('#7D55C7', SLATE).replace('style="width:1150px"', 'style="width:1000px;display:block;margin:6px auto 0"')
+dial_svg = padvb(re.search(r'<svg class="fig".*?</svg>', dial, re.S).group(0)).replace('#7D55C7', SLATE).replace('style="width:1150px"', 'style="width:1000px;display:block;margin:6px auto 0"')
 S.append(sec(4, 'Turn one dial inside MusicGen: same seed, only the tempo words change',
     '<div style="text-align:center">' + btn('slow', 'mg_tempo_slow.mp3', 'mg0') + btn('medium', 'mg_tempo_medium.mp3', 'mg1') + btn('fast', 'mg_tempo_fast.mp3', 'mg2') + '</div>' + dial_svg,
     ref(a('Copet et al., MusicGen, NeurIPS 2023', 'https://arxiv.org/abs/2306.05284')),
