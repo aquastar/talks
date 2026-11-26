@@ -6,6 +6,7 @@ Online: https://aquastar.github.io/talks/
 
 | Topic (stable link) | Version | Where |
 |---|---|---|
+| koopman-seizure/ | 2026-12-02-bibm-dallas/ | Paper talk, IEEE BIBM 2026, Dallas, Dec 2 (draft) |
 | music-to-brain/ | 2026-12-bibm-dallas/ | Keynote, AI4BioSig Workshop at IEEE BIBM 2026, Dallas, Dec 2026 (upcoming, day TBD). Draft 1 built from the CS colloquium, rename to the real day |
 | music-to-brain/ | 2026-12-01-bibm-dallas/ | Earlier RSI draft of the same keynote, source of slides and audio |
 | graph-inside/ | 2026-11-19-cs-colloquium/ | RIT CS Department Colloquium, Nov 19 2026 |
@@ -16,7 +17,7 @@ A topic link such as https://aquastar.github.io/talks/graph-inside/ always opens
 
 Rules for anyone, human or agent, who works here: MEMORY.md.
 
-Building: `python3 graph-inside/2026-11-19-cs-colloquium/src/build.py` (it reads the Oct 2 version next door), `python3 graph-inside/2026-10-02-gccis-phd/src/restyle.py`. The ai-literacy version is plain HTML. `python3 -I music-to-brain/2026-12-bibm-dallas/src/compose.py` (current keynote draft), `python3 -I music-to-brain/2026-12-01-bibm-dallas/src/build.py`, full layout check `music-to-brain/2026-12-01-bibm-dallas/src/measure.sh OUTDIR`.
+Building: `python3 graph-inside/2026-11-19-cs-colloquium/src/build.py` (it reads the Oct 2 version next door), `python3 graph-inside/2026-10-02-gccis-phd/src/restyle.py`. The ai-literacy version is plain HTML. `python3 -I music-to-brain/2026-12-bibm-dallas/src/compose.py` (current keynote draft), `python3 -I music-to-brain/2026-12-01-bibm-dallas/src/build.py`, full layout check `music-to-brain/2026-12-01-bibm-dallas/src/measure.sh OUTDIR`. KSNet: `python3 -I koopman-seizure/2026-12-02-bibm-dallas/src/build.py`.
 
 History: the Oct 2 and Nov 3 versions came from aquastar/neural-networks-to-networks and aquastar/ai-literacy-faculty with full git history (git subtree), and those repos are kept as they were. The Nov 19 version came from aquastar/graph-inside-generative-models the same way, and that repo was deleted afterwards. music-to-brain came from aquastar/music-to-brain the same way (2026-11-16), to be deleted after this move.
 
