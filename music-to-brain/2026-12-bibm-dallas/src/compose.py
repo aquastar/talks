@@ -171,6 +171,22 @@ def dots(n, k, x0, y0, cols=10, r=11, gap=27, col=None):
         g += f'<circle cx="{x}" cy="{y}" r="{r}" fill="{(col or SLATE) if i < k else "#fff"}" stroke="{col or SLATE}" stroke-width="2"/>'
     return g
 
+def stack(main, *backs):
+    ch = re.search(r'data-ch="([^"]*)"', main).group(1)
+    bk = [re.sub(r'<section([^>]*)>', lambda m: '<section' + (m.group(1).replace('class="', 'class="backup ') if 'class="' in m.group(1) else m.group(1) + ' class="backup"') + '>', b, count=1) for b in backs]
+    return f'<section data-ch="{ch}">\n' + main + '\n' + '\n'.join(bk) + '\n</section>'
+def table(cols, rows, widths, top=36, rh=62, size=17):
+    g = ''; x = 10; xs = []
+    for w_ in widths: xs.append(x); x += w_
+    for c, h in enumerate(cols): g += T(xs[c], top - 10, h, 16, MUT, 'start', 600)
+    g += f'<line x1="10" y1="{top}" x2="{x}" y2="{top}" stroke="#ACA39A" stroke-width="1.2"/>'
+    for r, row in enumerate(rows):
+        y = top + 26 + r * rh
+        for c, cell in enumerate(row):
+            for k, ln in enumerate(cell if isinstance(cell, list) else [cell]):
+                g += T(xs[c], y + k * 22, ln, size, INK if (c == 0 or k == 0) else MUT, 'start', 600 if c == 0 else 400)
+        g += f'<line x1="10" y1="{y + rh - 26}" x2="{x}" y2="{y + rh - 26}" stroke="#E4E0D9" stroke-width="1"/>'
+    return g, top + 26 + len(rows) * rh - 10, x + 10
 def landmark(ch, step, h, question, notes):
     return sec(ch, h, mapfig(step) + keybox(question, None, '.2em'), '', notes)
 
@@ -190,12 +206,6 @@ S.append(f'''<section class="title full" data-ch="0" data-background-color="#FBF
   <aside class="notes">Open with sound, not with me. Go straight to the next slide. Brain drawing: Gray, Anatomy of the Human Body, public domain, recolored.</aside>
 </section>''')
 
-S.append(sec(0, 'Pink Floyd, played back from electrodes on the brains of 29 patients',
-    two(img('bellier_spec_orig.png', 560, 'Spectrogram of the song as heard') + '<div style="height:8px"></div>' + img('bellier_spec_recon.png', 560, 'Spectrogram decoded from the brain'),
-        btn('heard', 'bellier_original.mp3', 'pf_heard') + '<br>' + btn('decoded from the brain', 'bellier_nonlinear.mp3', 'pf_dec')
-        + line('Rhythm and melody contour survive. The decoder learned this one song.', 20, MUT, 18)),
-    ref(a('Bellier et al., PLoS Biology 2023', 'https://doi.org/10.1371/journal.pbio.3002176')),
-    'Play the heard clip, then the decoded one. Twenty nine epilepsy patients with electrodes on the brain heard Another Brick in the Wall, and a decoder turned their brain activity back into sound. Honest line: it was trained on this one song. So we can read music back out of the brain. Today is about the other direction: can music be set so that it plays the brain? Spectrograms from Bellier et al. 2023, CC BY.'))
 
 S.append(sec(0, 'Many people with advanced dementia can still sing the hymns of their youth',
     two(img('older_adults_choir.jpg', 520, 'Older adults singing together'),
@@ -212,47 +222,54 @@ S.append(sec(0, 'Music to brain is three steps, and this talk walks all three',
 
 # Part 1. Why now
 S.append(pick('Part 2. Hearing loss: a quiet epidemic', 1).replace('Part 2. Hearing loss', 'Part 1. Hearing loss', 1))
-S.append(pick('Sound acts on the brain', 1))
-S.append(oldk('Music releases dopamine twice', 1))
-S.append(oldk("A steady beat can make a person with Parkinson", 1))
-S.append(pick('Music already acts on the brain, as medicine', 1))
-S.append(oldk('In dementia, music lifts mood slightly', 1))
+S.append(stack(pick('Sound acts on the brain', 1), oldk('Music releases dopamine twice', 1), oldk("A steady beat can make a person with Parkinson", 1)))
+S.append(stack(pick('Music already acts on the brain, as medicine', 1), oldk('In dementia, music lifts mood slightly', 1)))
 
-_g, _h = hbars([('40 Hz light and sound, Alzheimer', 673, False, '673 people · primary endpoint missed'),
-                ('Group music therapy, dementia', 1021, False, '1,021 residents · no change at 6 months'),
-                ('Slow music vs a silent track, ICU', 158, False, '158 patients · no difference'),
-                ('Parent singing, preterm infants', 206, False, '206 infants · no effect at 24 months')], 1100, w=420, lab_w=330, bh=40, gap=22, top=40)
+_tg, _th, _tw = table(['Trial', 'People', 'Music or sound given', 'Compared with', 'Primary outcome', 'Result'],
+    [[['HOPE'], '673', ['40 Hz light and sound,', '1 hour a day, 12 months'], ['sham device'], ['cognition plus', 'daily living'], ['missed', 'CTAD 2026, verify']],
+     [['MIDDEL'], '1,021', ['group music therapy or', 'choir, 6 countries'], ['usual care'], ['depression', 'at 6 months'], ['no change', 'β 0.8 [−1.0 to 2.6]']],
+     [['ICU trial'], '158', ['slow music, 60 to 80 bpm,', 'twice a day'], ['silent track,', 'same headphones'], ['days without', 'delirium or coma'], ['2.5 vs 3 days', 'p = 0.66']],
+     [['LongSTEP'], '206', ['parent singing,', 'preterm infants'], ['standard care'], ['language', 'at 24 months'], ['no effect']]],
+    [130, 90, 250, 190, 190, 200], top=34, rh=72, size=18)
 S.append(sec(1, 'The biggest, best controlled trials of music and sound came back null',
-    line('Expected: music helps. Measured, in the four largest recent trials (bar = people enrolled):', 21, MUT, 0).replace('text-align:left', 'text-align:center')
-    + f'<div class="fragment" data-fragment-index="1">{svgfig(1100, _h, T(330, 22, "enrolled", 16, MUT) + _g, 1060)}</div>'
-    + keybox('The larger the trial and the better the control, the closer the effect to ' + kw('zero') + '.', 2, '.5em'),
+    line('Expected: music helps. Measured, in the four largest recent trials:', 21, MUT, 0).replace('text-align:left', 'text-align:center')
+    + f'<div class="fragment" data-fragment-index="1">{svgfig(_tw, _th, _tg, 1120)}</div>'
+    + keybox('The larger the trial and the better the control, the closer the effect to ' + kw('zero') + '.', 2, '.4em'),
     ref(a('Cognito HOPE, NCT05637801', 'https://clinicaltrials.gov/study/NCT05637801'), a('MIDDEL, Lancet Healthy Longevity 2025', 'https://doi.org/10.1016/j.lanhl.2025.100783'),
         a('JAMA Intern Med 2025', 'https://doi.org/10.1001/jamainternmed.2025.5263'), a('LongSTEP, JAMA Netw Open 2024', 'https://doi.org/10.1001/jamanetworkopen.2024.10721')),
-    'Ask the room first: hands up if you expect music to help in these trials. Click: the four largest recent trials, bar length is how many people. HOPE, 40 Hz light and sound for Alzheimer disease, 673 enrolled, missed its primary endpoint at CTAD in November 2026 (VERIFY against the CTAD slides, numbers so far from news reports, a mild subgroup looked better but is unadjusted). MIDDEL, 1,021 care home residents in six countries, music therapy and choir did not change depression at six months, the country predicted more than the intervention. ICU, 158 ventilated older adults, slow music no better than a silent track through the same headphones. LongSTEP, 206 preterm infants, parent singing, no language effect at 24 months. Click: not that music does nothing, but that music given as a fixed playlist is not a controlled dose.'))
+    'Ask the room first: hands up if you expect music to help in these trials. Click: the four largest recent trials. HOPE, 40 Hz light and sound for Alzheimer disease, 673 enrolled, one hour a day for a year against a sham device, missed its primary endpoint at CTAD in November 2026 (VERIFY against the CTAD slides, numbers so far from news reports, a mild subgroup looked better but is unadjusted). MIDDEL, 1,021 care home residents in six countries, music therapy 0.8 and choir 0.4 on the depression scale, both intervals include zero, the country predicted more than the intervention. ICU, 158 ventilated older adults, slow music against a silent track through the same headphones, 2.5 against 3 days without delirium or coma. LongSTEP, 206 preterm infants, parent singing, no language effect at 24 months. Click: not that music does nothing, but that music given as a fixed playlist is not a controlled dose.'))
 
+_loop = (f'<rect x="10" y="40" width="170" height="70" rx="6" fill="{TINT}"/>' + T(95, 72, 'a body signal', 20, INK, 'middle') + T(95, 96, 'steps, sensors', 16, MUT, 'middle')
+    + f'<path d="M180,75 L270,75" stroke="{SLATE}" stroke-width="3" marker-end="url(#ah)"/>'
+    + f'<circle cx="320" cy="75" r="40" fill="#fff" stroke="{ACC}" stroke-width="3"/><line x1="320" y1="75" x2="343" y2="51" stroke="{ACC}" stroke-width="3"/>' + T(320, 140, 'one dial', 18, INK, 'middle')
+    + f'<path d="M362,75 L452,75" stroke="{SLATE}" stroke-width="3" marker-end="url(#ah)"/>'
+    + f'<rect x="456" y="40" width="170" height="70" rx="6" fill="{TINT}"/>' + T(541, 72, 'the music', 20, INK, 'middle') + T(541, 96, 'or the sound', 16, MUT, 'middle')
+    + f'<path d="M541,110 C541,170 95,170 95,115" fill="none" stroke="{SLATE}" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#ah)"/>' + T(318, 178, 'the body answers, the dial moves again', 16, MUT, 'middle'))
+_wg, _wh, _ww = table(['Condition, device', 'People', 'The dial', 'Result', 'Status'],
+    [[['Stroke walking'], '87', ['music tempo follows', 'the steps, 5 weeks'], ['walking speed', '+0.14 vs +0.06 m/s'], ['FDA cleared,', 'Medicare code 2024']],
+     [["Parkinson's"], '41', ['tempo from', 'shoe sensors'], ['more daily steps', 'than brisk walking'], ['RCT, 2025']],
+     [['Tinnitus'], '112', ['sound paired with', 'tongue stimulation'], ['58.6% respond', 'single arm'], ['FDA De Novo 2023']]],
+    [170, 90, 220, 220, 200], top=30, rh=66, size=18)
 S.append(sec(1, 'What works sets the music from a body signal, in a closed loop',
-    two(img('gait_rehab.jpg', 300, 'Gait training with a therapist'),
-        svgfig(640, 250,
-            f'<rect x="10" y="80" width="150" height="70" rx="6" fill="{TINT}"/>' + T(85, 112, 'steps', 20, INK, 'middle') + T(85, 136, 'shoe sensors', 16, MUT, 'middle')
-            + f'<path d="M160,115 L250,115" stroke="{SLATE}" stroke-width="3" marker-end="url(#ah)"/>'
-            + f'<circle cx="300" cy="115" r="42" fill="#fff" stroke="{ACC}" stroke-width="3"/><line x1="300" y1="115" x2="324" y2="90" stroke="{ACC}" stroke-width="3"/>' + T(300, 182, 'one dial: tempo', 18, INK, 'middle')
-            + f'<path d="M345,115 L435,115" stroke="{SLATE}" stroke-width="3" marker-end="url(#ah)"/>'
-            + f'<rect x="440" y="80" width="170" height="70" rx="6" fill="{TINT}"/>' + T(525, 112, 'music with', 20, INK, 'middle') + T(525, 136, 'that beat', 16, MUT, 'middle')
-            + f'<path d="M525,150 C525,240 85,240 85,155" fill="none" stroke="{SLATE}" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#ah)"/>' + T(305, 232, 'the next steps follow the beat', 16, MUT, 'middle'), 640)
-        + line('Stroke walking: RCT of 87, FDA cleared, Medicare code since 2024. Parkinson\'s: RCT of 41. Tinnitus: sound plus tongue stimulation, De Novo 2023.', 18, MUT, 8), lw=300)
+    svgfig(640, 190, _loop, 520) + svgfig(_ww, _wh, _wg, 1060)
     + keybox('The devices that work control ' + kw('one parameter') + ' and read the body back.', 1, '.6em'),
     ref(a('Hutchinson et al., Nat Commun 2024', 'https://www.nature.com/articles/s41467-024-44791-5'), a('CMS HCPCS E3200', 'https://www.cms.gov/files/document/2024-hcpcs-application-summary-biannual-2-2024-non-drug-and-non-biological-items-and-services-pdf.pdf'),
         a('Porciuncula et al., npj Parkinson\'s Dis 2025', 'https://www.nature.com/articles/s41531-025-00952-x'), a('Conlon et al., Nat Commun 2024', 'https://www.nature.com/articles/s41467-024-50473-z')),
-    'The contrast. What does make it through trials, FDA and payment is specific, and it is a loop. InTandem for chronic stroke walking: sensors on the shoes, the tempo of the music follows the steps, a randomized trial of 87 in Nature Communications 2024, FDA cleared, and Medicare created code E3200 in 2024. Parkinson disease: the same loop from shoe sensors, 41 patients, more daily steps. Lenire for tinnitus, De Novo 2023, a single arm trial. Click: one parameter, set from a body signal. That is a biosignal problem, this room\'s problem. Photo: U.S. Navy, public domain.'))
-
-S.append(oldk('Four ways the field studies music and the brain', 1))
+    'The contrast. What makes it through trials, FDA and payment is a loop with one dial. InTandem for chronic stroke walking: sensors on the shoes, the music tempo follows the steps, a randomized trial of 87 against an active control, walking speed up 0.14 against 0.06 meters per second (that pair is from the company release, VERIFY against the paper), FDA cleared, Medicare code E3200 in 2024. Parkinson disease: tempo from shoe sensors, 41 patients, more daily steps than brisk walking. Lenire for tinnitus, 112 patients, single arm, 58.6 percent responders among moderate or worse cases, De Novo 2023. Click: one parameter, set from a body signal. That is a biosignal problem, this room\'s problem.'))
 
 # Part 2. Read
 S.append(landmark(2, 'read', 'Part 2. Read: can we hear the music in the brain?',
     'In every trial the music was fixed. Before we set it, can we even ' + kw('see') + ' it in the brain?',
-    'Landmark. We are at Read, the bottom arrow: from brain activity back to the music. Pink Floyd was the hook. Now the state of the art in one minute, and the one control everyone should show.'))
+    'Landmark. We are at Read, the bottom arrow: from brain activity back to the music. Start with the most famous example, then the state of the art and the one control everyone should show.'))
+S.append(sec(2, 'Pink Floyd, played back from electrodes on the brains of 29 patients',
+    two(img('bellier_spec_orig.png', 560, 'Spectrogram of the song as heard') + '<div style="height:8px"></div>' + img('bellier_spec_recon.png', 560, 'Spectrogram decoded from the brain'),
+        btn('heard', 'bellier_original.mp3', 'pf_heard') + '<br>' + btn('decoded from the brain', 'bellier_nonlinear.mp3', 'pf_dec')
+        + line('Rhythm and melody contour survive. The decoder learned this one song.', 20, MUT, 18)),
+    ref(a('Bellier et al., PLoS Biology 2023', 'https://doi.org/10.1371/journal.pbio.3002176')),
+    'Play the heard clip, then the decoded one. Twenty nine epilepsy patients with electrodes on the brain heard Another Brick in the Wall, and a decoder turned their brain activity back into sound. Honest line: it was trained on this one song. So we can read music back out of the brain. Today is about the other direction: can music be set so that it plays the brain? Spectrograms from Bellier et al. 2023, CC BY.'))
 S.append(colk('The brain keeps enough of the music to rebuild it', 2))
 S.append(oldk('From brain scans, an AI composer', 2))
+S.append(oldk('Your auditory cortex has a population', 2))
 _g1, _h1 = hbars([('EEG plus generator', 0.60, True, '0.60'), ('same generator, no EEG', 0.38, False, '0.38'), ('EEG, simple regression', 0.26, False, '0.26')], 0.8, w=300, lab_w=250, bh=34, gap=14, top=50, size=18)
 _g2, _h2 = hbars([('fMRI conditioned', 85.4, True, '85.4%'), ('shuffled within category', 73.6, False, '73.6%'), ('shuffled freely', 53.4, False, '53.4%')], 100, w=280, lab_w=250, bh=34, gap=14, top=50, chance=50, size=18)
 S.append(sec(2, 'Music decoded from the brain sounds right partly because the generator is good',
@@ -268,21 +285,50 @@ S.append(pick('The brain is read as a graph, too', 2))
 S.append(landmark(3, 'model', 'Part 3. Model: what does the listening brain expect?',
     'Read works. To ' + kw('set') + ' music for a brain, we first need to predict the brain from the music.',
     'Landmark. We are at Model, the top arrow. The thread of this part: the brain predicts the next note, the prediction is a small graph of notes, music generators learn that graph, and we can watch it live.'))
-S.append(pick('Knowledge is not only text', 3, 'In this talk: the point of this slide is Meyer, emotion lives in expectation. That is what Part Model measures.'))
-S.append(oldk('Your auditory cortex has a population', 3))
-S.append(oldk('Change one chord, and the brain answers', 3))
-S.append(oldk('Try it: imagine a march', 3))
-S.append(sec(3, 'Try it: listeners hear how far each note is from home, not which note it is',
+_ff = ('<div style="width:290px;height:560px;overflow:hidden;margin:0 auto">'
+       '<iframe class="fe-frame" data-src="figs/far-from-home.html" width="446" height="862" style="border:0;transform:scale(.65);transform-origin:0 0;display:block" title="How far from home"></iframe></div>')
+S.append(stack(sec(3, 'Listeners do not hear which note it is. They hear how far it is from home.',
+    two(_ff,
+        line('Twinkle, Twinkle, Little Star, one tune, three endings:', 22, INK, 0)
+        + line('Stop on <b>si</b>: one step short, it hangs in the air.', 21, MUT, 14)
+        + line('Stop on <b>sol</b>: halfway home, it wants to go on.', 21, MUT, 8)
+        + line('Back to <b>do</b>: home, finished.', 21, MUT, 8)
+        + line('No theory needed. People who play by ear track distance from home, and this sense is learned just by listening.', 20, INK, 22)
+        + keybox('Music runs on ' + kw('expectation') + ': every note is heard against where home is.', None, '1em'), lw=290),
+    ref(a('Bigand and Poulin-Charronnat, Cognition 2006', 'https://doi.org/10.1016/j.cognition.2005.11.007'), 'Demo after the Pocket Music video, how far from home (LAVA MUSIC)'),
+    'Live demo, the room does it with its ears. Play the video on the left, about two and a half minutes, or skip to the three endings. Twinkle, Twinkle with three endings: stop on si, one step short, it hangs. Stop on sol, halfway. Back to do, home. Nobody here needed music theory for that: Bigand and Poulin-Charronnat 2006 show this sense of finished and unfinished is learned by listening. That is expectation, Meyer 1956: emotion in music lives in expectations being delayed or broken. The next slides show the brain measures it, and the live EEG demo later is the same feeling in data. The English bar version is under the down arrow. The page is Zhiqian\'s rebuild of a Xiaohongshu video by Pocket Music, check the rights before the deck link is shared publicly.'),
+    sec(3, 'Try it: listeners hear how far each note is from home, not which note it is',
     '<iframe class="fe-frame" data-src="figs/home-demo.html" width="1100" height="470" style="border:0;display:block;margin:0 auto;background:#FBFAF7" title="How far from home demo"></iframe>',
     ref(a('Bigand and Poulin-Charronnat, Cognition 2006', 'https://doi.org/10.1016/j.cognition.2005.11.007'), 'Bar height after ' + a('Krumhansl and Kessler, Psychol Rev 1982', 'https://doi.org/10.1037/0033-295X.89.4.334')),
-    'Live demo, the room does it with its ears. Twinkle, Twinkle. Play Ends on do: every bar is how far that note is from home, do, using the probe tone ratings of Krumhansl and Kessler 1982. The tune leaves home, jumps to sol, and walks back step by step. Now Stops on sol: halfway home, it wants to go on. Then Stops on si: one step short, it hangs in the air. Nobody here needed music theory for that: Bigand and Poulin-Charronnat 2006 show that this sense of finished and not finished is learned just by listening. That is expectation, and the next slides show the brain measures it note by note, the live EEG demo later is the same feeling in data. Idea from the Pocket Music video, how far from home (Xiaohongshu, LAVA MUSIC), rebuilt here in English. Zhiqian\'s own copy: zhiqian-knowledge-base life/music/far-from-home.html.'))
-S.append(oldk('Your brain predicts every next note', 3))
-S.append(pick('A tiny graph is enough to represent a piece of music', 3))
+    'Live demo, the room does it with its ears. Twinkle, Twinkle. Play Ends on do: every bar is how far that note is from home, do, using the probe tone ratings of Krumhansl and Kessler 1982. The tune leaves home, jumps to sol, and walks back step by step. Now Stops on sol: halfway home, it wants to go on. Then Stops on si: one step short, it hangs in the air. Nobody here needed music theory for that: Bigand and Poulin-Charronnat 2006 show that this sense of finished and not finished is learned just by listening. That is expectation, and the next slides show the brain measures it note by note, the live EEG demo later is the same feeling in data. Idea from the Pocket Music video, how far from home (Xiaohongshu, LAVA MUSIC), rebuilt here in English. Zhiqian\'s own copy: zhiqian-knowledge-base life/music/far-from-home.html.')))
+eran = OLDS and [t for t in OLDS if title(t).startswith('Change one chord')][0]
+eran_svg = padvb(re.search(r'<svg class="fig".*?</svg>', eran, re.S).group(0))
+S.append(sec(3, 'Change one chord, and the brain flags it within 200 ms, trained or not',
+    two(eran_svg.replace('<svg class="fig"', '<svg class="fig" style="width:600px;max-width:100%"', 1),
+        btn('a regular ending', 'cadence_regular.mp3', 'cad0') + '<br>' + btn('the same, odd last chord', 'cadence_odd.mp3', 'cad1')
+        + line('Five chords. In the odd version the last one is a Neapolitan sixth: legal in theory, unexpected at the end.', 20, INK, 16)
+        + line('About 150 to 200 ms later, a negative wave over the right front of the head: the ERAN.', 20, MUT, 10)
+        + line('It shows up in listeners with no musical training.', 20, MUT, 10), lw=600)
+    + keybox('The brain held a ' + kw('prediction') + ' for the next chord, and the odd one broke it.', None, '.6em'),
+    ref(a('Koelsch et al., J Cogn Neurosci 2000', 'https://doi.org/10.1162/089892900562183')),
+    'Play both. Everyone hears the odd one. Koelsch and colleagues 2000: an unexpected chord at the end of a cadence evokes the early right anterior negativity, about 150 to 200 milliseconds after the chord, in nonmusicians too. The drawing is a schematic of the paper\'s finding, not data. Cadences synthesized for the talk in the style of Koelsch 2000. Bridge: expectation is not only for chords, it is for time too.'))
+march = [t for t in OLDS if title(t).startswith('Try it: imagine a march')][0]
+march_svg = padvb(re.search(r'<svg class="fig".*?</svg>', march, re.S).group(0))
+S.append(sec(3, 'Imagine a march, and the brain adds a beat the sound does not have',
+    two(march_svg.replace('<svg class="fig"', '<svg class="fig" style="width:600px;max-width:100%"', 1),
+        line('The sound: a steady pulse, 2.4 beats per second. The EEG locks on: a peak at 2.4 Hz.', 20, INK, 0)
+        + line('Imagine a march, one two, one two: a new peak at 1.2 Hz.', 20, INK, 12)
+        + line('Imagine a waltz, one two three: new peaks at 0.8 and 1.6 Hz.', 20, INK, 12)
+        + line('The sound never changed. Try it now, in your head.', 20, MUT, 16), lw=600)
+    + keybox('Listening is ' + kw('predicting') + '. To measure it note by note, we need a model of it.', None, '.6em'),
+    ref(a('Nozaradan et al., J Neurosci 2011', 'https://doi.org/10.1523/JNEUROSCI.0411-11.2011')),
+    'Audience moment. Ask the room to imagine a steady beat as a march, one two, one two. Nozaradan and colleagues 2011, frequency tagging: listening to a 2.4 Hz pulse, the EEG spectrum has a peak at 2.4 Hz. Imagining a march adds a peak at 1.2 Hz, a waltz adds 0.8 and 1.6 Hz. The meter exists only in the brain. Schematic of the paper\'s finding. Bridge: the brain predicts. To measure prediction note by note we need a model of it, and the simplest model is a graph.'))
+S.append(pick('A tiny graph is enough to represent a piece of music', 3).replace('A tiny graph is enough to represent a piece of music', 'The simplest model of expectation is a graph: which note follows which', 1))
 S.append(pick('Fold 88 keys into 12 scale degrees', 3))
 S.append(pick("Occam's razor: the simplest graph already names the tradition", 3))
 S.append(colk('Richer nodes beat longer memory', 3))
 S.append(colk('The longest memory sounds most like the style', 3))
-S.append(pick('A note transition graph predicts the listening brain', 3))
+S.append(stack(pick('A note transition graph predicts the listening brain', 3), oldk('Your brain predicts every next note', 3)))
 old = OLDS
 kern = [t for t in old if title(t).startswith('Past about eight notes')][0]
 kern_svg = padvb(re.search(r'<svg class="fig".*?</svg>', kern, re.S).group(0)).replace('style="width:1000px"', 'style="width:900px;display:block;margin:6px auto 0"')
