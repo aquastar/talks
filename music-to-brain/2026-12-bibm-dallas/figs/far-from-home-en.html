@@ -219,8 +219,8 @@ STEPS.forEach((st,i)=>{const b=document.createElement('button');b.textContent=(i
 function goStep(k){k=Math.max(0,Math.min(STEPS.length,k));step=k;stepsEl.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('on',i===k-1));
   if(playing)stop();document.getElementById('stmt').textContent=STMT[k];document.getElementById('sideTxt').textContent=STMT[k];document.body.classList.toggle('single',k>1);document.getElementById('navL').classList.toggle('off',k<=1);document.getElementById('navR').classList.toggle('off',k>=STEPS.length);enterDuo(k===1);if(k===0){segEnd=null;tNow=0;big.hidden=false;draw(0);return}
   if(k===1){A();newMaster();return}
-  segEnd=STEPS[k-1][1];{const a=STEPS[k-1][0],first=N.find(n=>n.t>=a&&n.t<segEnd);SEGSTART=first?first.t:a;tNow=first?Math.max(a,first.t-.02):a}draw(tNow)}
-document.getElementById('sidePlay').onclick=e=>{e.stopPropagation();if(step<2)return;if(playing)stop();const a=STEPS[step-1][0],z=STEPS[step-1][1],first=N.find(n=>n.t>=a&&n.t<z);SEGSTART=first?first.t:a;tNow=first?Math.max(a,first.t-.02):a;segEnd=z;play()};
+  segEnd=STEPS[k-1][1];{const a=STEPS[k-1][0],first=N.find(n=>n.t>=a&&n.t<segEnd);SEGSTART=first?first.t:a;tNow=first?Math.max(a,first.t+LAND-.03):a}draw(tNow)}
+document.getElementById('sidePlay').onclick=e=>{e.stopPropagation();if(step<2)return;if(playing)stop();const a=STEPS[step-1][0],z=STEPS[step-1][1],first=N.find(n=>n.t>=a&&n.t<z);SEGSTART=first?first.t:a;tNow=first?Math.max(a,first.t+LAND-.03):a;segEnd=z;play()};
 addEventListener('message',e=>{const d=e.data;if(d&&typeof d==='object'&&'ffstep' in d)goStep(d.ffstep);if(d==='fe-stop'&&playing)stop()});
 addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();goStep(step+1)}if(e.key==='ArrowLeft'){e.preventDefault();goStep(step-1)}});
 
