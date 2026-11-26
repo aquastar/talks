@@ -92,7 +92,7 @@ function curve(L,a1,a2,prog,color,width,dash){const p1=P(L,a1),p2=P(L,a2),d=Math
 function onCurve(L,a1,a2,u){const p1=P(L,a1),p2=P(L,a2),d=Math.round(Math.abs(((a1-a2+540)%360)-180)/30),c=ctrlFor(L,p1,p2,d);return [(1-u)*(1-u)*p1[0]+2*u*(1-u)*c[0]+u*u*p2[0],(1-u)*(1-u)*p1[1]+2*u*(1-u)*c[1]+u*u*p2[1]]}
 function arcSeg(L,aFrom,aTo,color,width){g.strokeStyle=color;g.lineWidth=width;g.lineCap='round';g.beginPath();const st=aFrom<aTo?3:-3;let a=aFrom;g.moveTo(...P(L,a));while((st>0&&a<aTo)||(st<0&&a>aTo)){a+=st;if((st>0&&a>aTo)||(st<0&&a<aTo))a=aTo;g.lineTo(...P(L,a))}g.stroke()}
 function text(s,x,y,size,color,weight=700,align='left'){g.font=`${Math.min(weight,800)} ${size}px "et-book",Georgia,serif`;g.fillStyle=color;g.textAlign=align;g.textBaseline='alphabetic';g.fillText(s,x,y)}
-function current(t){let idx=-1;for(let i=0;i<N.length;i++){if(N[i].t<=t)idx=i;else break}if(idx<0)return null;const n=N[idx];if(t>GEND[n.grp])return null;return idx}
+var SEGSTART=-1;function current(t){let idx=-1;for(let i=0;i<N.length;i++){if(N[i].t<=t)idx=i;else break}if(idx<0||N[idx].t<SEGSTART-.001)return null;const n=N[idx];if(t>GEND[n.grp])return null;return idx}
 function keyboard(L,t,curPc){if(L.s<=0.01)return;const x=KBX,y=L.kbY,ww=40,w=ww*8,h=122,bw=24,bh=76;g.save();g.globalAlpha=clamp(L.s*1.3,0,1);
  g.fillStyle='rgba(31,30,27,.10)';rr(x+3,y+5,w,h,6);g.fill();
  g.fillStyle='#2B2926';rr(x-4,y-5,w+8,7,2);g.fill();
@@ -143,7 +143,7 @@ var ODD=false;function draw(t){bg();const L=layout(t),k=tonic(t),ha=homeAngle(t)
  // question mark, center titles
  
  
- const ct=win(t,0,6.6,.2)?'Twinkle, Twinkle':(win(t,8.0,14.4,.2)||win(t,19.2,23.6,.2))?'Ode to Joy':'';const ca=Math.max(win(t,0,6.6,.2),win(t,8.0,14.4,.2),win(t,19.2,23.6,.2));if(ct){g.globalAlpha=ca;text(ct,L.cx,L.cy+7,18,CREAM,500,'center');g.globalAlpha=1}
+ 
  // keyboard + jianpu
  keyboard(L,t,cur&&L.s>.5?cur.pc:(t>120.4&&t<123.6?0:null));
  if(t>123.7&&t<134.5){const al=win(t,123.7,134.4,.3);g.globalAlpha=al;const y=L.kbY-14;['do','re','mi','fa','sol','la','si','do'].forEach((s,i)=>{const x=KBX+20+i*40,pc=[0,2,4,5,7,9,11,12][i]%12,on=cur&&cur.pc===pc&&i<7||(i===0&&t<126.3);
@@ -211,7 +211,7 @@ function drawDuo(){bg();const now=ctx?ctx.currentTime:0;
 }
 function enterDuo(on){duo=on;document.getElementById('duoA').style.display=on?'flex':'none';document.getElementById('duoB').style.display=on?'flex':'none';if(on){big.hidden=true;DS[0].t0=DS[1].t0=-1;drawDuo()}}
 // ---------- steps: the presenter advances one module at a time ----------
-const STEPS=[[0,15.8,'Wrong?'],[15.9,23.8,'Right'],[24.0,47.9,'Home'],[48.0,67.9,'Three endings'],[68.0,87.7,'How far'],[87.8,105.9,'Stand and lean'],[106.0,134.4,'Find home'],[134.5,152.1,'Your turn']];
+const STEPS=[[0,15.8,'Wrong?'],[15.9,23.5,'Right'],[24.0,47.9,'Home'],[48.0,67.9,'Three endings'],[68.0,87.7,'How far'],[87.8,105.9,'Stand and lean'],[106.0,134.4,'Find home'],[134.5,152.1,'Your turn']];
 var step=0,segEnd=null;
 const STMT=['Eight short scenes. Click to begin.','Both stop on a wrong note, si and fi. Nobody studied this, yet everyone hears it.','The ear was waiting for one note, and this time it came.','The note a song returns to is its home. Years of listening taught the ear.','Same notes until the last one: si is one step short, sol is halfway, do is home.','Players by ear do not memorize notes. They hear how far each note is from home.','Do, mi and sol stand. Every other note leans toward one of them.','Hum to the last note, call it do, then match every note to it.','You always knew this note. Expectation is learned just by listening.'];
 const stepsEl=document.getElementById('steps');
@@ -219,8 +219,8 @@ STEPS.forEach((st,i)=>{const b=document.createElement('button');b.textContent=(i
 function goStep(k){k=Math.max(0,Math.min(STEPS.length,k));step=k;stepsEl.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('on',i===k-1));
   if(playing)stop();document.getElementById('stmt').textContent=STMT[k];document.getElementById('sideTxt').textContent=STMT[k];document.body.classList.toggle('single',k>1);document.getElementById('navL').classList.toggle('off',k<=1);document.getElementById('navR').classList.toggle('off',k>=STEPS.length);enterDuo(k===1);if(k===0){segEnd=null;tNow=0;big.hidden=false;draw(0);return}
   if(k===1){A();newMaster();return}
-  segEnd=STEPS[k-1][1];{const a=STEPS[k-1][0],first=N.find(n=>n.t>=a&&n.t<segEnd);tNow=first?Math.max(a,first.t-.25):a}draw(tNow)}
-document.getElementById('sidePlay').onclick=e=>{e.stopPropagation();if(step<2)return;if(playing)stop();const a=STEPS[step-1][0],z=STEPS[step-1][1],first=N.find(n=>n.t>=a&&n.t<z);tNow=first?Math.max(a,first.t-.25):a;segEnd=z;play()};
+  segEnd=STEPS[k-1][1];{const a=STEPS[k-1][0],first=N.find(n=>n.t>=a&&n.t<segEnd);SEGSTART=first?first.t:a;tNow=first?Math.max(a,first.t-.02):a}draw(tNow)}
+document.getElementById('sidePlay').onclick=e=>{e.stopPropagation();if(step<2)return;if(playing)stop();const a=STEPS[step-1][0],z=STEPS[step-1][1],first=N.find(n=>n.t>=a&&n.t<z);SEGSTART=first?first.t:a;tNow=first?Math.max(a,first.t-.02):a;segEnd=z;play()};
 addEventListener('message',e=>{const d=e.data;if(d&&typeof d==='object'&&'ffstep' in d)goStep(d.ffstep);if(d==='fe-stop'&&playing)stop()});
 addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();goStep(step+1)}if(e.key==='ArrowLeft'){e.preventDefault();goStep(step-1)}});
 
