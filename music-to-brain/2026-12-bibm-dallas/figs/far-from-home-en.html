@@ -22,13 +22,16 @@ input[type=range]{flex:1;min-width:0;accent-color:var(--acc)}
 .opts label{display:flex;gap:6px;align-items:center}
 input[type=checkbox]{accent-color:var(--acc)}
 .steps{display:flex;gap:6px;flex-wrap:wrap;flex:1}.steps button{font-size:15px;padding:2px 10px}.steps button.on{border-color:var(--acc);color:#C45200}
+.stmt{margin:4px auto 0;max-width:1100px;background:#FDEFE3;border-left:7px solid #F76902;border-radius:3px;padding:8px 18px;font-size:26px;line-height:1.3;color:#1F1E1B;text-align:center}
+.duo{position:absolute;top:4px;display:flex;gap:10px}.duo button{font-size:17px;padding:4px 16px}
 .credit{font-size:.85rem;color:var(--mut)}
 body.emb{padding:0 !important}body.emb .credit{display:none}
 </style>
 <main>
- <div class="stage" id="stage"><canvas id="cv" width="2480" height="800" aria-label="Animation: notes move on a clock face, do is home"></canvas><div class="bigplay" id="big"><span>▶</span></div></div>
- <div class="row"><div class="bar" style="display:none"><button id="pp" aria-label="Play">▶</button><input type="range" id="seek" min="0" max="152" step="0.1" value="0" aria-label="Position"><span class="time" id="tm">0:00 / 2:32</span></div><div id="steps" class="steps"></div><div class="opts"><label for="voice"><input type="checkbox" id="voice" checked> Voice</label><label for="sfx"><input type="checkbox" id="sfx" checked> Piano</label></div></div>
- <div class="credit">After the Pocket Music lesson, how far from home (Designed by LAVA MUSIC). Piano synthesized in the browser, voice read by the browser.</div>
+ <div class="stage" id="stage"><canvas id="cv" width="2480" height="800" aria-label="Animation: notes move on a clock face, do is home"></canvas><div class="duo" id="duoA" style="left:calc(25% - 62px);display:none"><button onclick="duoPlay(0)">&#9654; Version A</button></div><div class="duo" id="duoB" style="left:calc(75% - 62px);display:none"><button onclick="duoPlay(1)">&#9654; Version B</button></div><div class="bigplay" id="big"><span>▶</span></div></div>
+ <div class="stmt" id="stmt">Eight short scenes. Click to begin.</div>
+ <div class="row"><div class="bar" style="display:none"><button id="pp" aria-label="Play">▶</button><input type="range" id="seek" min="0" max="152" step="0.1" value="0" aria-label="Position"><span class="time" id="tm">0:00 / 2:32</span></div><div id="steps" class="steps"></div><div class="opts"><label for="voice" style="display:none"><input type="checkbox" id="voice"> Voice</label><label for="sfx"><input type="checkbox" id="sfx" checked> Piano</label></div></div>
+ <div class="credit">After the Pocket Music lesson, how far from home (Designed by LAVA MUSIC). Piano synthesized in the browser.</div>
 </main>
 <script>if(window.self!==window.top)document.body.classList.add("emb");
 
@@ -157,23 +160,48 @@ const lat=()=>(ctx&&(ctx.outputLatency||ctx.baseLatency))||0;let playing=false,o
 const pp=document.getElementById('pp'),seek=document.getElementById('seek'),tm=document.getElementById('tm'),big=document.getElementById('big'),voice=document.getElementById('voice'),sfx=document.getElementById('sfx');
 const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
 function schedule(from){newMaster();const base=ctx.currentTime-from;if(voice.checked&&nbuf&&from<nbuf.duration){const src=ctx.createBufferSource();src.buffer=nbuf;const ng=ctx.createGain();ng.gain.value=1.5;src.connect(ng);ng.connect(master);src.start(ctx.currentTime+.02,from+.02)}if(!sfx.checked)return;N.forEach((n,i)=>{if(n.t>=from-.01){const next=N[i+1],d=next&&next.grp===n.grp?Math.min(next.t-n.t,1.4):1.4;pluck(n.m,base+n.t+LAND,d)}})}
-function say(t){if(!voice.checked||!('speechSynthesis' in window))return;Object.keys(SPEAK).forEach(k=>{const kt=+k;if(t>=kt&&t<kt+.5&&!spoken.has(k)){spoken.add(k);try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(SPEAK[k]);u.lang='en-US';u.rate=1.05;const vs=speechSynthesis.getVoices();const v=vs.find(v=>/en[-_]US/i.test(v.lang)&&/Samantha|Google US|Aria|Jenny|Natural/i.test(v.name))||vs.find(v=>/en[-_]US/i.test(v.lang));if(v)u.voice=v;speechSynthesis.speak(u)}catch(e){}}})}
+function say(t){return;if(!voice.checked||!('speechSynthesis' in window))return;Object.keys(SPEAK).forEach(k=>{const kt=+k;if(t>=kt&&t<kt+.5&&!spoken.has(k)){spoken.add(k);try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(SPEAK[k]);u.lang='en-US';u.rate=1.05;const vs=speechSynthesis.getVoices();const v=vs.find(v=>/en[-_]US/i.test(v.lang)&&/Samantha|Google US|Aria|Jenny|Natural/i.test(v.name))||vs.find(v=>/en[-_]US/i.test(v.lang));if(v)u.voice=v;speechSynthesis.speak(u)}catch(e){}}})}
 function frame(){if(playing){tNow=Math.max(0,ctx.currentTime-off-lat());if(segEnd!=null&&tNow>=segEnd){tNow=segEnd;stop()}if(tNow>=END){tNow=END;stop()}say(tNow)}draw(tNow);seek.value=tNow;tm.textContent=fmt(tNow)+' / 2:32';if(playing)raf=requestAnimationFrame(frame)}
 async function play(){A();if(!nbuf){try{const bin=Uint8Array.from(atob(NARR),c=>c.charCodeAt(0));nbuf=await ctx.decodeAudioData(bin.buffer)}catch(e){nbuf=null}}if(tNow>=END)tNow=0;off=ctx.currentTime-tNow;spoken=new Set(Object.keys(SPEAK).filter(k=>+k<tNow-.05));schedule(tNow);playing=true;pp.textContent='❚❚';pp.setAttribute('aria-label','Pause');big.hidden=true;cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}
 function stop(){playing=false;pp.textContent='▶';pp.setAttribute('aria-label','Play');if(ctx)newMaster();try{speechSynthesis.cancel()}catch(e){}big.hidden=step>0}
-pp.onclick=()=>playing?stop():goStep(Math.max(1,step));document.getElementById('stage').onclick=()=>goStep(step+1);
+pp.onclick=()=>playing?stop():goStep(Math.max(1,step));document.getElementById('stage').onclick=e=>{if(e.target.closest('.duo'))return;goStep(step+1)};
 seek.oninput=()=>{tNow=+seek.value;if(playing){off=ctx.currentTime-tNow;spoken=new Set(Object.keys(SPEAK).filter(k=>+k<tNow-.05));try{speechSynthesis.cancel()}catch(e){}schedule(tNow)}draw(tNow);tm.textContent=fmt(tNow)+' / 2:32'};
 sfx.onchange=voice.onchange=()=>{if(playing)schedule(tNow)};
-function fit(){const r=cv.getBoundingClientRect(),d=Math.min(3,window.devicePixelRatio||1);cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);g.setTransform(cv.width/W,0,0,cv.height/H,0,0);draw(tNow)}
+function fit(){const r=cv.getBoundingClientRect(),d=Math.min(3,window.devicePixelRatio||1);cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);g.setTransform(cv.width/W,0,0,cv.height/H,0,0);if(typeof duo!=='undefined'&&duo)drawDuo();else draw(tNow)}
 addEventListener('resize',fit);(document.fonts?document.fonts.ready:Promise.resolve()).then(fit);fit();
 window.__seek=t=>{tNow=t;draw(t)};
+
+// ---------- scene 1: two versions side by side, each can be replayed ----------
+const TWL=[60,60,67,67,69,69,67,65,65,64,64,62,62],DUO=[{end:59,cx:310,ok:false,lab:'stops on si, one step short of home'},{end:60,cx:930,ok:true,lab:'back home to do'}];
+var duo=false,duoRaf=0;var DS=[{t0:-1},{t0:-1}];
+function duoNotes(k){return TWL.concat([DUO[k].end])}
+function duoPlay(k){A();if(!master)newMaster();const now=ctx.currentTime;DS[k].t0=now+.05;const ns=duoNotes(k);ns.forEach((m,i)=>{const d=i===ns.length-1?1.6:.46;pluck(m,DS[k].t0+i*.46,d,.3)});if(!duoRaf)duoRaf=requestAnimationFrame(duoFrame)}
+function duoFrame(){drawDuo();const busy=DS.some(d=>d.t0>0&&ctx&&ctx.currentTime-d.t0<duoNotes(0).length*.46+2.5);duoRaf=duo&&busy?requestAnimationFrame(duoFrame):0;if(!busy)drawDuo()}
+function drawDuo(){bg();const now=ctx?ctx.currentTime:0;
+ DUO.forEach((D,k)=>{const L={s:0,cx:D.cx,cy:212,r:128,w:6,ball:15,lab:20,kbY:999},ns=duoNotes(k),st=DS[k].t0,el=st>0?now-st:-1,idx=el<0?-1:Math.min(ns.length-1,Math.floor(el/.46)),done=el>=ns.length*.46-.46+.2;
+  const odd=!D.ok&&idx===ns.length-1,shake=odd&&el-idx*.46<.6?Math.sin((el-idx*.46)*60)*6*(1-(el-idx*.46)/.6):0;L.cx+=shake;
+  ring(L,0);const hp=P(L,homeAngle(0));
+  SCALE.forEach(iv=>{const a=homeAngle(0)-iv*30,q=P(L,a,L.r+(iv===0?24:19));text(SOLF[iv],q[0],q[1]+5,L.lab,CREAM,600,'center');const d=P(L,a);if(iv){g.fillStyle=CREAM;g.beginPath();g.arc(d[0],d[1],3.2,0,7);g.fill()}});
+  // trail
+  for(let j=1;j<=idx;j++){const a=ns[j-1]%12,b=ns[j]%12;if(a===b)continue;const last=j===ns.length-1;curve(L,pcAng(a,0),pcAng(b,0),1,last?(D.ok?'rgba(247,105,2,.9)':'rgba(218,41,28,.9)'):'rgba(76,91,102,.45)',last?2.6:1.2)}
+  // home
+  const atHome=D.ok&&idx===ns.length-1;if(atHome)glowAt(hp[0],hp[1],L.r*.55,.9);g.fillStyle=atHome?GOLD:'rgba(247,105,2,.12)';g.strokeStyle='#F76902';g.lineWidth=2;g.beginPath();g.arc(hp[0],hp[1],L.ball*.9,0,7);g.fill();g.stroke();
+  // ball
+  if(idx>=0&&!atHome){const pc=((ns[idx]%12)+12)%12,b=P(L,pcAng(pc,0));
+   if(odd){const pul=1+.35*Math.abs(Math.sin(el*7));g.strokeStyle='rgba(218,41,28,.85)';g.lineWidth=3;g.beginPath();g.arc(b[0],b[1],L.ball*2.1*pul,0,7);g.stroke();g.fillStyle='#DA291C';g.beginPath();g.arc(b[0],b[1],L.ball*1.15,0,7);g.fill();text('?',L.cx,L.cy+26,96,'#DA291C',800,'center')}
+   else{glowAt(b[0],b[1],L.ball*3,.4);g.fillStyle=CREAM;g.beginPath();g.arc(b[0],b[1],L.ball,0,7);g.fill()}}
+  if(done)text(D.lab,L.cx,388,21,D.ok?'#C45200':'#DA291C',600,'center')});
+}
+function enterDuo(on){duo=on;document.getElementById('duoA').style.display=on?'flex':'none';document.getElementById('duoB').style.display=on?'flex':'none';if(on){big.hidden=true;DS[0].t0=DS[1].t0=-1;drawDuo()}}
 // ---------- steps: the presenter advances one module at a time ----------
 const STEPS=[[0,15.8,'Wrong?'],[15.9,23.8,'Right'],[24.0,47.9,'Home'],[48.0,67.9,'Three endings'],[68.0,87.7,'How far'],[87.8,105.9,'Stand and lean'],[106.0,134.4,'Find home'],[134.5,152.1,'Your turn']];
 let step=0,segEnd=null;
+const STMT=['Eight short scenes. Click to begin.','Nobody here studied this, yet everyone hears which ending is wrong.','The ear was waiting for one note, and this time it came.','The note a song returns to is its home. The ear learned it from years of listening.','Same notes until the last one: si is one step short, sol is halfway, do is home.','People who play by ear do not memorize notes. They hear how far each note is from home.','Do, mi and sol stand. Every other note leans toward one of them.','Hum to the last note, call it do, then match every note to it.','You always knew this note. Expectation is learned just by listening.'];
 const stepsEl=document.getElementById('steps');
 STEPS.forEach((st,i)=>{const b=document.createElement('button');b.textContent=(i+1)+'. '+st[2];b.onclick=()=>goStep(i+1);stepsEl.appendChild(b)});
 function goStep(k){k=Math.max(0,Math.min(STEPS.length,k));step=k;stepsEl.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('on',i===k-1));
-  if(playing)stop();if(k===0){segEnd=null;tNow=0;big.hidden=false;draw(0);return}
+  if(playing)stop();document.getElementById('stmt').textContent=STMT[k];enterDuo(k===1);if(k===0){segEnd=null;tNow=0;big.hidden=false;draw(0);return}
+  if(k===1){A();newMaster();duoPlay(0);setTimeout(()=>{if(step===1)duoPlay(1)},8200);return}
   segEnd=STEPS[k-1][1];tNow=STEPS[k-1][0];play()}
 addEventListener('message',e=>{const d=e.data;if(d&&typeof d==='object'&&'ffstep' in d)goStep(d.ffstep);if(d==='fe-stop'&&playing)stop()});
 addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();goStep(step+1)}if(e.key==='ArrowLeft'){e.preventDefault();goStep(step-1)}});
