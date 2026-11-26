@@ -4,6 +4,12 @@ Moved 2026-11-16 from aquastar/music-to-brain into aquastar/talks/music-to-brain
 
 Updated 2026-11-15 (evening). Title chosen by him: "Music That Plays the Brain" (no subtitle).
 
+## 2026-11-26 draft 1 from the colloquium (start here)
+- Deck: music-to-brain/2026-12-bibm-dallas/ (day TBD, rename to YYYY-MM-DD before the link goes out). Build: python3 -I music-to-brain/2026-12-bibm-dallas/src/compose.py. Thumbs: NODE_PATH=$(npm root -g) node tools/thumbs.js, then python3 tools/thumbs_resize.py (needs reveal.js 5.1.0 in /tmp/claude-0/rv).
+- compose.py takes the colloquium index.html (head, CSS, scripts, music slides by headline) and adds new slides. 30 main slides, outline in 2026-12-01-bibm-dallas/docs/outline-v2.md, rail: Opening, Why now, Read, Model, Write, Close.
+- New: null trials (HOPE numbers from news only, verify), what works (InTandem, adaptive RAS, Lenire), Read (Postolache, MAAS), Write gap (Bashivan, Tuckute, verify PDFs), three In progress m2b results from the findings page (Bach readout transfers 29/29, real Bach vs continuation 96% vs 51%, steering +4.3 semitones).
+- Open: his "离家多远" demo (not found, he will upload), music2brain files still uploading, steering style audio, a pass with presentation-craft and the overlap check.
+
 ## 2026-11-19 outline source: RIT CS colloquium (his instruction)
 He says the colloquium deck already sets the keynote outline: use its opening and Part 2. Source: graph-inside/2026-11-19-cs-colloquium (docs/storyline-zh.md, src/talk.py, src/music.py, thumbs/).
 - Opening to reuse: "Knowledge is not only text" (5), music generator is a language model with a pitch helix (6), chord map follows music theory (7).
