@@ -23,12 +23,12 @@ input[type=range]{flex:1;min-width:0;accent-color:var(--acc)}
 input[type=checkbox]{accent-color:var(--acc)}
 .steps{display:flex;gap:6px;flex-wrap:wrap;flex:1}.steps button{font-size:15px;padding:2px 10px}.steps button.on{border-color:var(--acc);color:#C45200}
 .stmt{margin:4px auto 0;max-width:1100px;background:#FDEFE3;border-left:7px solid #F76902;border-radius:3px;padding:8px 18px;font-size:26px;line-height:1.3;color:#1F1E1B;text-align:center}
-.duo{position:absolute;top:4px;display:flex;gap:10px}.duo button{font-size:17px;padding:4px 16px}
+.duo{position:absolute;top:4px;display:flex;gap:10px}.duo button{font-size:17px;padding:4px 16px;min-width:170px}
 .credit{font-size:.85rem;color:var(--mut)}
 body.emb{padding:0 !important}body.emb .credit{display:none}
 </style>
 <main>
- <div class="stage" id="stage"><canvas id="cv" width="2480" height="800" aria-label="Animation: notes move on a clock face, do is home"></canvas><div class="duo" id="duoA" style="left:calc(25% - 62px);display:none"><button onclick="duoPlay(0)">&#9654; Version A</button></div><div class="duo" id="duoB" style="left:calc(75% - 62px);display:none"><button onclick="duoPlay(1)">&#9654; Version B</button></div><div class="bigplay" id="big"><span>▶</span></div></div>
+ <div class="stage" id="stage"><canvas id="cv" width="2480" height="800" aria-label="Animation: notes move on a clock face, do is home"></canvas><div class="duo" id="duoA" style="left:calc(25% - 85px);display:none"><button onclick="duoPlay(0)">&#9654; Twinkle, Twinkle</button></div><div class="duo" id="duoB" style="left:calc(75% - 85px);display:none"><button onclick="duoPlay(1)">&#9654; Ode to Joy</button></div><div class="bigplay" id="big"><span>▶</span></div></div>
  <div class="stmt" id="stmt">Eight short scenes. Click to begin.</div>
  <div class="row"><div class="bar" style="display:none"><button id="pp" aria-label="Play">▶</button><input type="range" id="seek" min="0" max="152" step="0.1" value="0" aria-label="Position"><span class="time" id="tm">0:00 / 2:32</span></div><div id="steps" class="steps"></div><div class="opts"><label for="voice" style="display:none"><input type="checkbox" id="voice"> Voice</label><label for="sfx"><input type="checkbox" id="sfx" checked> Piano</label></div></div>
  <div class="credit">After the Pocket Music lesson, how far from home (Designed by LAVA MUSIC). Piano synthesized in the browser.</div>
@@ -36,7 +36,7 @@ body.emb{padding:0 !important}body.emb .credit{display:none}
 <script>if(window.self!==window.top)document.body.classList.add("emb");
 
 const W=1240,H=400,cv=document.getElementById('cv'),g=cv.getContext('2d');
-const CREAM='#4C5B66',GOLD='#F76902',PINK='#FAD6BA',ORANGE='#F76902',NAVY='#FFFFFF',KBX=640;
+const CREAM='#4C5B66',GOLD='#F76902',PINK='#FAD6BA',ORANGE='#F76902',NAVY='#FFFFFF',KBX=720;
 const SOLF=['do','','re','','mi','fa','','sol','','la','','si'],SCALE=[0,2,4,5,7,9,11];
 const clamp=(x,a,b)=>Math.max(a,Math.min(b,x)),mix=(a,b,s)=>a+(b-a)*s,sm=s=>{s=clamp(s,0,1);return s*s*(3-2*s)};
 const win=(t,a,b,f=.25)=>sm((t-a)/f)*sm((b-t)/f); // fade in at a, out at b
@@ -67,7 +67,7 @@ const SPEAK={"16.0": "You never studied music theory. How do you know it is wron
 const GLOW=[[21.8,23.6,.55],[32.43,35.8,.5],[35.9,40.4,.95],[40.4,48,.45],[64.8,65.9,.5],[65.9,68.0,.95],[68.0,71.5,.45],[86.0,87.8,.7],[101.5,103.4,.5],[113.5,115.2,.75],[123.7,125.6,.6],[146.5,148.2,.75],[148.2,152.2,1.6]];
 // ---------- geometry ----------
 function layout(t){const s=t<76.3?0:t<77.8?sm((t-76.3)/1.5):t<134.6?1:t<136.0?1-sm((t-134.6)/1.4):0;
- return {s,cx:mix(300,280,s),cy:186,r:mix(144,136,s),w:mix(7,6,s),ball:mix(17,15,s),lab:mix(22,20,s),kbY:mix(520,232,s)}}
+ return {s,cx:mix(620,430,s),cy:186,r:mix(144,136,s),w:mix(7,6,s),ball:mix(17,15,s),lab:mix(22,20,s),kbY:mix(520,232,s)}}
 function homeAngle(t){const a0=-90,a1=0;if(t<7.6)return a0;if(t<8.1)return mix(a0,a1,sm((t-7.6)/.5));if(t<23.6)return a1;if(t<24.2)return mix(a1,a0+360,sm((t-23.6)/.6))-360;return a0}
 const pcAng=(pc,t)=>{const k=tonic(t),ha=homeAngle(t);return ha-((pc-k+12)%12)*30};
 const P=(L,ang,rr)=>[L.cx+(rr??L.r)*Math.cos(ang*Math.PI/180),L.cy-(rr??L.r)*Math.sin(ang*Math.PI/180)];
@@ -138,14 +138,14 @@ function draw(t){bg();const L=layout(t),k=tonic(t),ha=homeAngle(t),ci=current(t)
  if(t>123.7&&t<134.5){const al=win(t,123.7,134.4,.3);g.globalAlpha=al;const y=L.kbY-8;['do','re','mi','fa','sol','la','si','do'].forEach((s,i)=>{const x=KBX+22+i*36,pc=[0,2,4,5,7,9,11,12][i]%12,on=cur&&cur.pc===pc&&i<7||(i===0&&t<126.3);
    text(s,x,y-18,14,on?'#C45200':CREAM,500,'center');text(String([1,2,3,4,5,6,7,1][i]),x,y,20,on?ORANGE:CREAM,700,'center')});g.globalAlpha=1}
  // captions
- g.textAlign='left';CAP.forEach(([a,b,s,st])=>{const al=win(t,a,b,.22);if(al<=0)return;g.globalAlpha=al;const size=st==='big'?54:34,lh=size*1.3;s.split('\n').forEach((ln,i)=>text(ln,KBX-40,(st==='big'?110:90)+i*lh,size,'#1F1E1B',st==='big'?800:600));g.globalAlpha=1});
- if(t>44.6&&t<47.7){g.globalAlpha=win(t,44.6,47.7,.2)*.7;text('Bigand and Poulin-Charronnat, Cognition 2006: the sense of finished and unfinished',KBX-40,240,15,CREAM,400);text('is learned by listening (Western listeners)',KBX-40,260,15,CREAM,400);g.globalAlpha=1}
+ g.textAlign='left';
+ 
  // progressive note-name captions
  function solfLine(grp,start,end,brk){if(t<start||t>end)return;const ns=GROUPS[grp].map(i=>N[i]).filter(n=>n.t<=t+.02);if(!ns.length)return;const names=ns.map(n=>SOLF[(n.pc-tonic(t)+12)%12]);
   const l1=names.slice(0,brk),l2=names.slice(brk),al=win(t,start,end,.2);g.globalAlpha=al;g.font='600 34px "et-book",Georgia,serif';
   const last=ns.length===GROUPS[grp].length&&ns[ns.length-1].pc===tonic(t);
   [l1,l2].forEach((L2,li)=>{if(!L2.length)return;let x=KBX-40;L2.forEach((w,wi)=>{const isLast=last&&li===(l2.length?1:0)&&wi===L2.length-1;text(w,x,90+li*44,34,isLast?ORANGE:'#1F1E1B',600);g.font='600 34px "et-book",Georgia,serif';x+=g.measureText(w+' ').width})});g.globalAlpha=1}
- solfLine('scale',29.4,35.7,4);solfLine('twK',79.4,87.7,7);
+ 
  if(t>151.2)text('Designed by LAVA MUSIC',L.cx,L.cy+L.r+46,9,'rgba(76,91,102,.7)',500,'center')}
 // ---------- audio ----------
 let ctx=null,master=null;
@@ -172,36 +172,38 @@ addEventListener('resize',fit);(document.fonts?document.fonts.ready:Promise.reso
 window.__seek=t=>{tNow=t;draw(t)};
 
 // ---------- scene 1: two versions side by side, each can be replayed ----------
-const TWL=[60,60,67,67,69,69,67,65,65,64,64,62,62],DUO=[{end:59,cx:310,ok:false,lab:'stops on si, one step short of home'},{end:60,cx:930,ok:true,lab:'back home to do'}];
-var duo=false,duoRaf=0;var DS=[{t0:-1},{t0:-1}];
-function duoNotes(k){return TWL.concat([DUO[k].end])}
-function duoPlay(k){A();if(!master)newMaster();const now=ctx.currentTime;DS[k].t0=now+.05;const ns=duoNotes(k);ns.forEach((m,i)=>{const d=i===ns.length-1?1.6:.46;pluck(m,DS[k].t0+i*.46,d,.3)});if(!duoRaf)duoRaf=requestAnimationFrame(duoFrame)}
-function duoFrame(){drawDuo();const busy=DS.some(d=>d.t0>0&&ctx&&ctx.currentTime-d.t0<duoNotes(0).length*.46+2.5);duoRaf=duo&&busy?requestAnimationFrame(duoFrame):0;if(!busy)drawDuo()}
+const DUO=[{name:'Twinkle, Twinkle',cx:310,ns:[60,60,67,67,69,69,67,65,65,64,64,62,62,59],ds:[1,1,1,1,1,1,2,1,1,1,1,1,1,3],lab:'stops on si, one step short of home',oddLab:'si'},
+ {name:'Ode to Joy',cx:930,ns:[64,64,65,67,67,65,64,62,60,60,62,64,64,62,66],ds:[1,1,1,1,1,1,1,1,1,1,1,1,1.5,.5,3],lab:'stops on fi, a note outside the key',oddLab:'fi'}];
+const BEAT=.42;var duo=false,duoRaf=0;var DS=[{t0:-1},{t0:-1}];
+function onsets(k){let t=0;return DUO[k].ds.map(d=>{const o=t;t+=d*BEAT;return o})}
+function duoLen(k){return DUO[k].ds.reduce((a,b)=>a+b,0)*BEAT}
+function duoPlay(k){A();if(!master)newMaster();DS[k].t0=ctx.currentTime+.05;const on=onsets(k);DUO[k].ns.forEach((m,i)=>pluck(m,DS[k].t0+on[i],Math.min(1.6,DUO[k].ds[i]*BEAT+.2),.3));if(!duoRaf)duoRaf=requestAnimationFrame(duoFrame)}
+function duoFrame(){drawDuo();const busy=DS.some((d,k)=>d.t0>0&&ctx&&ctx.currentTime-d.t0<duoLen(k)+1.5);duoRaf=duo&&busy?requestAnimationFrame(duoFrame):0}
 function drawDuo(){bg();const now=ctx?ctx.currentTime:0;
- DUO.forEach((D,k)=>{const L={s:0,cx:D.cx,cy:212,r:128,w:6,ball:15,lab:20,kbY:999},ns=duoNotes(k),st=DS[k].t0,el=st>0?now-st:-1,idx=el<0?-1:Math.min(ns.length-1,Math.floor(el/.46)),done=el>=ns.length*.46-.46+.2;
-  const odd=!D.ok&&idx===ns.length-1,shake=odd&&el-idx*.46<.6?Math.sin((el-idx*.46)*60)*6*(1-(el-idx*.46)/.6):0;L.cx+=shake;
+ DUO.forEach((D,k)=>{const L={s:0,cx:D.cx,cy:212,r:128,w:6,ball:15,lab:20,kbY:999},ns=D.ns,st=DS[k].t0,el=st>0?now-st:-1,on=onsets(k);let idx=-1;if(el>=0)on.forEach((o,i)=>{if(el>=o)idx=i});const lastOn=on[ns.length-1],done=el>=lastOn+.2,sinceLast=el-lastOn;
+  const odd=idx===ns.length-1,shake=odd&&sinceLast<.6?Math.sin(sinceLast*60)*6*(1-sinceLast/.6):0;L.cx+=shake;
   ring(L,0);const hp=P(L,homeAngle(0));
   SCALE.forEach(iv=>{const a=homeAngle(0)-iv*30,q=P(L,a,L.r+(iv===0?24:19));text(SOLF[iv],q[0],q[1]+5,L.lab,CREAM,600,'center');const d=P(L,a);if(iv){g.fillStyle=CREAM;g.beginPath();g.arc(d[0],d[1],3.2,0,7);g.fill()}});
   // trail
-  for(let j=1;j<=idx;j++){const a=ns[j-1]%12,b=ns[j]%12;if(a===b)continue;const last=j===ns.length-1;curve(L,pcAng(a,0),pcAng(b,0),1,last?(D.ok?'rgba(247,105,2,.9)':'rgba(218,41,28,.9)'):'rgba(76,91,102,.45)',last?2.6:1.2)}
+  for(let j=1;j<=idx;j++){const a=ns[j-1]%12,b=ns[j]%12;if(a===b)continue;const last=j===ns.length-1;curve(L,pcAng(a,0),pcAng(b,0),1,last?'rgba(218,41,28,.9)':'rgba(76,91,102,.45)',last?2.6:1.2)}
   // home
-  const atHome=D.ok&&idx===ns.length-1;if(atHome)glowAt(hp[0],hp[1],L.r*.55,.9);g.fillStyle=atHome?GOLD:'rgba(247,105,2,.12)';g.strokeStyle='#F76902';g.lineWidth=2;g.beginPath();g.arc(hp[0],hp[1],L.ball*.9,0,7);g.fill();g.stroke();
+  const atHome=false;if(atHome)glowAt(hp[0],hp[1],L.r*.55,.9);g.fillStyle=atHome?GOLD:'rgba(247,105,2,.12)';g.strokeStyle='#F76902';g.lineWidth=2;g.beginPath();g.arc(hp[0],hp[1],L.ball*.9,0,7);g.fill();g.stroke();
   // ball
   if(idx>=0&&!atHome){const pc=((ns[idx]%12)+12)%12,b=P(L,pcAng(pc,0));
-   if(odd){const pul=1+.35*Math.abs(Math.sin(el*7));g.strokeStyle='rgba(218,41,28,.85)';g.lineWidth=3;g.beginPath();g.arc(b[0],b[1],L.ball*2.1*pul,0,7);g.stroke();g.fillStyle='#DA291C';g.beginPath();g.arc(b[0],b[1],L.ball*1.15,0,7);g.fill();text('?',L.cx,L.cy+26,96,'#DA291C',800,'center')}
+   if(odd){const pul=1+.35*Math.abs(Math.sin(el*7));const ol=P(L,pcAng(pc,0),L.r+19);text(D.oddLab,ol[0],ol[1]+5,24,'#DA291C',700,'center');g.strokeStyle='rgba(218,41,28,.85)';g.lineWidth=3;g.beginPath();g.arc(b[0],b[1],L.ball*2.1*pul,0,7);g.stroke();g.fillStyle='#DA291C';g.beginPath();g.arc(b[0],b[1],L.ball*1.15,0,7);g.fill();text('?',L.cx,L.cy+26,96,'#DA291C',800,'center')}
    else{glowAt(b[0],b[1],L.ball*3,.4);g.fillStyle=CREAM;g.beginPath();g.arc(b[0],b[1],L.ball,0,7);g.fill()}}
-  if(done)text(D.lab,L.cx,388,21,D.ok?'#C45200':'#DA291C',600,'center')});
+  });
 }
 function enterDuo(on){duo=on;document.getElementById('duoA').style.display=on?'flex':'none';document.getElementById('duoB').style.display=on?'flex':'none';if(on){big.hidden=true;DS[0].t0=DS[1].t0=-1;drawDuo()}}
 // ---------- steps: the presenter advances one module at a time ----------
 const STEPS=[[0,15.8,'Wrong?'],[15.9,23.8,'Right'],[24.0,47.9,'Home'],[48.0,67.9,'Three endings'],[68.0,87.7,'How far'],[87.8,105.9,'Stand and lean'],[106.0,134.4,'Find home'],[134.5,152.1,'Your turn']];
 let step=0,segEnd=null;
-const STMT=['Eight short scenes. Click to begin.','Nobody here studied this, yet everyone hears which ending is wrong.','The ear was waiting for one note, and this time it came.','The note a song returns to is its home. The ear learned it from years of listening.','Same notes until the last one: si is one step short, sol is halfway, do is home.','People who play by ear do not memorize notes. They hear how far each note is from home.','Do, mi and sol stand. Every other note leans toward one of them.','Hum to the last note, call it do, then match every note to it.','You always knew this note. Expectation is learned just by listening.'];
+const STMT=['Eight short scenes. Click to begin.','Both songs stop on the wrong note: Twinkle one step short on si, Ode to Joy outside the key on fi. Nobody here studied this, yet everyone hears it.','The ear was waiting for one note, and this time it came.','The note a song returns to is its home. The ear learned it from years of listening.','Same notes until the last one: si is one step short, sol is halfway, do is home.','People who play by ear do not memorize notes. They hear how far each note is from home.','Do, mi and sol stand. Every other note leans toward one of them.','Hum to the last note, call it do, then match every note to it.','You always knew this note. Expectation is learned just by listening.'];
 const stepsEl=document.getElementById('steps');
 STEPS.forEach((st,i)=>{const b=document.createElement('button');b.textContent=(i+1)+'. '+st[2];b.onclick=()=>goStep(i+1);stepsEl.appendChild(b)});
 function goStep(k){k=Math.max(0,Math.min(STEPS.length,k));step=k;stepsEl.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('on',i===k-1));
   if(playing)stop();document.getElementById('stmt').textContent=STMT[k];enterDuo(k===1);if(k===0){segEnd=null;tNow=0;big.hidden=false;draw(0);return}
-  if(k===1){A();newMaster();duoPlay(0);setTimeout(()=>{if(step===1)duoPlay(1)},8200);return}
+  if(k===1){A();newMaster();duoPlay(0);setTimeout(()=>{if(step===1)duoPlay(1)},(duoLen(0)+1.2)*1000);return}
   segEnd=STEPS[k-1][1];tNow=STEPS[k-1][0];play()}
 addEventListener('message',e=>{const d=e.data;if(d&&typeof d==='object'&&'ffstep' in d)goStep(d.ffstep);if(d==='fe-stop'&&playing)stop()});
 addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();goStep(step+1)}if(e.key==='ArrowLeft'){e.preventDefault();goStep(step-1)}});
