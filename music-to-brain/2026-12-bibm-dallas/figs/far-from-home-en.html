@@ -186,13 +186,15 @@ function onsets(k){let t=0;return DUO[k].ds.map(d=>{const o=t;t+=d*BEAT;return o
 function duoLen(k){return DUO[k].ds.reduce((a,b)=>a+b,0)*BEAT}
 function duoPlay(k){A();if(!master)newMaster();DS[k].t0=ctx.currentTime+.05;const on=onsets(k);DUO[k].ns.forEach((m,i)=>pluck(m,DS[k].t0+on[i],Math.min(1.6,DUO[k].ds[i]*BEAT+.2),.3));if(!duoRaf)duoRaf=requestAnimationFrame(duoFrame)}
 function duoFrame(){drawDuo();const busy=DS.some((d,k)=>d.t0>0&&ctx&&ctx.currentTime-d.t0<duoLen(k)+1.5);duoRaf=duo&&busy?requestAnimationFrame(duoFrame):0}
+function fadeCurve(L,a1,a2,prog,rgb,width,ao){if(ao<.02)return;const n=28,m=Math.max(1,Math.round(n*prog));let pv=onCurve(L,a1,a2,0);g.lineWidth=width;g.lineCap='butt';
+ for(let i=1;i<=m;i++){const q=onCurve(L,a1,a2,i/n),k=i/n,al=ao*(.08+.92*k*k);g.strokeStyle=`rgba(${rgb},${al})`;g.beginPath();g.moveTo(pv[0],pv[1]);g.lineTo(q[0],q[1]);g.stroke();pv=q}}
 function drawDuo(){bg();const now=ctx?ctx.currentTime:0;
  DUO.forEach((D,k)=>{const L={s:0,cx:D.cx,cy:214,r:132,w:8,ball:17,lab:22,kbY:999},ns=D.ns,st=DS[k].t0,el=st>0?now-st-lat():-1,on=onsets(k);const MV=.15;let idx=-1;if(el>=-MV)on.forEach((o,i)=>{if(el>=o-(i?MV:0))idx=i});const lastOn=on[ns.length-1],done=el>=lastOn+.2,sinceLast=el-lastOn;
   const odd=idx===ns.length-1&&sinceLast>=0,shake=odd&&sinceLast<.6?Math.sin(sinceLast*60)*6*(1-sinceLast/.6):0;L.cx+=shake;
   ring(L,0);const hp=P(L,homeAngle(0));
   SCALE.forEach(iv=>{const a=homeAngle(0)-iv*30,q=P(L,a,L.r+(iv===0?24:19));text(SOLF[iv],q[0],q[1]+5,L.lab,CREAM,600,'center');const d=P(L,a);if(iv){g.fillStyle=CREAM;g.beginPath();g.arc(d[0],d[1],3.2,0,7);g.fill()}});
   // trail
-  for(let j=1;j<=idx;j++){const a=ns[j-1]%12,b=ns[j]%12;if(a===b)continue;const last=j===ns.length-1;{const tj=on[j],pr=clamp((el-tj+MV)/(MV+.05),0,1);curve(L,pcAng(a,0),pcAng(b,0),pr,last?'rgba(218,41,28,.9)':'rgba(95,93,80,.7)',last?3:2)}}
+  for(let j=1;j<=idx;j++){const a=ns[j-1]%12,b=ns[j]%12;if(a===b)continue;const last=j===ns.length-1;{const tj=on[j],pr=clamp((el-tj+MV)/(MV+.05),0,1),age=Math.max(0,el-tj),ao=last?Math.max(.55,Math.exp(-age/4)):Math.exp(-age/1.4);fadeCurve(L,pcAng(a,0),pcAng(b,0),pr,last?'218,41,28':'95,93,80',last?3:2.2,ao)}}
   // home
   const atHome=false;if(atHome)glowAt(hp[0],hp[1],L.r*.55,.9);g.fillStyle=atHome?GOLD:'rgba(247,105,2,.12)';g.strokeStyle='#F76902';g.lineWidth=2;g.beginPath();g.arc(hp[0],hp[1],L.ball*.9,0,7);g.fill();g.stroke();
   // ball
