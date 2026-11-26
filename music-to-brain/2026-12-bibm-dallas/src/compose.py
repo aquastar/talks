@@ -286,7 +286,7 @@ S.append(landmark(3, 'model', 'Part 3. Model: what does the listening brain expe
     'Read works. To ' + kw('set') + ' music for a brain, we first need to predict the brain from the music.',
     'Landmark. We are at Model, the top arrow. The thread of this part: the brain predicts the next note, the prediction is a small graph of notes, music generators learn that graph, and we can watch it live.'))
 S.append(sec(3, 'Listeners do not hear which note it is. They hear how far it is from home.',
-    '<iframe class="fe-frame ffh" data-src="figs/far-from-home-en.html" width="1240" height="505" style="border:0;display:block;width:1240px !important;height:505px !important;max-width:none !important;max-height:none !important;flex:0 0 auto;position:relative;left:50%;transform:translateX(calc(-50% - 33px))" title="How far from home"></iframe>'
+    '<iframe class="fe-frame ffh" data-src="figs/far-from-home-en.html" width="1240" height="490" style="border:0;display:block;width:1240px !important;height:490px !important;max-width:none !important;max-height:none !important;flex:0 0 auto;position:relative;left:50%;transform:translateX(calc(-50% - 33px))" title="How far from home"></iframe>'
     + ''.join(f'<span class="fragment ffstep" data-fragment-index="{k}"></span>' for k in range(1, 8))
     ,
     ref(a('Bigand and Poulin-Charronnat, Cognition 2006', 'https://doi.org/10.1016/j.cognition.2005.11.007'), 'After the Pocket Music lesson, how far from home (LAVA MUSIC)'),
