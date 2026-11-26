@@ -73,7 +73,7 @@ const GLOW=[[21.8,23.6,.55],[32.43,35.8,.5],[35.9,40.4,.95],[40.4,48,.45],[64.8,
 // ---------- geometry ----------
 function layout(t){const s=t<76.3?0:t<77.8?sm((t-76.3)/1.5):t<134.6?1:t<136.0?1-sm((t-134.6)/1.4):0;
  return {s,cx:330,cy:190,r:mix(158,150,s),w:mix(10,9,s),ball:mix(21,19,s),lab:mix(26,24,s),kbY:mix(520,226,s)}}
-function homeAngle(t){const a0=-90,a1=0;if(t<7.6)return a0;if(t<8.1)return mix(a0,a1,sm((t-7.6)/.5));if(t<23.6)return a1;if(t<24.2)return mix(a1,a0+360,sm((t-23.6)/.6))-360;return a0}
+function homeAngle(t){const a0=-90,a1=0;return a0;if(t<7.6)return a0;if(t<8.1)return mix(a0,a1,sm((t-7.6)/.5));if(t<23.6)return a1;if(t<24.2)return mix(a1,a0+360,sm((t-23.6)/.6))-360;return a0}
 const pcAng=(pc,t)=>{const k=tonic(t),ha=homeAngle(t);return ha-((pc-k+12)%12)*30};
 const P=(L,ang,rr)=>[L.cx+(rr??L.r)*Math.cos(ang*Math.PI/180),L.cy-(rr??L.r)*Math.sin(ang*Math.PI/180)];
 // ---------- drawing ----------
@@ -169,7 +169,7 @@ const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
 function schedule(from){newMaster();const base=ctx.currentTime-from;if(voice.checked&&nbuf&&from<nbuf.duration){const src=ctx.createBufferSource();src.buffer=nbuf;const ng=ctx.createGain();ng.gain.value=1.5;src.connect(ng);ng.connect(master);src.start(ctx.currentTime+.02,from+.02)}if(!sfx.checked)return;N.forEach((n,i)=>{if(n.t>=from-.01){const next=N[i+1],d=next&&next.grp===n.grp?Math.min(next.t-n.t,1.4):1.4;pluck(n.m,base+n.t+LAND,d)}})}
 function say(t){return;if(!voice.checked||!('speechSynthesis' in window))return;Object.keys(SPEAK).forEach(k=>{const kt=+k;if(t>=kt&&t<kt+.5&&!spoken.has(k)){spoken.add(k);try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(SPEAK[k]);u.lang='en-US';u.rate=1.05;const vs=speechSynthesis.getVoices();const v=vs.find(v=>/en[-_]US/i.test(v.lang)&&/Samantha|Google US|Aria|Jenny|Natural/i.test(v.name))||vs.find(v=>/en[-_]US/i.test(v.lang));if(v)u.voice=v;speechSynthesis.speak(u)}catch(e){}}})}
 function frame(){if(playing){tNow=Math.max(0,ctx.currentTime-off-lat());if(segEnd!=null&&tNow>=segEnd){tNow=segEnd;stop()}if(tNow>=END){tNow=END;stop()}say(tNow)}draw(tNow);seek.value=tNow;tm.textContent=fmt(tNow)+' / 2:32';if(playing)raf=requestAnimationFrame(frame)}
-async function play(){A();if(!nbuf){try{const bin=Uint8Array.from(atob(NARR),c=>c.charCodeAt(0));nbuf=await ctx.decodeAudioData(bin.buffer)}catch(e){nbuf=null}}if(tNow>=END)tNow=0;off=ctx.currentTime-tNow;spoken=new Set(Object.keys(SPEAK).filter(k=>+k<tNow-.05));schedule(tNow);playing=true;pp.textContent='❚❚';pp.setAttribute('aria-label','Pause');big.hidden=true;cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}
+async function play(){A();if(!nbuf&&NARR){try{const bin=Uint8Array.from(atob(NARR),c=>c.charCodeAt(0));nbuf=await ctx.decodeAudioData(bin.buffer)}catch(e){nbuf=null}}if(tNow>=END)tNow=0;off=ctx.currentTime-tNow;spoken=new Set(Object.keys(SPEAK).filter(k=>+k<tNow-.05));schedule(tNow);playing=true;pp.textContent='❚❚';pp.setAttribute('aria-label','Pause');big.hidden=true;cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}
 function stop(){playing=false;pp.textContent='▶';pp.setAttribute('aria-label','Play');if(ctx)newMaster();try{speechSynthesis.cancel()}catch(e){}big.hidden=step>0}
 pp.onclick=()=>playing?stop():goStep(Math.max(1,step));document.getElementById('stage').onclick=e=>{if(e.target.closest('.duo')||e.target.closest('.side'))return;goStep(step+1)};
 seek.oninput=()=>{tNow=+seek.value;if(playing){off=ctx.currentTime-tNow;spoken=new Set(Object.keys(SPEAK).filter(k=>+k<tNow-.05));try{speechSynthesis.cancel()}catch(e){}schedule(tNow)}draw(tNow);tm.textContent=fmt(tNow)+' / 2:32'};
@@ -216,7 +216,7 @@ function goStep(k){k=Math.max(0,Math.min(STEPS.length,k));step=k;stepsEl.querySe
   if(playing)stop();document.getElementById('stmt').textContent=STMT[k];document.getElementById('sideTxt').textContent=STMT[k];document.body.classList.toggle('single',k>1);enterDuo(k===1);if(k===0){segEnd=null;tNow=0;big.hidden=false;draw(0);return}
   if(k===1){A();newMaster();return}
   segEnd=STEPS[k-1][1];tNow=STEPS[k-1][0];draw(tNow)}
-document.getElementById('sidePlay').onclick=e=>{e.stopPropagation();if(step<2)return;if(playing)stop();tNow=STEPS[step-1][0];segEnd=STEPS[step-1][1];play()};
+document.getElementById('sidePlay').onclick=e=>{e.stopPropagation();if(step<2)return;if(playing)stop();const a=STEPS[step-1][0],z=STEPS[step-1][1],first=N.find(n=>n.t>=a&&n.t<z);tNow=first?Math.max(a,first.t-.25):a;segEnd=z;play()};
 addEventListener('message',e=>{const d=e.data;if(d&&typeof d==='object'&&'ffstep' in d)goStep(d.ffstep);if(d==='fe-stop'&&playing)stop()});
 addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();goStep(step+1)}if(e.key==='ArrowLeft'){e.preventDefault();goStep(step-1)}});
 
